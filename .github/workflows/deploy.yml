@@ -3,8 +3,6 @@ name: Build and Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 # Allow one concurrent deployment
 concurrency:
@@ -13,8 +11,6 @@ concurrency:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 jobs:
   build:
@@ -50,10 +46,12 @@ jobs:
           path: public
 
   deploy:
-    # Only deploy from main branch, not PRs
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
