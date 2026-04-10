@@ -13,12 +13,8 @@
       </div>
       {{ end }}
 
-      {{ with .GitInfo }}
-      <p class="meta-updated">Updated {{ .AuthorDate.Format "Jan 2006" }}</p>
-      {{ else }}{{ with .Date }}
-      <p class="meta-updated">{{ .Format "Jan 2006" }}</p>
-      {{ end }}{{ end }}
-
+      {{ with .Params.issue }}<p class="meta-issue">Issue #{{ . }}</p>{{ end }}
+      {{ with .Date }}<p class="meta-updated">{{ .Format "Jan 2, 2006" }}</p>{{ end }}
       <p class="meta-readtime">{{ .ReadingTime }} min read</p>
     </div>
   </aside>

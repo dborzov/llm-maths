@@ -2,12 +2,12 @@
   <nav class="site-nav">
     <div class="nav-inner">
       <a href="{{ site.Home.RelPermalink }}" class="nav-brand">
-        <img src="{{ "logo-64.png" | relURL }}" alt="LLM Maths Almanac" class="nav-brand-icon">
-        <span class="nav-brand-text">LLM Maths<br><small>Almanac</small></span>
+        <img src="{{ "logo-64.png" | relURL }}" alt="LLM Maths Comics" class="nav-brand-icon">
+        <span class="nav-brand-text">LLM Maths<br><small>Comics</small></span>
       </a>
 
       <div class="nav-links">
-        {{- with site.GetPage "/chapters" }}<a href="{{ .RelPermalink }}" class="nav-link">Chapters</a>{{ end -}}
+        {{- with site.GetPage "/issues" }}<a href="{{ .RelPermalink }}" class="nav-link">Issues</a>{{ end -}}
         {{- with site.GetPage "/docs" }}<a href="{{ .RelPermalink }}" class="nav-link">Docs</a>{{ end -}}
         {{- with site.GetPage "/prompts" }}<a href="{{ .RelPermalink }}" class="nav-link">Prompts</a>{{ end -}}
         <a href="{{ site.Params.githubRepo }}" class="nav-link" target="_blank" rel="noopener">GitHub ↗</a>

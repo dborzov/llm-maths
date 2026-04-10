@@ -1,6 +1,6 @@
-baseURL = "https://borzov.ca/llm-maths/"
+baseURL = "https://dborzov.github.io/llm-maths/"
 languageCode = "en-us"
-title = "Ye Olde LLM Maths Almanac"
+title = "LLM Maths Comics"
 theme = "almanac"
 
 enableGitInfo = false
@@ -41,7 +41,7 @@ enableGitInfo = false
   page    = ["HTML"]
 
 [params]
-  description  = "A wiki-style collection of long-form deep-learning mathematics articles"
+  description  = "Long-form deep-learning mathematics articles — comic-style."
   author       = "borzov.ca"
   githubRepo   = "https://github.com/dborzov/llm-maths"
   katexVersion = "0.16.11"

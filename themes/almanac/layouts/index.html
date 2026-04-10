@@ -6,13 +6,13 @@
       <div class="hero-eyebrow">Open Source · Deep Learning · From First Principles</div>
       <div class="hero-title-row">
         <div class="hero-decoration">
-          <img src="{{ "logo-512.png" | relURL }}" alt="LLM Maths Almanac" class="hero-logo">
+          <img src="{{ "logo-512.png" | relURL }}" alt="LLM Maths Comics" class="hero-logo">
         </div>
-        <h1 class="hero-title"><br>LLM Maths<br>Almanac</h1>
+        <h1 class="hero-title"><br>LLM Maths<br>Comics</h1>
       </div>
       <p class="hero-description">{{ site.Params.description }}</p>
       <div class="hero-actions">
-        {{- with site.GetPage "/chapters" }}<a href="{{ .RelPermalink }}" class="btn-primary">Browse Chapters</a>{{ end -}}
+        {{- with site.GetPage "/issues" }}<a href="{{ .RelPermalink }}" class="btn-primary">Browse Issues</a>{{ end -}}
         <a href="{{ site.Params.githubRepo }}" class="btn-secondary" target="_blank" rel="noopener">Contribute ↗</a>
       </div>
     </div>
@@ -29,10 +29,10 @@
   <section class="recent-articles">
     <div class="section-header">
       <h2 class="section-title">Latest Dispatches</h2>
-      {{- with site.GetPage "/chapters" }}<a href="{{ .RelPermalink }}" class="section-link">All chapters →</a>{{ end -}}
+      {{- with site.GetPage "/issues" }}<a href="{{ .RelPermalink }}" class="section-link">All issues →</a>{{ end -}}
     </div>
     <div class="article-grid">
-      {{ range first 6 ($articles.ByLastmod.Reverse) }}
+      {{ range first 6 ($articles.ByDate.Reverse) }}
       <a href="{{ .RelPermalink }}" class="article-card">
         {{ with .Params.header }}
         <div class="card-illustration">
@@ -41,12 +41,14 @@
         {{ end }}
         <div class="card-body">
           <div class="card-topic">
+            {{ with .Params.issue }}<span class="card-issue">#{{ . }}</span>{{ end }}
             {{ with .Params.topics }}{{ range . }}{{ . }} {{ end }}{{ end }}
           </div>
           <h3 class="card-title">{{ .Title }}</h3>
           {{ with .Description }}<p class="card-desc">{{ . }}</p>{{ end }}
           <div class="card-meta">
             <span class="card-readtime">{{ .ReadingTime }} min</span>
+            {{ with .Date }}<span class="card-date">{{ .Format "Jan 2, 2006" }}</span>{{ end }}
           </div>
         </div>
       </a>

@@ -6,6 +6,8 @@ tags: [logits, sigmoid, softmax, numpy, matplotlib]
 theme: teal
 math: true
 draft: false
+date: 2026-04-07T09:00:00-04:00
+issue: 2
 ---
 
 # From Dead Insects to Deep Learning: How Probits and Logits Conquered Statistics and AI

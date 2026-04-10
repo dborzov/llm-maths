@@ -6,7 +6,7 @@
   </header>
 
   <div class="article-grid">
-    {{ range .Pages }}
+    {{ range (.Pages.ByDate.Reverse) }}
     <a href="{{ .RelPermalink }}" class="article-card">
       {{ with .Params.header }}
       <div class="card-illustration">
@@ -15,6 +15,7 @@
       {{ end }}
       <div class="card-body">
         <div class="card-topic">
+          {{ with .Params.issue }}<span class="card-issue">#{{ . }}</span>{{ end }}
           {{ with .Params.topics }}{{ range . }}{{ . }} {{ end }}{{ end }}
           {{ with .Params.tags }}{{ range first 1 . }}#{{ . }}{{ end }}{{ end }}
         </div>
@@ -22,7 +23,7 @@
         {{ with .Description }}<p class="card-desc">{{ . }}</p>{{ end }}
         <div class="card-meta">
           <span class="card-readtime">{{ .ReadingTime }} min</span>
-          {{ with .GitInfo }}<span class="card-date">{{ .AuthorDate.Format "Jan 2006" }}</span>{{ else }}{{ with .Date }}<span class="card-date">{{ .Format "Jan 2006" }}</span>{{ end }}{{ end }}
+          {{ with .Date }}<span class="card-date">{{ .Format "Jan 2, 2006" }}</span>{{ end }}
         </div>
       </div>
     </a>

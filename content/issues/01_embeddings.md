@@ -7,6 +7,8 @@ theme: cream
 header: word2vec.png
 math: true
 draft: false
+date: 2026-04-01T09:00:00-04:00
+issue: 1
 ---
 
 ## A Linguist Walks into a Neural Network
