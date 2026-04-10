@@ -1,0 +1,11 @@
+{{- $v := site.Params.katexVersion | default "0.16.11" -}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@{{ $v }}/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@{{ $v }}/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@{{ $v }}/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {
+    delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '$', right: '$', display: false}
+    ],
+    throwOnError: false
+  });"></script>

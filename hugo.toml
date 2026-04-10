@@ -1,0 +1,48 @@
+baseURL = "https://borzov.ca/llm-maths/"
+languageCode = "en-us"
+title = "Ye Olde LLM Maths Almanac"
+theme = "almanac"
+
+enableGitInfo = false
+
+[taxonomies]
+  tag = "tags"
+  topic = "topics"
+
+[markup]
+  defaultMarkdownHandler = "goldmark"
+
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block  = [["$$", "$$"]]
+          inline = [["$", "$"]]
+
+  [markup.highlight]
+    style          = "monokai"
+    noClasses      = true
+    lineNos        = false
+    tabWidth       = 4
+    codeFences     = true
+
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel   = 3
+    ordered    = false
+
+[outputs]
+  home    = ["HTML"]
+  section = ["HTML"]
+  page    = ["HTML"]
+
+[params]
+  description  = "A wiki-style collection of long-form deep-learning mathematics articles"
+  author       = "borzov.ca"
+  githubRepo   = "https://github.com/dborzov/llm-maths"
+  katexVersion = "0.16.11"
+  defaultTheme = "cream"

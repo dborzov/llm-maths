@@ -1,0 +1,14 @@
+# Cream theme — from StyleGuide
+# Background: Pop Cream #FDF5E6, primary accent: Pop Pink
+bg-page      = "#FDF5E6"
+bg-surface   = "#FFFFFF"
+bg-nav       = "#FFFFFF"
+bg-toc       = "#FFFFFF"
+bg-code      = "#1A1A1A"
+text-body    = "#1A1A1A"
+text-nav     = "#1A1A1A"
+text-toc     = "#1A1A1A"
+accent-1     = "#FF007F"
+accent-2     = "#00A8A8"
+accent-3     = "#FFD700"
+accent-4     = "#FF8C00"

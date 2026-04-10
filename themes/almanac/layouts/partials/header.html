@@ -1,0 +1,21 @@
+<header class="site-header">
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="{{ site.Home.RelPermalink }}" class="nav-brand">
+        <span class="nav-brand-icon">∑</span>
+        <span class="nav-brand-text">LLM Maths<br><small>Almanac</small></span>
+      </a>
+
+      <div class="nav-links">
+        {{- with site.GetPage "/chapters" }}<a href="{{ .RelPermalink }}" class="nav-link">Chapters</a>{{ end -}}
+        {{- with site.GetPage "/docs" }}<a href="{{ .RelPermalink }}" class="nav-link">Docs</a>{{ end -}}
+        {{- with site.GetPage "/prompts" }}<a href="{{ .RelPermalink }}" class="nav-link">Prompts</a>{{ end -}}
+        <a href="{{ site.Params.githubRepo }}" class="nav-link" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+
+      <div class="nav-search">
+        <input type="search" placeholder="Search the archives…" class="search-input" aria-label="Search">
+      </div>
+    </div>
+  </nav>
+</header>

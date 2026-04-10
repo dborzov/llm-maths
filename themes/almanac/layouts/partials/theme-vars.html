@@ -1,0 +1,11 @@
+{{- $theme := .Params.theme | default site.Params.defaultTheme | default "cream" -}}
+{{- $themeData := index site.Data.themes $theme -}}
+{{- if $themeData -}}
+<style>
+:root {
+  {{- range $key, $val := $themeData }}
+  --{{ $key }}: {{ $val }};
+  {{- end }}
+}
+</style>
+{{- end -}}

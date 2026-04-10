@@ -1,0 +1,15 @@
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-sigil">∑</span>
+      <p>Ye Olde LLM Maths Almanac</p>
+      <p class="footer-sub">Open source. No corporate fluff. Just maths.</p>
+    </div>
+    <div class="footer-links">
+      {{- with site.GetPage "/chapters" }}<a href="{{ .RelPermalink }}">Chapters</a>{{ end }}
+      {{- with site.GetPage "/docs" }}<a href="{{ .RelPermalink }}">Docs</a>{{ end }}
+      {{- with site.GetPage "/prompts" }}<a href="{{ .RelPermalink }}">Prompts</a>{{ end }}
+      <a href="{{ site.Params.githubRepo }}" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.LanguageCode }}"
+      data-theme="{{ .Params.theme | default site.Params.defaultTheme | default "cream" }}">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  {{ partial "header.html" . }}
+
+  <main class="site-main">
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  {{ partial "footer.html" . }}
+
+  <script src="{{ "js/fold.js" | relURL }}" defer></script>
+  <script src="{{ "js/toc.js" | relURL }}" defer></script>
+</body>
+</html>

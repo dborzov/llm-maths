@@ -1,0 +1,16 @@
+{{- $id      := index .Attributes "id" | default (string .Ordinal) -}}
+{{- $caption := index .Attributes "caption" | default "" -}}
+{{- $filePath := .Page.File.Path -}}
+{{- $fileBase := strings.TrimSuffix ".md" $filePath -}}
+{{- $imgSrc  := printf "plots/%s/%s.png" $fileBase $id | relURL -}}
+
+<div class="pyplot-block">
+  <div class="pyplot-code">
+    {{ highlight .Inner "python" "" }}
+  </div>
+  <figure class="pyplot-output">
+    <img src="{{ $imgSrc }}" alt="{{ $caption }}" loading="lazy"
+         onerror="this.closest('.pyplot-output').classList.add('pyplot-missing')">
+    {{ with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+  </figure>
+</div>

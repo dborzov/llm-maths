@@ -1,0 +1,14 @@
+# Teal theme — from WikiMockup / concept-art2
+# Background: deep teal #007A7A, primary accent: Pop Yellow
+bg-page      = "#007A7A"
+bg-surface   = "#FDF5E6"
+bg-nav       = "#005858"
+bg-toc       = "#005858"
+bg-code      = "#003D3D"
+text-body    = "#1A1A1A"
+text-nav     = "#FDF5E6"
+text-toc     = "#FDF5E6"
+accent-1     = "#FFD700"
+accent-2     = "#FF007F"
+accent-3     = "#FF8C00"
+accent-4     = "#00C8C8"

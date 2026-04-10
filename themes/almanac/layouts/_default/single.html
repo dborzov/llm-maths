@@ -1,0 +1,47 @@
+{{ define "main" }}
+<div class="article-container">
+
+  <aside class="toc-sidebar" aria-label="Table of contents">
+    {{ partial "toc.html" . }}
+
+    <div class="toc-meta">
+      {{ with .GetTerms "tags" }}
+      <div class="meta-tags">
+        {{ range . }}
+        <a href="{{ .RelPermalink }}" class="tag">{{ .LinkTitle }}</a>
+        {{ end }}
+      </div>
+      {{ end }}
+
+      {{ with .GitInfo }}
+      <p class="meta-updated">Updated {{ .AuthorDate.Format "Jan 2006" }}</p>
+      {{ else }}{{ with .Date }}
+      <p class="meta-updated">{{ .Format "Jan 2006" }}</p>
+      {{ end }}{{ end }}
+
+      <p class="meta-readtime">{{ .ReadingTime }} min read</p>
+    </div>
+  </aside>
+
+  <article class="article-body">
+    <header class="article-header">
+      {{ with .Params.topics }}
+      <div class="article-topic">
+        {{ range . }}{{ . }}{{ end }}
+      </div>
+      {{ end }}
+
+      <h1 class="article-title">{{ .Title }}</h1>
+
+      {{ with .Description }}
+      <p class="article-description">{{ . }}</p>
+      {{ end }}
+    </header>
+
+    <div class="article-content">
+      {{ .Content }}
+    </div>
+  </article>
+
+</div>
+{{ end }}

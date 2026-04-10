@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=Bangers&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bangers", system-ui, sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  --color-pop-pink: #FF007F;
+  --color-pop-teal: #00A8A8;
+  --color-pop-yellow: #FFD700;
+  --color-pop-orange: #FF8C00;
+  --color-pop-cream: #FDF5E6;
+  --color-pop-black: #1A1A1A;
+
+  --shadow-pop: 4px 4px 0px 0px var(--color-pop-black);
+  --shadow-pop-lg: 8px 8px 0px 0px var(--color-pop-black);
+  --shadow-pop-hover: 2px 2px 0px 0px var(--color-pop-black);
+}
+
+@layer utilities {
+  .bg-halftone {
+    background-image: radial-gradient(var(--color-pop-black) 1px, transparent 0);
+    background-size: 4px 4px;
+    opacity: 0.1;
+  }
+
+  .bg-checkered {
+    background-image: conic-gradient(
+      var(--color-pop-black) 90deg,
+      transparent 90deg 180deg,
+      var(--color-pop-black) 180deg 270deg,
+      transparent 270deg
+    );
+    background-size: 20px 20px;
+    opacity: 0.05;
+  }
+
+  .border-pop {
+    border: 3px solid var(--color-pop-black);
+  }
+
+  .btn-pop {
+    @apply px-6 py-2 font-bold uppercase tracking-wider transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none;
+    border: 3px solid var(--color-pop-black);
+    box-shadow: var(--shadow-pop);
+  }
+
+  .card-pop {
+    @apply bg-white p-6;
+    border: 3px solid var(--color-pop-black);
+    box-shadow: var(--shadow-pop);
+  }
+}
+
+body {
+  @apply bg-pop-cream text-pop-black font-sans;
+}
+
+h1, h2, h3, h4 {
+  @apply font-bold uppercase tracking-tight;
+}
