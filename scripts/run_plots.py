@@ -39,7 +39,7 @@ CACHE_FILE   = Path(__file__).parent / ".plot_cache.json"
 # Regex for ```pyplot {id="..." caption="..."} ... ``` blocks
 # ---------------------------------------------------------------------------
 PYPLOT_PATTERN = re.compile(
-    r'```pyplot\s*\{([^}]*)\}\s*\n([\s\S]*?)```',
+    r'^```pyplot\s*\{([^}]*)\}\s*\n([\s\S]*?)^```',
     re.MULTILINE,
 )
 

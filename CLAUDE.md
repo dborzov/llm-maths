@@ -19,6 +19,14 @@ make clean-all    # + delete plot cache and generated PNGs
 
 **Python tooling:** always use `uv` — never bare `python` or `pip`.
 
+## Sanity-Check Protocol
+
+After every significant change (CSS, templates, content, scripts):
+
+1. Run `uv run scripts/run_plots.py` — must exit with 0 errors.
+2. Run `hugo` — must build cleanly (no errors in output).
+3. Run `make preview` and visually check the affected pages in the browser at `http://localhost:1313/llm-maths/`.
+
 ## Adding a New Chapter
 
 ```bash
