@@ -4,16 +4,17 @@
   <section class="hero">
     <div class="hero-text">
       <div class="hero-eyebrow">Open Source · Deep Learning · From First Principles</div>
-      <h1 class="hero-title">Ye Olde<br>LLM Maths<br>Almanac</h1>
+      <div class="hero-title-row">
+        <div class="hero-decoration">
+          <img src="{{ "logo-512.png" | relURL }}" alt="LLM Maths Almanac" class="hero-logo">
+        </div>
+        <h1 class="hero-title"><br>LLM Maths<br>Almanac</h1>
+      </div>
       <p class="hero-description">{{ site.Params.description }}</p>
       <div class="hero-actions">
         {{- with site.GetPage "/chapters" }}<a href="{{ .RelPermalink }}" class="btn-primary">Browse Chapters</a>{{ end -}}
         <a href="{{ site.Params.githubRepo }}" class="btn-secondary" target="_blank" rel="noopener">Contribute ↗</a>
       </div>
-    </div>
-    <div class="hero-decoration" aria-hidden="true">
-      <div class="hero-sigil">∑</div>
-      <div class="halftone-block"></div>
     </div>
   </section>
 
@@ -33,13 +34,20 @@
     <div class="article-grid">
       {{ range first 6 ($articles.ByLastmod.Reverse) }}
       <a href="{{ .RelPermalink }}" class="article-card">
-        <div class="card-topic">
-          {{ with .Params.topics }}{{ range . }}{{ . }} {{ end }}{{ end }}
+        {{ with .Params.header }}
+        <div class="card-illustration">
+          <img src="{{ printf "header-illustrations/%s" . | relURL }}" alt="{{ $.Title }}">
         </div>
-        <h3 class="card-title">{{ .Title }}</h3>
-        {{ with .Description }}<p class="card-desc">{{ . }}</p>{{ end }}
-        <div class="card-meta">
-          <span class="card-readtime">{{ .ReadingTime }} min</span>
+        {{ end }}
+        <div class="card-body">
+          <div class="card-topic">
+            {{ with .Params.topics }}{{ range . }}{{ . }} {{ end }}{{ end }}
+          </div>
+          <h3 class="card-title">{{ .Title }}</h3>
+          {{ with .Description }}<p class="card-desc">{{ . }}</p>{{ end }}
+          <div class="card-meta">
+            <span class="card-readtime">{{ .ReadingTime }} min</span>
+          </div>
         </div>
       </a>
       {{ end }}

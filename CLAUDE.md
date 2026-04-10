@@ -42,6 +42,7 @@ description: ""   # one sentence, shown in article cards
 topics: []        # broad: [embeddings], [probability], [optimization]
 tags: []          # specific: [numpy, matplotlib, pytorch]
 theme: cream      # or: teal
+header: image.png # optional — filename in static/header-illustrations/; defaults to default.png
 math: true        # or false — controls KaTeX loading
 draft: false
 ---
@@ -102,6 +103,8 @@ themes/almanac/         → The custom Hugo theme (DO NOT edit node_modules-styl
   layouts/_default/_markup/render-codeblock-pyplot.html  → pyplot hook
 static/js/fold.js       → Auto-wraps H2 sections in <details>
 static/js/toc.js        → TOC scroll-spy via IntersectionObserver
+static/header-illustrations/ → Article header images (header: field in front matter); default.png used as fallback
+static/logo-*.png       → Web-optimised logo variants (64, 192, 512px); source in styles/logo/logo.png
 static/plots/           → Generated PNGs (gitignored, rebuilt by run_plots.py)
 scripts/run_plots.py    → Pre-build pyplot executor
 scripts/.plot_cache.json → Cache: code-hash → skip re-execution

@@ -8,15 +8,22 @@
   <div class="article-grid">
     {{ range .Pages }}
     <a href="{{ .RelPermalink }}" class="article-card">
-      <div class="card-topic">
-        {{ with .Params.topics }}{{ range . }}{{ . }} {{ end }}{{ end }}
-        {{ with .Params.tags }}{{ range first 1 . }}#{{ . }}{{ end }}{{ end }}
+      {{ with .Params.header }}
+      <div class="card-illustration">
+        <img src="{{ printf "header-illustrations/%s" . | relURL }}" alt="{{ $.Title }}">
       </div>
-      <h2 class="card-title">{{ .Title }}</h2>
-      {{ with .Description }}<p class="card-desc">{{ . }}</p>{{ end }}
-      <div class="card-meta">
-        <span class="card-readtime">{{ .ReadingTime }} min</span>
-        {{ with .GitInfo }}<span class="card-date">{{ .AuthorDate.Format "Jan 2006" }}</span>{{ else }}{{ with .Date }}<span class="card-date">{{ .Format "Jan 2006" }}</span>{{ end }}{{ end }}
+      {{ end }}
+      <div class="card-body">
+        <div class="card-topic">
+          {{ with .Params.topics }}{{ range . }}{{ . }} {{ end }}{{ end }}
+          {{ with .Params.tags }}{{ range first 1 . }}#{{ . }}{{ end }}{{ end }}
+        </div>
+        <h2 class="card-title">{{ .Title }}</h2>
+        {{ with .Description }}<p class="card-desc">{{ . }}</p>{{ end }}
+        <div class="card-meta">
+          <span class="card-readtime">{{ .ReadingTime }} min</span>
+          {{ with .GitInfo }}<span class="card-date">{{ .AuthorDate.Format "Jan 2006" }}</span>{{ else }}{{ with .Date }}<span class="card-date">{{ .Format "Jan 2006" }}</span>{{ end }}{{ end }}
+        </div>
       </div>
     </a>
     {{ end }}

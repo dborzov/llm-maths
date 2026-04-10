@@ -4,11 +4,10 @@ description: "How Mikolov's 2013 breakthrough replaced brittle one-hot vectors w
 topics: [embeddings, representations]
 tags: [word2vec, numpy, linear-algebra]
 theme: cream
+header: word2vec.png
 math: true
 draft: false
 ---
-
-# Chapter 1: Word2Vec and The Geometry of Meaning
 
 ## A Linguist Walks into a Neural Network
 
@@ -402,7 +401,7 @@ dim=1000: mean |cosine| = 0.0252, std = 0.0224
 
 Look at that table. In 300 dimensions, two random vectors have a cosine similarity of essentially zero. They're almost exactly perpendicular.
 
-This is *a gift* for word embeddings. It means 300-dimensional space has enough "room" for every word to have its own direction without crowding. If you have 100,000 words and 300 dimensions, the space is not only big enough — it's almost embarrassingly spacious. Words that *should* be similar can be clustered together, while unrelated words naturally end up far apart, in one of the 2³⁰⁰ available corners.
+> This is *a gift* for word embeddings. It means 300-dimensional space has enough "room" for every word to have its own direction without crowding. If you have 100,000 words and 300 dimensions, the space is not only big enough — it's almost embarrassingly spacious. Words that *should* be similar can be clustered together, while unrelated words naturally end up far apart, in one of the 2³⁰⁰ available corners.
 
 ### Concentration of Measure: Why Cosine Similarity Works
 

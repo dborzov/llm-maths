@@ -33,6 +33,12 @@
 
       <h1 class="article-title">{{ .Title }}</h1>
 
+      {{ $headerImg := "header-illustrations/default.png" }}
+      {{ with .Params.header }}{{ $headerImg = printf "header-illustrations/%s" . }}{{ end }}
+      <div class="article-header-illustration">
+        <img src="{{ $headerImg | relURL }}" alt="{{ .Title }}">
+      </div>
+
       {{ with .Description }}
       <p class="article-description">{{ . }}</p>
       {{ end }}
