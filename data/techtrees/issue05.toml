@@ -1,0 +1,391 @@
+# Schema and conventions: see docs/techtrees-schema.md.
+# Canonical example: data/techtrees/issue03.toml.
+
+title  = "Tech tree — MicroGPT, Unfolded"
+width  = 1700
+height = 1180
+node_w = 200
+node_h = 70
+
+# ---------------------------------------------------------------
+# Layout (top → bottom; arrows point UPWARD prerequisite → user):
+#
+# Row 0 (y=80)    — architecture variants wing: H/D/L-axis innovations
+# Row 1 (y=210)   — framework chapter: the three axes of KV compression
+# Row 2 (y=360)   — boss: the full annotated forward pass
+# Row 3 (y=500)   — top-of-funnel mainline: prefill vs decode
+# Row 4 (y=650)   — mainline blocks: multi-head, mlp, kv-cache, sampling
+# Row 5 (y=800)   — middle layer: attention, residual stream, activations
+# Row 6 (y=950)   — primers: q/k/v, softmax, rmsnorm, embeddings
+# Row 7 (y=1100)  — foundations: linear, state dict
+# ---------------------------------------------------------------
+
+# =========================================================================
+# Row 0: architecture variants (the H/D/L compression wing)
+# =========================================================================
+
+[[nodes]]
+id    = "gqa"
+label = "Grouped-Query\nAttention (H-axis)"
+kind  = "mainline"
+x     = 280
+y     = 80
+link  = "18-gqa/"
+sub   = "ch.18"
+
+[[nodes]]
+id    = "mla"
+label = "Multi-head Latent\nAttention (D-axis)"
+kind  = "mainline"
+x     = 700
+y     = 80
+link  = "19-mla/"
+sub   = "ch.19"
+
+[[nodes]]
+id    = "sliding-window"
+label = "Sliding-Window\nAttention (L-axis)"
+kind  = "primer"
+x     = 1120
+y     = 80
+link  = "20-sliding-window/"
+sub   = "ch.20"
+
+[[nodes]]
+id    = "ssm-hybrids"
+label = "State-Space\nHybrids (L-axis)"
+kind  = "mainline"
+x     = 1480
+y     = 80
+link  = "21-ssm-hybrids/"
+sub   = "ch.21"
+
+[[nodes]]
+id    = "kv-axes"
+label = "The Three Axes\nof KV Compression"
+kind  = "mainline"
+x     = 880
+y     = 210
+link  = "17-kv-axes/"
+sub   = "ch.17"
+
+# =========================================================================
+# Row 2: boss capstone (baseline forward pass)
+# =========================================================================
+
+[[nodes]]
+id    = "full-forward"
+label = "The Full\nForward Pass"
+kind  = "boss"
+x     = 880
+y     = 360
+link  = "16-full-forward/"
+sub   = "ch.16"
+
+# =========================================================================
+# Row 3: top-of-funnel mainline
+# =========================================================================
+
+[[nodes]]
+id    = "prefill-decode"
+label = "Prefill vs\nDecode"
+kind  = "mainline"
+x     = 880
+y     = 500
+link  = "14-prefill-decode/"
+sub   = "ch.14"
+
+# =========================================================================
+# Row 4: per-layer mainline blocks
+# =========================================================================
+
+[[nodes]]
+id    = "multi-head"
+label = "Multi-Head\nAttention"
+kind  = "mainline"
+x     = 280
+y     = 650
+link  = "09-multi-head/"
+sub   = "ch.9"
+
+[[nodes]]
+id    = "mlp-block"
+label = "The MLP\nBlock"
+kind  = "primer"
+x     = 700
+y     = 650
+link  = "11-mlp-block/"
+sub   = "ch.11"
+
+[[nodes]]
+id    = "kv-cache"
+label = "The KV\nCache"
+kind  = "mainline"
+x     = 1120
+y     = 650
+link  = "13-kv-cache/"
+sub   = "ch.13"
+
+[[nodes]]
+id    = "sampling"
+label = "LM Head\n& Sampling"
+kind  = "primer"
+x     = 1480
+y     = 650
+link  = "15-sampling/"
+sub   = "ch.15"
+
+# =========================================================================
+# Row 5: middle layer (mainline + primers feeding blocks)
+# =========================================================================
+
+[[nodes]]
+id    = "attention"
+label = "Scaled Dot-\nProduct Attention"
+kind  = "mainline"
+x     = 280
+y     = 800
+link  = "08-attention/"
+sub   = "ch.8"
+
+[[nodes]]
+id    = "residual-stream"
+label = "The Residual\nStream"
+kind  = "primer"
+x     = 500
+y     = 800
+link  = "10-residual-stream/"
+sub   = "ch.10"
+
+[[nodes]]
+id    = "activations"
+label = "ReLU\n& Friends"
+kind  = "primer"
+x     = 900
+y     = 800
+link  = "12-activations/"
+sub   = "ch.12"
+
+# =========================================================================
+# Row 6: prerequisite primers
+# =========================================================================
+
+[[nodes]]
+id    = "qkv-projections"
+label = "Q, K, V:\nThe Three Projections"
+kind  = "mainline"
+x     = 180
+y     = 950
+link  = "06-qkv-projections/"
+sub   = "ch.6"
+
+[[nodes]]
+id    = "softmax"
+label = "Softmax,\nNumerically"
+kind  = "primer"
+x     = 400
+y     = 950
+link  = "07-softmax/"
+sub   = "ch.7"
+
+[[nodes]]
+id    = "rmsnorm"
+label = "RMSNorm,\nNot LayerNorm"
+kind  = "primer"
+x     = 700
+y     = 950
+link  = "05-rmsnorm/"
+sub   = "ch.5"
+
+[[nodes]]
+id    = "embeddings"
+label = "Tokens\n& Positions"
+kind  = "primer"
+x     = 980
+y     = 950
+link  = "03-embeddings/"
+sub   = "ch.3"
+
+# =========================================================================
+# Row 7: foundations
+# =========================================================================
+
+[[nodes]]
+id    = "linear"
+label = "Linear, in\nPure Python"
+kind  = "primer"
+x     = 480
+y     = 1100
+link  = "04-linear/"
+sub   = "ch.4"
+
+[[nodes]]
+id    = "state-dict"
+label = "The State\nDict"
+kind  = "primer"
+x     = 880
+y     = 1100
+link  = "02-state-dict/"
+sub   = "ch.2"
+
+# =========================================================================
+# Edges — arrows point UPWARD from prerequisite to user
+# =========================================================================
+
+# ---- State dict + linear are the foundation everything sits on ----
+
+[[edges]]
+from = "state-dict"
+to   = "linear"
+
+[[edges]]
+from = "state-dict"
+to   = "embeddings"
+
+[[edges]]
+from = "linear"
+to   = "qkv-projections"
+
+[[edges]]
+from = "linear"
+to   = "embeddings"
+
+[[edges]]
+from = "linear"
+to   = "rmsnorm"
+
+[[edges]]
+from = "linear"
+to   = "mlp-block"
+
+# ---- Primers feed attention ----
+
+[[edges]]
+from = "qkv-projections"
+to   = "attention"
+
+[[edges]]
+from = "softmax"
+to   = "attention"
+
+[[edges]]
+from = "rmsnorm"
+to   = "attention"
+
+# ---- Embeddings feed the residual stream / forward pass entry ----
+
+[[edges]]
+from = "embeddings"
+to   = "residual-stream"
+
+# ---- Attention assembles into multi-head ----
+
+[[edges]]
+from = "attention"
+to   = "multi-head"
+
+[[edges]]
+from = "residual-stream"
+to   = "multi-head"
+
+# ---- MLP block sits on activations + rmsnorm + residual ----
+
+[[edges]]
+from = "activations"
+to   = "mlp-block"
+
+[[edges]]
+from = "rmsnorm"
+to   = "mlp-block"
+
+[[edges]]
+from = "residual-stream"
+to   = "mlp-block"
+
+# ---- Multi-head → KV cache (the cache exists because of attention) ----
+
+[[edges]]
+from = "multi-head"
+to   = "kv-cache"
+
+# ---- Sampling builds on softmax ----
+
+[[edges]]
+from = "softmax"
+to   = "sampling"
+
+# ---- Per-layer blocks fold into prefill/decode ----
+
+[[edges]]
+from = "multi-head"
+to   = "prefill-decode"
+
+[[edges]]
+from = "mlp-block"
+to   = "prefill-decode"
+
+[[edges]]
+from = "kv-cache"
+to   = "prefill-decode"
+
+# ---- Everything assembles into the boss ----
+
+[[edges]]
+from = "prefill-decode"
+to   = "full-forward"
+
+[[edges]]
+from = "sampling"
+to   = "full-forward"
+
+# =========================================================================
+# Architecture variants wing (Row 0/1) — sits ABOVE the baseline boss
+# =========================================================================
+
+# The framework chapter (kv-axes) builds on the kv-cache primer and the
+# multi-head primer — you cannot reason about compressing the cache until
+# you know what is in it.
+
+[[edges]]
+from = "kv-cache"
+to   = "kv-axes"
+
+[[edges]]
+from = "multi-head"
+to   = "kv-axes"
+
+# Each axis-specific chapter builds on the framework.
+
+[[edges]]
+from = "kv-axes"
+to   = "gqa"
+
+[[edges]]
+from = "kv-axes"
+to   = "mla"
+
+[[edges]]
+from = "kv-axes"
+to   = "sliding-window"
+
+[[edges]]
+from = "kv-axes"
+to   = "ssm-hybrids"
+
+# =========================================================================
+# Legend
+# =========================================================================
+
+[[legend]]
+kind  = "boss"
+label = "Boss capstone"
+
+[[legend]]
+kind  = "mainline"
+label = "Mainline narrative"
+
+[[legend]]
+kind  = "primer"
+label = "Tutorial primer"
+
+caption = 'Arrows point <em>upward</em> from prerequisite to user. Read the cold-open (<a href="01-cold-open/">ch.1</a>) first — it introduces the 60-line listing this whole tree unpacks. The bottom row (<a href="02-state-dict/">state dict</a> + <a href="04-linear/">linear</a>) is the bedrock; everything else hangs off it. The capstone (<a href="16-full-forward/">ch.16</a>) re-prints the listing with every line annotated. The top row is the <strong>architecture variants wing</strong> — the four families of KV-cache-shrinking modifications (GQA, MLA, sliding-window, SSM-hybrids) that became mainstream in 2023–2025, framed by <a href="17-kv-axes/">ch.17</a>.'

@@ -8,6 +8,8 @@ Live at: `https://borzov.ca/llm-maths/`
 
 **Canonical reference**: `content/issues/03-sixteen-numbers/` is the reference implementation for the new issue format. When in doubt, copy what issue 03 does.
 
+**Canonical vocabulary for LLM architecture**: `content/issues/05-microgpt-unfolded/` introduces a single 60-line plain-Python transformer (microGPT) that this entire project uses as its shared reference implementation. Variable names from microGPT — `wte`, `wpe`, `attn_wq`, `attn_wk`, `attn_wv`, `attn_wo`, `mlp_fc1`, `mlp_fc2`, `lm_head`, `q`, `k`, `v`, `head_dim`, `n_layer`, `n_embd`, `block_size`, `n_head`, `keys[li]`, `values[li]`, `x_residual`, `attn_logits`, `attn_weights`, `head_out`, `x_attn`, the `prefill` and `decode` phases — are the **canonical names** every article in this project should use. See [the microGPT terminology contract](#the-microgpt-terminology-contract) below for the full enforcement rules.
+
 ## The Issue Format (READ THIS FIRST)
 
 An **issue** is the unit of release. It contains **multiple articles** sharing one theme:
@@ -64,6 +66,59 @@ This is the per-article checklist. If any item is missing, the article isn't don
 - [ ] **Cross-links to siblings.** Every concept that has a primer must link to that primer with `[label](../slug-of-primer/)`. Every primer should link forward to the mainline article that uses it.
 - [ ] **Pop-art formatting variety.** Mix `**bold**`, `*emphasis*`, tables, blockquotes, `<details>` blocks, fenced code, inline HTML/SVG. Don't let the page be one font weight on one background.
 - [ ] **Closes with a forward link.** A "Continue to → [Next Article]" line at the bottom, written as a cliffhanger that pulls the reader onward.
+- [ ] **Uses microGPT terminology where applicable.** Any time the article touches a transformer-internal concept that already has a name in microGPT, *use that name* and link to the matching primer in issue 5. The terminology contract is enforced in the next section.
+
+## The microGPT Terminology Contract
+
+Issue 5 (`content/issues/05-microgpt-unfolded/`) introduces a 60-line plain-Python transformer that is the shared **reference implementation** for everything else in this project. Whenever a later article (in any issue) discusses transformer internals, it should refer to those internals using **microGPT's variable names and structure**, and link back to the issue 5 primer that explains the concept.
+
+This keeps the project coherent: a reader who has read issue 5 once can pick up *any* article in *any* later issue and know that `attn_wk` always means the same thing.
+
+### The Canonical Names
+
+| Symbol | What it is | Where in microGPT | Primer to link |
+|---|---|---|---|
+| `wte` | token embedding table | `state_dict['wte']` | [ch.3 Tokens & Positions](../05-microgpt-unfolded/03-embeddings/) |
+| `wpe` | positional embedding table | `state_dict['wpe']` | [ch.3 Tokens & Positions](../05-microgpt-unfolded/03-embeddings/) |
+| `attn_wq` / `attn_wk` / `attn_wv` | per-layer Q/K/V projections | `state_dict[f'layer{li}.attn_w?']` | [ch.6 Q, K, V](../05-microgpt-unfolded/06-qkv-projections/) |
+| `attn_wo` | attention output projection | `state_dict[f'layer{li}.attn_wo']` | [ch.9 Multi-Head Attention](../05-microgpt-unfolded/09-multi-head/) |
+| `mlp_fc1` / `mlp_fc2` | MLP fatten / skinny matrices | `state_dict[f'layer{li}.mlp_fc?']` | [ch.11 The MLP Block](../05-microgpt-unfolded/11-mlp-block/) |
+| `lm_head` | vocab projection | `state_dict['lm_head']` | [ch.15 LM Head & Sampling](../05-microgpt-unfolded/15-sampling/) |
+| `q`, `k`, `v` | current-token query/key/value | local in `gpt()` | [ch.6](../05-microgpt-unfolded/06-qkv-projections/) |
+| `q_h`, `k_h`, `v_h` | per-head slices | local in head loop | [ch.9](../05-microgpt-unfolded/09-multi-head/) |
+| `attn_logits` | raw `q · k / √d` scores | local | [ch.8 Scaled Dot-Product Attention](../05-microgpt-unfolded/08-attention/) |
+| `attn_weights` | softmaxed scores | local | [ch.8](../05-microgpt-unfolded/08-attention/) |
+| `head_out` | per-head output vector | local | [ch.8](../05-microgpt-unfolded/08-attention/) |
+| `x_attn` | concatenated head outputs | local | [ch.9](../05-microgpt-unfolded/09-multi-head/) |
+| `x_residual` | residual-stream copy held aside | local | [ch.10 The Residual Stream](../05-microgpt-unfolded/10-residual-stream/) |
+| `keys[li]`, `values[li]` | KV cache for layer `li` | function argument | [ch.13 The KV Cache](../05-microgpt-unfolded/13-kv-cache/) |
+| `n_layer`, `n_embd`, `block_size`, `n_head`, `head_dim` | model hyperparameters | `const.py` | [ch.2 The State Dict](../05-microgpt-unfolded/02-state-dict/) |
+| **prefill** / **decode** | the two inference phases | driver loop | [ch.14 Prefill vs Decode](../05-microgpt-unfolded/14-prefill-decode/) |
+| KV cache shape `(2, L, H, T, D)` | the 5D tensor view of the cache | implicit | [ch.17 The Three Axes](../05-microgpt-unfolded/17-kv-axes/) |
+| `n_kv_head`, `group_size` | GQA/MQA sharing factor | (extension) | [ch.18 Grouped-Query Attention](../05-microgpt-unfolded/18-gqa/) |
+| `kv_down`, `d_c`, latent `c` | MLA low-rank cache form | (extension) | [ch.19 Multi-head Latent Attention](../05-microgpt-unfolded/19-mla/) |
+| sliding window `W` | per-layer attention window | (extension) | [ch.20 Sliding-Window Attention](../05-microgpt-unfolded/20-sliding-window/) |
+| `state[li]` for SSM layers | fixed-size recurrent state replacing KV | (extension) | [ch.21 State-Space Hybrids](../05-microgpt-unfolded/21-ssm-hybrids/) |
+
+### What This Means In Practice
+
+When writing a *new* article that touches any of these concepts:
+
+1. **Use the microGPT name on first mention** rather than coining a synonym. Write "the `attn_wk` projection" rather than "the key matrix `W_K`" or "the key weights". If the source paper uses different notation, introduce both: *"the K projection (`attn_wk` in our reference listing)"*.
+2. **Link to the issue 5 primer** the first time a microGPT name appears in the article. Use a sibling-relative link like `[the `attn_wk` projection](../../05-microgpt-unfolded/06-qkv-projections/)` from another issue, or `../06-qkv-projections/` from within issue 5.
+3. **Show the relevant slice of the listing** when the article is talking about one specific line. Copy-paste the 1–4 line excerpt from microGPT verbatim, do *not* rewrite it into a different style. Consistency is the entire value proposition.
+4. **For shape questions, defer to the table in [ch.1 Sixty Lines, One LLM](../05-microgpt-unfolded/01-cold-open/#the-names-you-should-tattoo)**. Don't re-derive `wte` is `vocab_size × n_embd` in every article — point at the canonical table.
+
+### Exception: When NOT To Use microGPT Terms
+
+MicroGPT is intentionally *minimal*. It does not cover:
+- **GLU-family activations** (SwiGLU, GeGLU) — the listing only has `relu`. If you need to discuss gated MLPs, name the gate variables yourself and explicitly note the divergence from the listing.
+- **Rotary or ALiBi positions** — the listing uses additive `wpe`. If you need RoPE, name the rotation parameters yourself.
+- **Multi-query or grouped-query attention** — the listing has `n_head` independent heads. Note when you're describing GQA/MQA explicitly.
+- **Layer-norm variants beyond RMSNorm** — the listing uses `rmsnorm`.
+- **Anything from the training loop** — microGPT is inference-only.
+
+When you cross one of these boundaries, **say so explicitly** in the article: *"microGPT uses a plain additive `wpe`; modern models use rotary position embeddings (RoPE) — see [chapter X] for the substitution."*
 
 ## Primer vs Mainline vs Boss — How To Decide
 
