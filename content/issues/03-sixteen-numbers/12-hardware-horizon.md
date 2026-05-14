@@ -95,10 +95,12 @@ A complete tour of LLM quantization in 2026 would also include:
 
 - **Sparsity** + quantization (Wanda, SparseGPT, 2:4 structured sparsity)
 - **Diffusion-model quantization**, which has different statistics
-- **Quantization-aware training** (QAT), which has had a recent revival
+- **Quantization-aware training** (QAT), which has had a recent revival — the [calibration field guide](../13-calibration-survey/) only sketches it
 - **Mixture-of-experts quantization** challenges (per-expert outliers, activation routing)
 - The **GGUF** format and llama.cpp's K-quant variants in detail
 - Quantization for **multimodal models** and vision encoders
+- True **vector quantization** for LLMs (AQLM and friends — picked up in [Compression's Family Tree](../14-compression-roots/) but not unpacked deeply)
+- **Sink-free training** as the long-term replacement for KV-cache outlier methods (introduced in [Inside K and V](../16-kv-distribution/))
 
 Each is its own issue. The next one in the *LLM Maths Comics* line will pick something else from this list — let me know which one would be most useful to you, and it will be.
 

@@ -1,0 +1,42 @@
+# Schema and conventions: see docs/timelines-schema.md.
+# Five-event cap is enforced — keep it focused.
+
+title   = "Five years of looking inside the KV cache"
+caption = "Each entry is the moment the field <em>noticed</em> a thing about K, V, or attention — not the first paper to propose a fix."
+
+[[events]]
+date  = "2022"
+title = "Outlier dimensions"
+who   = "Dettmers et al. (LLM.int8)"
+body  = "First systematic catalogue of activation outliers in transformers — the upstream cause of everything that follows in K and V."
+kind  = "paper"
+link  = "06-outliers/"
+
+[[events]]
+date  = "Jun 2023"
+title = "K vs V asymmetry"
+who   = "Liu, Wang et al. (KIVI)"
+body  = "K outliers cluster per channel; V outliers cluster per token. Same tensor shape, opposite axes."
+kind  = "paper"
+link  = "15-kv-method-family/"
+
+[[events]]
+date  = "Sep 2023"
+title = "Attention sinks"
+who   = "Xiao et al. (StreamingLLM)"
+body  = "BOS and the first few tokens collect a wildly disproportionate share of attention mass — a learned junk drawer for excess softmax probability."
+kind  = "paper"
+
+[[events]]
+date  = "Apr 2024"
+title = "Massive activations"
+who   = "Sun et al."
+body  = "Specific (token, channel) entries in the residual stream are 10⁵× larger than the median. Unifies the previous two observations: K outliers, V outliers, and attention sinks are all projections of the same massive activations."
+kind  = "paper"
+
+[[events]]
+date  = "2025"
+title = "Sink-free training"
+who   = "Cancedda; follow-ups"
+body  = "Models can be trained without attention sinks if the softmax denominator is modified (softmax-1, softplus). Quality holds; the entire KV-quantization rulebook is up for revision."
+kind  = "paper"

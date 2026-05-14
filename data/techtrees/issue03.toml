@@ -2,52 +2,59 @@
 # This file is the canonical example — copy its structure for new tech trees.
 
 title  = "Tech tree — Sixteen Numbers Walk Into A GPU"
-width  = 1320
-height = 800
+width  = 1500
+height = 920
 node_w = 200
 node_h = 70
 
 # ---------------------------------------------------------------
-# Row 1 (y=80)  — boss capstone: hardware horizon
-# Row 2 (y=220) — boss / mainline destinations
-# Row 3 (y=370) — applied algorithms (mainline narrative)
-# Row 4 (y=520) — foundational primers
-# Row 5 (y=670) — basic quantizers + deepest theory
+# Row 1 (y=80)   — overall capstone (hardware horizon)
+# Row 2 (y=210)  — boss capstones (the two method-family-tree articles)
+# Row 3 (y=380)  — mainline narrative chapters + KV mainline
+# Row 4 (y=540)  — applied / cross-cutting primers
+# Row 5 (y=700)  — theory primers
+# Row 6 (y=850)  — basic quantizers
 # ---------------------------------------------------------------
+
+# ---------- Row 1: overall capstone ----------
 
 [[nodes]]
 id    = "hardware"
 label = "Hardware\nHorizon"
 kind  = "boss"
-x     = 950
+x     = 1100
 y     = 80
 link  = "12-hardware-horizon/"
 sub   = "ch.12"
 
+# ---------- Row 2: two boss capstones ----------
+
 [[nodes]]
 id    = "method-family"
-label = "Method\nFamily Tree"
+label = "Weight Method\nFamily Tree"
 kind  = "boss"
-x     = 560
-y     = 220
+x     = 380
+y     = 210
 link  = "09-method-family-tree/"
 sub   = "ch.9"
 
 [[nodes]]
-id    = "kv-cache"
-label = "KV Cache\nTyranny"
-kind  = "mainline"
-x     = 950
-y     = 220
-link  = "10-kv-cache/"
-sub   = "ch.10"
+id    = "kv-method-family"
+label = "KV Method\nFamily Tree"
+kind  = "boss"
+x     = 1100
+y     = 210
+link  = "15-kv-method-family/"
+sub   = "ch.15"
+
+# ---------- Row 3: mainline narrative + applied ----------
 
 [[nodes]]
 id    = "outliers"
 label = "The 1% That\nRuins Everything"
 kind  = "mainline"
-x     = 160
-y     = 370
+x     = 140
+y     = 380
 link  = "06-outliers/"
 sub   = "ch.6"
 
@@ -55,8 +62,8 @@ sub   = "ch.6"
 id    = "llm-int8"
 label = "Inside\nLLM.int8()"
 kind  = "mainline"
-x     = 380
-y     = 370
+x     = 360
+y     = 380
 link  = "06b-llm-int8-deep/"
 sub   = "ch.6b"
 
@@ -64,62 +71,131 @@ sub   = "ch.6b"
 id    = "brain-surgery"
 label = "Brain Surgery\nReturns"
 kind  = "mainline"
-x     = 620
-y     = 370
+x     = 600
+y     = 380
 link  = "08-brain-surgery/"
 sub   = "ch.8"
 
 [[nodes]]
-id    = "calibration"
-label = "Calibration\n& Blocks"
-kind  = "primer"
-x     = 950
-y     = 370
-link  = "11-calibration-and-blocks/"
-sub   = "ch.11"
+id    = "kv-distribution"
+label = "Inside K and V"
+kind  = "mainline"
+x     = 870
+y     = 380
+link  = "16-kv-distribution/"
+sub   = "ch.16"
 
 [[nodes]]
-id    = "numbers"
-label = "Numbers\nin Boxes"
-kind  = "primer"
-x     = 160
-y     = 520
-link  = "02-numbers-in-boxes/"
-sub   = "ch.2"
+id    = "kv-cache"
+label = "KV Cache\nTyranny"
+kind  = "mainline"
+x     = 1100
+y     = 380
+link  = "10-kv-cache/"
+sub   = "ch.10"
+
+# ---------- Row 4: applied primers / cross-cutting concepts ----------
 
 [[nodes]]
 id    = "shape-weights"
 label = "Geometry\nof Weights"
 kind  = "primer"
-x     = 380
-y     = 520
+x     = 360
+y     = 540
 link  = "05-geometry-of-weights/"
 sub   = "ch.5"
 
 [[nodes]]
-id    = "lloyd-max"
-label = "The Lloyd-Max\nBargain"
+id    = "rotations"
+label = "Rotations:\nThe Anti-Outlier"
 kind  = "primer"
-x     = 620
-y     = 520
-link  = "03-lloyd-max/"
-sub   = "ch.3"
+x     = 600
+y     = 540
+link  = "17-rotations/"
+sub   = "ch.17"
+
+[[nodes]]
+id    = "quantization-axes"
+label = "The Axis\nQuestion"
+kind  = "primer"
+x     = 870
+y     = 540
+link  = "18-quantization-axes/"
+sub   = "ch.18"
+
+[[nodes]]
+id    = "calibration"
+label = "Calibration\n& Blocks"
+kind  = "primer"
+x     = 1100
+y     = 540
+link  = "11-calibration-and-blocks/"
+sub   = "ch.11"
+
+[[nodes]]
+id    = "calibration-survey"
+label = "Calibration\nField Guide"
+kind  = "primer"
+x     = 1340
+y     = 540
+link  = "13-calibration-survey/"
+sub   = "ch.13"
+
+# ---------- Row 5: theory primers ----------
+
+[[nodes]]
+id    = "numbers"
+label = "Numbers\nin Boxes"
+kind  = "primer"
+x     = 140
+y     = 700
+link  = "02-numbers-in-boxes/"
+sub   = "ch.2"
 
 [[nodes]]
 id    = "taylor-hess"
 label = "Taylor &\nHessians"
 kind  = "primer"
-x     = 900
-y     = 520
+x     = 360
+y     = 700
 link  = "07-taylor-and-hessians/"
 sub   = "ch.7"
+
+[[nodes]]
+id    = "lloyd-max"
+label = "The Lloyd-Max\nBargain"
+kind  = "primer"
+x     = 600
+y     = 700
+link  = "03-lloyd-max/"
+sub   = "ch.3"
+
+[[nodes]]
+id    = "rate-distortion"
+label = "Rate-Distortion\nBridge"
+kind  = "primer"
+x     = 870
+y     = 700
+link  = "04-rate-distortion/"
+sub   = "ch.4"
+
+[[nodes]]
+id    = "compression-roots"
+label = "Compression's\nFamily Tree"
+kind  = "primer"
+x     = 1100
+y     = 700
+link  = "14-compression-roots/"
+sub   = "ch.14"
+
+# ---------- Row 6: basic quantizers ----------
 
 [[nodes]]
 id    = "absmax"
 label = "Absmax\nQuantization"
 kind  = "primer"
-x     = 80
-y     = 670
+x     = 140
+y     = 850
 link  = "02a-absmax/"
 sub   = "ch.2a"
 
@@ -127,28 +203,17 @@ sub   = "ch.2a"
 id    = "zero-point"
 label = "Zero-Point\nQuantization"
 kind  = "primer"
-x     = 300
-y     = 670
+x     = 360
+y     = 850
 link  = "02b-zero-point/"
 sub   = "ch.2b"
 
-[[nodes]]
-id    = "rate-distortion"
-label = "Rate-Distortion\nBridge"
-kind  = "primer"
-x     = 620
-y     = 670
-link  = "04-rate-distortion/"
-sub   = "ch.4"
+# =========================================================================
+# Edges — arrows point UPWARD from prerequisite to user
+# =========================================================================
 
-# Edges: prerequisite -> user (arrows point upward in the diagram)
+# ---- Foundations cascade up to theory (row 5/6) ----
 
-# Deepest theory feeds the primers above it
-[[edges]]
-from = "rate-distortion"
-to   = "lloyd-max"
-
-# Basic quantizers feed the outlier story
 [[edges]]
 from = "absmax"
 to   = "outliers"
@@ -165,7 +230,6 @@ to   = "llm-int8"
 from = "zero-point"
 to   = "llm-int8"
 
-# Numbers-in-boxes is the prereq for everything that quantizes
 [[edges]]
 from = "numbers"
 to   = "absmax"
@@ -182,10 +246,29 @@ to   = "kv-cache"
 from = "numbers"
 to   = "hardware"
 
-# Geometry of weights and Lloyd-Max feed outliers
+[[edges]]
+from = "rate-distortion"
+to   = "lloyd-max"
+
+# ---- Theory feeds the new compression-roots primer ----
+
+[[edges]]
+from = "lloyd-max"
+to   = "compression-roots"
+
+[[edges]]
+from = "rate-distortion"
+to   = "compression-roots"
+
+# ---- Theory + geometry feed mainlines ----
+
 [[edges]]
 from = "shape-weights"
 to   = "outliers"
+
+[[edges]]
+from = "shape-weights"
+to   = "kv-distribution"
 
 [[edges]]
 from = "lloyd-max"
@@ -199,10 +282,43 @@ to   = "calibration"
 from = "taylor-hess"
 to   = "brain-surgery"
 
-# Mainline → boss capstones
+# ---- Cross-cutting primers (row 4) ----
+
+[[edges]]
+from = "shape-weights"
+to   = "rotations"
+
+[[edges]]
+from = "shape-weights"
+to   = "quantization-axes"
+
+[[edges]]
+from = "calibration"
+to   = "calibration-survey"
+
+[[edges]]
+from = "compression-roots"
+to   = "calibration-survey"
+
+[[edges]]
+from = "taylor-hess"
+to   = "calibration-survey"
+
+[[edges]]
+from = "quantization-axes"
+to   = "calibration"
+
+# ---- Mainline narrative cascade ----
+
 [[edges]]
 from = "outliers"
 to   = "llm-int8"
+
+[[edges]]
+from = "kv-distribution"
+to   = "kv-cache"
+
+# ---- Mainlines + primers feed the boss capstones ----
 
 [[edges]]
 from = "llm-int8"
@@ -217,18 +333,55 @@ from = "brain-surgery"
 to   = "method-family"
 
 [[edges]]
-from = "calibration"
+from = "calibration-survey"
 to   = "method-family"
+
+[[edges]]
+from = "rotations"
+to   = "method-family"
+
+[[edges]]
+from = "quantization-axes"
+to   = "method-family"
+
+[[edges]]
+from = "kv-cache"
+to   = "kv-method-family"
+
+[[edges]]
+from = "kv-distribution"
+to   = "kv-method-family"
+
+[[edges]]
+from = "calibration-survey"
+to   = "kv-method-family"
+
+[[edges]]
+from = "rotations"
+to   = "kv-method-family"
+
+[[edges]]
+from = "quantization-axes"
+to   = "kv-method-family"
+
+# ---- Boss capstones feed the overall hardware capstone ----
 
 [[edges]]
 from = "method-family"
 to   = "hardware"
 
 [[edges]]
+from = "kv-method-family"
+to   = "hardware"
+
+[[edges]]
 from = "kv-cache"
 to   = "hardware"
 
+# =========================================================================
 # Legend
+# =========================================================================
+
 [[legend]]
 kind  = "boss"
 label = "Boss capstone"
@@ -241,4 +394,4 @@ label = "Mainline narrative"
 kind  = "primer"
 label = "Tutorial primer"
 
-caption = 'Arrows point <em>upward</em> from prerequisite to user. Read the cold-open (<a href="01-cold-open/">ch.1</a>) first — it sets the mystery this tree resolves.'
+caption = 'Arrows point <em>upward</em> from prerequisite to user. Read the cold-open (<a href="01-cold-open/">ch.1</a>) first — it sets the mystery this tree resolves. The right column tracks the KV-cache thread; the left column tracks weight quantization; the cross-cutting primers in the middle (rotations, axes, calibration) feed both bosses.'

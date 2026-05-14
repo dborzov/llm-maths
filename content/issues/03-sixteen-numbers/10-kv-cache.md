@@ -146,4 +146,4 @@ When weights were the problem, you got [LLM.int8](../06-outliers/), [GPTQ](../08
 
 But there's an even larger move just over the horizon: **what if the hardware itself supported KV-cache-native low-precision arithmetic?** What if you could do attention math directly in FP8 or FP4 without the dequantize-then-compute dance? That's the territory of the next-generation silicon, and the closing chapter of this issue.
 
-**Continue to** → [Calibration & Blocks](../11-calibration-and-blocks/) for the underlying machinery — how block-wise scales make all of this work — then onward to the hardware finale.
+**Continue to** → [Inside K and V](../16-kv-distribution/) for the deep distribution-detective story behind the K-channel / V-token asymmetry — the empirical discovery that drives every entry in [The KV Method Family Tree](../15-kv-method-family/). Then onwards to the underlying machinery in [Calibration & Blocks](../11-calibration-and-blocks/) and the hardware finale.

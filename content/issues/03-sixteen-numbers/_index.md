@@ -23,7 +23,9 @@ The answer turns out to involve **a 1992 paper on brain surgery**, **a 1957 Bell
 
 Start with the [cold open](01-cold-open/) — it sets the stakes and introduces the cast. After that, the **tech tree** below is the table of contents. Each node is an article. Arrows show which articles build on which: if you follow them upward, you walk from the deepest mathematical foundations to the modern algorithms that exploit them.
 
-If you already know IEEE 754 and rate-distortion theory, skip the primers and stay on the mainline (pink nodes). If you want the full James Burke treatment — connections between Bell Labs and your iPhone, between 1990s pruning theory and DeepSeek — read everything in numerical order.
+The tree has two storey-wide capstones below the hardware finale. On the left, the [**weight method family tree**](09-method-family-tree/) gathers GPTQ, AWQ, SmoothQuant, QLoRA/NF4, HQQ, LLM.int8 onto one shelf. On the right, the [**KV-cache method family tree**](15-kv-method-family/) does the same for the KV side: KIVI, KVQuant, GEAR, ATOM, QServe, KVTuner, TurboQuant. Three cross-cutting primers in the middle ([rotations](17-rotations/), [quantization axes](18-quantization-axes/), and the [calibration field guide](13-calibration-survey/)) feed both bosses — they are the concepts that show up in every method, on either side.
+
+If you already know IEEE 754 and rate-distortion theory, skip the primers and stay on the mainline (pink nodes). If you want the full James Burke treatment — connections between Bell Labs, your iPhone, 1990s pruning theory, and DeepSeek — read everything in numerical order.
 
 {{< techtree name="issue03" >}}
 
@@ -37,7 +39,11 @@ By the end of this issue you should be able to answer, with confidence and napki
 - Why "just round the weights to 4 bits" *breaks* an LLM — and what the **1%** of activations doing the breaking actually looks like.
 - How [**LLM.int8()**](06b-llm-int8-deep/) routes outliers through a separate FP16 path, what each line of its three-step recipe does, and how to predict the speed cost on your hardware.
 - How a 1992 paper on **pruning neural networks** silently became the workhorse algorithm of LLM quantization in 2022.
-- Why **K** and **V** in your transformer's KV cache need *different* quantization schemes.
+- Why **K** and **V** in your transformer's KV cache need *different* quantization schemes — and how the same root cause (massive activations in the residual stream) explains the K-channel outliers, the V-token outliers, *and* the BOS attention sink.
+- The full menagerie of **KV-cache quantization methods** (KIVI, KVQuant, GEAR, ATOM, QServe, TurboQuant) and which one to reach for under what constraint.
+- The five-bucket taxonomy of **calibration**: data-free, statistics-only, second-order, gradient-based, full QAT — and why every single one has a 1970s–80s analogue in classical speech and image codec engineering.
+- The **rotation trick** (Hadamard transforms used by QuIP, QuaRot, SpinQuant, TurboQuant) — why orthogonal rotations spread outliers uniformly, and the algebraic identity that makes it free at inference time.
+- The **axis question** (per-tensor, per-row, per-channel, per-token, per-block) and the rule of thumb that decides which axis is right for which tensor.
 - What the **OCP microscaling** standard is, why **NVIDIA Blackwell** bet the farm on it, and what it means that "FP4" is now a number format your GPU has hardware support for.
 
 ---

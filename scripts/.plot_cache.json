@@ -20,5 +20,22 @@
   "issues/03-sixteen-numbers/07-taylor-and-hessians/hessian-curvature": "a5c5858dc410366b",
   "issues/03-sixteen-numbers/08-brain-surgery/gptq-vs-rtn": "7543368d007d9e73",
   "issues/03-sixteen-numbers/10-kv-cache/kv-asymmetry": "7bd6ba0c5c47f522",
-  "issues/03-sixteen-numbers/11-calibration-and-blocks/block-vs-row-scale": "3a4f8661145bce4d"
+  "issues/03-sixteen-numbers/11-calibration-and-blocks/block-vs-row-scale": "3a4f8661145bce4d",
+  "issues/03-sixteen-numbers/13-calibration-survey/awq-stat-grid": "05e7631a25f7ce46",
+  "issues/03-sixteen-numbers/13-calibration-survey/calib-cost-quality": "56ab00e230a217ee",
+  "issues/03-sixteen-numbers/13-calibration-survey/calib-size-saturation": "69bed675e7c4beb6",
+  "issues/03-sixteen-numbers/13-calibration-survey/hqq-vs-rtn-toy": "40c7a8dae0ed5053",
+  "issues/03-sixteen-numbers/13-calibration-survey/learned-vs-fixed-scale": "0fb1a7d41b613952",
+  "issues/03-sixteen-numbers/14-compression-roots/dpcm-residual-shrinks": "dfb3897ace5773be",
+  "issues/03-sixteen-numbers/14-compression-roots/generations-radial": "1349672f732d5abe",
+  "issues/03-sixteen-numbers/14-compression-roots/pcm-vs-absmax": "206e9a89821ff250",
+  "issues/03-sixteen-numbers/14-compression-roots/vq-vs-scalar": "62f65779289e2655",
+  "issues/03-sixteen-numbers/15-kv-method-family/kivi-axis-recap": "1d044147bee5c337",
+  "issues/03-sixteen-numbers/16-kv-distribution/attention-sink": "63d924987e33ff2f",
+  "issues/03-sixteen-numbers/16-kv-distribution/kivi-real-asymmetry": "1719e73fabf67a8a",
+  "issues/03-sixteen-numbers/16-kv-distribution/massive-activation-cascade": "df13330959c230a9",
+  "issues/03-sixteen-numbers/16-kv-distribution/naive-kv-expectation": "21666643f28eca29",
+  "issues/03-sixteen-numbers/17-rotations/hadamard-spread": "13c241a9b6a95651",
+  "issues/03-sixteen-numbers/17-rotations/quarot-flatten": "f0d2fd7323cf0748",
+  "issues/03-sixteen-numbers/18-quantization-axes/six-axes": "ca7583b1604182a8"
 }

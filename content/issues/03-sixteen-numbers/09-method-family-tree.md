@@ -173,4 +173,4 @@ A practical decision tree if you're about to quantize a model:
 
 Most users will, in practice, pick the format their inference engine supports — **GGUF** for `llama.cpp`-based stacks, **GPTQ** or **AWQ** for `vLLM` and TensorRT, **bitsandbytes** for `transformers`-native loading. The engine choice has come to matter as much as the algorithm.
 
-**Continue to** → [KV Cache Tyranny](../10-kv-cache/) for the other half of the modern memory bill.
+**Continue to** → [KV Cache Tyranny](../10-kv-cache/) for the other half of the modern memory bill — or jump straight to [The KV Method Family Tree](../15-kv-method-family/) for the analogous shelf of KV-side methods (KIVI, KVQuant, GEAR, ATOM, QServe, KVTuner, TurboQuant), which complements this article one-for-one.
