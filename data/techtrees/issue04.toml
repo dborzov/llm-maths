@@ -1,0 +1,287 @@
+# Schema and conventions: see docs/techtrees-schema.md.
+# Canonical example: data/techtrees/issue03.toml.
+
+title  = "Tech tree — The Heatmap That Lied"
+width  = 1500
+height = 940
+node_w = 200
+node_h = 70
+
+# ---------------------------------------------------------------
+# Row 1 (y=80)   — boss capstone (the 2026 layered eval stack)
+# Row 2 (y=240)  — mainline narrative, chronological left → right
+# Row 3 (y=400)  — cross-cutting primers feeding mainlines
+# Row 4 (y=570)  — theory primers feeding cross-cutting + mainlines
+# Row 5 (y=720)  — mid-foundational primers
+# Row 6 (y=860)  — the deepest foundation
+# Arrows point UPWARD from prerequisite to user.
+# ---------------------------------------------------------------
+
+# ---------- Row 1: boss ----------
+
+[[nodes]]
+id    = "eval-stack-2026"
+label = "The 2026\nLayered Stack"
+kind  = "boss"
+x     = 800
+y     = 80
+link  = "16-eval-stack-2026/"
+sub   = "ch.16"
+
+# ---------- Row 2: mainline narrative ----------
+
+[[nodes]]
+id    = "cold-open"
+label = "The Heatmap\nThat Lied"
+kind  = "mainline"
+x     = 140
+y     = 240
+link  = "01-cold-open/"
+sub   = "ch.1"
+
+[[nodes]]
+id    = "saturation"
+label = "When Everyone\nScored 99"
+kind  = "mainline"
+x     = 380
+y     = 240
+link  = "05-saturation/"
+sub   = "ch.5"
+
+[[nodes]]
+id    = "needle-to-graph"
+label = "One Pass\nIsn't Enough"
+kind  = "mainline"
+x     = 620
+y     = 240
+link  = "08-needle-to-graph/"
+sub   = "ch.8"
+
+[[nodes]]
+id    = "context-rot-fix"
+label = "The 4× Jump"
+kind  = "mainline"
+x     = 860
+y     = 240
+link  = "11-context-rot-fix/"
+sub   = "ch.11"
+
+[[nodes]]
+id    = "agentic-turn"
+label = "A Day's Worth\nof Work"
+kind  = "mainline"
+x     = 1100
+y     = 240
+link  = "14-agentic-turn/"
+sub   = "ch.14"
+
+# ---------- Row 3: cross-cutting primers ----------
+
+[[nodes]]
+id    = "latent-structure"
+label = "Vodrahalli's\nChisel"
+kind  = "primer"
+x     = 500
+y     = 400
+link  = "09-latent-structure/"
+sub   = "ch.9"
+
+[[nodes]]
+id    = "graph-traversal"
+label = "BFS as\nReasoning"
+kind  = "primer"
+x     = 700
+y     = 400
+link  = "10-graph-traversal/"
+sub   = "ch.10"
+
+[[nodes]]
+id    = "contamination-drift"
+label = "Leakage &\nDrift"
+kind  = "primer"
+x     = 1100
+y     = 400
+link  = "15-contamination-drift/"
+sub   = "ch.15"
+
+[[nodes]]
+id    = "synth-vs-real"
+label = "Synthetic vs\nRealistic"
+kind  = "primer"
+x     = 1340
+y     = 400
+link  = "13-synth-vs-real/"
+sub   = "ch.13"
+
+# ---------- Row 4: theory primers ----------
+
+[[nodes]]
+id    = "retrieval-vs-reasoning"
+label = "Scan vs\nThink"
+kind  = "primer"
+x     = 380
+y     = 570
+link  = "04-retrieval-vs-reasoning/"
+sub   = "ch.4"
+
+[[nodes]]
+id    = "measurement-saturation"
+label = "Goodhart's\nCeiling"
+kind  = "primer"
+x     = 200
+y     = 570
+link  = "06-measurement-saturation/"
+sub   = "ch.6"
+
+[[nodes]]
+id    = "context-rot"
+label = "The Chroma\nMeasurement"
+kind  = "primer"
+x     = 860
+y     = 570
+link  = "12-context-rot/"
+sub   = "ch.12"
+
+# ---------- Row 5: mid-foundational primers ----------
+
+[[nodes]]
+id    = "niah-mechanics"
+label = "Needle in a\nHaystack"
+kind  = "primer"
+x     = 140
+y     = 720
+link  = "03-niah-mechanics/"
+sub   = "ch.3"
+
+[[nodes]]
+id    = "lost-in-the-middle"
+label = "The U-Curve"
+kind  = "primer"
+x     = 1100
+y     = 720
+link  = "07-lost-in-the-middle/"
+sub   = "ch.7"
+
+# ---------- Row 6: deepest foundation ----------
+
+[[nodes]]
+id    = "context-window"
+label = "What 1M Tokens\nActually Costs"
+kind  = "primer"
+x     = 140
+y     = 860
+link  = "02-context-window/"
+sub   = "ch.2"
+
+# =========================================================================
+# Edges — arrows point UPWARD from prerequisite to user
+# =========================================================================
+
+# Foundation cascade
+[[edges]]
+from = "context-window"
+to   = "niah-mechanics"
+
+[[edges]]
+from = "niah-mechanics"
+to   = "cold-open"
+
+[[edges]]
+from = "niah-mechanics"
+to   = "retrieval-vs-reasoning"
+
+# Lost-in-the-middle feeds the context-rot measurement
+[[edges]]
+from = "lost-in-the-middle"
+to   = "context-rot"
+
+# Theory primers feed the saturation crisis
+[[edges]]
+from = "retrieval-vs-reasoning"
+to   = "saturation"
+
+[[edges]]
+from = "measurement-saturation"
+to   = "saturation"
+
+[[edges]]
+from = "context-rot"
+to   = "saturation"
+
+[[edges]]
+from = "latent-structure"
+to   = "saturation"
+
+# Latent structure + graph traversal feed the needle-to-graph pivot
+[[edges]]
+from = "latent-structure"
+to   = "needle-to-graph"
+
+[[edges]]
+from = "graph-traversal"
+to   = "needle-to-graph"
+
+[[edges]]
+from = "retrieval-vs-reasoning"
+to   = "needle-to-graph"
+
+# Mainline cascade into the context-rot-fix chapter
+[[edges]]
+from = "context-rot"
+to   = "context-rot-fix"
+
+[[edges]]
+from = "saturation"
+to   = "context-rot-fix"
+
+# Mainline cascade into the agentic turn
+[[edges]]
+from = "needle-to-graph"
+to   = "agentic-turn"
+
+[[edges]]
+from = "context-rot-fix"
+to   = "agentic-turn"
+
+[[edges]]
+from = "synth-vs-real"
+to   = "agentic-turn"
+
+[[edges]]
+from = "contamination-drift"
+to   = "agentic-turn"
+
+# Boss feeders
+[[edges]]
+from = "agentic-turn"
+to   = "eval-stack-2026"
+
+[[edges]]
+from = "saturation"
+to   = "eval-stack-2026"
+
+[[edges]]
+from = "contamination-drift"
+to   = "eval-stack-2026"
+
+[[edges]]
+from = "synth-vs-real"
+to   = "eval-stack-2026"
+
+# =========================================================================
+# Legend
+# =========================================================================
+
+[[legend]]
+kind  = "boss"
+label = "Boss capstone"
+
+[[legend]]
+kind  = "mainline"
+label = "Mainline narrative"
+
+[[legend]]
+kind  = "primer"
+label = "Tutorial primer"
+
+caption = 'Arrows point <em>upward</em> from prerequisite to user. Read the cold-open (<a href="01-cold-open/">ch.1</a>) first — the 2023 NIAH heatmap from Greg Kamradt sets the mystery. The five pink mainline chapters trace the story chronologically left → right (2023 → 2026). Cream primers below each unpack one concept the mainlines lean on.'

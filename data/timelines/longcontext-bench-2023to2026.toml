@@ -1,0 +1,45 @@
+# Schema, conventions, and the 5-event cap rule: see docs/timelines-schema.md.
+# Five turning points of the long-context-benchmark wars.
+
+title   = "Five Turning Points — How We Learned To Measure Long Context"
+caption = "Five moments the field changed its mind about what a benchmark even is. <em>Dozens of benchmarks omitted.</em>"
+
+[[events]]
+date  = "Nov 2023"
+title = "Greg Kamradt posts NIAH"
+who   = "Greg Kamradt (independent)"
+body  = "Paul Graham essays + one out-of-place sentence about Dolores Park. The green/red heatmap goes viral within weeks and becomes the industry's first shared long-context yardstick."
+kind  = "paper"
+link  = "03-niah-mechanics/"
+
+[[events]]
+date  = "Apr 2024"
+title = "RULER calls NIAH's bluff"
+who   = "Hsieh, Sun et al. (NVIDIA)"
+body  = "RULER expands NIAH to multi-hop tracing and aggregation, and shows that only half of 17 frontier models clear 'satisfactory' at 32K — even when they're all 99% on vanilla NIAH at the same length."
+kind  = "paper"
+link  = "05-saturation/"
+
+[[events]]
+date  = "Sep 2024"
+title = "Michelangelo chisels the field"
+who   = "Vodrahalli et al. (Google DeepMind)"
+body  = "The Latent Structure Queries framework lands: tasks that force the model to chisel away irrelevant context to expose the real structure. MRCR is born here, alongside Latent List and IDK."
+kind  = "paper"
+link  = "09-latent-structure/"
+
+[[events]]
+date  = "Apr 2025"
+title = "GPT-4.1 ships GraphWalks"
+who   = "OpenAI"
+body  = "OpenAI publishes GraphWalks alongside the model release and spells out the reframe: MRCR can be solved by one linear pass through the prompt; GraphWalks demands BFS through multiple positions and cannot."
+kind  = "release"
+link  = "08-needle-to-graph/"
+
+[[events]]
+date  = "Feb 2026"
+title = "Opus 4.6 fixes 'context rot'"
+who   = "Anthropic"
+body  = "MRCR v2 at 1M jumps from Sonnet 4.5's 18.5% to Opus 4.6's 76% — a 4× leap Anthropic publicly credits to fixing 'context rot'. The phrase enters the practitioner lexicon."
+kind  = "release"
+link  = "11-context-rot-fix/"
