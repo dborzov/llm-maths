@@ -11,7 +11,7 @@ issue: 3
 weight: 10
 techKind: mainline
 techNode: cold-open
-header: default.png
+header: default.webp
 ---
 
 ## A 350-Gigabyte Brain

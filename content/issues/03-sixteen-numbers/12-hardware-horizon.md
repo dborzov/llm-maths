@@ -11,7 +11,7 @@ issue: 3
 weight: 120
 techKind: boss
 techNode: hardware
-header: default.png
+header: default.webp
 ---
 
 ## Numbers Become Hardware

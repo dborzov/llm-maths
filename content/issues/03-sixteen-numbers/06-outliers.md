@@ -11,7 +11,7 @@ issue: 3
 weight: 60
 techKind: mainline
 techNode: outliers
-header: default.png
+header: default.webp
 ---
 
 ## Saskatchewan To Seattle

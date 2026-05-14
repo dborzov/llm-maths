@@ -11,7 +11,7 @@ issue: 3
 weight: 20
 techKind: primer
 techNode: numbers
-header: default.png
+header: default.webp
 ---
 
 ## The Berkeley Cellar

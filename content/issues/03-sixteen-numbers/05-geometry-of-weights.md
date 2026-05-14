@@ -11,7 +11,7 @@ issue: 3
 weight: 50
 techKind: primer
 techNode: shape-weights
-header: default.png
+header: default.webp
 ---
 
 ## What Are You Actually Quantizing?

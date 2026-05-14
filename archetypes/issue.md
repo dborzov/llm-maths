@@ -5,7 +5,7 @@ issue:
 layout: issue-cover
 theme: cream
 math: false
-header: default.png
+header: default.webp
 date: {{ .Date }}
 ---
 

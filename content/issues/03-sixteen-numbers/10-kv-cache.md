@@ -11,7 +11,7 @@ issue: 3
 weight: 100
 techKind: mainline
 techNode: kv-cache
-header: default.png
+header: default.webp
 ---
 
 ## What Happens After You Win

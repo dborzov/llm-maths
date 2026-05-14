@@ -115,7 +115,7 @@ issue: 3                # the issue number this article belongs to
 weight: 10              # ordering within the issue (steps of 10 — leave gaps)
 techKind: primer        # mainline | primer | boss | external
 techNode: numbers       # id matching the tech tree node in data/techtrees/issueNN.toml
-header: default.png     # optional; defaults to header-illustrations/default.png
+header: default.webp    # optional; defaults to header-illustrations/default.webp — see "Header Illustrations" below
 ---
 ```
 
@@ -133,7 +133,7 @@ issue: 3
 layout: issue-cover     # tells Hugo to use the issue-cover layout
 theme: cream
 math: false             # cover usually has no KaTeX
-header: default.png     # optional; large illustration on the cover
+header: default.webp    # optional; large illustration on the cover — see "Header Illustrations" below
 ---
 ```
 
@@ -141,6 +141,34 @@ The body of `_index.md` should:
 1. Open with a few paragraphs setting up the mystery / cold-open framing.
 2. Embed the tech-tree graph via `{{< techtree name="issueNN" >}}`.
 3. Optionally end with a short reading-order note. The article list is rendered automatically below.
+
+## Header Illustrations
+
+Every article and issue cover gets a banner illustration rendered at the top by the `single.html` / `issue-cover.html` templates. The file referenced by the `header:` front-matter field lives at `static/header-illustrations/<name>`.
+
+**The convention is strict** so the repo stays small and pages stay fast:
+
+| Property | Value |
+|---|---|
+| **Format** | WebP (lossy VP8). No PNG, no JPEG — they're 5–60× larger at the same visual quality. |
+| **Max width** | 1600 px (height scales to preserve aspect ratio). |
+| **Preferred aspect** | ~8:3 (e.g. 1600×600) — the comic-strip banner look. |
+| **Target size** | <150 KB. Hard cap 300 KB. |
+| **Metadata** | Stripped. |
+| **Source-of-truth originals** | Keep the high-res PNG outside `static/` (e.g. in `raw-sort-me/<slug>/`, gitignored) — only the optimized `.webp` is committed. |
+
+The canonical encoding command is:
+
+```bash
+convert <source.png> \
+  -resize 1600x -strip \
+  -define webp:lossless=false -define webp:method=6 \
+  static/header-illustrations/<slug>.webp
+```
+
+Naming: `<slug>.webp` (e.g. `lloyd-max.webp`). The fallback `default.webp` is used whenever an article's front matter omits `header:`. Existing examples: `static/header-illustrations/{default,lloyd-max,word2vec}.webp`.
+
+If a converted file exceeds 300 KB, lower the resize width to 1200 px before raising compression — visual fidelity matters more than the last 50 KB.
 
 ## The Tech Tree Widget (Reusable)
 
@@ -241,7 +269,7 @@ themes/almanac/                   → custom Hugo theme
   layouts/shortcodes/timeline.html          → timeline widget
 static/js/fold.js                 → auto-wraps H2 sections in <details>
 static/js/toc.js                  → TOC scroll-spy
-static/header-illustrations/      → article header images
+static/header-illustrations/      → article header images (always .webp, ≤1600px wide, ≤300KB — see "Header Illustrations")
 static/plots/                     → generated PNGs (gitignored)
 scripts/run_plots.py              → pre-build pyplot executor
 scripts/new_issue.py              → scaffold new issues / articles

@@ -35,7 +35,7 @@
 
       <h1 class="article-title">{{ .Title }}</h1>
 
-      {{ $headerImg := "header-illustrations/default.png" }}
+      {{ $headerImg := "header-illustrations/default.webp" }}
       {{ with .Params.header }}{{ $headerImg = printf "header-illustrations/%s" . }}{{ end }}
       <div class="article-header-illustration">
         <img src="{{ $headerImg | relURL }}" alt="{{ .Title }}">

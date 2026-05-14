@@ -11,7 +11,7 @@ issue:
 weight: 10
 techKind: primer
 techNode:
-header: default.png
+header: default.webp
 ---
 
 ## [Open With A Human Moment]

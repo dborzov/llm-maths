@@ -11,7 +11,7 @@ issue: 3
 weight: 30
 techKind: primer
 techNode: lloyd-max
-header: default.png
+header: lloyd-max.webp
 ---
 
 ## Murray Hill, March 1957

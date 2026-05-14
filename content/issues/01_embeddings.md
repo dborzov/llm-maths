@@ -4,7 +4,7 @@ description: "How Mikolov's 2013 breakthrough replaced brittle one-hot vectors w
 topics: [embeddings, representations]
 tags: [word2vec, numpy, linear-algebra]
 theme: cream
-header: word2vec.png
+header: word2vec.webp
 math: true
 draft: false
 date: 2026-04-01T09:00:00-04:00

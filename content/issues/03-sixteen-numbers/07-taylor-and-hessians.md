@@ -11,7 +11,7 @@ issue: 3
 weight: 70
 techKind: primer
 techNode: taylor-hess
-header: default.png
+header: default.webp
 ---
 
 ## What If We Just Rounded?
