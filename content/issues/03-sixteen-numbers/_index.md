@@ -32,8 +32,10 @@ If you already know IEEE 754 and rate-distortion theory, skip the primers and st
 By the end of this issue you should be able to answer, with confidence and napkin math:
 
 - Why FP16 is *not* simply "half of FP32" but a fundamentally different number system.
+- The exact arithmetic of **absmax** quantization, **zero-point** quantization, and why each one is the default for different tensor shapes.
 - What the **Lloyd-Max** bargain is, and why nobody actually uses uniform quantization for anything that matters.
 - Why "just round the weights to 4 bits" *breaks* an LLM — and what the **1%** of activations doing the breaking actually looks like.
+- How [**LLM.int8()**](06b-llm-int8-deep/) routes outliers through a separate FP16 path, what each line of its three-step recipe does, and how to predict the speed cost on your hardware.
 - How a 1992 paper on **pruning neural networks** silently became the workhorse algorithm of LLM quantization in 2022.
 - Why **K** and **V** in your transformer's KV cache need *different* quantization schemes.
 - What the **OCP microscaling** standard is, why **NVIDIA Blackwell** bet the farm on it, and what it means that "FP4" is now a number format your GPU has hardware support for.

@@ -28,13 +28,13 @@ What followed is one of the cleanest examples of empirical detective work in mod
 
 ## What Naïve INT8 Does
 
-Standard 8-bit quantization works like this. For a weight matrix $W$:
+Standard 8-bit quantization works like this — the full primer is at [Absmax Quantization](../02a-absmax/), but in one paragraph: for a weight matrix $W$,
 
 1. Find the largest absolute value in the matrix: $s = \max |W_{ij}|$.
 2. Scale to fit in $[-127, 127]$: $\tilde{W}_{ij} = \text{round}(127 \cdot W_{ij} / s)$.
 3. To dequantize: $W_{ij} \approx \tilde{W}_{ij} \cdot s / 127$.
 
-This is **per-tensor symmetric quantization**. It works fine on a CNN. It works fine on a small transformer. **On OPT-6.7B, it suddenly stops working.**
+This is **per-tensor symmetric quantization**, also known as absmax. It works fine on a CNN. It works fine on a small transformer. **On OPT-6.7B, it suddenly stops working.** The reason — as we will see below — is not a *quantization* problem in the abstract sense. It is a problem about the *distribution of activations* that emerges only when transformers cross a particular scale threshold. Below that threshold, every activation is well-behaved Gaussian noise, and absmax happily reduces it to INT8 with $\Delta/2$ error per value. Above the threshold, six out of twelve thousand hidden dimensions develop magnitudes 50× larger than everything else, and the whole scheme falls apart.
 
 ```pyplot {id="naive-quant-error" caption="Naïve per-tensor INT8 quantization on synthetic outlier-containing data. The scale is dominated by the outliers, so the bulk of values gets crushed."}
 np.random.seed(42)
@@ -76,6 +76,173 @@ plt.tight_layout()
 The outliers eat the entire dynamic range. With max-value scaling, the gap between adjacent INT8 levels is $s/127$, which for our synthetic case is around $0.06$. Most weights have magnitude around $0.1$ — barely two quantization steps away from zero. We've gone from a real number to one of three values: $-0.06$, $0$, or $+0.06$. That's not enough resolution to do anything useful.
 
 This is the mechanism. **In the presence of outliers, max-based scaling makes the bulk of the data unrepresentable.**
+
+### Order Of Magnitude: How Bad Is It?
+
+Let us do the napkin math. For a Gaussian tensor with standard deviation $\sigma_\text{bulk}$ and a single rare outlier of magnitude $M$, the absmax $s \approx M$ for any reasonable $M / \sigma_\text{bulk}$. The INT8 step size $\Delta = s/127 \approx M/127$. The number of distinct integer codes that the bulk distribution actually touches — call it the **effective resolution** — is roughly
+
+$$
+R \;\approx\; \frac{6\sigma_\text{bulk}}{\Delta} \;=\; \frac{6 \cdot 127 \cdot \sigma_\text{bulk}}{M} \;=\; \frac{762 \, \sigma_\text{bulk}}{M}.
+$$
+
+Concrete regimes from real transformers:
+
+| Model | $\sigma_\text{bulk}$ | $M$ | Effective codes | Effective bits |
+|---|---|---|---|---|
+| GPT-2 (125M, pre-emergence) | 0.5 | 3.0 | $\approx 127$ | 7.0 |
+| GPT-Neo 1.3B | 0.3 | 8 | $\approx 29$ | 4.8 |
+| OPT-6.7B (just past phase shift) | 0.2 | 18 | $\approx 8.5$ | 3.1 |
+| OPT-13B | 0.15 | 50 | $\approx 2.3$ | **1.2** |
+| OPT-66B | 0.1 | 95 | $\approx 0.8$ | **near zero** |
+
+The last column is the bit you should engrave somewhere. At OPT-66B scale, per-tensor INT8 absmax delivers **less than one bit of information about the bulk activation**. The transformer is being asked to do FFN matmuls where 99% of the inputs are routed through what is essentially a ternary $\{-1, 0, +1\}$ representation. Of course it collapses. The question is not "why does it collapse"; the question is "why does it not collapse *worse*."
+
+Watch the same calculation in real time. The widget below lets you slide outlier magnitude and bulk std and reads off the effective bits.
+
+<div class="resolution-widget" data-widget="resolution">
+  <div class="resolution-widget__controls">
+    <label class="resolution-widget__label">
+      <span>Bulk std σ</span>
+      <input type="range" min="0.01" max="2" step="0.01" value="0.15" data-control="sigma">
+      <output data-output="sigma">0.15</output>
+    </label>
+    <label class="resolution-widget__label">
+      <span>Outlier magnitude M</span>
+      <input type="range" min="0.5" max="200" step="0.5" value="50" data-control="M">
+      <output data-output="M">50</output>
+    </label>
+    <label class="resolution-widget__label">
+      <span>Bit width</span>
+      <select data-control="bits">
+        <option value="4">INT4</option>
+        <option value="8" selected>INT8</option>
+        <option value="16">FP16-as-int (range only)</option>
+      </select>
+    </label>
+  </div>
+  <div class="resolution-widget__bars" data-bars></div>
+  <div class="resolution-widget__readout" data-readout></div>
+</div>
+
+<style>
+.resolution-widget {
+  border: 3px solid #1A1A1A;
+  background: #007A7A;
+  color: #FDF5E6;
+  box-shadow: 4px 4px 0 #1A1A1A;
+  padding: 1rem 1.1rem 1.2rem;
+  margin: 1.5rem 0;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+}
+.resolution-widget__controls {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8rem 1rem;
+  margin-bottom: 0.8rem;
+}
+@media (max-width: 600px) { .resolution-widget__controls { grid-template-columns: 1fr; } }
+.resolution-widget__label {
+  display: flex; flex-direction: column; gap: 0.25rem;
+  font-size: 0.85rem; font-weight: 600;
+}
+.resolution-widget__label input[type="range"] { accent-color: #FFD700; }
+.resolution-widget__label select {
+  border: 2px solid #1A1A1A; padding: 0.2rem 0.4rem;
+  background: #FDF5E6; color: #1A1A1A; font: inherit;
+}
+.resolution-widget__label output {
+  font-variant-numeric: tabular-nums; font-weight: 700; color: #FFD700;
+}
+.resolution-widget__bars {
+  display: grid; gap: 0.4rem;
+  background: #1A1A1A; padding: 0.6rem;
+  border: 2px solid #1A1A1A;
+}
+.resolution-widget__bar {
+  display: grid; grid-template-columns: 12rem 1fr 6rem;
+  align-items: center; gap: 0.6rem;
+  font-family: 'Space Mono', monospace; font-size: 0.8rem;
+}
+.resolution-widget__bar-fill {
+  background: linear-gradient(90deg, #FF8C00 0%, #FFD700 100%);
+  height: 16px;
+  border: 1px solid #FDF5E6;
+  min-width: 1px;
+}
+.resolution-widget__readout {
+  margin-top: 0.6rem;
+  background: #1A1A1A; color: #FFD700;
+  padding: 0.5rem 0.8rem;
+  white-space: pre-wrap;
+  font-family: 'Space Mono', ui-monospace, monospace;
+  font-size: 0.85rem; line-height: 1.6;
+}
+</style>
+<script>
+(function() {
+  function init(widget) {
+    if (widget.dataset.bound) return;
+    widget.dataset.bound = '1';
+    const sIn = widget.querySelector('[data-control="sigma"]');
+    const mIn = widget.querySelector('[data-control="M"]');
+    const bIn = widget.querySelector('[data-control="bits"]');
+    const sO  = widget.querySelector('[data-output="sigma"]');
+    const mO  = widget.querySelector('[data-output="M"]');
+    const bars= widget.querySelector('[data-bars]');
+    const out = widget.querySelector('[data-readout]');
+
+    function render() {
+      const sigma = parseFloat(sIn.value);
+      const M     = parseFloat(mIn.value);
+      const bits  = parseInt(bIn.value, 10);
+      sO.value = sigma.toFixed(2);
+      mO.value = M.toFixed(1);
+
+      const qmax = (1 << (bits - 1)) - 1;
+      const levels = qmax * 2 + 1;
+      const absmaxV = Math.max(M, 4 * sigma);
+      const step    = absmaxV / qmax;
+      const eff     = (6 * sigma) / step;
+      const effBits = eff > 0 ? Math.log2(Math.max(1, eff)) : 0;
+
+      // Scenarios
+      const scenarios = [
+        { label: "GPT-2 125M",            sigma: 0.5,  M: 3   },
+        { label: "GPT-Neo 1.3B",          sigma: 0.3,  M: 8   },
+        { label: "OPT-6.7B",              sigma: 0.2,  M: 18  },
+        { label: "OPT-13B",               sigma: 0.15, M: 50  },
+        { label: "OPT-66B",               sigma: 0.1,  M: 95  },
+        { label: "Your slider →",         sigma,       M       },
+      ];
+      const rows = scenarios.map(s => {
+        const am = Math.max(s.M, 4 * s.sigma);
+        const st = am / qmax;
+        const e  = (6 * s.sigma) / st;
+        const eb = Math.log2(Math.max(1, e));
+        const w  = Math.min(100, eb / bits * 100);
+        return `<div class="resolution-widget__bar">
+            <div>${s.label}</div>
+            <div><div class="resolution-widget__bar-fill" style="width:${w}%"></div></div>
+            <div>${eb.toFixed(2)} bit</div>
+          </div>`;
+      });
+      bars.innerHTML = rows.join('');
+
+      const codesUsed = Math.max(1, Math.round(eff));
+      out.textContent = [
+        `Stored bits per weight  = ${bits}`,
+        `INT step size Δ          = absmax / ${qmax} = ${step.toExponential(2)}`,
+        `Bulk reaches ±3σ = ±${(3*sigma).toFixed(2)}, which spans ${eff.toFixed(2)} integer codes`,
+        `Effective bits delivered to bulk = log₂(${eff.toFixed(2)}) ≈ ${effBits.toFixed(2)}`,
+        `→ At outlier M=${M.toFixed(1)} with σ=${sigma.toFixed(2)}, you store ${bits} bits and use ${effBits.toFixed(2)}. ${(bits - effBits).toFixed(1)} bits per weight wasted.`,
+      ].join('\n');
+    }
+    [sIn, mIn, bIn].forEach(el => el.addEventListener('input', render));
+    render();
+  }
+  document.querySelectorAll('.resolution-widget').forEach(init);
+})();
+</script>
+
+The takeaway: **the effective bits delivered to your bulk activations is not the number of bits you store.** It is the number of bits you store minus the bits stolen by the outliers. For an OPT-13B-scale outlier ($M \approx 50$, $\sigma \approx 0.15$), you store eight bits and you deliver one. Seven bits per weight are wasted, every layer, every forward pass. The mystery is not the model collapsing — the mystery is anything still being computable at all.
 
 ## What Dettmers Saw
 
@@ -188,4 +355,6 @@ This was the trade: you got OPT-175B onto a single node, at the cost of being sl
 
 The next-generation methods — **GPTQ, AWQ, NF4** — would all attempt to recover the speed *without* losing the precision gains. They take a different angle: rather than handle outliers with a runtime mixed-precision split, they do the harder work of **quantizing weights more cleverly** during a one-time calibration step. That story needs second-order math — the kind that powers [Brain Surgery Returns](../08-brain-surgery/) — so we'll detour for a primer on Hessians first.
 
-**Continue to** → [Taylor & Hessians](../07-taylor-and-hessians/) for the mathematical tools that power the next generation.
+If you would like the **inside-the-algorithm** version of this chapter — every step of the LLM.int8 matmul written out, the per-row / per-column scale arithmetic, the threshold-tuning experiments, and an interactive widget that runs the whole pipeline in your browser — read [Inside LLM.int8()](../06b-llm-int8-deep/) before moving on. It is the implementation companion to this detective story.
+
+**Continue to** → [Inside LLM.int8()](../06b-llm-int8-deep/) for the algorithm autopsy, or skip ahead to → [Taylor & Hessians](../07-taylor-and-hessians/) for the mathematical tools that power the next generation.
