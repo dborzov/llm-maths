@@ -1,0 +1,112 @@
+@layer utilities {
+    /* Markdown Specific Styles */
+    .markdown-body {
+        @apply space-y-6 font-body leading-relaxed;
+    }
+
+    .markdown-body h1 {
+        @apply text-5xl font-display text-pop-pink border-b-4 border-pop-black pb-2 mb-8;
+    }
+
+    .markdown-body h2 {
+        @apply text-3xl font-display text-pop-teal bg-pop-yellow/20 px-4 py-2 inline-block mb-4;
+        border: 3px solid var(--color-pop-black);
+    }
+
+    .markdown-body h3 {
+        @apply text-2xl font-bold text-pop-orange uppercase tracking-tight mb-2;
+    }
+
+    .markdown-body p {
+        @apply mb-4;
+    }
+
+    .markdown-body strong {
+        @apply text-pop-pink font-black bg-pop-yellow px-1;
+    }
+
+    .markdown-body em {
+        @apply text-pop-teal font-bold italic;
+    }
+
+    .markdown-body ul {
+        @apply list-none space-y-2 ml-4;
+    }
+
+    .markdown-body ul li {
+        @apply relative pl-8;
+    }
+
+    .markdown-body ul li::before {
+        content: "";
+        @apply absolute left-0 top-1.5 w-4 h-4 bg-pop-pink border-2 border-pop-black;
+        box-shadow: 2px 2px 0px black;
+    }
+
+    .markdown-body ol {
+        @apply list-none space-y-2 ml-4;
+        counter-reset: pop-counter;
+    }
+
+    .markdown-body ol li {
+        @apply relative pl-12;
+        counter-increment: pop-counter;
+    }
+
+    .markdown-body ol li::before {
+        content: counter(pop-counter);
+        @apply absolute left-0 top-0 w-8 h-8 bg-pop-teal text-white border-2 border-pop-black flex items-center justify-center font-bold;
+        box-shadow: 2px 2px 0px black;
+    }
+
+    .markdown-body blockquote {
+        @apply border-l-8 border-pop-orange bg-pop-orange/10 p-6 italic font-medium relative overflow-hidden;
+    }
+
+    .markdown-body blockquote::after {
+        content: "";
+        @apply absolute inset-0 opacity-5 pointer-events-none;
+        background-image: radial-gradient(
+            var(--color-pop-black) 1px,
+            transparent 0
+        );
+        background-size: 4px 4px;
+    }
+
+    .markdown-body table {
+        @apply w-full border-collapse my-8;
+        border: 4px solid var(--color-pop-black);
+        box-shadow: var(--shadow-pop-lg);
+    }
+
+    .markdown-body th {
+        @apply bg-pop-black text-white p-4 text-left uppercase font-display tracking-widest;
+    }
+
+    .markdown-body td {
+        @apply border-2 border-pop-black p-4 font-medium;
+    }
+
+    .markdown-body tr:nth-child(even) {
+        @apply bg-pop-yellow/10;
+    }
+
+    .markdown-body tr:hover {
+        @apply bg-pop-teal/20 transition-colors;
+    }
+
+    .markdown-body code {
+        @apply bg-pop-black text-pop-yellow px-2 py-0.5 font-mono text-sm;
+        border: 2px solid var(--color-pop-black);
+    }
+
+    .markdown-body pre {
+        @apply bg-pop-black text-pop-yellow p-6 overflow-x-auto my-6;
+        border: 4px solid var(--color-pop-black);
+        box-shadow: var(--shadow-pop-lg);
+    }
+
+    .markdown-body hr {
+        @apply border-t-4 border-pop-black border-dashed my-12;
+    }
+}

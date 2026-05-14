@@ -203,7 +203,7 @@ A good almanac prompt has these ingredients:
 5. **Audience calibration** — assume: intro stats, comfortable with NumPy/PyTorch, wants to grok not just memorise
 6. **Output format** — a markdown file with Hugo front matter, `##` sections, `pyplot` blocks
 
-See the [example prompts]({{< relref "/prompts" >}}) for reference — those are the exact prompts that generated the existing chapters.
+See the `prompts/` directory in the repository root for reference — those are the exact prompts that generated the existing issues. They are kept in-repo as authoring artifacts but are deliberately not published to the public site.
 
 ### Step 2 — Generate the draft
 

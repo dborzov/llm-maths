@@ -1,4 +1,19 @@
 {
   "docs/contribute/sigmoid-curve": "8549aef3e2279905",
-  "docs/stack/activation-fns": "4a43daeacd1b460b"
+  "docs/stack/activation-fns": "4a43daeacd1b460b",
+  "issues/03-sixteen-numbers/02-numbers-in-boxes/fp4-all-values": "acf1acf22ad2a8f2",
+  "issues/03-sixteen-numbers/02-numbers-in-boxes/fp8-number-line": "2eee96ce46d5bf2e",
+  "issues/03-sixteen-numbers/02-numbers-in-boxes/int4-vs-fp4": "d8496dd0053b9a16",
+  "issues/03-sixteen-numbers/03-lloyd-max/lloyd-iteration": "b6e104e9189ff2de",
+  "issues/03-sixteen-numbers/03-lloyd-max/nf4-vs-int4": "9a31874eda5699fb",
+  "issues/03-sixteen-numbers/04-rate-distortion/rd-curve": "821d576acdc8814e",
+  "issues/03-sixteen-numbers/05-geometry-of-weights/activation-hist": "4067f1786d893210",
+  "issues/03-sixteen-numbers/05-geometry-of-weights/weight-hist": "e20ca6f8e5849094",
+  "issues/03-sixteen-numbers/06-outliers/llm-int8-decomp": "0412d4b2b2fff50c",
+  "issues/03-sixteen-numbers/06-outliers/naive-quant-error": "90e1b854ff3613d0",
+  "issues/03-sixteen-numbers/07-taylor-and-hessians/calibration-hessian": "cb8a399083e87871",
+  "issues/03-sixteen-numbers/07-taylor-and-hessians/hessian-curvature": "a5c5858dc410366b",
+  "issues/03-sixteen-numbers/08-brain-surgery/gptq-vs-rtn": "7543368d007d9e73",
+  "issues/03-sixteen-numbers/10-kv-cache/kv-asymmetry": "7bd6ba0c5c47f522",
+  "issues/03-sixteen-numbers/11-calibration-and-blocks/block-vs-row-scale": "3a4f8661145bce4d"
 }

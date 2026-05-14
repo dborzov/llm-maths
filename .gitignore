@@ -40,3 +40,6 @@ styles/node_modules/
 *.swp
 *.swo
 Thumbs.db
+
+# Scratch directory for unsorted authoring material
+raw-sort-me/

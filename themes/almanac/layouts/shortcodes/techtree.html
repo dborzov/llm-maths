@@ -1,0 +1,151 @@
+{{- /*
+  techtree shortcode — pop-art dependency graph
+
+  Usage:
+      {{< techtree name="issue03" >}}
+
+  Reads node/edge data from `data/techtrees/<name>.toml`. The data file
+  declares fixed pixel coordinates (so authors retain full control of layout)
+  along with optional viewBox dimensions, node kinds, and per-node links.
+*/ -}}
+
+{{- $name := .Get "name" -}}
+{{- /* Resolve relative node links against the issue cover, not the calling
+       page — so the data file works whether the shortcode is used on the
+       cover or inside one of the articles. */ -}}
+{{- $pageBase := .Page.RelPermalink -}}
+{{- if .Page.IsPage -}}{{- $pageBase = .Page.Parent.RelPermalink -}}{{- end -}}
+{{- $tree := index site.Data.techtrees $name -}}
+{{- if not $tree -}}
+  <div class="techtree-error">techtree shortcode: no data file at <code>data/techtrees/{{ $name }}.toml</code></div>
+{{- else -}}
+
+{{- $width  := $tree.width  | default 1200 -}}
+{{- $height := $tree.height | default 700 -}}
+{{- $nw     := $tree.node_w | default 200 -}}
+{{- $nh     := $tree.node_h | default 70 -}}
+{{- $halfW := div $nw 2 -}}
+{{- $halfH := div $nh 2 -}}
+
+{{- /* Build a map id -> node for edge endpoint lookup. */ -}}
+{{- $byId := dict -}}
+{{- range $tree.nodes -}}
+  {{- $byId = merge $byId (dict .id .) -}}
+{{- end -}}
+
+<figure class="techtree" role="group" aria-label="Tech tree diagram">
+  <div class="techtree-scroll">
+    <svg class="techtree-svg"
+         viewBox="0 0 {{ $width }} {{ $height }}"
+         preserveAspectRatio="xMidYMid meet"
+         xmlns="http://www.w3.org/2000/svg"
+         aria-labelledby="techtree-title-{{ $name }}">
+      <title id="techtree-title-{{ $name }}">{{ $tree.title | default "Tech tree" }}</title>
+
+      <defs>
+        <marker id="techtree-arrow-{{ $name }}" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 Z" fill="#1a1a1a" />
+        </marker>
+        <pattern id="techtree-halftone-{{ $name }}" width="5" height="5" patternUnits="userSpaceOnUse">
+          <circle cx="1" cy="1" r="0.7" fill="#1a1a1a" opacity="0.18" />
+        </pattern>
+      </defs>
+
+      {{- /* Edges first so they sit behind nodes. */ -}}
+      <g class="techtree-edges">
+        {{- range $tree.edges -}}
+          {{- $a := index $byId .from -}}
+          {{- $b := index $byId .to -}}
+          {{- if and $a $b -}}
+            {{- $ax := $a.x -}}
+            {{- $bx := $b.x -}}
+            {{- $ay := add $a.y $halfH -}}
+            {{- $by := sub $b.y $halfH -}}
+            {{- $cy1 := add $ay 60 -}}
+            {{- $cy2 := sub $by 60 -}}
+            <path d="M {{ $ax }} {{ $ay }} C {{ $ax }} {{ $cy1 }}, {{ $bx }} {{ $cy2 }}, {{ $bx }} {{ $by }}"
+                  fill="none"
+                  stroke="#1a1a1a"
+                  stroke-width="2.5"
+                  marker-end="url(#techtree-arrow-{{ $name }})" />
+          {{- end -}}
+        {{- end -}}
+      </g>
+
+      {{- /* Nodes */ -}}
+      <g class="techtree-nodes">
+        {{- range $tree.nodes -}}
+          {{- $node := . -}}
+          {{- $rx := sub $node.x $halfW -}}
+          {{- $ry := sub $node.y $halfH -}}
+          {{- $shadowX := add $rx 4 -}}
+          {{- $shadowY := add $ry 4 -}}
+          {{- $kind := $node.kind | default "primer" -}}
+          {{- $hasLink := and $node.link (ne $node.link "") -}}
+          {{- $lines := split $node.label "\n" -}}
+          {{- $lineCount := len $lines -}}
+
+          <g class="techtree-node techtree-node--{{ $kind }}" data-id="{{ $node.id }}">
+            {{- if $hasLink -}}
+              {{- $linkURL := $node.link -}}
+              {{- if not (hasPrefix $linkURL "/") -}}
+                {{- $linkURL = printf "%s%s" $pageBase $node.link -}}
+              {{- end -}}
+              <a href="{{ $linkURL }}" class="techtree-node-link">
+            {{- end -}}
+
+            <rect x="{{ $shadowX }}" y="{{ $shadowY }}" width="{{ $nw }}" height="{{ $nh }}" fill="#1a1a1a" />
+
+            {{- if eq $kind "boss" -}}
+              <rect x="{{ $rx }}" y="{{ $ry }}" width="{{ $nw }}" height="{{ $nh }}"
+                    fill="url(#techtree-halftone-{{ $name }})" />
+            {{- end -}}
+
+            <rect class="techtree-node-rect"
+                  x="{{ $rx }}" y="{{ $ry }}"
+                  width="{{ $nw }}" height="{{ $nh }}"
+                  stroke="#1a1a1a" stroke-width="3" />
+
+            {{- with $node.sub -}}
+              {{- $subY := sub $ry 6 -}}
+              <text class="techtree-node-sub" x="{{ $node.x }}" y="{{ $subY }}"
+                    text-anchor="middle" font-size="11" font-weight="700">{{ . }}</text>
+            {{- end -}}
+
+            <text class="techtree-node-label"
+                  x="{{ $node.x }}" y="{{ $node.y }}"
+                  text-anchor="middle" dominant-baseline="middle"
+                  font-family="Bangers, Impact, sans-serif"
+                  font-size="{{ if gt $lineCount 1 }}15{{ else }}17{{ end }}"
+                  letter-spacing="0.04em">
+              {{- range $i, $line := $lines -}}
+                {{- $dy := "0" -}}
+                {{- if eq $i 0 -}}
+                  {{- if gt $lineCount 1 -}}{{- $dy = "-0.55em" -}}{{- end -}}
+                {{- else -}}
+                  {{- $dy = "1.1em" -}}
+                {{- end -}}
+                <tspan x="{{ $node.x }}" dy="{{ $dy }}">{{ $line }}</tspan>
+              {{- end -}}
+            </text>
+
+            {{- if $hasLink -}}</a>{{- end -}}
+          </g>
+        {{- end -}}
+      </g>
+    </svg>
+  </div>
+
+  {{- with $tree.legend -}}
+  <figcaption class="techtree-legend">
+    {{- range . -}}
+      <span class="techtree-legend-item techtree-legend-item--{{ .kind }}">{{ .label }}</span>
+    {{- end -}}
+  </figcaption>
+  {{- end -}}
+
+  {{- with $tree.caption -}}<figcaption class="techtree-caption">{{ . | safeHTML }}</figcaption>{{- end -}}
+</figure>
+
+{{- end -}}

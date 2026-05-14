@@ -1,0 +1,183 @@
+# Schema, conventions, and the full field reference: see docs/techtrees-schema.md.
+# This file is the canonical example — copy its structure for new tech trees.
+
+title  = "Tech tree — Sixteen Numbers Walk Into A GPU"
+width  = 1280
+height = 740
+node_w = 200
+node_h = 70
+
+# ---------------------------------------------------------------
+# Row 1 (y=70) — the destination: hardware-level story
+# Row 2 (y=220) — methods that the destination uses
+# Row 3 (y=380) — applied algorithms
+# Row 4 (y=540) — foundational primers
+# Row 5 (y=680) — deepest theoretical primer
+# ---------------------------------------------------------------
+
+[[nodes]]
+id    = "hardware"
+label = "Hardware\nHorizon"
+kind  = "boss"
+x     = 900
+y     = 70
+link  = "12-hardware-horizon/"
+sub   = "ch.12"
+
+[[nodes]]
+id    = "method-family"
+label = "Method\nFamily Tree"
+kind  = "boss"
+x     = 540
+y     = 220
+link  = "09-method-family-tree/"
+sub   = "ch.9"
+
+[[nodes]]
+id    = "kv-cache"
+label = "KV Cache\nTyranny"
+kind  = "mainline"
+x     = 900
+y     = 220
+link  = "10-kv-cache/"
+sub   = "ch.10"
+
+[[nodes]]
+id    = "outliers"
+label = "The 1% That\nRuins Everything"
+kind  = "mainline"
+x     = 180
+y     = 380
+link  = "06-outliers/"
+sub   = "ch.6"
+
+[[nodes]]
+id    = "brain-surgery"
+label = "Brain Surgery\nReturns"
+kind  = "mainline"
+x     = 540
+y     = 380
+link  = "08-brain-surgery/"
+sub   = "ch.8"
+
+[[nodes]]
+id    = "calibration"
+label = "Calibration\n& Blocks"
+kind  = "primer"
+x     = 900
+y     = 380
+link  = "11-calibration-and-blocks/"
+sub   = "ch.11"
+
+[[nodes]]
+id    = "numbers"
+label = "Numbers\nin Boxes"
+kind  = "primer"
+x     = 180
+y     = 540
+link  = "02-numbers-in-boxes/"
+sub   = "ch.2"
+
+[[nodes]]
+id    = "shape-weights"
+label = "Geometry\nof Weights"
+kind  = "primer"
+x     = 400
+y     = 540
+link  = "05-geometry-of-weights/"
+sub   = "ch.5"
+
+[[nodes]]
+id    = "lloyd-max"
+label = "The Lloyd-Max\nBargain"
+kind  = "primer"
+x     = 620
+y     = 540
+link  = "03-lloyd-max/"
+sub   = "ch.3"
+
+[[nodes]]
+id    = "taylor-hess"
+label = "Taylor &\nHessians"
+kind  = "primer"
+x     = 840
+y     = 540
+link  = "07-taylor-and-hessians/"
+sub   = "ch.7"
+
+[[nodes]]
+id    = "rate-distortion"
+label = "Rate-Distortion\nBridge"
+kind  = "primer"
+x     = 620
+y     = 680
+link  = "04-rate-distortion/"
+sub   = "ch.4"
+
+# Edges: prerequisite -> user (arrows point upward in the diagram)
+[[edges]]
+from = "rate-distortion"
+to   = "lloyd-max"
+
+[[edges]]
+from = "numbers"
+to   = "outliers"
+
+[[edges]]
+from = "numbers"
+to   = "kv-cache"
+
+[[edges]]
+from = "numbers"
+to   = "hardware"
+
+[[edges]]
+from = "shape-weights"
+to   = "outliers"
+
+[[edges]]
+from = "lloyd-max"
+to   = "outliers"
+
+[[edges]]
+from = "lloyd-max"
+to   = "calibration"
+
+[[edges]]
+from = "taylor-hess"
+to   = "brain-surgery"
+
+[[edges]]
+from = "outliers"
+to   = "method-family"
+
+[[edges]]
+from = "brain-surgery"
+to   = "method-family"
+
+[[edges]]
+from = "calibration"
+to   = "method-family"
+
+[[edges]]
+from = "method-family"
+to   = "hardware"
+
+[[edges]]
+from = "kv-cache"
+to   = "hardware"
+
+# Legend
+[[legend]]
+kind  = "boss"
+label = "Boss capstone"
+
+[[legend]]
+kind  = "mainline"
+label = "Mainline narrative"
+
+[[legend]]
+kind  = "primer"
+label = "Tutorial primer"
+
+caption = 'Arrows point <em>upward</em> from prerequisite to user. Read the cold-open (<a href="01-cold-open/">ch.1</a>) first — it sets the mystery this tree resolves.'

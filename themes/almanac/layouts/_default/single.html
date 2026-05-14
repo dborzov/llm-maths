@@ -21,6 +21,12 @@
 
   <article class="article-body">
     <header class="article-header">
+      {{ $parent := .Parent }}
+      {{ $issuesRoot := site.GetPage "/issues" }}
+      {{ if and $parent $issuesRoot (ne $parent.RelPermalink $issuesRoot.RelPermalink) (ne $parent.Kind "home") }}
+      <a href="{{ $parent.RelPermalink }}" class="article-breadcrumb">← {{ $parent.Title }}</a>
+      {{ end }}
+
       {{ with .Params.topics }}
       <div class="article-topic">
         {{ range . }}{{ . }}{{ end }}
@@ -43,6 +49,27 @@
     <div class="article-content">
       {{ .Content }}
     </div>
+
+    {{ if and $parent $issuesRoot (ne $parent.RelPermalink $issuesRoot.RelPermalink) (ne $parent.Kind "home") }}
+    <nav class="article-issue-nav" aria-label="Issue navigation">
+      {{ with .PrevInSection }}
+      <a href="{{ .RelPermalink }}" class="article-issue-nav-link article-issue-nav-prev">
+        <span class="article-issue-nav-label">← Previous</span>
+        <span class="article-issue-nav-title">{{ .Title }}</span>
+      </a>
+      {{ else }}<span></span>{{ end }}
+      {{ with .NextInSection }}
+      <a href="{{ .RelPermalink }}" class="article-issue-nav-link article-issue-nav-next">
+        <span class="article-issue-nav-label">Next →</span>
+        <span class="article-issue-nav-title">{{ .Title }}</span>
+      </a>
+      {{ else }}<span></span>{{ end }}
+    </nav>
+
+    <div class="article-issue-return">
+      <a href="{{ $parent.RelPermalink }}" class="btn-secondary">↑ Back to Issue Cover</a>
+    </div>
+    {{ end }}
   </article>
 
 </div>

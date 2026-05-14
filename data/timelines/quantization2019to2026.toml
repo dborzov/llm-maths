@@ -1,0 +1,44 @@
+# Schema, conventions, and the 5-event cap rule: see docs/timelines-schema.md.
+# This file is the canonical example — copy its structure for new timelines.
+
+title   = "How LLMs Got Small — 2019 to 2026 in five turning points"
+caption = "Five inflection points. <em>Hundreds of papers omitted.</em>"
+
+[[events]]
+date  = "2018"
+title = "Mixed-Precision Training"
+who   = "Micikevicius et al. (NVIDIA / Baidu)"
+body  = "FP16 enters training mainstream — the first time deep learning blinks at \"more bits is always better\"."
+kind  = "format"
+
+[[events]]
+date  = "2022"
+title = "LLM.int8()"
+who   = "Dettmers, Lewis, Belkada, Zettlemoyer"
+body  = "OPT-175B runs in INT8 on a single 8×A100 node. Discovers the activation-outlier phenomenon."
+kind  = "paper"
+link  = "06-outliers/"
+
+[[events]]
+date  = "2023"
+title = "GPTQ & QLoRA"
+who   = "Frantar/Alistarh + Dettmers"
+body  = "Second-order weight quantization to 4 bits (GPTQ); NF4 + double quantization finetunes 65B on one 48GB GPU (QLoRA)."
+kind  = "paper"
+link  = "08-brain-surgery/"
+
+[[events]]
+date  = "2023"
+title = "H100 FP8"
+who   = "NVIDIA Hopper"
+body  = "Silicon finally supports 8-bit floats natively. E4M3 for weights/activations, E5M2 for gradients."
+kind  = "hardware"
+link  = "12-hardware-horizon/"
+
+[[events]]
+date  = "2025"
+title = "Blackwell MXFP4"
+who   = "NVIDIA + OCP Microscaling"
+body  = "Native FP4 training. The whole model on sixteen numbers per block — and the loss curve barely flinches."
+kind  = "hardware"
+link  = "12-hardware-horizon/"

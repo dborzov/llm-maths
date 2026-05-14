@@ -1348,3 +1348,554 @@ hr {
         font-size: 3rem;
     }
 }
+
+/* ============================================================
+   ISSUE COVER PAGE
+   The landing page of a multi-article "comic book issue".
+   ============================================================ */
+
+.issue-cover-container {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+}
+
+.issue-cover-header {
+    border-bottom: var(--border);
+    padding-bottom: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.issue-cover-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--color-cream);
+    background: var(--accent-1);
+    border: var(--border);
+    box-shadow: var(--shadow-pop);
+    padding: 0.3em 0.9em;
+    margin-bottom: 1.25rem;
+}
+
+.issue-cover-title {
+    font-size: clamp(2.6rem, 6vw, 5rem);
+    line-height: 0.95;
+    margin-bottom: 1rem;
+    color: var(--text-body);
+}
+
+.issue-cover-description {
+    font-size: 1.2rem;
+    line-height: 1.55;
+    opacity: 0.85;
+    max-width: 60ch;
+}
+
+.issue-cover-illustration {
+    width: 100%;
+    margin-top: 1.5rem;
+    border: var(--border);
+    box-shadow: var(--shadow-pop-lg);
+    overflow: hidden;
+    line-height: 0;
+}
+.issue-cover-illustration img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.issue-cover-content {
+    margin: 2.5rem 0;
+}
+.issue-cover-content > * + * {
+    margin-top: 1.5em;
+}
+.issue-cover-content h2 {
+    font-size: 1.6rem;
+    margin-top: 2.5rem;
+    margin-bottom: 0.8rem;
+    color: var(--accent-2);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.issue-cover-content p {
+    max-width: 72ch;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+.issue-cover-content strong {
+    background: var(--accent-3);
+    padding: 0 0.2em;
+    font-weight: 900;
+}
+
+.issue-cover-section-title {
+    font-size: 1.5rem;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    color: var(--text-body);
+    background: color-mix(in srgb, var(--accent-3) 25%, transparent);
+    padding: 0.3rem 1rem;
+    border: var(--border);
+    display: inline-block;
+    box-shadow: var(--shadow-pop);
+}
+
+.issue-cover-article-list {
+    list-style: none;
+    counter-reset: issue-art;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.issue-cover-article-item {
+    counter-increment: issue-art;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.issue-cover-article-item::before {
+    display: none !important;
+}
+
+.issue-cover-article-link {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--text-body);
+    background: var(--bg-surface);
+    border: var(--border);
+    box-shadow: var(--shadow-pop);
+    padding: 1rem 1.25rem;
+    transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+}
+.issue-cover-article-link:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--color-ink);
+    background: color-mix(in srgb, var(--accent-3) 18%, var(--bg-surface));
+    color: var(--text-body);
+}
+
+.issue-cover-article-num {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--accent-1);
+    min-width: 2.5rem;
+    flex-shrink: 0;
+}
+.issue-cover-article-num::before {
+    content: counter(issue-art, decimal-leading-zero);
+}
+
+.issue-cover-article-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 0;
+}
+
+.issue-cover-article-title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--text-body);
+}
+
+.issue-cover-article-desc {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    opacity: 0.75;
+}
+
+.issue-cover-article-meta {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    margin-top: 0.25rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+}
+
+.issue-cover-article-kind {
+    padding: 0.1em 0.5em;
+    border: 2px solid var(--color-ink);
+    background: var(--bg-page);
+    opacity: 1;
+}
+.issue-cover-article-kind--mainline {
+    background: var(--accent-1);
+    color: var(--color-cream);
+}
+.issue-cover-article-kind--primer {
+    background: var(--accent-2);
+    color: var(--color-cream);
+}
+.issue-cover-article-kind--boss {
+    background: var(--color-ink);
+    color: var(--accent-3);
+}
+
+/* ============================================================
+   ARTICLE BREADCRUMB & ISSUE-NAV
+   Shown when an article lives inside an issue section.
+   ============================================================ */
+
+.article-breadcrumb {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    color: var(--accent-1);
+    border: 2px solid var(--accent-1);
+    padding: 0.25em 0.7em;
+    margin-bottom: 1.25rem;
+    transition: background 0.1s, color 0.1s;
+}
+.article-breadcrumb:hover {
+    background: var(--accent-1);
+    color: var(--color-cream);
+}
+
+.article-issue-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 3.5rem;
+    border-top: 4px dashed var(--color-ink);
+    padding-top: 2rem;
+}
+
+.article-issue-nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    text-decoration: none;
+    color: var(--text-body);
+    background: var(--bg-surface);
+    border: var(--border);
+    box-shadow: var(--shadow-pop);
+    padding: 1rem 1.25rem;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+.article-issue-nav-link:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--color-ink);
+    color: var(--text-body);
+}
+.article-issue-nav-next {
+    text-align: right;
+}
+
+.article-issue-nav-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent-1);
+}
+
+.article-issue-nav-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-body);
+}
+
+.article-issue-return {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+/* ============================================================
+   TECHTREE WIDGET
+   SVG dependency graph used as table of contents on issue covers.
+   ============================================================ */
+
+.techtree {
+    margin: 2.5rem 0;
+    border: var(--border);
+    box-shadow: var(--shadow-pop-lg);
+    background: var(--bg-surface);
+    position: relative;
+    overflow: hidden;
+}
+.techtree::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(var(--color-ink) 1px, transparent 0);
+    background-size: 8px 8px;
+    opacity: 0.05;
+    pointer-events: none;
+}
+
+.techtree-scroll {
+    width: 100%;
+    overflow-x: auto;
+    padding: 1rem;
+    position: relative;
+}
+
+.techtree-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-width: 760px;
+    max-width: 100%;
+}
+
+.techtree-node {
+    cursor: default;
+}
+.techtree-node-link {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.techtree-node-rect {
+    fill: var(--bg-surface);
+    transition: fill 0.1s, transform 0.1s;
+}
+.techtree-node--mainline .techtree-node-rect { fill: var(--accent-1); }
+.techtree-node--primer .techtree-node-rect   { fill: var(--bg-surface); }
+.techtree-node--boss .techtree-node-rect     { fill: var(--accent-3); }
+.techtree-node--external .techtree-node-rect { fill: color-mix(in srgb, var(--accent-2) 12%, var(--bg-surface)); }
+
+.techtree-node--mainline .techtree-node-label { fill: var(--color-cream); }
+.techtree-node-label { fill: var(--color-ink); }
+.techtree-node-sub   { fill: var(--accent-1); text-transform: uppercase; letter-spacing: 0.08em; }
+
+.techtree-node-link:hover .techtree-node-rect {
+    fill: var(--accent-3);
+}
+.techtree-node-link:hover .techtree-node-label {
+    fill: var(--color-ink);
+}
+
+.techtree-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-top: var(--border);
+    background: var(--bg-page);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+.techtree-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.15em 0.55em;
+    border: 2px solid var(--color-ink);
+}
+.techtree-legend-item--mainline { background: var(--accent-1); color: var(--color-cream); }
+.techtree-legend-item--primer   { background: var(--bg-surface); }
+.techtree-legend-item--boss     { background: var(--accent-3); }
+.techtree-legend-item--external { background: color-mix(in srgb, var(--accent-2) 12%, var(--bg-surface)); }
+
+.techtree-caption {
+    padding: 0.75rem 1rem;
+    border-top: 2px dashed var(--color-ink);
+    background: var(--bg-page);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    opacity: 0.8;
+    text-align: center;
+}
+
+.techtree-error {
+    border: 3px dashed var(--accent-1);
+    background: color-mix(in srgb, var(--accent-1) 10%, var(--bg-surface));
+    padding: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    margin: 1.5rem 0;
+}
+
+/* ============================================================
+   TIMELINE WIDGET
+   Five-event horizontal milestone strip.
+   ============================================================ */
+
+.timeline {
+    margin: 2.5rem 0;
+    border: var(--border);
+    box-shadow: var(--shadow-pop-lg);
+    background: var(--bg-surface);
+    overflow: hidden;
+}
+
+.timeline-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: var(--accent-3);
+    border-bottom: var(--border);
+    padding: 0.6rem 1rem;
+    color: var(--color-ink);
+}
+
+.timeline-rail {
+    list-style: none !important;
+    counter-reset: none;
+    display: grid;
+    grid-template-columns: repeat(var(--timeline-count, 5), minmax(180px, 1fr));
+    gap: 0;
+    padding: 0 !important;
+    margin: 0 !important;
+    background:
+        linear-gradient(to right,
+          transparent calc(50% / var(--timeline-count, 5)),
+          var(--color-ink) calc(50% / var(--timeline-count, 5)),
+          var(--color-ink) calc(100% - 50% / var(--timeline-count, 5)),
+          transparent calc(100% - 50% / var(--timeline-count, 5))
+        )
+        no-repeat;
+    background-size: 100% 4px;
+    background-position: 0 60px;
+    overflow-x: auto;
+}
+
+.timeline-event {
+    position: relative;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    border-right: 2px dashed color-mix(in srgb, var(--color-ink) 20%, transparent);
+}
+.timeline-event:last-child {
+    border-right: none;
+}
+.timeline-event::before {
+    display: none !important;
+}
+
+.timeline-event-dot {
+    width: 28px;
+    height: 28px;
+    background: var(--accent-1);
+    border: var(--border);
+    box-shadow: var(--shadow-pop);
+    margin: 46px auto 0;
+    position: relative;
+    z-index: 1;
+}
+.timeline-event--hardware .timeline-event-dot { background: var(--accent-2); }
+.timeline-event--format   .timeline-event-dot { background: var(--accent-3); }
+.timeline-event--release  .timeline-event-dot { background: var(--accent-4); }
+
+.timeline-event-card {
+    background: var(--bg-surface);
+    border: var(--border);
+    box-shadow: var(--shadow-pop);
+    margin: 1.25rem 0.75rem 1rem;
+    padding: 0.9rem 0.9rem 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.timeline-event-date {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    color: var(--accent-1);
+    line-height: 1;
+}
+
+.timeline-event-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-body);
+    margin: 0 !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    display: block !important;
+}
+.timeline-event-title a {
+    text-decoration: none;
+    color: inherit;
+}
+.timeline-event-title a:hover {
+    color: var(--accent-1);
+}
+
+.timeline-event-who {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-2);
+}
+
+.timeline-event-body {
+    font-size: 0.85rem;
+    line-height: 1.45;
+    opacity: 0.85;
+    margin: 0 !important;
+    max-width: none !important;
+}
+
+.timeline-caption {
+    padding: 0.75rem 1rem;
+    border-top: 2px dashed var(--color-ink);
+    background: var(--bg-page);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    opacity: 0.8;
+    text-align: center;
+}
+
+.timeline-error {
+    border: 3px dashed var(--accent-1);
+    background: color-mix(in srgb, var(--accent-1) 10%, var(--bg-surface));
+    padding: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    margin: 1.5rem 0;
+}
+
+@media (max-width: 700px) {
+    .timeline-rail {
+        grid-auto-flow: column;
+        grid-auto-columns: 78%;
+        grid-template-columns: none;
+    }
+    .article-issue-nav {
+        grid-template-columns: 1fr;
+    }
+    .issue-cover-article-link {
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+}

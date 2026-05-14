@@ -32,6 +32,9 @@ jobs:
         with:
           version: "latest"
 
+      - name: Validate conventions (front matter, tech tree, cross-links, pyplot)
+        run: uv run scripts/validate.py
+
       - name: Generate matplotlib plots
         run: uv run scripts/run_plots.py
 

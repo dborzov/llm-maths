@@ -1,0 +1,71 @@
+{{- /*
+  timeline shortcode — five-event horizontal milestone strip.
+
+  Usage:
+      {{< timeline name="quantization2019to2026" >}}
+
+  Reads event data from `data/timelines/<name>.toml`. Designed for the
+  almanac's "≤5 events, big picture only" rule: keep cards small and
+  punchy. If the file has more than 5 events, only the first five render
+  (with a build-time warning).
+
+  Schema (TOML):
+      title   = "optional caption"
+      caption = "optional footer HTML"
+
+      [[events]]
+      date    = "2022"
+      title   = "LLM.int8()"
+      who     = "Dettmers et al."
+      body    = "Outlier-aware 8-bit inference for OPT-175B."
+      link    = "06-outliers/"           # optional
+      kind    = "paper"                  # paper | hardware | format | release
+*/ -}}
+
+{{- $name := .Get "name" -}}
+{{- /* Resolve relative event links against the issue cover, not the calling
+       page — so the data file works whether the shortcode is used on the
+       cover or inside one of the articles. */ -}}
+{{- $pageBase := .Page.RelPermalink -}}
+{{- if .Page.IsPage -}}{{- $pageBase = .Page.Parent.RelPermalink -}}{{- end -}}
+{{- $data := index site.Data.timelines $name -}}
+{{- if not $data -}}
+  <div class="timeline-error">timeline shortcode: no data file at <code>data/timelines/{{ $name }}.toml</code></div>
+{{- else -}}
+
+{{- $events := $data.events -}}
+{{- if gt (len $events) 5 -}}
+  {{- warnf "timeline %q has %d events; only the first 5 will be shown (we keep timelines focused — see CLAUDE.md)." $name (len $events) -}}
+  {{- $events = first 5 $events -}}
+{{- end -}}
+
+<figure class="timeline" role="group" aria-label="Timeline">
+  {{- with $data.title -}}<figcaption class="timeline-title">{{ . }}</figcaption>{{- end -}}
+
+  <ol class="timeline-rail" style="--timeline-count: {{ len $events }};">
+    {{- range $i, $e := $events -}}
+      {{- $hasLink := and .link (ne .link "") -}}
+      <li class="timeline-event timeline-event--{{ .kind | default "paper" }}">
+        <div class="timeline-event-dot" aria-hidden="true"></div>
+        <div class="timeline-event-card">
+          <div class="timeline-event-date">{{ .date }}</div>
+          <h3 class="timeline-event-title">
+            {{- if $hasLink -}}
+              {{- $linkURL := .link -}}
+              {{- if not (hasPrefix $linkURL "/") -}}
+                {{- $linkURL = printf "%s%s" $pageBase $linkURL -}}
+              {{- end -}}
+              <a href="{{ $linkURL }}">{{ .title }}</a>
+            {{- else -}}{{ .title }}{{- end -}}
+          </h3>
+          {{- with .who -}}<div class="timeline-event-who">{{ . }}</div>{{- end -}}
+          {{- with .body -}}<p class="timeline-event-body">{{ . | safeHTML }}</p>{{- end -}}
+        </div>
+      </li>
+    {{- end -}}
+  </ol>
+
+  {{- with $data.caption -}}<figcaption class="timeline-caption">{{ . | safeHTML }}</figcaption>{{- end -}}
+</figure>
+
+{{- end -}}
