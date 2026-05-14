@@ -4,13 +4,23 @@
 {{- $fileBase := strings.TrimSuffix ".md" $filePath -}}
 {{- $imgSrc  := printf "plots/%s/%s.png" $fileBase $id | relURL -}}
 
-<div class="pyplot-block">
-  <div class="pyplot-code">
-    {{ highlight .Inner "python" "" }}
-  </div>
-  <figure class="pyplot-output">
+<figure class="pyplot-block" id="pyplot-{{ $id }}">
+  <a class="pyplot-image" href="{{ $imgSrc }}" target="_blank" rel="noopener"
+     aria-label="Open plot at full size">
     <img src="{{ $imgSrc }}" alt="{{ $caption }}" loading="lazy"
-         onerror="this.closest('.pyplot-output').classList.add('pyplot-missing')">
-    {{ with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
-  </figure>
-</div>
+         onerror="this.closest('.pyplot-block').classList.add('pyplot-missing')">
+    <span class="pyplot-image-hint" aria-hidden="true">⤢ zoom</span>
+  </a>
+
+  {{ with $caption }}<figcaption class="pyplot-caption">{{ . }}</figcaption>{{ end }}
+
+  <details class="pyplot-code">
+    <summary>
+      <span class="pyplot-code-icon" aria-hidden="true">{ }</span>
+      <span class="pyplot-code-label">show python source</span>
+    </summary>
+    <div class="pyplot-code-body">
+      {{ highlight .Inner "python" "" }}
+    </div>
+  </details>
+</figure>

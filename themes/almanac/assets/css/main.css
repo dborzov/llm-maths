@@ -748,65 +748,140 @@ hr {
 }
 
 /* ============================================================
-   PYPLOT BLOCKS — code + plot side-by-side
+   PYPLOT BLOCKS — vertical "plot card": image, caption, then
+   a collapsible source-listing. Image opens a fullscreen
+   lightbox on click (see static/js/pyplot.js).
    ============================================================ */
 
 .pyplot-block {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
+    display: block;
+    margin: 2.5rem 0;
     border: var(--border);
     box-shadow: var(--shadow-pop-lg);
-    margin: 2.5rem 0;
-    background: var(--bg-code);
+    background: var(--bg-surface);
     overflow: hidden;
 }
 
-.pyplot-code {
-    border-right: var(--border);
-    overflow: auto;
+.pyplot-image {
+    display: block;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    background: var(--bg-surface);
+    border-bottom: var(--border);
+    transition: background 0.12s ease-in-out;
+}
+.pyplot-image:hover,
+.pyplot-image:focus-visible {
+    background: color-mix(in srgb, var(--accent-1) 5%, var(--bg-surface));
 }
 
-.pyplot-code .highlight,
-.pyplot-code pre {
-    height: 100%;
+.pyplot-image img {
+    display: block;
+    width: 100%;
+    max-height: 620px;
+    object-fit: contain;
+    padding: 1rem;
+    border: none;
+    box-shadow: none;
+}
+
+.pyplot-image-hint {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    background: #1A1A1A;
+    color: #FDF5E6;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.3rem 0.65rem;
+    border: 2px solid #1A1A1A;
+    opacity: 0;
+    transform: translateY(-2px);
+    transition: opacity 0.12s ease-in-out, transform 0.12s ease-in-out;
+    pointer-events: none;
+}
+.pyplot-image:hover .pyplot-image-hint,
+.pyplot-image:focus-visible .pyplot-image-hint {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* On touch devices there is no hover — keep the hint visible at low opacity. */
+@media (hover: none) {
+    .pyplot-image-hint { opacity: 0.85; transform: none; }
+}
+
+.pyplot-caption {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #1A1A1A;
+    opacity: 0.78;
+    text-align: center;
+    padding: 0.9rem 1rem;
+    margin: 0;
+    background: var(--bg-surface);
+    border: none;
+}
+
+.pyplot-code {
+    background: var(--bg-code);
+    border-top: var(--border);
+}
+.pyplot-code > summary {
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.7rem 1.1rem;
+    background: var(--bg-code);
+    color: #f8f8f2;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition: background 0.12s ease-in-out;
+}
+.pyplot-code > summary::-webkit-details-marker { display: none; }
+.pyplot-code > summary::before {
+    content: "▸";
+    display: inline-block;
+    width: 0.85em;
+    color: var(--accent-1);
+    transition: transform 0.15s ease-in-out;
+}
+.pyplot-code[open] > summary::before { transform: rotate(90deg); }
+.pyplot-code > summary:hover {
+    background: color-mix(in srgb, var(--accent-1) 18%, var(--bg-code));
+}
+.pyplot-code-icon {
+    background: var(--accent-1);
+    color: #1A1A1A;
+    padding: 0.05rem 0.4rem;
+    border: 2px solid #1A1A1A;
+    font-weight: 700;
+}
+.pyplot-code-body {
+    border-top: 2px solid color-mix(in srgb, #f8f8f2 12%, transparent);
+    overflow-x: auto;
+}
+.pyplot-code-body .highlight,
+.pyplot-code-body pre {
     margin: 0;
     border: none;
     box-shadow: none;
 }
 
-.pyplot-output {
-    background: var(--bg-surface);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    min-height: 240px;
-}
-
-.pyplot-output img {
-    max-width: 100%;
-    max-height: 400px;
-    object-fit: contain;
-    border: none;
-    box-shadow: none;
-}
-
-.pyplot-output figcaption {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    opacity: 0.65;
-    margin-top: 0.6rem;
-    text-align: center;
-    border: none;
-    padding: 0;
-}
-
-/* Missing plot placeholder */
-.pyplot-missing {
+/* Missing plot placeholder — applied to the whole block when img fails to load. */
+.pyplot-block.pyplot-missing .pyplot-image {
+    pointer-events: none;
     background: repeating-linear-gradient(
         45deg,
         color-mix(in srgb, var(--accent-1) 8%, var(--bg-surface)),
@@ -815,19 +890,101 @@ hr {
         var(--bg-surface) 20px
     );
 }
-.pyplot-missing::after {
+.pyplot-block.pyplot-missing .pyplot-image img { display: none; }
+.pyplot-block.pyplot-missing .pyplot-image-hint { display: none; }
+.pyplot-block.pyplot-missing .pyplot-image::after {
     content: "Plot not generated — run make plots";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    opacity: 0.5;
+    opacity: 0.55;
+    padding: 1rem;
+    text-align: center;
+}
+
+/* ----- Lightbox dialog (created once per page by pyplot.js) ----- */
+.pyplot-lightbox {
+    border: var(--border);
+    box-shadow: var(--shadow-pop-lg);
+    background: var(--bg-surface);
+    padding: 0;
+    width: min(95vw, 1600px);
+    max-width: 95vw;
+    height: min(95vh, 1200px);
+    max-height: 95vh;
+    margin: auto;
+    color: #1A1A1A;
+}
+.pyplot-lightbox::backdrop {
+    background: rgba(26, 26, 26, 0.86);
+}
+.pyplot-lightbox-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+.pyplot-lightbox-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    border-bottom: var(--border);
+    background: var(--bg-surface);
+    padding: 0.55rem 0.75rem;
+}
+.pyplot-lightbox-caption {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.7;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+.pyplot-lightbox-close {
+    flex-shrink: 0;
+    background: var(--accent-1);
+    color: #1A1A1A;
+    border: 2px solid #1A1A1A;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.35rem 0.85rem;
+    cursor: pointer;
+    transition: background 0.1s ease-in-out;
+}
+.pyplot-lightbox-close:hover { background: #FFD700; }
+.pyplot-lightbox-img-wrap {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
     padding: 1rem;
-    text-align: center;
+    background: var(--bg-surface);
+}
+.pyplot-lightbox-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    cursor: zoom-in;
+}
+.pyplot-lightbox-img.is-actual-size {
+    max-width: none;
+    max-height: none;
+    cursor: zoom-out;
 }
 
 /* ============================================================
@@ -1326,12 +1483,17 @@ hr {
         align-self: flex-start;
     }
 
-    .pyplot-block {
-        grid-template-columns: 1fr;
+    .pyplot-image img {
+        max-height: none;
+        padding: 0.5rem;
     }
-    .pyplot-code {
-        border-right: none;
-        border-bottom: var(--border);
+    .pyplot-caption {
+        font-size: 0.72rem;
+        padding: 0.7rem 0.8rem;
+    }
+    .pyplot-code > summary {
+        font-size: 0.78rem;
+        padding: 0.65rem 0.9rem;
     }
 
     .nav-search {

@@ -186,7 +186,7 @@ If a converted file exceeds 300 KB, lower the resize width to 1200 px before rai
 
 ## Pyplot Executable Code Blocks
 
-The almanac's signature feature. Mark code blocks with `pyplot` to execute them during build, with the matplotlib plot shown side-by-side with the code.
+The almanac's signature feature. Mark code blocks with `pyplot` to execute them during build, with the matplotlib plot rendered next to the source listing in a single "plot card".
 
 **Syntax:**
 
@@ -206,6 +206,16 @@ plt.title("tanh")
 - PNG output: `static/plots/{section}/{article-slug}/{id}.png`.
 
 **Script:** `scripts/run_plots.py` — reads `scripts/.plot_cache.json` (SHA-256 hashes) to skip unchanged blocks.
+
+### How pyplot blocks render on the page
+
+The Hugo hook at `themes/almanac/layouts/_default/_markup/render-codeblock-pyplot.html` produces a vertical card:
+
+1. The plot image at the top, full container width. Click anywhere on the image to open a fullscreen lightbox (native `<dialog>`). Inside the lightbox, click the image once more to toggle between "fit to viewport" and "actual pixels" (with scrollbars). ESC or backdrop-click closes.
+2. The optional `caption=` text in uppercase underneath.
+3. A `<details>` collapsible holding the Python source — **collapsed by default**, so the picture leads. The summary label toggles between *show python source* / *hide python source*.
+
+This layout is single-column at every viewport width, which is why it works on phones. No CSS grid breakpoints to worry about. JS lives at `static/js/pyplot.js`; CSS in `themes/almanac/assets/css/main.css` under the "PYPLOT BLOCKS" section. Progressive enhancement: with JS disabled the image is still an `<a target="_blank">` to the PNG, and `<details>` toggles natively.
 
 ## Validation
 
