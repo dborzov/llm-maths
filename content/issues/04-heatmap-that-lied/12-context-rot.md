@@ -128,7 +128,7 @@ This is, again, evidence that *the long-context capability surface is multi-dime
 
 ## OOLONG — The Aggregation Stress
 
-We've covered OOLONG in detail in [One Pass Isn't Enough](../08-needle-to-graph/) and [Vodrahalli's Chisel](../09-latent-structure/). It deserves a brief reappearance here because **OOLONG is the standard 2026 test for the *width* axis of context rot**.
+A full account of OOLONG — its two evaluation splits, the D&D transcript construction, the Gemini cliff at 256K, and the width-vs-depth orthogonality result — is in the dedicated primer [The Tallying Problem](../18-oolong/). OOLONG deserves a brief reappearance here because **it is the standard 2026 test for the *width* axis of context rot**.
 
 Recall the OOLONG construction: each chunk in the prompt encodes a small atomic fact (a number, a category, a sentiment). The question requires per-chunk classification *plus* aggregation across chunks ("how many tickets are about billing with sentiment < 3?"). This stresses *working memory across the context*, not depth of reasoning.
 

@@ -126,7 +126,7 @@ Read that again. **GPT-5. Claude Sonnet 4. Gemini 2.5 Pro. All under 50% at 128K
 
 The conceptual move OOLONG makes is worth pausing on. **GraphWalks measures depth-of-reasoning** — can the model chain $k$ dependent hops without losing the thread? **OOLONG measures width-of-aggregation** — can the model perform $n$ independent atomic analyses and then *combine* their results without dropping any? These are orthogonal capabilities. A model can be strong on one and weak on the other, and the 2025–2026 reporting practice now treats them as distinct measurements.
 
-We unpack OOLONG's mechanics more carefully in [Vodrahalli's Chisel](../09-latent-structure/) (where the LSQ-to-OOLONG arc is the natural continuation) and revisit it in [The Chroma Measurement](../12-context-rot/) (as the canonical long-context-rot test for reasoning models).
+We unpack OOLONG's mechanics — the two evaluation splits, the D&D transcript angle, and why all frontier models fall below 50% at 128K — in the dedicated primer [The Tallying Problem](../18-oolong/). For the conceptual framework that connects MRCR and OOLONG, see [Vodrahalli's Chisel](../09-latent-structure/).
 
 ## What Changed In Anthropic's System Cards
 
@@ -144,7 +144,7 @@ That sequence — NIAH boast → NIAH sanity check → NIAH demoted → NIAH dis
 
 ## The MRCR v2 Story Beside GraphWalks
 
-Worth a footnote on MRCR v2 specifically, because it remains the most-cited long-context benchmark in 2026 alongside GraphWalks.
+Worth a footnote on MRCR v2 specifically, because it remains the most-cited long-context benchmark in 2026 alongside GraphWalks. A full treatment of the benchmark's mechanics — the 9-cell grid, the random string verification trick, MRCR v1 vs v2, and a model-by-model comparison — is in [The Fourth Poem](../17-mrcr/).
 
 OpenAI's GPT-4.1 launch shipped **OpenAI-MRCR** as a public dataset — a cleaned-up implementation of Vodrahalli's MRCR. In December 2025, OpenAI shipped **MRCR v2**, fixing several methodology issues and tightening the disambiguation criteria. The needles-per-prompt variants (2-needle, 4-needle, 8-needle) and the context-length variants (128K, 256K, 1M) define a 9-cell grid that has become the *standard* retrieval-side report.
 

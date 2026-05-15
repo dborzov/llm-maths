@@ -96,7 +96,7 @@ This is hard *because* the requests are designed to look similar. A poem about f
 
 **Crucially, MRCR is still single-pass.** A linear scan can solve it: walk through the prompt, maintain a counter for "poems about tapirs," when the counter hits 4 capture the next assistant turn. No graph traversal required. This is the point OpenAI's GPT-4.1 launch blog made explicit: MRCR is *harder* than NIAH but does not require *non-linear* reasoning. We covered the launch quote in detail in [One Pass Isn't Enough](../08-needle-to-graph/).
 
-MRCR's value as a benchmark is precisely that it stresses *retrieval-with-bookkeeping*. It is the cleanest test for whether the model can maintain a *count* through a long context — a deeper retrieval capability than simple lookup.
+MRCR's value as a benchmark is precisely that it stresses *retrieval-with-bookkeeping*. It is the cleanest test for whether the model can maintain a *count* through a long context — a deeper retrieval capability than simple lookup. For the full picture — MRCR v1 vs v2, the 9-cell measurement grid, and the Opus 4.7 regression story — see the dedicated primer [The Fourth Poem](../17-mrcr/).
 
 ```pyplot {id="mrcr-counting-difficulty" caption="MRCR's central difficulty: counting ordinal instances. The harder the question — 1st vs 4th vs 8th of N matches — the more bookkeeping the model has to do across the prompt. Accuracy degrades not just with context length but with ordinal depth. The 8-needle variants (asking for the 4th, 5th, 6th, 7th, or 8th match) are the standard 'hard' MRCR v2 setting."}
 np.random.seed(2)
@@ -210,9 +210,9 @@ print("  2025: query an aggregate over chunks (OOLONG)")
 
 The trajectory is the story of the field. A community that started in 2023 by querying single sentences has, by 2026, learned to design benchmarks that query graphs, aggregates, and absences. The LSQ framework didn't *cause* this evolution, but it gave it a *language*. Once you have the vocabulary "latent structure", you can argue about *which* structures matter and *why* the easy ones (single sentence) are not sufficient.
 
-## OOLONG — Vodrahalli's Own Critique Of MRCR
+## OOLONG — The Aggregation Follow-Up
 
-A small irony worth pausing on. **Vodrahalli wrote the Michelangelo paper. Vodrahalli also wrote OOLONG.** The same researcher who proposed MRCR in 2024 published, in November 2025, a benchmark that explicitly *moves past* MRCR.
+A small irony worth pausing on. **Vodrahalli's LSQ framework gave the community MRCR.** And in November 2025, a team at **Carnegie Mellon** — Bertsch, Pratapa, Mitamura, Neubig, and Gormley — published **OOLONG** (arXiv:2511.02817), explicitly building on the LSQ vocabulary to define the aggregation capability that MRCR had left unmeasured.
 
 The motivation, paraphrasing the OOLONG paper: MRCR tests *retrieval-with-counting* across long context. But many real applications — analysing a long support transcript, summarising a multi-document deal package, computing a financial total across a long invoice list — require *atomic analysis of each piece* combined with *aggregation across pieces*. MRCR's indexed retrieval doesn't probe this capability cleanly. OOLONG does.
 
@@ -222,7 +222,7 @@ The OOLONG paper's bombshell: *"Even frontier models struggle on OOLONG, with GP
 
 **The lesson**: depth of reasoning (GraphWalks) and width of aggregation (OOLONG) are different capabilities, and Vodrahalli built the second benchmark because he watched the field saturate the first.
 
-We will see OOLONG show up in the 2026 layered stack as the canonical width-axis test alongside GraphWalks's depth-axis test. See [The 2026 Layered Stack](../16-eval-stack-2026/).
+We will see OOLONG show up in the 2026 layered stack as the canonical width-axis test alongside GraphWalks's depth-axis test. See [The 2026 Layered Stack](../16-eval-stack-2026/). For the full picture — the two evaluation splits (OOLONG-Synth and OOLONG-Real), the D&D transcript construction, and why temporal questions are 4× harder than counting questions — see the dedicated primer [The Tallying Problem](../18-oolong/).
 
 ## What The "Chisel" Metaphor Got Right
 
@@ -240,7 +240,7 @@ This is, on reflection, what a *good* framework does in a young field. It doesn'
 2. **Three diagnostic tasks**: **Latent List** (running list state), **MRCR** (indexed retrieval with counting), **IDK** (absence recognition). MRCR is the famous one and survives into 2026.
 3. **MRCR is single-pass-solvable** even though it's much harder than NIAH. A linear scan with a counter suffices. This is the architectural distinction OpenAI's GraphWalks launch blog made explicit.
 4. **The LSQ taxonomy classifies every benchmark by what latent structure it queries.** NIAH (single sentence) → MRCR (ordered set) → GraphWalks (graph adjacency) → OOLONG (aggregate). Reading the taxonomy in order is reading the conceptual trajectory of the field.
-5. **OOLONG is Vodrahalli's own follow-up to MRCR.** It tests *width* (per-chunk atomic analysis + aggregation) rather than *depth* (chained retrieval). All major 2025 frontier models score under 50% at 128K. Different capability than GraphWalks's BFS-depth measurement.
+5. **OOLONG (Bertsch et al., CMU, Nov 2025) follows MRCR** in the LSQ tradition. It tests *width* (per-chunk atomic analysis + aggregation) rather than *depth* (chained retrieval). All major 2025 frontier models score under 50% at 128K. Different capability than GraphWalks's BFS-depth measurement.
 6. **The framework gave the field a language**, not a specific result. That is what good frameworks do.
 
 **Continue to** → [BFS as Reasoning](../10-graph-traversal/) — the computational primer behind GraphWalks. What a graph traversal *is* algorithmically, why no amount of clever skimming substitutes for it, and the napkin-math reason BFS depth is the *right* axis along which to stress a long-context model.

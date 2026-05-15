@@ -134,6 +134,15 @@ link  = "06-measurement-saturation/"
 sub   = "ch.6"
 
 [[nodes]]
+id    = "mrcr"
+label = "The Fourth\nPoem"
+kind  = "primer"
+x     = 590
+y     = 570
+link  = "17-mrcr/"
+sub   = "ch.17"
+
+[[nodes]]
 id    = "context-rot"
 label = "The Chroma\nMeasurement"
 kind  = "primer"
@@ -141,6 +150,15 @@ x     = 860
 y     = 570
 link  = "12-context-rot/"
 sub   = "ch.12"
+
+[[nodes]]
+id    = "oolong"
+label = "The Tallying\nProblem"
+kind  = "primer"
+x     = 1080
+y     = 570
+link  = "18-oolong/"
+sub   = "ch.18"
 
 # ---------- Row 5: mid-foundational primers ----------
 
@@ -190,10 +208,18 @@ to   = "cold-open"
 from = "niah-mechanics"
 to   = "retrieval-vs-reasoning"
 
-# Lost-in-the-middle feeds the context-rot measurement
+[[edges]]
+from = "niah-mechanics"
+to   = "mrcr"
+
+# Lost-in-the-middle feeds the context-rot measurement and OOLONG
 [[edges]]
 from = "lost-in-the-middle"
 to   = "context-rot"
+
+[[edges]]
+from = "lost-in-the-middle"
+to   = "oolong"
 
 # Theory primers feed the saturation crisis
 [[edges]]
@@ -224,6 +250,24 @@ to   = "needle-to-graph"
 [[edges]]
 from = "retrieval-vs-reasoning"
 to   = "needle-to-graph"
+
+# MRCR feeds the GraphWalks pivot and the 4x jump
+[[edges]]
+from = "mrcr"
+to   = "needle-to-graph"
+
+[[edges]]
+from = "mrcr"
+to   = "context-rot-fix"
+
+# OOLONG feeds the 2026 stack and 4x jump
+[[edges]]
+from = "oolong"
+to   = "eval-stack-2026"
+
+[[edges]]
+from = "oolong"
+to   = "context-rot-fix"
 
 # Mainline cascade into the context-rot-fix chapter
 [[edges]]
