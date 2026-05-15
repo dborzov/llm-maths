@@ -2127,6 +2127,14 @@ hr {
 }
 .pullquote-body p { margin: 0; max-width: none; }
 .pullquote-body::after { display: none; }
+/* Override the general .article-content blockquote rules that have higher specificity */
+.article-content .pullquote-body {
+    border-left: none;
+    background: none;
+    padding: 0;
+    overflow: visible;
+}
+.article-content .pullquote-body::after { display: none; }
 .pullquote-author {
     position: relative;
     z-index: 1;
