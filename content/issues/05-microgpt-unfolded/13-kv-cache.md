@@ -31,7 +31,7 @@ That is the whole mechanism. The most important data structure in modern LLM ser
 
 ## What Attention Demands
 
-Recall the attention math from [ch.8 attention](../08-attention/). To produce the output for token at position $t$, the model needs:
+Recall the {{< wiki "attention" >}}attention{{< /wiki >}} math from [ch.8 attention](../08-attention/). To produce the output for token at position $t$, the model needs:
 
 - The **query** $q_t$ at position $t$.
 - The **keys** $k_0, k_1, \ldots, k_t$ — all of them, going back to the beginning of the sequence.
@@ -212,7 +212,7 @@ ax.set_ylim(0, 100)
 
 ## The Bytes-Per-Token Trick
 
-The cache shape is fixed by the architecture, but the **element type is not**. Real serving stacks store the cache in whatever precision they can get away with:
+The cache shape is fixed by the architecture, but the **element type is not**. Real serving stacks store the cache in whatever {{< wiki "number-formats" >}}precision{{< /wiki >}} they can get away with:
 
 | Element type | Bytes/elem | Llama-3-8B at 128K | Notes |
 |---|---|---|---|

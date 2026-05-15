@@ -16,11 +16,11 @@ header: default.webp
 
 ## A Different Question
 
-It is **mid-2025**. The long-context benchmark wave from 2024 has settled. NIAH is dead. MRCR v2 has become the retrieval-side standard. GraphWalks is the multi-hop standard. OOLONG has just been released. The community has a layered stack, a vocabulary, and well-calibrated synthetic measurements.
+It is **mid-2025**. The long-context benchmark wave from 2024 has settled. {{< wiki "long-context-benchmarks" >}}NIAH{{< /wiki >}} is dead. MRCR v2 has become the retrieval-side standard. GraphWalks is the multi-hop standard. OOLONG has just been released. The community has a layered stack, a vocabulary, and well-calibrated synthetic measurements.
 
 And the question the frontier labs are *actually* asking has quietly moved on.
 
-The 2024 question was: *"How well does the model use its context window on a single prompt?"* Send in a 200K-token document, ask one question, score the answer. That question, the field has learned to measure.
+The 2024 question was: *"How well does the model use its {{< wiki "hyperparameters" >}}context window{{< /wiki >}} on a single prompt?"* Send in a 200K-token document, ask one question, score the answer. That question, the field has learned to measure.
 
 The 2025-2026 question is different: *"How well does the model use its context window across hours of work — many prompts, many tool calls, many intermediate decisions, all anchored on what was discovered earlier in the same session?"* This is **agentic long context**. It is not a question a single benchmark prompt can answer. It is a question about *sustained coherence*.
 

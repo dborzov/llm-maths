@@ -56,7 +56,7 @@ Three properties make it the natural choice for this job, and they are worth say
 
 What softmax *doesn't* do, and this catches everyone the first time: it is not "the function that turns numbers into probabilities" — it is *one such function*, chosen because it satisfies Luce's axiom and because its derivative is suspiciously clean (you can write $\partial \text{softmax}_i / \partial x_j$ in terms of softmax outputs themselves, which is why backprop through it is one line of code). A perfectly valid alternative would be to clip everything below zero and normalise; it would just lose all the gradients and Luce would frown.
 
-The exponential is what makes the gap between "biggest logit" and "everyone else" widen as the logits get larger. Two logits differing by 1 produce probabilities in the ratio $e^1 \approx 2.72$. Differing by 5: ratio $e^5 \approx 148$. Differing by 20: ratio $\approx 5 \cdot 10^8$. *Big numbers eat small numbers.* This is the entire reason a single attention head can lock onto one specific previous token while ignoring the rest.
+The exponential is what makes the gap between "biggest {{< wiki "logit" >}}logit{{< /wiki >}}" and "everyone else" widen as the logits get larger. Two logits differing by 1 produce probabilities in the ratio $e^1 \approx 2.72$. Differing by 5: ratio $e^5 \approx 148$. Differing by 20: ratio $\approx 5 \cdot 10^8$. *Big numbers eat small numbers.* This is the entire reason a single {{< wiki "attention" >}}attention{{< /wiki >}} head can lock onto one specific previous token while ignoring the rest.
 
 ## Where It Lives In microGPT
 

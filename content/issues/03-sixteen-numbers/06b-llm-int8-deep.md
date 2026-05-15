@@ -25,10 +25,10 @@ You will leave this chapter able to (a) implement the core algorithm from scratc
 The Hugging Face paper summarizes the method in three numbered steps. They look innocent. Each one hides a design decision.
 
 > 1. From the input hidden states, extract the outlier columns (any column whose absmax exceeds a threshold $\alpha$).
-> 2. Perform the matmul in two pieces: outliers in FP16, the rest in INT8 with vector-wise scaling.
+> 2. Perform the matmul in two pieces: outliers in {{< wiki "number-formats" >}}FP16{{< /wiki >}}, the rest in INT8 with vector-wise scaling.
 > 3. Dequantize the INT8 result back to FP16 and add it to the FP16 outlier result.
 
-Let us write this as math. We have an activation matrix $X \in \mathbb{R}^{T \times d}$ (token batch on rows, hidden dims on columns) and a weight matrix $W \in \mathbb{R}^{m \times d}$ (output dims on rows, input dims on columns). We want $Y = X W^\top \in \mathbb{R}^{T \times m}$.
+Let us write this as math. We have an activation matrix $X \in \mathbb{R}^{T \times d}$ (token batch on rows, hidden dims on columns) and a {{< wiki "transformer-weights" >}}weight matrix{{< /wiki >}} $W \in \mathbb{R}^{m \times d}$ (output dims on rows, input dims on columns). We want $Y = X W^\top \in \mathbb{R}^{T \times m}$.
 
 Define an **outlier mask** on columns of $X$:
 

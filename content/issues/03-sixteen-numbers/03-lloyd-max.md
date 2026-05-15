@@ -304,7 +304,7 @@ Once you know what to look for, you find Lloyd's iteration *everywhere* in twent
 
 **1993 — MP3 and the consumer audio revolution.** Suzanne Vega's *Tom's Diner* becomes famous among engineers because it is the reference recording the Fraunhofer team tunes the MP3 codec against. MP3 is a stack of psychoacoustic tricks over a quantization core — and the core is descended from the same lossy-compression theory Lloyd sketched in 1957.
 
-**2017 — VQ-VAE.** Aäron van den Oord and the DeepMind team build a neural network with a **discrete bottleneck** — an embedding layer that snaps continuous activations to the nearest vector in a learned codebook of size $K$. The snap is k-means. The model learns its codebook by gradient descent, but the inference-time operation — find the nearest codebook vector — is Lloyd's nearest-neighbour assignment, dropped into a deep learning pipeline like a guest who's been waiting for sixty years.
+**2017 — VQ-VAE.** Aäron van den Oord and the DeepMind team build a neural network with a **discrete bottleneck** — an {{< wiki "embeddings" >}}embedding layer{{< /wiki >}} that snaps continuous activations to the nearest vector in a learned codebook of size $K$. The snap is k-means. The model learns its codebook by gradient descent, but the inference-time operation — find the nearest codebook vector — is Lloyd's nearest-neighbour assignment, dropped into a deep learning pipeline like a guest who's been waiting for sixty years.
 
 **2024 — Tokenization.** When a modern LLM splits the string `"unbelievable"` into the tokens `["un", "believ", "able"]`, what just happened? Byte-pair encoding is *not* Lloyd's algorithm exactly, but the conceptual move — map a continuous space of byte sequences into a discrete codebook of subword units — is the same move Lloyd made in 1957, played at a higher level of abstraction. ChatGPT's tokenizer is, in spirit, the philosophical grandchild of the Murray Hill voltage-snapping circuit.
 
@@ -314,7 +314,7 @@ Every one of these systems is, deep down, **a Lloyd-Max codebook for the relevan
 
 So we arrive, by a longish road, at our actual subject: **modern LLM weight quantization**.
 
-In **May 2023**, in a paper called **QLoRA**, **Tim Dettmers** and collaborators publish a new 4-bit number format with a deliberately provocative claim: it is, they argue, *information-theoretically optimal* for storing the weights of a trained neural network. They call it **NF4** — "Normal Float 4". And the way they construct it is *exactly* Lloyd's algorithm.
+In **May 2023**, in a paper called **QLoRA**, **Tim Dettmers** and collaborators publish a new 4-bit number format with a deliberately provocative claim: it is, they argue, *information-theoretically optimal* for storing the weights of a trained neural network. They call it **{{< wiki "number-formats" >}}NF4{{< /wiki >}}** — "Normal Float 4". And the way they construct it is *exactly* Lloyd's algorithm.
 
 Step one of NF4: assume that, after normalisation, LLM weight tensors are approximately Gaussian. (This is empirical. It is mostly true. We unpack the caveats in [Geometry Of Weights](../05-geometry-of-weights/).)
 

@@ -40,7 +40,7 @@ x = linear(x, state_dict[f'layer{li}.mlp_fc2'])
 x = [a + b for a, b in zip(x, x_residual)]
 ```
 
-The shape is the same as the attention half: **normalize → do something → add the result back into the [residual stream](../10-residual-stream/)**. What's different is what happens in the middle. Two `linear()` calls separated by a per-element `relu`. The matrices have asymmetric shapes:
+The shape is the same as the attention half: **normalize → do something → add the result back into the {{< wiki "residual-stream" >}}residual stream{{< /wiki >}}**. What's different is what happens in the middle. Two `linear()` calls separated by a per-element `relu`. The matrices have asymmetric shapes:
 
 | Tensor | Shape `(out, in)` | microGPT toy | Llama 3 8B |
 |---|---|---|---|

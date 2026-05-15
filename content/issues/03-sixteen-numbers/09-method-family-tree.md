@@ -34,7 +34,7 @@ Each has a one-page entry. At the bottom is a quick selection table.
 ## 1. LLM.int8() — The Outlier Decomposition
 
 **Year:** August 2022.
-**The trick:** Split activations into a "regular" path (INT8 + vector-wise scales) and an "outlier" path (FP16). Recombine for the matmul. See [The 1% That Ruins Everything](../06-outliers/) for the full story.
+**The trick:** Split activations into a "regular" path ({{< wiki "number-formats" >}}INT8{{< /wiki >}} + vector-wise scales) and an "outlier" path (FP16). Recombine for the matmul. See [The 1% That Ruins Everything](../06-outliers/) for the full story.
 
 **When to use:** When you absolutely need *zero* accuracy degradation and don't mind a 3–4× slowdown vs FP16.
 
@@ -117,7 +117,7 @@ Effect: you can fine-tune a 65B-parameter model on a **single 48 GB GPU**. This 
 ## 6. HQQ — Half-Quadratic Quantization
 
 **Year:** October 2023, by **Hicham Badri** and **Appu Shaji** at Mobius Labs.
-**The trick:** *No calibration data needed.* HQQ formulates quantization as a sparse-regularized optimization problem solved by **half-quadratic splitting** — a classical optimization technique from signal processing. The minimization runs entirely from the weight matrix alone, no $X$.
+**The trick:** *No calibration data needed.* HQQ formulates quantization as a sparse-regularized optimization problem solved by **half-quadratic splitting** — a classical optimization technique from signal processing. The minimization runs entirely from the {{< wiki "transformer-weights" >}}weight matrix{{< /wiki >}} alone, no $X$.
 
 **Why this matters:** Calibration data is annoying to obtain ethically, especially for fine-tuned or proprietary models. HQQ skips it entirely.
 
@@ -156,7 +156,7 @@ Reading down the table you can pull out the things every successful method has i
 
 Two things.
 
-**1. Activations.** Most modern methods are weight-only. Activations live in FP16. This means the KV cache — which is *activations* in disguise — is unaffected. As long-context inference becomes the dominant cost, the KV cache becomes the dominant memory bill. We deal with it in [KV Cache Tyranny](../10-kv-cache/).
+**1. Activations.** Most modern methods are weight-only. Activations live in FP16. This means the {{< wiki "kv-cache" >}}KV cache{{< /wiki >}} — which is *activations* in disguise — is unaffected. As long-context inference becomes the dominant cost, the KV cache becomes the dominant memory bill. We deal with it in [KV Cache Tyranny](../10-kv-cache/).
 
 **2. The hardware floor.** All these methods are clever software tricks running on hardware that fundamentally does FP16 math. The next leap is when the *silicon itself* learns to do INT4 and FP4 math natively — see [Hardware Horizon](../12-hardware-horizon/). At that point, the software-quantization tricks become *cooperators* with hardware quantization, not workarounds for the lack of it.
 

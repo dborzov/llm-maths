@@ -125,7 +125,7 @@ Read the listing once more, but this time skim it like prose. There are exactly 
 
 > **7. Project to vocabulary.** After all the blocks, one final linear `lm_head` takes the residual vector and returns one logit per vocabulary token. The caller turns logits into probabilities, samples one, and feeds that integer back into `gpt()` next round.
 
-There is no extra cleverness. Every "trick" of modern LLM inference — paged KV cache, continuous batching, speculative decoding, RoPE, GQA — is **a localized optimization of one specific line above**. By the end of this issue, you will be able to point at the line each of those tricks is replacing.
+There is no extra cleverness. Every "trick" of modern LLM inference — paged {{< wiki "kv-cache" >}}KV cache{{< /wiki >}}, continuous batching, speculative decoding, RoPE, GQA — is **a localized optimization of one specific line above**. By the end of this issue, you will be able to point at the line each of those tricks is replacing.
 
 ## Where The Cache Goes
 
@@ -243,6 +243,8 @@ The rest of this issue is a guided walk through that 60-line listing. Every chap
 The order is chosen so that by the time you reach an article, every concept it references has already been introduced. The [tech tree on the cover page](../) is the dependency graph; the chapter numbers respect a topological sort of that graph.
 
 When you finish the last chapter — [The Full Forward Pass](../16-full-forward/) — we will reprint the listing one more time, this time annotated, every variable and every loop bound hyperlinked to the chapter that explained it. Think of it as the index to the rest of this entire project.
+
+*microGPT is a pedagogical derivative of **{{< wiki "karpathy" >}}Andrej Karpathy{{< /wiki >}}**'s [nanoGPT](https://github.com/karpathy/nanoGPT) — the same spirit of stripping everything to the minimum, rewritten for plain-Python clarity.*
 
 ---
 

@@ -16,7 +16,7 @@ header: default.webp
 
 ## Two Kinds Of Yardstick, Two Kinds Of Claim
 
-There is a quiet division running through every long-context benchmark we've discussed in this issue. Some — NIAH, RULER, MRCR, GraphWalks, OOLONG, Latent List — are **synthetic**. Their prompts are constructed by algorithm; their needles are deliberately engineered; their adjacency lists are random hex hashes; their distractors are programmatically generated. Other benchmarks — LongBench v2, NoCha, HELMET's application categories, LOFT's downstream tasks — are **realistic**. Their prompts are real documents, written by humans for non-benchmark purposes; their questions are expert-written; their answers are graded by humans (or by humans-with-tools).
+There is a quiet division running through every long-context benchmark we've discussed in this issue. Some — {{< wiki "long-context-benchmarks" >}}NIAH{{< /wiki >}}, RULER, MRCR, GraphWalks, OOLONG, Latent List — are **synthetic**. Their prompts are constructed by algorithm; their needles are deliberately engineered; their adjacency lists are random hex hashes; their distractors are programmatically generated. Other benchmarks — LongBench v2, NoCha, HELMET's application categories, LOFT's downstream tasks — are **realistic**. Their prompts are real documents, written by humans for non-benchmark purposes; their questions are expert-written; their answers are graded by humans (or by humans-with-tools).
 
 These two kinds of benchmark **answer different questions** about a model. A synthetic benchmark is *diagnostic*: it tells you whether the model has a *specific* capability, in a clean controlled setting. A realistic benchmark is *predictive*: it tells you what the model is likely to do *in production*, in a messier real setting.
 
@@ -85,7 +85,7 @@ That picture is the *whole* benchmark landscape of 2026, sorted by a single axis
 
 ## The Case For Synthetic — Diagnostics
 
-A synthetic benchmark is *clean*. Every variable is controlled. The latent structure ([Vodrahalli's Chisel](../09-latent-structure/)) is exactly known. The distractors are statistically uniform. The grade is binary (right or wrong). This produces three useful properties:
+A synthetic benchmark is *clean*. Every variable is controlled. The {{< wiki "long-context-concepts" >}}latent structure{{< /wiki >}} ([Vodrahalli's Chisel](../09-latent-structure/)) is exactly known. The distractors are statistically uniform. The grade is binary (right or wrong). This produces three useful properties:
 
 1. **Reproducibility.** Two labs running the same NIAH harness on the same model should get identical results to within sampling noise. This is uncommon outside synthetic benchmarks.
 2. **Capability decomposition.** When a model fails NoLiMa but passes NIAH, the diff isolates a specific capability — semantic retrieval vs surface-token matching. When a model fails GraphWalks BFS-4 but passes BFS-2, the diff isolates reasoning depth.

@@ -24,7 +24,7 @@ The contribution they end up with is a single metaphor.
 A well-designed long-context task requires the model to **chisel away the irrelevant context, revealing a latent structure** — and then query that structure for details.
 {{% /pullquote %}}
 
-They call this the **Latent Structure Queries (LSQ) framework**.
+They call this the **{{< wiki "long-context-concepts" >}}Latent Structure Queries (LSQ) framework{{< /wiki >}}**.
 
 The metaphor is shamelessly art-historical: Michelangelo claimed (apocryphally) that *"the sculpture is already there in the block of marble; the artist's job is to remove the parts that do not belong."* Vodrahalli's claim is the same for long contexts. The answer to a well-designed long-context question is *already implicit* in the prompt, encoded as a latent structure (a list, a chain of co-references, a graph, an aggregate). The model's job is to *chisel away the irrelevant text* and *expose the structure* — and then read off the answer.
 
@@ -61,7 +61,7 @@ This is a beautiful task design. Notice three things:
 
 Latent List is *the* clean LSQ instance. If a model fails it, the model is not extracting structure from long context; it is doing something else.
 
-### Task 2 — MRCR (Multi-Round Co-reference Resolution)
+### Task 2 — {{< wiki "long-context-benchmarks" >}}MRCR (Multi-Round Co-reference Resolution){{< /wiki >}}
 
 The famous one. The prompt contains a long, naturalistic dialogue between a hypothetical user and assistant, in which the user makes **8 similar requests** — say, all variations on "write me a poem":
 

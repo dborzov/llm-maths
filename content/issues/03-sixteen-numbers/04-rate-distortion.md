@@ -79,7 +79,7 @@ ax.spines[['top', 'right']].set_visible(False)
 ax.grid(True, alpha=0.3)
 ```
 
-This curve is the **frontier of all possible lossy codes**. Every Lloyd-Max quantizer, every JPEG, every NF4 weight scheme — all of them are *points below the frontier*, each chasing the limit but never quite reaching it.
+This curve is the **frontier of all possible lossy codes**. Every Lloyd-Max quantizer, every JPEG, every {{< wiki "number-formats" >}}NF4{{< /wiki >}} weight scheme — all of them are *points below the frontier*, each chasing the limit but never quite reaching it.
 
 ## Where Lloyd-Max Sits On The Curve
 

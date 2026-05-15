@@ -34,7 +34,7 @@ That is it. That is the algorithm. It fits on a business card. Now let us unders
 
 ## The Geometry
 
-Picture a number line in the original `float32` range. Suppose the values in your tensor span $[-s, s]$ where $s = \max_i |x_i|$. The integer grid you target spans $[-127, +127]$ for signed INT8. Absmax stretches the float interval like a rubber band onto the integer interval. Every float gets snapped to the nearest integer code.
+Picture a number line in the original `float32` range. Suppose the values in your tensor span $[-s, s]$ where $s = \max_i |x_i|$. The integer grid you target spans $[-127, +127]$ for signed {{< wiki "number-formats" >}}INT8{{< /wiki >}}. Absmax stretches the float interval like a rubber band onto the integer interval. Every float gets snapped to the nearest integer code.
 
 $$
 q_i = \mathrm{round}\!\left(\frac{127}{s} \cdot x_i\right), \qquad
@@ -342,7 +342,7 @@ Knowing all this, why is absmax still the universal baseline? Three reasons.
 2. **Zero is exact**. In neural networks the scalar value $0$ appears constantly — ReLU outputs, padding tokens, masked positions, pruned weights, attention masks. Any quantizer that introduces a bias at zero will silently corrupt all of these. Absmax preserves zero by construction. (Asymmetric schemes have to work harder to do this — see [Zero-Point Quantization](../02b-zero-point/).)
 3. **It has no parameters to calibrate**. No data needed, no offline pass. A model is loaded, scale is computed in one CUDA reduction, weights are cast. The latency budget of a deployment script can absorb this.
 
-That third property is why even [LLM.int8()](../06-outliers/) uses absmax internally — applied **per row of the activation matrix and per column of the weight matrix** rather than per tensor, but absmax nonetheless. The genius of LLM.int8 is not abandoning absmax. The genius is **isolating the outliers so absmax can do its job on the rest**.
+That third property is why even [LLM.int8()](../06-outliers/) uses absmax internally — applied **per row of the activation matrix and per column of the {{< wiki "transformer-weights" >}}weight matrix{{< /wiki >}}** rather than per tensor, but absmax nonetheless. The genius of LLM.int8 is not abandoning absmax. The genius is **isolating the outliers so absmax can do its job on the rest**.
 
 ## The Granularity Knob
 

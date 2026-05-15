@@ -20,7 +20,7 @@ Suppose you have done everything in this issue. Your 70B-parameter Llama is quan
 
 Then a user asks for a 32,000-token context window.
 
-Suddenly your memory bill explodes again. Not from weights — those are still 35 GB. The new culprit is the **KV cache**: the running buffer of key and value tensors that the model carries from token to token during self-attention.
+Suddenly your memory bill explodes again. Not from weights — those are still 35 GB. The new culprit is the **{{< wiki "kv-cache" >}}KV cache{{< /wiki >}}**: the running buffer of key and value tensors that the model carries from token to token during {{< wiki "attention" >}}self-attention{{< /wiki >}}.
 
 For Llama 2 70B at 32K context, the KV cache is roughly **40 GB** — *bigger than the quantized weights*. For 128K context, it's 160 GB. The cache scales **linearly with context length**, while weights are fixed.
 
@@ -144,6 +144,6 @@ Quantization stays useful in all of these — it's a *constant-factor* saving on
 
 When weights were the problem, you got [LLM.int8](../06-outliers/), [GPTQ](../08-brain-surgery/), and the [family of methods](../09-method-family-tree/) we just toured. Once weights got small, the KV cache became the new dominant cost — and KIVI-style methods carved into it.
 
-But there's an even larger move just over the horizon: **what if the hardware itself supported KV-cache-native low-precision arithmetic?** What if you could do attention math directly in FP8 or FP4 without the dequantize-then-compute dance? That's the territory of the next-generation silicon, and the closing chapter of this issue.
+But there's an even larger move just over the horizon: **what if the hardware itself supported KV-cache-native low-precision arithmetic?** What if you could do attention math directly in {{< wiki "number-formats" >}}FP8{{< /wiki >}} or FP4 without the dequantize-then-compute dance? That's the territory of the next-generation silicon, and the closing chapter of this issue.
 
 **Continue to** → [Inside K and V](../16-kv-distribution/) for the deep distribution-detective story behind the K-channel / V-token asymmetry — the empirical discovery that drives every entry in [The KV Method Family Tree](../15-kv-method-family/). Then onwards to the underlying machinery in [Calibration & Blocks](../11-calibration-and-blocks/) and the hardware finale.

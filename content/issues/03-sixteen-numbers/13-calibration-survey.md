@@ -22,7 +22,7 @@ The wobble is the adaptation working too slowly. Each time a speaker shifts from
 
 Crochiere's fix is one of the foundational papers of the field. He proposes that the encoder transmit a small *header* before each block of samples — twenty-four bits of metadata announcing the step size for the next block. Decoders receive the header, set their reconstruction grid to match, and process the block. Calibration becomes **explicit, periodic, and free of feedback delay**.
 
-The paper is published in **1976**. Forty-six years later, when **Elias Frantar** sits down to write GPTQ, his calibration has the same shape: read a small block of data, decide on a per-block scale, encode that scale, encode the values. The difference is that Crochiere's "block" was a hundred milliseconds of speech and Frantar's was a hundred and twenty-eight columns of a Llama weight matrix. The bones of the technique are identical.
+The paper is published in **1976**. Forty-six years later, when **Elias Frantar** sits down to write GPTQ, his calibration has the same shape: read a small block of data, decide on a per-block scale, encode that scale, encode the values. The difference is that Crochiere's "block" was a hundred milliseconds of speech and Frantar's was a hundred and twenty-eight columns of a Llama {{< wiki "transformer-weights" >}}weight matrix{{< /wiki >}}. The bones of the technique are identical.
 
 This article is the field guide to **calibration** — the half of every quantization method that decides where the dots go. We will tour the modern menagerie (data-free, statistics-only, Hessian-aware, gradient-based) with one eye on the long lineage that all of these methods inherit from, and one eye on the practical question of *which one you actually want to use*.
 
@@ -30,7 +30,7 @@ This article is the field guide to **calibration** — the half of every quantiz
 
 Strip a quantization method to its bones and you have two choices to make:
 
-1. **The grid:** which set of representable values? (Picked once, often by the format — INT8, FP4, NF4.)
+1. **The grid:** which set of representable values? (Picked once, often by the format — {{< wiki "number-formats" >}}INT8{{< /wiki >}}, FP4, NF4.)
 2. **The placement:** where does that grid sit, relative to the data? (Picked per tensor / per row / per block — the **scale** and possibly the **zero-point**.)
 
 **Calibration is the second choice.** It is the act of looking at some sample of the data — or no data at all — and producing the parameters that locate the grid. Everything from "use the maximum absolute value" ([absmax](../02a-absmax/)) to "solve a constrained optimization with second-order information" ([GPTQ](../08-brain-surgery/)) is a calibration strategy. The *only* difference between a five-line absmax script and a hundred-thousand-line OmniQuant codebase is **how much work is being done at calibration time, and how much information is being used to do it**.
@@ -365,7 +365,7 @@ Final recap, framed as the practical choice you have to make.
 5. **Do you have no calibration data at all, or need a quantized model in seconds?** → use HQQ (bucket 1).
 6. **Do you just want the quickest possible thing that doesn't catastrophically break?** → use round-to-nearest with per-block scaling (bucket 0/1). It's the baseline; surprisingly hard to beat at 8-bit.
 
-For the [KV cache](../10-kv-cache/), the buckets shift around: most KV methods are bucket 1 (data-free, or per-token online) because there's no time to calibrate at inference. The handful that are bucket 2 (KIVI calibrates outlier-channel masks once per layer) need only seconds. The full bucket-3 GPTQ machinery does not really have a KV analogue — KV calibration is a different game, with its own family tree, in [The KV Method Family Tree](../15-kv-method-family/).
+For the [{{< wiki "kv-cache" >}}KV cache{{< /wiki >}}](../10-kv-cache/), the buckets shift around: most KV methods are bucket 1 (data-free, or per-token online) because there's no time to calibrate at inference. The handful that are bucket 2 (KIVI calibrates outlier-channel masks once per layer) need only seconds. The full bucket-3 GPTQ machinery does not really have a KV analogue — KV calibration is a different game, with its own family tree, in [The KV Method Family Tree](../15-kv-method-family/).
 
 ## What To Remember
 

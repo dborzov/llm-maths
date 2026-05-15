@@ -16,7 +16,7 @@ header: default.webp
 
 ## Numbers Become Hardware
 
-For most of the story we've told in this issue, *quantization is a software trick*. A clever calibration pass, a Cholesky factor, a per-block scale — all running on top of GPU hardware that fundamentally does FP16 (or FP32) math. The hardware doesn't know about INT4. It just multiplies floats. We dequantize on the fly.
+For most of the story we've told in this issue, *quantization is a software trick*. A clever calibration pass, a Cholesky factor, a per-block scale — all running on top of GPU hardware that fundamentally does {{< wiki "number-formats" >}}FP16{{< /wiki >}} (or FP32) math. The hardware doesn't know about INT4. It just multiplies floats. We dequantize on the fly.
 
 In 2023, that changed. NVIDIA's **Hopper** architecture introduced native **FP8 tensor cores** — silicon-level multiplication and accumulation in 8-bit floating point, without a dequantization detour. In 2025, **Blackwell** doubled down and added native **FP4** (specifically **MXFP4**, with hardware-aware per-block scales).
 

@@ -11,7 +11,7 @@ issue: 4
 weight: 30
 techKind: primer
 techNode: niah-mechanics
-header: default.webp
+header: 03-niah-mechanics.v2.webp
 ---
 
 ## The Whiteboard, The Weekend, The Test

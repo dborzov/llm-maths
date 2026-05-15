@@ -26,7 +26,7 @@ Recall the basic INT-quantization picture. To represent a vector of real values 
 
 The question is: how do you pick $s$?
 
-**Per-tensor scale**: one $s$ for the whole matrix. Simplest, smallest metadata, but fails badly when different rows have different magnitudes. This is what naïve INT8 does — and what makes it crumble on LLMs.
+**Per-tensor scale**: one $s$ for the whole matrix. Simplest, smallest metadata, but fails badly when different rows have different magnitudes. This is what naïve {{< wiki "number-formats" >}}INT8{{< /wiki >}} does — and what makes it crumble on LLMs.
 
 **Per-row scale**: one $s$ per row of the matrix. Better — adjusts for row-to-row heterogeneity. Standard since AlexNet-era quantization.
 
@@ -143,7 +143,7 @@ It's a small saving in absolute terms but a meaningful win when every bit counts
 
 ## Why Block-Wise Matters Beyond Weights
 
-KV cache quantization (see [KV Cache Tyranny](../10-kv-cache/)) uses the same block idea, but on a different axis. KIVI quantizes K **per-channel block** (because outliers cluster per channel) and V **per-token block** (because outliers cluster per token). The block size still matters; the axis-of-blocking matters more.
+{{< wiki "kv-cache" >}}KV cache{{< /wiki >}} quantization (see [KV Cache Tyranny](../10-kv-cache/)) uses the same block idea, but on a different axis. KIVI quantizes K **per-channel block** (because outliers cluster per channel) and V **per-token block** (because outliers cluster per token). The block size still matters; the axis-of-blocking matters more.
 
 For activations in general, **per-token quantization** is the standard. Each token gets its own scale, computed on the fly during inference. This costs a single max-reduction per token but means each token's activations are independently fit to the grid. It's how SmoothQuant and ZeroQuant achieve INT8 activation quantization without LLM.int8's mixed-precision split.
 

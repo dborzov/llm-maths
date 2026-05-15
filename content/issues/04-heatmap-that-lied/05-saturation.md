@@ -23,7 +23,7 @@ If 2023 was the year of *one* long-context benchmark, **2024 was the year of fif
 This chapter is the story of how that slogan was constructed, paper by paper. We will visit seven benchmarks — RULER, ∞Bench, BABILong, LOFT, NoCha, HELMET, LongBench v2 — and a single conceptual scaffold (Michelangelo's *Latent Structure Queries*) that ties them together. The point is not to memorise each test's exact construction — that's what the primers underneath are for — but to absorb the *coordinated movement* of the field, and what it concluded.
 
 {{% pullquote type="profound" %}}
-**Retrieval is not reasoning.** It emerged from seven benchmarks in eight months, never as a formal thesis — just the shared annotation the field kept writing in the margins.
+**{{< wiki "long-context-concepts" >}}Retrieval is not reasoning{{< /wiki >}}.** It emerged from seven benchmarks in eight months, never as a formal thesis — just the shared annotation the field kept writing in the margins.
 {{% /pullquote %}}
 
 ```pyplot {id="benchmark-timeline" caption="The 2024 long-context benchmark wave. Each marker is a paper that explicitly framed itself as a NIAH successor or critique. Seven benchmarks in eight months — and three more (Michelangelo, NoCha, LongBench v2) in the same window. Single field, coordinated shift in evaluation philosophy."}
@@ -151,7 +151,7 @@ Three benchmarks. Three different methodologies. One conclusion: **the model fin
 
 ## September 2024 — Michelangelo Names The Problem
 
-By September 2024 the field had a pile of evidence and no organising principle. The paper that supplied the principle was **Michelangelo** by **Kiran Vodrahalli and colleagues at Google DeepMind** (arXiv:2409.12640). It proposed the **Latent Structure Queries (LSQ) framework**, and its central metaphor borrowed from the sculptor: **a long-context evaluation task should require the model to "chisel away the irrelevant context, revealing a latent structure"** — and then query that structure for details.
+By September 2024 the field had a pile of evidence and no organising principle. The paper that supplied the principle was **Michelangelo** by **{{< wiki "vodrahalli" >}}Kiran Vodrahalli{{< /wiki >}} and colleagues at Google DeepMind** (arXiv:2409.12640). It proposed the **Latent Structure Queries (LSQ) framework**, and its central metaphor borrowed from the sculptor: **a long-context evaluation task should require the model to "chisel away the irrelevant context, revealing a latent structure"** — and then query that structure for details.
 
 Three diagnostic tasks, each one a clean instantiation of the LSQ idea:
 

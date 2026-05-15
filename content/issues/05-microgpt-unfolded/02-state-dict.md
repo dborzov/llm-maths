@@ -85,7 +85,7 @@ This is also why the same `.pth` file can be loaded by twelve different inferenc
 
 ## The Table That Holds The Whole Thing
 
-Here are the nine shapes, side by side, for our toy and for a real frontier model. We'll use **Llama 3 8B** as the reference — 32 layers, 4096 embedding dim, 32 query heads, 8 key/value heads (it uses Grouped-Query Attention, which compresses K and V; we'll explain it in [chapter 9](../09-multi-head/) and [chapter 18](../18-gqa/)), 128000-token vocab.
+Here are the nine shapes, side by side, for our toy and for a real frontier model. We'll use **Llama 3 8B** as the reference — 32 layers, 4096 embedding dim, 32 query heads, 8 key/value heads (it uses Grouped-Query {{< wiki "attention" >}}Attention{{< /wiki >}}, which compresses K and V; we'll explain it in [chapter 9](../09-multi-head/) and [chapter 18](../18-gqa/)), 128000-token vocab.
 
 | Key | Role | microGPT shape | Llama 3 8B shape |
 |---|---|---|---|
@@ -121,7 +121,7 @@ $$
 \underbrace{4096 \cdot 14336}_{\text{fc1}} + \underbrace{14336 \cdot 4096}_{\text{fc2}} \approx 117{,}440{,}512
 $$
 
-Per-layer total: $\approx 159$ M params. Times 32 layers: $\approx 5.1$ B. Add the embedding and head tables ($128000 \cdot 4096 \cdot 2 = 1.05$ B if they're untied), and you land at roughly **6–8 B parameters** depending on whether `wte` and `lm_head` share storage. At fp16 (2 bytes/param), that's **12–16 GB on disk**. This is why a single 24 GB RTX 4090 can host Llama 3 8B in fp16 with room left for KV cache, but not a 70B sibling.
+Per-layer total: $\approx 159$ M params. Times 32 layers: $\approx 5.1$ B. Add the embedding and head tables ($128000 \cdot 4096 \cdot 2 = 1.05$ B if they're untied), and you land at roughly **6–8 B parameters** depending on whether `wte` and `lm_head` share storage. At fp16 (2 bytes/param), that's **12–16 GB on disk**. This is why a single 24 GB RTX 4090 can host Llama 3 8B in fp16 with room left for {{< wiki "kv-cache" >}}KV cache{{< /wiki >}}, but not a 70B sibling.
 
 The same nine names. The same six lines of arithmetic. Different integers.
 

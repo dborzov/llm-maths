@@ -36,7 +36,7 @@ The axis question is just: **how do you partition?**
 
 ## A Tour Of The Standard Partitions
 
-Take a generic 2D weight matrix $W$ of shape $(m, n)$ — say $m$ output dimensions × $n$ input dimensions. There are six standard ways to partition it.
+Take a generic 2D {{< wiki "transformer-weights" >}}weight matrix{{< /wiki >}} $W$ of shape $(m, n)$ — say $m$ output dimensions × $n$ input dimensions. There are six standard ways to partition it.
 
 ### 1. Per-Tensor
 
@@ -101,7 +101,7 @@ We discussed why $g = 128$ is the conventional sweet spot in [Calibration & Bloc
 A genuinely 2D partition: tile $W$ into $g \times g$ blocks, one scale per tile. Or non-square ($g_1 \times g_2$).
 
 **Cost:** $\frac{mn}{g_1 g_2}$ scalars. For $g_1 = g_2 = 32$: 16K scalars per layer. Cheap.
-**When right:** When *both* row and column axes have local heterogeneity. Useful for KV cache and for some attention patterns.
+**When right:** When *both* row and column axes have local heterogeneity. Useful for {{< wiki "kv-cache" >}}KV cache{{< /wiki >}} and for some {{< wiki "attention" >}}attention{{< /wiki >}} patterns.
 **Where used:** Less common than 1D blocks; some GGUF K-quant variants and some KV methods. A frontier area.
 
 ## A Pictorial Walk Through The Same Tensor
@@ -182,11 +182,11 @@ Practical translation:
 | Tensor type | Heterogeneous along… | Right partition |
 |---|---|---|
 | Trained weights $W$ | rows + within-row | per-row + per-block(1D) |
-| FFN activations | feature dims (channels) | per-column + per-token |
+| {{< wiki "mlp-block" >}}FFN{{< /wiki >}} activations | feature dims (channels) | per-column + per-token |
 | K (per layer) | feature dims (channels) | per-channel |
 | V (per layer) | sequence positions (tokens) | per-token |
-| Embedding tables | both rows and columns | per-block(2D) sometimes |
-| Gradient tensors | wide dynamic range | per-tensor with FP8 (range matters more than partition) |
+| {{< wiki "embeddings" >}}Embedding{{< /wiki >}} tables | both rows and columns | per-block(2D) sometimes |
+| Gradient tensors | wide dynamic range | per-tensor with {{< wiki "number-formats" >}}FP8{{< /wiki >}} (range matters more than partition) |
 
 The rule is empirical, not theoretical — but it has held up across two years of method-paper publications. The methods that work are the ones that match axes.
 

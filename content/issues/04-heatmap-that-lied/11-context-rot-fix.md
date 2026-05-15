@@ -18,7 +18,7 @@ header: default.webp
 
 It is **September 29, 2025**. Anthropic ships **Claude Sonnet 4.5**. The system card runs 184 pages. Buried inside, on page 71, in the long-context section, is a table that the long-context Twitter accounts will spend a week chewing over:
 
-> **MRCR v2 (OpenAI), 8-needle, 1M context: 18.5%**
+> **{{< wiki "long-context-benchmarks" >}}MRCR v2{{< /wiki >}} (OpenAI), 8-needle, 1M context: 18.5%**
 
 Read that number. **A frontier model from the leading "long-context" lab scoring 18.5% on the hardest variant of the standard retrieval benchmark.** A random-chance baseline would do better than 18.5% only on a multiple-choice version — MRCR v2 is open-ended, so 18.5% means the model genuinely retrieves the right ordinal instance in fewer than 1 of every 5 attempts.
 
@@ -34,7 +34,7 @@ On **February 13, 2026**, Anthropic ships **Claude Opus 4.6**. The launch blog o
 
 > *"A common complaint about AI models is 'context rot,' where performance degrades as conversations exceed a certain number of tokens. Opus 4.6 performs markedly better than its predecessors. This is a qualitative shift in how much context a model can actually use while maintaining peak performance."*
 
-This is the first time "context rot" appears in a frontier-lab marketing blog as a *named, acknowledged phenomenon to be fixed*. The phrase had been circulating in user communities since mid-2024, formalised by the Chroma study in July 2025 ([The Chroma Measurement](../12-context-rot/)), and treated as a known limitation by every long-context paper since. Anthropic's move is to *adopt the user-coined term* and then announce that the new model fixes it.
+This is the first time "{{< wiki "long-context-concepts" >}}context rot{{< /wiki >}}" appears in a frontier-lab marketing blog as a *named, acknowledged phenomenon to be fixed*. The phrase had been circulating in user communities since mid-2024, formalised by the Chroma study in July 2025 ([The Chroma Measurement](../12-context-rot/)), and treated as a known limitation by every long-context paper since. Anthropic's move is to *adopt the user-coined term* and then announce that the new model fixes it.
 
 The headline number:
 
@@ -101,7 +101,7 @@ That graph contains two stories. The first — the 57.5-pp jump from Sonnet 4.5 
 The Opus 4.6 launch material is *unusually specific* about what changed. The launch blog cites three contributions, in order of estimated importance:
 
 1. **A new training-data mixture emphasising long-context examples** — Anthropic added more 256K- and 1M-token training documents (synthetic mixtures of code, documentation, and natural dialogue) and re-weighted the loss to penalise long-position errors more heavily.
-2. **An improved RoPE-extension scheme** — Opus 4.6 uses a YaRN-style positional interpolation tuned on the new long training distribution. The blog notes "stronger position discrimination at >256K tokens" without detailing the parameter choices.
+2. **An improved {{< wiki "rope" >}}RoPE{{< /wiki >}}-extension scheme** — Opus 4.6 uses a YaRN-style positional interpolation tuned on the new long training distribution. The blog notes "stronger position discrimination at >256K tokens" without detailing the parameter choices.
 3. **A revised attention pattern at long context** — implicitly hinting at some attention-sink or sliding-window hybridisation, though Anthropic remains tight-lipped about the specifics. (Open-model labs published several attention-sink and ring-attention variants in the same window of time; the details are likely similar.)
 
 The blog's most often-quoted phrase, capturing the philosophical pitch:
@@ -206,7 +206,7 @@ This is, in retrospect, the first really public demonstration that **frontier mo
 Step back. The Opus 4.6 release crystallised the phrase "context rot" into a measurable phenomenon, but what does it actually denote? Three empirical components, in roughly descending order of impact:
 
 1. **The U-curve.** Middle-of-context information is recalled less reliably than start or end. We unpacked this in [The U-Curve](../07-lost-in-the-middle/).
-2. **The compounding-noise effect.** Across 80 attention layers, small per-layer attention misallocations compound. At 1M tokens, a 0.5% per-layer drift in attention probability across the wrong key positions becomes a 30%+ probability mass on the wrong answer.
+2. **The compounding-noise effect.** Across 80 {{< wiki "attention" >}}attention{{< /wiki >}} layers, small per-layer attention misallocations compound. At 1M tokens, a 0.5% per-layer drift in attention probability across the wrong key positions becomes a 30%+ probability mass on the wrong answer.
 3. **The training-distribution mismatch.** Most 2024-era models were trained on a length distribution that averaged ~8K tokens, with very few examples at the 1M-token tail. The architecture *accepts* 1M; the *training* didn't reward correct behaviour there.
 
 What Opus 4.6 did was attack components 2 and 3 directly: more long-context training data, better positional discrimination at long range, attention-pattern improvements. Component 1 (the U-curve) is partly mitigated but not fully — the Chroma 2025 study's reproductions of the U on Opus 4.6 still show a (shallower) valley in the middle.

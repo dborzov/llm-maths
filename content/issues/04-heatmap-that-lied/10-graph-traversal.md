@@ -20,9 +20,9 @@ In **1959**, **Edward F. Moore** publishes a paper titled *"The shortest path th
 
 Why is a 1959 algorithm at the center of the 2025 long-context benchmark wars?
 
-Because it has one property that is *exactly* what the field needed: **its depth cannot be parallelised across attention layers**. Each level of the BFS frontier *must* be computed after the previous level. No amount of clever batching changes this fact. And as we showed in [Scan vs Think](../04-retrieval-vs-reasoning/), this is the precise capability that single-pass transformer attention does not have. **BFS in context is the cleanest possible architectural stress test for in-context reasoning.**
+Because it has one property that is *exactly* what the field needed: **its depth cannot be parallelised across {{< wiki "attention" >}}attention{{< /wiki >}} layers**. Each level of the BFS frontier *must* be computed after the previous level. No amount of clever batching changes this fact. And as we showed in [Scan vs Think](../04-retrieval-vs-reasoning/), this is the precise capability that single-pass transformer attention does not have. **BFS in context is the cleanest possible architectural stress test for in-context reasoning.**
 
-This primer walks through what BFS is, why GraphWalks built its benchmark around it, and the napkin math that says BFS depth $k$ in a graph of $n$ nodes requires *at least* $k$ dependent attention hops to complete.
+This primer walks through what BFS is, why {{< wiki "long-context-benchmarks" >}}GraphWalks{{< /wiki >}} built its benchmark around it, and the napkin math that says BFS depth $k$ in a graph of $n$ nodes requires *at least* $k$ dependent attention hops to complete.
 
 ## BFS, From Scratch
 
@@ -190,7 +190,7 @@ Because **hex hashes have no semantic prior in the model's weights.** The model 
 
 This is the same defensive design choice we saw in [Needle in a Haystack](../03-niah-mechanics/) and [Leakage and Drift](../15-contamination-drift/): use synthetic, semantically-neutral content so that *parametric* knowledge cannot short-circuit the test. A benchmark with semantically-meaningful node names (`Alice → Bob`, `Bob → Charlie`) would be solvable by reading half the adjacency list and guessing the rest from social-network priors the model already knows. The hex hashes force the model to *actually* attend to the in-prompt structure.
 
-In the LSQ framework from [Vodrahalli's Chisel](../09-latent-structure/), this design choice is "make the latent structure *only* extractable from the prompt." Hex hashes are how GraphWalks operationalises that.
+In the {{< wiki "long-context-concepts" >}}LSQ framework{{< /wiki >}} from [Vodrahalli's Chisel](../09-latent-structure/), this design choice is "make the latent structure *only* extractable from the prompt." Hex hashes are how GraphWalks operationalises that.
 
 ## How Models Solve GraphWalks: Chain-of-Thought As Hop Multiplier
 

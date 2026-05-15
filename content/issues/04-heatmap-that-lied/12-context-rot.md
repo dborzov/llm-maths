@@ -28,7 +28,7 @@ This primer is about what the Chroma study actually measured, why it stuck, and 
 
 ## The Chroma Construction
 
-What the Chroma team did, mechanically, is something nobody else had done at that scale. They took **NIAH**, **NoLiMa** (a no-token-overlap variant), and an MRCR-style focused retrieval task, and they ran them **across 18 frontier models** at **8 context lengths** from 1K to 1M tokens — with the *position of the needle controlled and reported separately*. The result is a multi-dimensional measurement grid: (model × benchmark × context length × needle position). The point is not the headline number but the *shape* of the surface.
+What the Chroma team did, mechanically, is something nobody else had done at that scale. They took **{{< wiki "long-context-benchmarks" >}}NIAH{{< /wiki >}}**, **NoLiMa** (a no-token-overlap variant), and an MRCR-style focused retrieval task, and they ran them **across 18 frontier models** at **8 context lengths** from 1K to 1M tokens — with the *position of the needle controlled and reported separately*. The result is a multi-dimensional measurement grid: (model × benchmark × context length × needle position). The point is not the headline number but the *shape* of the surface.
 
 Three findings dominated the report.
 
@@ -122,7 +122,7 @@ A different angle from the same era. **AbsenceBench** (Fu et al., 2025) inverts 
 
 For example: present the model with a long list of 50 specific named entities (cities, products, people), then ask "what's missing from the standard list of 51?" The latent structure is *the gap* in an ordered set.
 
-Frontier models perform astonishingly badly on AbsenceBench. The reason connects to the Michelangelo IDK task ([Vodrahalli's Chisel](../09-latent-structure/)): **detecting absence requires a different mode of attention than detecting presence.** A NIAH-style retrieval lets attention concentrate probability mass on a single match; an absence query requires comparing the input set to an expected set and *noticing the diff*. The transformer is not natively built for this. Even at moderate context lengths, AbsenceBench scores trail NIAH scores by 30-50 pp.
+Frontier models perform astonishingly badly on AbsenceBench. The reason connects to the Michelangelo IDK task ([Vodrahalli's Chisel](../09-latent-structure/)): **detecting absence requires a different mode of {{< wiki "attention" >}}attention{{< /wiki >}} than detecting presence.** A NIAH-style retrieval lets attention concentrate probability mass on a single match; an absence query requires comparing the input set to an expected set and *noticing the diff*. The transformer is not natively built for this. Even at moderate context lengths, AbsenceBench scores trail NIAH scores by 30-50 pp.
 
 This is, again, evidence that *the long-context capability surface is multi-dimensional*. A model that aces NIAH may fail AbsenceBench. A model that aces both may fail OOLONG. There is no single "long-context ability" anymore.
 
@@ -132,7 +132,7 @@ We've covered OOLONG in detail in [One Pass Isn't Enough](../08-needle-to-graph/
 
 Recall the OOLONG construction: each chunk in the prompt encodes a small atomic fact (a number, a category, a sentiment). The question requires per-chunk classification *plus* aggregation across chunks ("how many tickets are about billing with sentiment < 3?"). This stresses *working memory across the context*, not depth of reasoning.
 
-Chroma did not run OOLONG (it came out four months after their report), but the Vodrahalli et al. OOLONG paper is in some sense a *spiritual successor* to the Chroma study. Both ask: when does the model start dropping pieces? Chroma measures *retrieval rot*. OOLONG measures *aggregation rot*. Together they bracket the practical limit of long-context capability in 2026.
+Chroma did not run OOLONG (it came out four months after their report), but the {{< wiki "vodrahalli" >}}Vodrahalli{{< /wiki >}} et al. OOLONG paper is in some sense a *spiritual successor* to the Chroma study. Both ask: when does the model start dropping pieces? Chroma measures *retrieval rot*. OOLONG measures *aggregation rot*. Together they bracket the practical limit of long-context capability in 2026.
 
 The OOLONG headline number: **GPT-5, Claude Sonnet 4, Gemini 2.5 Pro all under 50% at 128K.** This number anchors the practitioner's mental model: even when the model can find each fact, it cannot reliably combine many facts. The capability surface has a width axis that is much worse than the depth axis at long context.
 

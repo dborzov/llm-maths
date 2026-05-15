@@ -18,7 +18,7 @@ header: default.webp
 
 On May 6, 2024, a Chinese lab called **DeepSeek-AI** uploaded the weights of a 236-billion-parameter mixture-of-experts model to Hugging Face and quietly published a paper titled *"DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model"*. The paper was 50 pages. Most Western infrastructure teams had not heard of the lab. The model card claimed inference costs **5.76× cheaper** than competitors of the same parameter class. The headline benchmark numbers were good but not extraordinary; the headline *economics* were extraordinary.
 
-The interesting page of the paper was not the benchmark table. It was Figure 3 — a diagram of a thing called **Multi-head Latent Attention**, abbreviated MLA. The diagram showed K and V vectors being squeezed through a narrow waist before being written to the cache, and then being unfolded again at attention-read time. The arrow pointing into the cache was thin. The arrows coming back out were fat. A footnote said: *"the up-projection can be absorbed into the query projection at inference time, so the read-time decompression is free."*
+The interesting page of the paper was not the benchmark table. It was Figure 3 — a diagram of a thing called **Multi-head Latent Attention**, abbreviated MLA. The diagram showed K and V vectors being squeezed through a narrow waist before being written to the {{< wiki "kv-cache" >}}cache{{< /wiki >}}, and then being unfolded again at attention-read time. The arrow pointing into the cache was thin. The arrows coming back out were fat. A footnote said: *"the up-projection can be absorbed into the query projection at inference time, so the read-time decompression is free."*
 
 The on-call engineer at every serving company who read that footnote on May 7th had the same reaction: **wait, what?** And then: *can we ship this?*
 
@@ -32,7 +32,7 @@ Take a step back to [ch.17 — the three axes of KV compression](../17-kv-axes/)
 
 MLA attacks the **D-axis** instead. Same cache tensor. Different dimension. Instead of shrinking the number of heads, you shrink the **dimension of the K and V vectors themselves** — the `head_dim` coordinate. You compose the two halves of `attn_wk` (or `attn_wv`) into a *narrow-bottleneck-then-wide* path: project the residual $x$ down to a tiny latent dimension $d_c$, cache *that*, and reconstitute K and V from the latent only when you actually need them. The cache row goes from $H \cdot D = 1024+$ floats per token down to $d_c = 512$ — and as we will see, the choice of $d_c$ relative to $H$ is what unlocks the trick that makes the read path free.
 
-The two surgeries **compose**. DeepSeek V2 ships MLA on top of MoE on top of multi-head attention. GQA is *not* in the recipe because MLA subsumes it: once you have decomposed K and V through a shared low-rank latent, there is nothing left to share across head groups.
+The two surgeries **compose**. DeepSeek V2 ships MLA on top of MoE on top of multi-head {{< wiki "attention" >}}attention{{< /wiki >}}. GQA is *not* in the recipe because MLA subsumes it: once you have decomposed K and V through a shared low-rank latent, there is nothing left to share across head groups.
 
 ## The Microgpt Surgery
 
@@ -193,7 +193,7 @@ The yellow band is the regime DeepSeek picked. Half the dimensions, almost all t
 
 ## The RoPE Problem
 
-Now the asterisk in the footnote. **Rotary Position Embeddings**, ubiquitous in 2024-era LLMs, do not commute with the absorption trick.
+Now the asterisk in the footnote. **{{< wiki "rope" >}}Rotary Position Embeddings{{< /wiki >}}**, ubiquitous in 2024-era LLMs, do not commute with the absorption trick.
 
 Recall RoPE: before computing the dot product $q^\top k$, you apply a position-dependent rotation $R_{pos}$ to *each pair of coordinates* of $q$ and $k$. Crucially, the rotation depends on the **absolute position of the K token**, which is fixed at write time, and on the **absolute position of the Q token**, which is the current step. The relative rotation $R_{pos_q - pos_k}$ is what determines the score.
 

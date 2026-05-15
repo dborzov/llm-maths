@@ -20,7 +20,7 @@ In 2017, a team at Google published a paper with the dry title [*Quantization an
 
 > If your data lives in $[0, 6]$ and you quantize symmetrically around zero, **half of your integer codes go to numbers that cannot occur.**
 
-This is not a minor point. Modern transformers contain layers that produce only non-negative outputs — anything downstream of a `ReLU`, `GELU`-with-clamp, or `sigmoid` lives in a one-sided range. For these tensors, symmetric absmax is wasting *one whole bit* of precision out of eight. That is the difference between INT8 and INT7, paid silently every layer.
+This is not a minor point. Modern transformers contain layers that produce only non-negative outputs — anything downstream of a `ReLU`, `GELU`-with-clamp, or `sigmoid` lives in a one-sided range. For these tensors, symmetric absmax is wasting *one whole bit* of precision out of eight. That is the difference between {{< wiki "number-formats" >}}INT8{{< /wiki >}} and INT7, paid silently every layer.
 
 The fix is to drop symmetry. Allow the quantization grid to slide off-zero. This is **zero-point quantization** — sometimes called *affine* or *asymmetric* quantization — and it is the default integer format on every mobile inference runtime: TFLite, QNN, Core ML, ONNX Runtime.
 
@@ -357,12 +357,12 @@ A quick decision table — internalize this; you will revisit it constantly.
 | Tensor source | Distribution shape | Use |
 |---|---|---|
 | Linear-layer weights (Gaussian-ish, symmetric) | Symmetric around 0 | **Absmax** |
-| Post-ReLU activations | One-sided $[0, +\infty)$ | **Zero-point** |
+| {{< wiki "activations" >}}Post-ReLU activations{{< /wiki >}} | One-sided $[0, +\infty)$ | **Zero-point** |
 | Post-GELU activations | Nearly one-sided, slight negative tail | **Zero-point** |
-| Post-LayerNorm activations | Approximately Gaussian (centered) | **Absmax** |
-| Attention scores (pre-softmax) | Roughly symmetric, heavy-tailed | **Absmax**, but watch the [outliers](../06-outliers/) |
-| Embedding tables | Per-row distributions vary wildly | **Per-row zero-point** |
-| KV cache (post-softmax × V) | Per-channel, often skewed | Per-row [zero-point](../10-kv-cache/) |
+| {{< wiki "normalization" >}}Post-LayerNorm activations{{< /wiki >}} | Approximately Gaussian (centered) | **Absmax** |
+| {{< wiki "attention" >}}Attention{{< /wiki >}} scores (pre-{{< wiki "softmax" >}}softmax{{< /wiki >}}) | Roughly symmetric, heavy-tailed | **Absmax**, but watch the [outliers](../06-outliers/) |
+| {{< wiki "embeddings" >}}Embedding{{< /wiki >}} tables | Per-row distributions vary wildly | **Per-row zero-point** |
+| {{< wiki "kv-cache" >}}KV cache{{< /wiki >}} (post-softmax × V) | Per-channel, often skewed | Per-row [zero-point](../10-kv-cache/) |
 
 A modern quantization framework — [LLM.int8](../06-outliers/), TensorRT, ONNX Runtime — does not pick one and stick with it. It picks **per tensor** based on the distribution shape.
 

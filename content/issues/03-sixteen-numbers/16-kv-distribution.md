@@ -16,7 +16,7 @@ header: default.webp
 
 ## Three Microscopes
 
-You can spend a year working with transformers without ever looking *inside* the KV cache. The cache is just a buffer; the model writes to it, the model reads from it, the wrapper logic feeds it back into attention. From outside the box, the bits that go in and out are floating-point numbers and that is that.
+You can spend a year working with transformers without ever looking *inside* the {{< wiki "kv-cache" >}}KV cache{{< /wiki >}}. The cache is just a buffer; the model writes to it, the model reads from it, the wrapper logic feeds it back into {{< wiki "attention" >}}attention{{< /wiki >}}. From outside the box, the bits that go in and out are floating-point numbers and that is that.
 
 Then in **early 2023**, three different research groups, working independently, point microscopes at the same buffer and start reporting strange things. **Yujun Liu's group at MIT** notices that K vectors have a few channels with persistently giant values, while V vectors have a few sequence positions with persistently giant values. **Guangxuan Xiao's team at MIT** notices that the *first token* of every sequence — the BOS token — receives a wildly disproportionate fraction of attention from later positions. **Mingjie Sun's team at CMU** notices that *some hidden states*, in the residual stream itself, develop magnitudes a thousand times larger than their neighbors.
 
@@ -186,12 +186,12 @@ plt.tight_layout()
 
 ## Witness #3 — Sun Et Al. And Dark Signals
 
-In **April 2024**, Mingjie Sun and collaborators at CMU publish **"Massive Activations in Large Language Models"**. They point the microscope at the **residual stream** (the `x` variable in [microGPT](../../05-microgpt-unfolded/10-residual-stream/)).
+In **April 2024**, Mingjie Sun and collaborators at CMU publish **"Massive Activations in Large Language Models"**. They point the microscope at the **{{< wiki "residual-stream" >}}residual stream{{< /wiki >}}** (the `x` variable in [microGPT](../../05-microgpt-unfolded/10-residual-stream/)).
 
 They find **Massive Activations**: specific (token, channel) entries with magnitudes 100,000× the median. These act as **Implicit Bias** terms.
 
 {{< callout type="warning" title="Dark Signals" >}}
-These outliers are often created by the Feed-Forward Networks (MLPs) specifically to be used as sinks. Removing them breaks the model instantly.
+These outliers are often created by the {{< wiki "mlp-block" >}}Feed-Forward Networks (MLPs){{< /wiki >}} specifically to be used as sinks. Removing them breaks the model instantly.
 {{< /callout >}}
 
 1. **They are persistent:** Once an anchor cell develops (often at BOS), it stays massive through 20+ layers.

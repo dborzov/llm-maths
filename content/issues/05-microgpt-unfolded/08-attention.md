@@ -46,7 +46,7 @@ $$
 \text{Attention}(Q, K, V) \;=\; \text{softmax}\!\left(\frac{Q K^{\top}}{\sqrt{d_k}}\right) V
 $$
 
-— but for our purposes, the six lines above *are* the formula. They are scaled-dot-product attention on one head, for one query token, against a cache of `T` past keys and values. Three things come out:
+— but for our purposes, the six lines above *are* the formula. They are scaled-dot-product attention on one head, for one query token, against a {{< wiki "kv-cache" >}}cache{{< /wiki >}} of `T` past keys and values. Three things come out:
 
 | Variable | What it is | Shape |
 |---|---|---|
@@ -63,7 +63,7 @@ Forget every neuroscience metaphor you've read. The cleanest way to think about 
 - The `T` past tokens have each filed a `(key, value)` pair into a tiny database: `k_h[t]` is the index card, `v_h[t]` is the contents on the back of the card.
 - The current token shows up at the desk holding a query `q_h`.
 - The librarian compares `q_h` against every index card using the dot product. *Higher dot product = more aligned in vector space = more "this card is the one you want".*
-- Instead of returning *one* card (a hard lookup), the librarian returns a **probability-weighted mix** of all the cards' contents. The softmax decides the mixing weights.
+- Instead of returning *one* card (a hard lookup), the librarian returns a **probability-weighted mix** of all the cards' contents. The {{< wiki "softmax" >}}softmax{{< /wiki >}} decides the mixing weights.
 
 The mixing-rather-than-picking is what makes attention **differentiable**, which is what makes it trainable. Hard `argmax` lookup has no gradient. Softmax does.
 

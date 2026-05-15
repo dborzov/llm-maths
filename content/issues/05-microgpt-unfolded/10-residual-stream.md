@@ -47,7 +47,7 @@ x = rmsnorm(x)
 x = [a + b for a, b in zip(x, x_residual)]
 ```
 
-Save. Normalize. Compute. Add back. Save, normalize, compute, add back. The "do something interesting" in the first half is multi-head attention; in the second half it is the MLP. The wrapper is identical:
+Save. Normalize. Compute. Add back. Save, normalize, compute, add back. The "do something interesting" in the first half is multi-head {{< wiki "attention" >}}attention{{< /wiki >}}; in the second half it is the {{< wiki "mlp-block" >}}MLP{{< /wiki >}}. The wrapper is identical:
 
 | Step                | Code                                              | What it does                          |
 |---------------------|---------------------------------------------------|---------------------------------------|

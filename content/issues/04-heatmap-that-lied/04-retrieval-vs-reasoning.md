@@ -34,9 +34,9 @@ This primer is about why a transformer's attention mechanism is *built* for the 
 
 ## What Attention *Is*, In One Picture
 
-Strip a transformer down to bare metal. Each decoder block does two operations that take a sequence of $n$ token vectors and return another sequence of $n$ token vectors. The first is self-attention: for each output token $i$, look at every previous token $j$, compute a scalar **attention weight** $\alpha_{ij}$ that says "how much should token $j$ influence token $i$'s output?", and then take a weighted sum.
+Strip a transformer down to bare metal. Each decoder block does two operations that take a sequence of $n$ token vectors and return another sequence of $n$ token vectors. The first is {{< wiki "attention" >}}self-attention{{< /wiki >}}: for each output token $i$, look at every previous token $j$, compute a scalar **attention weight** $\alpha_{ij}$ that says "how much should token $j$ influence token $i$'s output?", and then take a weighted sum.
 
-The attention weight $\alpha_{ij}$ is the dot product of token $i$'s **query** vector (`q` in the [microGPT reference](../../05-microgpt-unfolded/08-attention/)) and token $j$'s **key** vector (`k`), normalised by softmax — these are the `attn_logits` and `attn_weights` from the listing:
+The attention weight $\alpha_{ij}$ is the dot product of token $i$'s **query** vector (`q` in the [microGPT reference](../../05-microgpt-unfolded/08-attention/)) and token $j$'s **key** vector (`k`), normalised by {{< wiki "softmax" >}}softmax{{< /wiki >}} — these are the `attn_logits` and `attn_weights` from the listing:
 
 $$
 \alpha_{ij} \;=\; \frac{\exp(q_i \cdot k_j / \sqrt{\text{head\_dim}})}{\sum_{k \leq i} \exp(q_i \cdot k_k / \sqrt{\text{head\_dim}})}
@@ -103,7 +103,7 @@ Let's formalise. Suppose a question requires $k$ sequential hops to answer. *Ali
 3. **Hop 3**: locate "Carol's parent" → return Diana. (Required Hop 2's output.)
 4. **Hop 4**: locate "Diana's parent" → return Eve. (Required Hop 3's output.)
 
-How many attention layers does this take? In the worst case — when none of the facts can be co-located or precomputed in earlier layers — **at least one attention layer per hop**. The first layer does Hop 1 and writes "Alice → Bob" into Alice's residual stream. The second layer reads "Alice → Bob" out of the residual, does Hop 2 (look up Bob's parent), and writes "Alice → Carol" back. And so on.
+How many attention layers does this take? In the worst case — when none of the facts can be co-located or precomputed in earlier layers — **at least one attention layer per hop**. The first layer does Hop 1 and writes "Alice → Bob" into Alice's {{< wiki "residual-stream" >}}residual stream{{< /wiki >}}. The second layer reads "Alice → Bob" out of the residual, does Hop 2 (look up Bob's parent), and writes "Alice → Carol" back. And so on.
 
 This is a real, formal result. It's been studied under various names — *circuit depth*, *reasoning depth*, *attention compositionality* — by interpretability researchers like Sanford et al. (2024) and the Anthropic interpretability group.
 

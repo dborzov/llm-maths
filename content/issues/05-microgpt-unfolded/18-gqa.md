@@ -18,7 +18,7 @@ header: default.webp
 
 In **November 2019**, Noam Shazeer — same Shazeer who had been on the original *Attention Is All You Need* author list two years earlier — posted a four-page note to arXiv called *"Fast Transformer Decoding: One Write-Head Is All You Need."* No co-authors. No big experiments. Just a section of math, a table of decoding speeds, and a slightly grumpy tone.
 
-The grumpiness was earned. Shazeer had been trying to run a transformer at production latency on Google's TPU pods and kept hitting the same wall: **memory bandwidth**, not compute. Every decode step had to *re-read* the entire KV cache from HBM into the chip's registers, and the cache was *gigantic*. On a 6-billion-parameter model, the cache reads alone took eleven times longer than the actual attention math.
+The grumpiness was earned. Shazeer had been trying to run a transformer at production latency on Google's TPU pods and kept hitting the same wall: **memory bandwidth**, not compute. Every decode step had to *re-read* the entire KV cache from HBM into the chip's registers, and the cache was *gigantic*. On a 6-billion-parameter model, the cache reads alone took eleven times longer than the actual {{< wiki "attention" >}}attention{{< /wiki >}} math.
 
 His proposal was almost rude in its simplicity. The K and V projections are the only operations whose outputs you have to *keep around* across decode steps. Q is computed fresh every step from the current token. So: **keep only one K and one V per layer, shared across all heads**. Each head still gets its own query — its own *question* — but they all ask that question against the *same* shared database.
 
@@ -71,7 +71,7 @@ So MQA is **almost** the right idea. The compression factor is enormous, but the
 
 Joshua Ainslie and collaborators at Google published *"GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints"* in **May 2023**. The headline contribution sounds obvious in hindsight: **don't collapse all $H$ heads into 1; collapse them into $G$ groups, with $G$ somewhere between 1 and $H$.**
 
-Define:
+Define two new {{< wiki "hyperparameters" >}}hyperparameters{{< /wiki >}}:
 
 - `n_kv_head` = the number of K/V groups. Call it $G$.
 - `group_size = n_head // n_kv_head` = how many query heads share each K/V.

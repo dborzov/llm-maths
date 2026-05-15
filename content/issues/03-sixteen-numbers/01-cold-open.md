@@ -76,13 +76,13 @@ By 2024 the menu had six entries — LLM.int8, GPTQ, AWQ, SmoothQuant, QLoRA/NF4
 
 ## The Sixth Question: Why Did The KV Cache Become The New Problem?
 
-Here is the irony: once you make weights small, **inference is no longer bottlenecked by weights**. It's bottlenecked by the **KV cache** — the per-token memory of activations the model needs to hand back to itself for self-attention. For long-context inference, the KV cache can be *bigger than the weights themselves*.
+Here is the irony: once you make weights small, **inference is no longer bottlenecked by weights**. It's bottlenecked by the **{{< wiki "kv-cache" >}}KV cache{{< /wiki >}}** — the per-token memory of activations the model needs to hand back to itself for {{< wiki "attention" >}}self-attention{{< /wiki >}}. For long-context inference, the KV cache can be *bigger than the weights themselves*.
 
 But you cannot quantize K and V the same way you quantize weights, for a wonderful, geometric reason that we unpack in [KV Cache Tyranny](../10-kv-cache/), built on [Calibration & Blocks](../11-calibration-and-blocks/).
 
 ## The Last Question: What Comes Next?
 
-By 2025, the conversation has moved from software to silicon. NVIDIA's **Hopper** architecture introduced native FP8 support. **Blackwell** went all the way to FP4. The Open Compute Project's **microscaling** specification (the "MX" formats) is becoming an industry standard. The number format itself is now a hardware feature.
+By 2025, the conversation has moved from software to silicon. NVIDIA's **Hopper** architecture introduced native {{< wiki "number-formats" >}}FP8{{< /wiki >}} support. **Blackwell** went all the way to FP4. The Open Compute Project's **microscaling** specification (the "MX" formats) is becoming an industry standard. The number format itself is now a hardware feature.
 
 The closing chapter, [Hardware Horizon](../12-hardware-horizon/), connects all the prior threads to where the field is right now — and tells the story through five turning points from 2018 to 2025.
 

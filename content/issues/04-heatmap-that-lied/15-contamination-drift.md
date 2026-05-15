@@ -74,7 +74,7 @@ The 2026 community consensus, after several embarrassing incidents, is that **pu
 In 2024-2025, four benchmarks pioneered the *recency* defense in different ways:
 
 - **NoCha** — used English novels *published after the cutoff date* of the models being tested. By using books that didn't exist when training ended, NoCha guaranteed the model hadn't seen them. (The catch: as time passes, the cutoff also passes, and old NoCha items need to be retired.)
-- **GraphWalks** — used *randomly generated hex-hash graphs* with no semantic content. The model cannot have seen the specific adjacency lists; they were generated for each eval run.
+- **{{< wiki "long-context-benchmarks" >}}GraphWalks{{< /wiki >}}** — used *randomly generated hex-hash graphs* with no semantic content. The model cannot have seen the specific adjacency lists; they were generated for each eval run.
 - **MRCR v2 (OpenAI)** — uses *fresh templated prompts* drawn from a generator that produces stylistic variants ("a poem about tapirs" vs "a story about elephants" with parametrised distractors). Each eval run can generate fresh test cases.
 - **OOLONG** — similarly templated, with random aggregation seeds. Each test instance is procedurally generated.
 
@@ -104,7 +104,7 @@ Anthropic's response was unusual and important: they *published* the incident in
 
 A separate disease entirely. **Methodology drift** is when the benchmark's name stays the same but what it actually scores has changed.
 
-The cleanest example is **MRCR v1 → MRCR v2**, the OpenAI-published version of Vodrahalli's Michelangelo task. The v1 → v2 transition included:
+The cleanest example is **MRCR v1 → MRCR v2**, the OpenAI-published version of {{< wiki "vodrahalli" >}}Vodrahalli{{< /wiki >}}'s Michelangelo task. The v1 → v2 transition included:
 
 - **Updated needle inventory.** v2 dropped some confusing pairs (e.g., "story about tapirs" and "narrative about tapirs" were too similar) and added new clearly-distinct topic-form pairs.
 - **Tightened scoring criteria.** v2 requires *exact* sentence reproduction; v1 accepted paraphrases.

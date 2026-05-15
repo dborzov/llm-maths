@@ -28,7 +28,7 @@ What followed is one of the cleanest examples of empirical detective work in mod
 
 ## What Naïve INT8 Does
 
-Standard 8-bit quantization works like this — the full primer is at [Absmax Quantization](../02a-absmax/), but in one paragraph: for a weight matrix $W$,
+Standard 8-bit quantization works like this — the full primer is at [Absmax Quantization](../02a-absmax/), but in one paragraph: for a {{< wiki "transformer-weights" >}}weight matrix{{< /wiki >}} $W$,
 
 1. Find the largest absolute value in the matrix: $s = \max |W_{ij}|$.
 2. Scale to fit in $[-127, 127]$: $\tilde{W}_{ij} = \text{round}(127 \cdot W_{ij} / s)$.
@@ -95,7 +95,7 @@ Concrete regimes from real transformers:
 | OPT-13B | 0.15 | 50 | $\approx 2.3$ | **1.2** |
 | OPT-66B | 0.1 | 95 | $\approx 0.8$ | **near zero** |
 
-The last column is the bit you should engrave somewhere. At OPT-66B scale, per-tensor INT8 absmax delivers **less than one bit of information about the bulk activation**. The transformer is being asked to do FFN matmuls where 99% of the inputs are routed through what is essentially a ternary $\{-1, 0, +1\}$ representation. Of course it collapses. The question is not "why does it collapse"; the question is "why does it not collapse *worse*."
+The last column is the bit you should engrave somewhere. At OPT-66B scale, per-tensor INT8 absmax delivers **less than one bit of information about the bulk activation**. The transformer is being asked to do {{< wiki "mlp-block" >}}FFN{{< /wiki >}} matmuls where 99% of the inputs are routed through what is essentially a ternary $\{-1, 0, +1\}$ representation. Of course it collapses. The question is not "why does it collapse"; the question is "why does it not collapse *worse*."
 
 Watch the same calculation in real time. The widget below lets you slide outlier magnitude and bulk std and reads off the effective bits.
 

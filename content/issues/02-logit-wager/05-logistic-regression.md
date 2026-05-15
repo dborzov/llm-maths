@@ -212,7 +212,7 @@ The insight that made deep learning practical was that you could stack transform
 
 ## Napkin Math
 
-In a 10-class MNIST classifier, the final layer is not one logistic regression but *ten simultaneous logistic regressions* — one per class. Each competes against the others. To turn them into a proper probability distribution over 10 classes, you need to normalize. That normalization is the softmax function, which is the subject of the final chapter.
+In a 10-class MNIST classifier, the final layer is not one logistic regression but *ten simultaneous logistic regressions* — one per class. Each competes against the others. To turn them into a proper probability distribution over 10 classes, you need to normalize. That normalization is the {{< wiki "softmax" >}}softmax{{< /wiki >}} function, which is the subject of the final chapter.
 
 - **MNIST final layer**: $784 \to 128 \to 64 \to 10$. The last layer has $64 \times 10 + 10 = 650$ parameters. Of those, 10 are biases.
 - **GPT-2 final layer**: $768 \to 50{,}257$ (vocabulary size). That is $768 \times 50{,}257 \approx 38.6\text{M}$ parameters — just in the last layer, called `lm_head`.

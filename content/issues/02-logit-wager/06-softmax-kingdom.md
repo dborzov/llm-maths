@@ -26,7 +26,7 @@ The solution was already known from statistics. It is the natural multi-class ge
 
 ## Softmax: The Multi-Class Generalization
 
-Given a vector of raw scores $z = [z_1, z_2, \ldots, z_K]$ — one per class — the **softmax** function produces a proper probability distribution:
+Given a vector of raw scores $z = [z_1, z_2, \ldots, z_K]$ — one per class — the **{{< wiki "softmax" >}}softmax{{< /wiki >}}** function produces a proper probability distribution:
 
 $$
 \text{softmax}(z)_k = \frac{e^{z_k}}{\sum_{j=1}^{K} e^{z_j}}
@@ -44,7 +44,7 @@ Binary logistic regression is the $K=2$ special case of softmax, where the singl
 
 ## The Pre-Softmax Scores Are Called "Logits"
 
-The raw scores $z_k$ before the softmax are called **logits** — Berkson's word from 1944.
+The raw scores $z_k$ before the softmax are called **{{< wiki "logit" >}}logits{{< /wiki >}}** — Berkson's word from 1944.
 
 The connection is direct. In a $K$-class softmax, the log-probability ratio between class $k$ and class $K$ (the reference class) is:
 

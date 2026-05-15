@@ -112,7 +112,7 @@ Mikolov looked at this pipeline — count, weight, factorize — and thought: *W
 
 There was another thread of research, started by Yoshua Bengio and colleagues in 2003. Their idea: train a neural network to predict the next word in a sentence, and use the internal weights of the network as word vectors.
 
-The architecture was straightforward. Take the previous few words, look up their embeddings (initially random), concatenate them, feed them through a hidden layer, then project to a probability distribution over the entire vocabulary via a softmax.
+The architecture was straightforward. Take the previous few words, look up their embeddings (initially random), concatenate them, feed them through a hidden layer, then project to a probability distribution over the entire vocabulary via a {{< wiki "softmax" >}}softmax{{< /wiki >}}.
 
 ```python
 import numpy as np

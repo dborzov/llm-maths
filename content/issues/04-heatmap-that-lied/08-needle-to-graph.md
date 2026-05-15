@@ -18,9 +18,9 @@ header: default.webp
 
 It is **Monday, April 14, 2025**, around 9 AM Pacific time. OpenAI announces the **GPT-4.1** model family. The blog post is, by frontier-launch standards, low-key — a developer-focused release with three SKUs, pricing tables, and a benchmarks section. Halfway down the page, in the long-context section, there is a paragraph that the long-context-evaluation community will spend the next twelve months quoting verbatim:
 
-> *"In OpenAI-MRCR, the model must answer a question that involves disambiguating between 2, 4, or 8 user prompts scattered amongst distractors… The challenge arises from the similarity between these requests and the rest of the context — models can easily be misled by subtle differences, such as a short story about tapirs rather than a poem, or a poem about frogs instead of tapirs."*
+> *"In {{< wiki "long-context-benchmarks" >}}OpenAI-MRCR{{< /wiki >}}, the model must answer a question that involves disambiguating between 2, 4, or 8 user prompts scattered amongst distractors… The challenge arises from the similarity between these requests and the rest of the context — models can easily be misled by subtle differences, such as a short story about tapirs rather than a poem, or a poem about frogs instead of tapirs."*
 
-That's the *first* paragraph. It explains why OpenAI is shipping their own implementation of MRCR — Vodrahalli's task from the Michelangelo paper — as a public dataset. Fair enough. Then comes the part that mattered:
+That's the *first* paragraph. It explains why OpenAI is shipping their own implementation of MRCR — {{< wiki "vodrahalli" >}}Vodrahalli{{< /wiki >}}'s task from the Michelangelo paper — as a public dataset. Fair enough. Then comes the part that mattered:
 
 > *"Many developer use cases for long context require multiple logical hops within the context, like jumping between multiple files when writing code or cross referencing documents when answering complicated legal questions. **A model (or even a human) could theoretically solve an OpenAI-MRCR problem by doing one pass or read-through of the prompt, but Graphwalks is designed to require reasoning across multiple positions in the context and cannot be solved sequentially.** Graphwalks fills the context window with a directed graph composed of hexadecimal hashes, and then asks the model to perform a breadth-first search (BFS) starting from a random node in the graph. We then ask it to return all nodes at a certain depth."*
 
@@ -106,7 +106,7 @@ Second, by March 2026, the **<128K BFS variant is approaching saturation** — f
 
 GraphWalks did not appear in a vacuum. The benchmark itself is technically simple — a random directed graph in a prompt, a question about BFS. The **conceptual framing** — the bolded launch-blog sentence about "cannot be solved sequentially" — is what made it influential, and that framing rested on a year of community work:
 
-- **Michelangelo's LSQ framework** (Sep 2024) gave the field the vocabulary to say "this task requires latent structure extraction, not retrieval."
+- **{{< wiki "long-context-concepts" >}}Michelangelo's LSQ framework{{< /wiki >}}** (Sep 2024) gave the field the vocabulary to say "this task requires latent structure extraction, not retrieval."
 - **RULER's variable tracing** (Apr 2024) had already shown that even simple chained references collapse most frontier models' effective windows.
 - **The chain-of-thought reasoning models** (o1 in late 2024) had shown that emitting intermediate tokens could buy unbounded *hop depth*, suggesting that long-context tests should require it.
 

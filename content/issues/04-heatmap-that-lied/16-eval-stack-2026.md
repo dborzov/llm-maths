@@ -22,7 +22,7 @@ The 2026 frontier-lab playbook for reporting long-context capability is no longe
 
 {{< timeline name="longcontext-bench-2023to2026" >}}
 
-The timeline above traces the inflection points that drove the field from a single-number culture to the layered one. **Each event was a *response* to the previous era's failure to measure what was being claimed.** NIAH was a response to the absence of a shared long-context benchmark. RULER was a response to NIAH's collapse. Michelangelo was a response to the multi-benchmark proliferation. GraphWalks was a response to MRCR being single-pass-solvable. Opus 4.6's claim to fix "context rot" was a response to two years of users describing the gap between advertised and usable windows.
+The timeline above traces the inflection points that drove the field from a single-number culture to the layered one. **Each event was a *response* to the previous era's failure to measure what was being claimed.** {{< wiki "long-context-benchmarks" >}}NIAH{{< /wiki >}} was a response to the absence of a shared long-context benchmark. RULER was a response to NIAH's collapse. Michelangelo was a response to the multi-benchmark proliferation. GraphWalks was a response to MRCR being single-pass-solvable. Opus 4.6's claim to fix "{{< wiki "long-context-concepts" >}}context rot{{< /wiki >}}" was a response to two years of users describing the gap between advertised and usable windows.
 
 The layered stack is the *culture* that fell out of this trajectory. Let's name its parts.
 
@@ -145,7 +145,7 @@ A boss capstone should also be honest about what isn't solved. Three open proble
 
 ### Open Problem 1 — The Capacity-vs-Usable Gap Is Still Huge
 
-Even after Opus 4.6's celebrated 4× jump, the gap between advertised and *usable* context window remains 3-10× for every frontier model. Examples from May 2026 system cards:
+Even after Opus 4.6's celebrated 4× jump, the gap between advertised and *usable* {{< wiki "hyperparameters" >}}context window{{< /wiki >}} remains 3-10× for every frontier model. Examples from May 2026 system cards:
 
 - **Gemini 3 Pro** advertises **2M tokens**. MRCR v2 8-needle at the full 2M is **<20%** — effectively unusable. At 128K it is 77%. The usable window is roughly **128-256K**, an order of magnitude below the advertised number.
 - **Claude Opus 4.7** advertises **1M tokens**. MRCR v2 8-needle at 1M is **32%**. Usable window roughly **256K**.

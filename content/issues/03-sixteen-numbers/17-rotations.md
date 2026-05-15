@@ -32,7 +32,7 @@ $$
 Y = X W^\top
 $$
 
-where $X$ is the input activation and $W$ is the weight matrix. We want to quantize both $X$ and $W$, and we know that $X$ has a few outlier channels making this hard.
+where $X$ is the input activation and $W$ is the {{< wiki "transformer-weights" >}}weight matrix{{< /wiki >}}. We want to quantize both $X$ and $W$, and we know that $X$ has a few outlier channels making this hard.
 
 Now insert a pair of orthogonal matrices $R$ and $R^{-1} = R^\top$ that cancel each other:
 
@@ -48,7 +48,7 @@ This is the same algebraic identity as the AWQ/SmoothQuant migration trick (see 
 
 Of all the orthogonal matrices in $\mathbb{R}^{d \times d}$, why pick a Hadamard? Three reasons.
 
-**1. Speed.** A general orthogonal $R$ requires $O(d^2)$ operations to apply. For $d = 4096$, that's $\sim 16$ million operations *per token*. Way too slow to insert into an attention path.
+**1. Speed.** A general orthogonal $R$ requires $O(d^2)$ operations to apply. For $d = 4096$, that's $\sim 16$ million operations *per token*. Way too slow to insert into an {{< wiki "attention" >}}attention{{< /wiki >}} path.
 
 The Hadamard transform requires only $O(d \log d)$. For $d = 4096$, that's $\sim 50{,}000$ operations per token. Fast enough to fuse into the attention kernel without measurable latency cost. This is the same speedup that the FFT gives over a general DFT.
 
@@ -102,7 +102,7 @@ print(f"L2 norm preserved? Before: {np.linalg.norm(x):.3f}, After: {np.linalg.no
 print(f"Quantization-grid penalty (max/mean) reduced by {(np.abs(x).max()/np.abs(x).mean()) / (np.abs(y).max()/np.abs(y).mean()):.0f}x")
 ```
 
-The before/after comparison is striking. The original vector has a max-to-mean ratio of ~50; quantizing it with one shared scale would give ~50 INT4 codes "wasted" on the outliers. The Hadamard-rotated vector has a max-to-mean ratio of ~3 — almost flat. INT4 quantization now uses essentially every code.
+The before/after comparison is striking. The original vector has a max-to-mean ratio of ~50; quantizing it with one shared scale would give ~50 {{< wiki "number-formats" >}}INT4{{< /wiki >}} codes "wasted" on the outliers. The Hadamard-rotated vector has a max-to-mean ratio of ~3 — almost flat. INT4 quantization now uses essentially every code.
 
 The L2 norm is preserved exactly (to floating-point precision). No information has been lost. We have *redistributed* it.
 
@@ -210,7 +210,7 @@ The KV-cache application of the rotation trick is **TurboQuant**, by Apple's MLR
 
 The TurboQuant story is essentially: take QuaRot's Hadamard-rotation idea, apply it specifically to K and V *online* (during inference), and skip the QuaRot-style calibration. Random Hadamard, no learning, no calibration data — just the rotation, applied per-vector during the attention forward pass.
 
-Why this works without calibration: the TurboQuant authors observed that **for KV cache specifically, a randomized Hadamard rotation is as good as a learned one**. The reason is the universality of the concentration property — almost any orthogonal rotation flattens outliers. The "best" rotation gives you maybe 0.05 perplexity over a random one, which is below the noise floor for KV quantization.
+Why this works without calibration: the TurboQuant authors observed that **for {{< wiki "kv-cache" >}}KV cache{{< /wiki >}} specifically, a randomized Hadamard rotation is as good as a learned one**. The reason is the universality of the concentration property — almost any orthogonal rotation flattens outliers. The "best" rotation gives you maybe 0.05 perplexity over a random one, which is below the noise floor for KV quantization.
 
 The TurboQuant practical pitch: a 4-bit KV cache with no setup, ~4× memory reduction, and accuracy matching KVQuant. Becoming the default in inference engines that prioritize zero-config deployment (notably MLX, Apple's stack).
 
@@ -238,7 +238,7 @@ The rotation methods are an instance of a deeper principle: **the basis matters 
 
 This idea is everywhere in classical compression — see [Compression's Family Tree](../14-compression-roots/), G3 (transform coding). MP3, JPEG, AAC all hinge on representation-basis choice. ML quantization is finally catching up.
 
-If the rotation methods generalize — and they keep generalizing further (rotations within each attention head; rotations between layers; rotations for embedding tables) — by 2027 we may be in a world where *every* quantized tensor is stored in a non-standard, locally-optimal basis. The matmul kernels will know about the basis; the storage will be smaller; and the dots will land where the data is.
+If the rotation methods generalize — and they keep generalizing further (rotations within each attention head; rotations between layers; rotations for {{< wiki "embeddings" >}}embedding{{< /wiki >}} tables) — by 2027 we may be in a world where *every* quantized tensor is stored in a non-standard, locally-optimal basis. The matmul kernels will know about the basis; the storage will be smaller; and the dots will land where the data is.
 
 ## What To Remember
 

@@ -37,21 +37,21 @@ Each gets a one-page entry. The lessons emerge after.
 
 Before the methods, the framing. KV quantization is *not* just "weight quantization, but for keys and values." The constraints are different:
 
-- **No offline calibration.** The KV cache is built *during inference* — you cannot pre-quantize it on a calibration set. Whatever you do has to happen on the fly, ideally in less than a token's worth of compute.
+- **No offline calibration.** The {{< wiki "kv-cache" >}}KV cache{{< /wiki >}} is built *during inference* — you cannot pre-quantize it on a calibration set. Whatever you do has to happen on the fly, ideally in less than a token's worth of compute.
 - **Asymmetric structure.** As we saw in [KV Cache Tyranny](../10-kv-cache/) and unpack in [Inside K and V](../16-kv-distribution/), keys have outlier *channels* while values have outlier *tokens*. Same tensor shape, different quantization axes. This rules out symmetric W-style methods.
 - **Streaming workload.** Tokens arrive one at a time. The quantizer has to amortize across the sequence, not the calibration set.
-- **Bigger blast radius for errors.** A single mis-quantized K vector affects all *future* attention queries against that token. A weight error gets averaged over many activations; a KV error compounds across the rest of the sequence.
+- **Bigger blast radius for errors.** A single mis-quantized K vector affects all *future* {{< wiki "attention" >}}attention{{< /wiki >}} queries against that token. A weight error gets averaged over many activations; a KV error compounds across the rest of the sequence.
 
 These constraints push the KV side of the field toward **online, statistics-driven, axis-aware** methods. None of the major weight quantization methods (GPTQ, AWQ, SmoothQuant) translates directly.
 
 ## 1. FP8 KV — The Hardware Baseline
 
 **Year:** 2023 (Hopper); 2024 widespread.
-**The trick:** Just store K and V in FP8 instead of FP16. No clever scaling, no axis tricks, no calibration.
+**The trick:** Just store K and V in {{< wiki "number-formats" >}}FP8{{< /wiki >}} instead of FP16. No clever scaling, no axis tricks, no calibration.
 
 This is the simplest possible KV quantization, available on every Hopper-or-newer GPU. The hardware can read FP8 from the cache and dequantize-on-the-fly to FP16 for the attention matmul, with no runtime cost to speak of.
 
-**Why it works at all:** FP8 has roughly the same dynamic range as FP16 (E5M2 has a *bigger* range than FP16, in fact). The precision drop from FP16's 10-bit mantissa to FP8's 2- or 3-bit mantissa is barely felt by attention, because the softmax in attention is itself a noise-suppressor: small differences between large logits get exponentially flattened. Most attention computations don't need the precision FP16 was giving them.
+**Why it works at all:** FP8 has roughly the same dynamic range as FP16 (E5M2 has a *bigger* range than FP16, in fact). The precision drop from FP16's 10-bit mantissa to FP8's 2- or 3-bit mantissa is barely felt by attention, because the {{< wiki "softmax" >}}softmax{{< /wiki >}} in attention is itself a noise-suppressor: small differences between large {{< wiki "logit" >}}logits{{< /wiki >}} get exponentially flattened. Most attention computations don't need the precision FP16 was giving them.
 
 **Why it's not enough:** At long context, FP8 is still *only 2× compression*. For Llama-2-70B at 128K context, FP8 KV cache is 80 GB — half of what FP16 demanded, but still bigger than the quantized weights. To get below 4 bits per KV element you need cleverer methods.
 
@@ -101,7 +101,7 @@ plt.tight_layout()
 **Year:** January 2024, by **Coleman Hooper** and collaborators at UC Berkeley.
 **The trick:** Three stacked tricks: (a) **per-channel pre-RoPE rotation** for K, (b) **non-uniform quantization** (NF4-style levels chosen for the empirical K and V distributions), and (c) **explicit outlier separation** (top-1% values stored in FP16, the rest at 4-bit).
 
-**Why "pre-RoPE"?** This is a specifically transformer-architecture observation. **RoPE** (Rotary Positional Embeddings) is the position-encoding scheme used by Llama-family models: it applies a position-dependent rotation to K and Q vectors *after* the linear projection. KIVI's per-channel scales are computed on *post*-RoPE K — but RoPE *changes* the channel statistics depending on the token position. KVQuant moves the quantization to *before* RoPE: the per-channel statistics there are stable (RoPE hasn't shuffled them yet), so the scales fit better.
+**Why "pre-RoPE"?** This is a specifically transformer-architecture observation. **{{< wiki "rope" >}}RoPE{{< /wiki >}}** (Rotary Positional Embeddings) is the position-encoding scheme used by Llama-family models: it applies a position-dependent rotation to K and Q vectors *after* the linear projection. KIVI's per-channel scales are computed on *post*-RoPE K — but RoPE *changes* the channel statistics depending on the token position. KVQuant moves the quantization to *before* RoPE: the per-channel statistics there are stable (RoPE hasn't shuffled them yet), so the scales fit better.
 
 **Why non-uniform levels?** The same Lloyd-Max insight from [the lloyd-max bargain](../03-lloyd-max/). The empirical K and V distributions aren't uniform; they aren't even Gaussian; they're heavy-tailed. KVQuant fits a custom 4-bit grid to each layer's K and V distributions during a one-time calibration, NF4-style.
 

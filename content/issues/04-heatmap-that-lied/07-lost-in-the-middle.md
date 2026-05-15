@@ -26,7 +26,7 @@ The plot that comes out is a **smile**. Models score highest when the gold docum
 Putting the right answer in the **middle** of a long prompt was *worse* than not putting it in the prompt at all. The surrounding context distracted the model so badly that its parametric memory outperformed its in-context retrieval.
 {{% /pullquote %}}
 
-This is the **U-curve**. It is the single most reproduced finding in long-context literature, and it explains a lot of what users feel as "context rot" without needing any new vocabulary.
+This is the **U-curve**. It is the single most reproduced finding in long-context literature, and it explains a lot of what users feel as "{{< wiki "long-context-concepts" >}}context rot{{< /wiki >}}" without needing any new vocabulary.
 
 ## The Picture, Carefully
 
@@ -102,13 +102,13 @@ This is the dominant explanation for the asymmetry (start > end). Code, especial
 
 ### 2. The RoPE-Extension Aliasing
 
-We saw in [What 1M Tokens Actually Costs](../02-context-window/) that **RoPE** encodes position by rotating query/key vectors by angles proportional to position. RoPE has a *wavelength range* — the slowest-rotating dimensions cycle every ~10,000 positions, the fastest every position. Extend past the longest wavelength the model was trained on and positions in different "octaves" start to alias.
+We saw in [What 1M Tokens Actually Costs](../02-context-window/) that **{{< wiki "rope" >}}RoPE{{< /wiki >}}** encodes position by rotating query/key vectors by angles proportional to position. RoPE has a *wavelength range* — the slowest-rotating dimensions cycle every ~10,000 positions, the fastest every position. Extend past the longest wavelength the model was trained on and positions in different "octaves" start to alias.
 
 Middle positions, in a long prompt, are *exactly* the regime where RoPE extension techniques (NTK-aware, YaRN, ABF) are doing the most interpolation work — and where they generate the most positional confusion. Empirically, the dip in the U-curve *deepens* as context length increases, which is what you'd expect from a RoPE-aliasing explanation. We will revisit this in [The Chroma Measurement](../12-context-rot/), where the empirical evidence is fleshed out across 18 models.
 
 ### 3. The Attention-Dilution Argument
 
-Recall from [Scan vs Think](../04-retrieval-vs-reasoning/) that softmax attention has to *normalise* across all keys. With more keys, the probability mass per key, on average, gets smaller. A key in the *middle* of the prompt is competing with $n - 1$ distractors, and the "right" attention weight has to win a normalisation contest against all of them.
+Recall from [Scan vs Think](../04-retrieval-vs-reasoning/) that {{< wiki "softmax" >}}softmax{{< /wiki >}} {{< wiki "attention" >}}attention{{< /wiki >}} has to *normalise* across all keys. With more keys, the probability mass per key, on average, gets smaller. A key in the *middle* of the prompt is competing with $n - 1$ distractors, and the "right" attention weight has to win a normalisation contest against all of them.
 
 But this should apply uniformly to all positions, not preferentially to the middle. The reason it manifests as a *U* and not a *flat line* is that the model has *learned* to amplify edge tokens — via training-distribution bias (point 1) — but has not learned, or has not been *able* to learn given its position-encoding scheme, to amplify the middle.
 
@@ -118,7 +118,7 @@ These three explanations are **complementary**, not competing. Each accounts for
 
 A short tour of where the U-curve shows up in the wild, post-2023:
 
-- **NIAH heatmaps** (2023–2024) show *exactly* this pattern in the depth dimension. The red band that became the visual signature of NIAH is the middle of the U, plotted as a colour.
+- **{{< wiki "long-context-benchmarks" >}}NIAH{{< /wiki >}} heatmaps** (2023–2024) show *exactly* this pattern in the depth dimension. The red band that became the visual signature of NIAH is the middle of the U, plotted as a colour.
 - **MRCR** (2024) finds that the *fourth* of eight tapir poems is harder to retrieve than the *first* or the *eighth*. Same U.
 - **NoCha** (2024) finds that book passages quoted in the middle of the book are less reliably verified than those in the first chapter or the last.
 - **Chroma's "Context Rot" study** (2025; Hong et al.) finds that the U-curve's *centre* shifts with content type — pure-text prompts have the valley around 50%; code-heavy prompts have it closer to 60%. The U is real but its *centre* is not exactly the geometric middle.

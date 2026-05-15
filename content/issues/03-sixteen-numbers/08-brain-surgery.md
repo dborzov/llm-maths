@@ -229,7 +229,7 @@ After GPTQ:
 - 3-bit and even 2-bit started being explored seriously.
 - Quantization was no longer a runtime cost — it was a one-time calibration step.
 
-The runtime efficiency was the bigger deal. GPTQ produces a *pre-quantized* model: at inference time, weights are already in INT4 and dequantization is a simple per-block scale-and-shift operation. There's no mixed-precision split, no per-batch outlier detection, no special kernels. You can run the quantized model with **the same matmul kernels you'd use at FP16**, plus a quick INT4→FP16 dequant step.
+The runtime efficiency was the bigger deal. GPTQ produces a *pre-quantized* model: at inference time, weights are already in {{< wiki "number-formats" >}}INT4{{< /wiki >}} and dequantization is a simple per-block scale-and-shift operation. There's no mixed-precision split, no per-batch outlier detection, no special kernels. You can run the quantized model with **the same matmul kernels you'd use at FP16**, plus a quick INT4→FP16 dequant step.
 
 This is what let LLMs run on consumer hardware overnight. The **bitsandbytes**, **AutoGPTQ**, and **ExLlamaV2** libraries all materialized in 2023. By the time **Llama-2** dropped in July 2023, the open-source ecosystem already had production-quality 4-bit inference ready to go.
 

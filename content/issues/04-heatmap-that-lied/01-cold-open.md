@@ -28,7 +28,7 @@ In the late afternoon of **November 21, 2023**, a freelance developer named **Gr
 5. Grade the answer for whether it mentions the sandwich-and-Dolores-Park sentence.
 6. Repeat for every (context length × depth) pair. Render the result as a heatmap — context length on the x-axis, depth on the y-axis, green where the model found the needle, red where it didn't.
 
-That's it. There is no formal paper. There is no peer review. There is no controlled trial. There is a colourful PNG. **Within ten days, Anthropic, OpenAI, Google, and every long-context-curious researcher on the timeline has run their own version. Within six weeks the heatmap is on every lab's product page. By March 2024 it is — by industry consensus, with zero ceremony — *the* long-context benchmark.**
+That's it. There is no formal paper. There is no peer review. There is no controlled trial. There is a colourful PNG. **Within ten days, Anthropic, OpenAI, Google, and every long-context-curious researcher on the timeline has run their own version. Within six weeks the heatmap is on every lab's product page. By March 2024 it is — by industry consensus, with zero ceremony — *the* {{< wiki "long-context-benchmarks" >}}long-context benchmark{{< /wiki >}}.**
 
 The picture is irresistible:
 
@@ -71,7 +71,7 @@ print(f"  short context (≤24K):  {short:.1%}")
 print(f"  long  context (>24K):  {long:.1%}")
 ```
 
-Look at the picture. *It looks like a measurement.* It has a clean x-axis (a hyperparameter you'd ship), a clean y-axis (an experimental knob), a clean colour (success/failure). It has a top-line number ("Overall pass rate"). It compresses a 2-D capability into a 1-D dashboard chart your VP can paste into a slide deck. **For the first time, the AI industry has a shared visual language for long context.**
+Look at the picture. *It looks like a measurement.* It has a clean x-axis (a {{< wiki "hyperparameters" >}}hyperparameter{{< /wiki >}} you'd ship), a clean y-axis (an experimental knob), a clean colour (success/failure). It has a top-line number ("Overall pass rate"). It compresses a 2-D capability into a 1-D dashboard chart your VP can paste into a slide deck. **For the first time, the AI industry has a shared visual language for long context.**
 
 And here's the thing nobody admits at first: the *visual* is doing a lot of work the *math* is not. We will spend this issue, in twelve primers and four more mainline chapters, picking apart what that heatmap was actually saying — and what it was not.
 
@@ -140,7 +140,7 @@ And yet, the 99% scores would have been a happy ending — *if the underlying ca
 
 By the end of 2024 a strange split has emerged. Frontier models all score 99% on the headline benchmark. **Frontier-model users keep complaining their long context windows feel broken.**
 
-Software engineers loading 200K tokens of source code report that variable definitions mentioned at character 10,000 are forgotten by character 100,000. Researchers running multi-document summarization watch the model conflate documents, attribute claims to the wrong source, or politely hallucinate citations that aren't in the prompt. Code-agent users discover that around 60% context fill, the model starts pretending to have seen tools it never actually called. Customer-support bots ingesting hour-long transcripts substitute earlier customer names for later ones. Anthropic engineers, fielding these complaints, coin a phrase for it: **"context rot."**
+Software engineers loading 200K tokens of source code report that variable definitions mentioned at character 10,000 are forgotten by character 100,000. Researchers running multi-document summarization watch the model conflate documents, attribute claims to the wrong source, or politely hallucinate citations that aren't in the prompt. Code-agent users discover that around 60% context fill, the model starts pretending to have seen tools it never actually called. Customer-support bots ingesting hour-long transcripts substitute earlier customer names for later ones. Anthropic engineers, fielding these complaints, coin a phrase for it: **{{< wiki "long-context-concepts" >}}context rot{{< /wiki >}}.**
 
 How can a model score 99% on a benchmark explicitly designed to measure long-context retrieval — *and* be widely reported as forgetful when you actually use its long context window?
 

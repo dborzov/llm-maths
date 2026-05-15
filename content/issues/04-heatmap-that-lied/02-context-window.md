@@ -16,15 +16,15 @@ header: default.webp
 
 ## A Marketing Number And A Hardware Number
 
-In **February 2024**, Google announces that **Gemini 1.5 Pro** has a context window of **one million tokens**. Six weeks later they raise the headline to **10 million tokens** in a developer preview, accompanied by a video where the model finds a specific frame inside a 44-minute Buster Keaton silent film. The reception across AI Twitter is rapturous. Several VC accounts pronounce that "RAG is dead" — why bother with retrieval if you can just *paste the whole codebase*.
+In **February 2024**, Google announces that **Gemini 1.5 Pro** has a {{< wiki "hyperparameters" >}}context window{{< /wiki >}} of **one million tokens**. Six weeks later they raise the headline to **10 million tokens** in a developer preview, accompanied by a video where the model finds a specific frame inside a 44-minute Buster Keaton silent film. The reception across AI Twitter is rapturous. Several VC accounts pronounce that "RAG is dead" — why bother with retrieval if you can just *paste the whole codebase*.
 
-A small minority of engineers, the ones who have read the FlashAttention paper, mutter into their coffee. They know that the marketing number ("**1M token context window**") and the *hardware* number — what it costs in silicon to actually carry one million tokens of cached state through one decoder step — are two different things by a wide margin. They know that attention is **quadratic** in sequence length, that the KV cache is **linear** in sequence length but with a large constant, and that the difference between "the model accepts these tokens without crashing" and "the model can usefully attend across them" can be one or two orders of magnitude.
+A small minority of engineers, the ones who have read the FlashAttention paper, mutter into their coffee. They know that the marketing number ("**1M token context window**") and the *hardware* number — what it costs in silicon to actually carry one million tokens of cached state through one decoder step — are two different things by a wide margin. They know that {{< wiki "attention" >}}attention{{< /wiki >}} is **quadratic** in sequence length, that the {{< wiki "kv-cache" >}}KV cache{{< /wiki >}} is **linear** in sequence length but with a large constant, and that the difference between "the model accepts these tokens without crashing" and "the model can usefully attend across them" can be one or two orders of magnitude.
 
 This primer is the napkin math behind their grumbling.
 
 ## What "A Token" Becomes Inside The Model
 
-Before any arithmetic, the picture. A modern decoder-only transformer receives a sequence of token ids, embeds each one as a vector in $\mathbb{R}^{d_{\text{model}}}$, and then runs that sequence through $L$ identical decoder blocks. Each block does two things to the sequence: **self-attention** (every token attends to every previous token) and a **feed-forward MLP** (each token transforms in place). At the end you take the last vector, project it through the output head, and sample a next token.
+Before any arithmetic, the picture. A modern decoder-only transformer receives a sequence of token ids, {{< wiki "embeddings" >}}embeds{{< /wiki >}} each one as a vector in $\mathbb{R}^{d_{\text{model}}}$, and then runs that sequence through $L$ identical decoder blocks. Each block does two things to the sequence: **self-attention** (every token attends to every previous token) and a **feed-forward MLP** (each token transforms in place). At the end you take the last vector, project it through the output head, and sample a next token.
 
 For numbers throughout this primer we will anchor on a single concrete model: **Llama-3.1 70B**, because its architecture is public and representative of mid-2024 frontier scale.
 
@@ -51,7 +51,7 @@ $$
 
 where `n_kv_head` and `head_dim` are the microGPT architecture constants (see [ch.18 Grouped-Query Attention](../../05-microgpt-unfolded/18-gqa/)).{{% marginnote %}}Full-precision (FP16) `keys` and `values` occupy `2 × n_kv_head × head_dim` bytes per token per layer. KV quantization — dropping to INT8 or INT4 — is covered in depth in [Issue 03, The KV Method Family](../../03-sixteen-numbers/15-kv-method-family/).{{% /marginnote %}}
 
-For Llama-3.1 70B at FP16 (2 bytes per value), and using **Grouped-Query Attention** (GQA) with 8 KV heads of width 128:
+For Llama-3.1 70B at {{< wiki "number-formats" >}}FP16{{< /wiki >}} (2 bytes per value), and using **Grouped-Query Attention** (GQA) with 8 KV heads of width 128:
 
 $$
 2 \times 8 \times 128 \times 80 \times 2 \;\text{bytes} \;=\; 327{,}680 \;\text{bytes} \;\approx\; 320 \;\text{KB per token}
@@ -179,7 +179,7 @@ Three landmarks from the print-out:
 - At **128K tokens** (the Llama-3.1 advertised window), attention is already on par with MLP cost. The two halves of the transformer block now consume roughly equal silicon.
 - At **1M tokens**, attention is roughly **8× the MLP cost**, and the total forward pass demands roughly **15 EFLOPs** of compute — about **15 seconds on a single H100 at theoretical peak**, and well over a minute at realistic throughput. Real models batch this work and amortize it, but the underlying quadratic is what's setting the price.
 
-This is the deep reason the field is so obsessed with **sub-quadratic** attention variants. The recent literature on Mamba, Hyena, RWKV, Linear Attention, and friends is a several-year-long search for an architecture that pays $\mathcal{O}(n \log n)$ or $\mathcal{O}(n)$ in attention compute while preserving the qualitative behaviour of softmax attention. So far, every winner is a compromise: cheaper *and* a bit worse at long-context recall in some specific way.
+This is the deep reason the field is so obsessed with **sub-quadratic** attention variants. The recent literature on Mamba, Hyena, RWKV, Linear Attention, and friends is a several-year-long search for an architecture that pays $\mathcal{O}(n \log n)$ or $\mathcal{O}(n)$ in attention compute while preserving the qualitative behaviour of {{< wiki "softmax" >}}softmax{{< /wiki >}} attention. So far, every winner is a compromise: cheaper *and* a bit worse at long-context recall in some specific way.
 
 ## The "Position" Channel: How A Transformer Even Knows Token 999,999 Is Later Than Token 1
 
@@ -199,7 +199,7 @@ The marketing number is set by **what the architecture accepts without crashing*
 
 1. **Quadratic attention dilution.** At long context, each query attends to *more* keys. Softmax normalises across all of them. As $n$ grows, the attention probability spread out across $n$ targets gets noisier — the "right" key is competing with $n - 1$ distractors for a finite probability budget. We will see the dramatic shape of this curve in [The U-Curve](../07-lost-in-the-middle/).
 
-2. **Lost-in-the-middle.** Empirically, models recall best from the **start** and the **end** of the prompt and worst from the middle. Liu et al. (2023) documented this. We unpack it in detail in the next primer cluster.
+2. **Lost-in-the-middle.** Empirically, models recall best from the **start** and the **end** of the prompt and worst from the middle. {{< wiki "liu-2023" >}}Liu et al. (2023){{< /wiki >}} documented this. We unpack it in detail in the next primer cluster.
 
 3. **RoPE extension artefacts.** The further you extend RoPE past training, the more positions start aliasing. This produces *qualitatively new* failure modes — the model conflates positions, mixes up co-references, gets the order of events backwards.
 

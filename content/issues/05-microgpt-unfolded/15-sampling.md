@@ -40,7 +40,7 @@ The `lm_head` is a matrix of shape `(vocab_size, n_embd)`. One row per token in 
 return linear(x, state_dict['lm_head'])
 ```
 
-dots `x` against each of those rows. The result is a vector of length `vocab_size` — one number per vocabulary token. **These numbers are the `logits`.** They are not probabilities. They have not been normalized. They can be negative, can be 47, can be -3.2. The bigger the logit, the more the model "votes" for that token.
+dots `x` against each of those rows. The result is a vector of length `vocab_size` — one number per vocabulary token. **These numbers are the `{{< wiki "logit" >}}logits{{< /wiki >}}`.** They are not probabilities. They have not been normalized. They can be negative, can be 47, can be -3.2. The bigger the logit, the more the model "votes" for that token.
 
 Geometrically: each row of `lm_head` is a *reading template* for one vocabulary word. The dot product is "how aligned is the final residual with the template for the word *cat*?" High alignment, high logit. The lm head is, literally, an inner-product retrieval against a learned dictionary of tokens.
 
@@ -79,7 +79,7 @@ Three operations and a stop condition. Let's take them in order.
 
 **Step 1: divide every logit by `temperature`.** A scalar division before the softmax. We unpack what it does below.
 
-**Step 2: softmax.** The same numerically-stable softmax from [ch.7](../07-softmax/) — subtract the max, exponentiate, normalize. The output is a length-`vocab_size` probability distribution.
+**Step 2: softmax.** The same numerically-stable {{< wiki "softmax" >}}softmax{{< /wiki >}} from [ch.7](../07-softmax/) — subtract the max, exponentiate, normalize. The output is a length-`vocab_size` probability distribution.
 
 **Step 3: weighted random choice.** Python's `random.choices` does inverse-CDF sampling: build the cumulative distribution, throw a uniform random number into [0, sum(weights)), find the bucket. One token returned.
 

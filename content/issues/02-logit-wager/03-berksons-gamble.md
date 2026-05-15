@@ -46,7 +46,7 @@ $$
 \sigma^{-1}(p) = \log\!\left(\frac{p}{1-p}\right)
 $$
 
-No table lookup. No approximation. If you have $p$, you compute $p/(1-p)$ (the odds), take the logarithm, and you're done. Berkson called this inverse the **logit** — from *log-odds unit*, by exact analogy with *probability unit* (probit).
+No table lookup. No approximation. If you have $p$, you compute $p/(1-p)$ (the odds), take the logarithm, and you're done. Berkson called this inverse the **{{< wiki "logit" >}}logit{{< /wiki >}}** — from *log-odds unit*, by exact analogy with *probability unit* (probit).
 
 The logit of a probability is the log-odds of that probability:
 

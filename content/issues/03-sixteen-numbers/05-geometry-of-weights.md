@@ -106,9 +106,9 @@ We chase this story properly in [The 1% That Ruins Everything](../06-outliers/).
 
 ## Why "Per-Row" Vs "Per-Token" Matters: The K/V Asymmetry
 
-Here is one more empirical curiosity that pays off later. When you look at the **K** (keys) and **V** (values) tensors of a transformer's attention layer:
+Here is one more empirical curiosity that pays off later. When you look at the **K** (keys) and **V** (values) tensors of a transformer's {{< wiki "attention" >}}attention{{< /wiki >}} layer:
 
-- **K** has a few systematically-large *channels* (dimensions) — an outlier-channel pattern, similar to FFN activations.
+- **K** has a few systematically-large *channels* (dimensions) — an outlier-channel pattern, similar to {{< wiki "mlp-block" >}}FFN{{< /wiki >}} activations.
 - **V** has a few systematically-large *tokens* — outlier rows that vary by sequence position.
 
 This is a real, well-documented asymmetry. The 2023 paper KIVI exploits it: they quantize K **per-channel** (one scale per feature dimension), and V **per-token** (one scale per sequence position). Same data, two different scaling axes, because the *outlier geometry* is different.
