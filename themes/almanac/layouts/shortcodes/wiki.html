@@ -1,0 +1,29 @@
+{{- /*
+  wiki shortcode — link a term to its canonical wiki stub page.
+
+  Usage:
+      The {{< wiki "attention" >}}multi-head attention{{< /wiki >}} block...
+      The {{< wiki "kv-cache" >}}KV cache{{< /wiki >}} grows linearly with T.
+
+  The slug must match a `slug` field in a wiki page's front matter.
+  Missing slugs render the inner text verbatim and emit a build warning.
+*/ -}}
+
+{{- $slug := .Get 0 -}}
+{{- if not $slug -}}
+  {{- errorf "wiki shortcode in %s: missing slug arg" .Page.RelPermalink -}}
+{{- end -}}
+
+{{- $target := "" -}}
+{{- range where site.RegularPages "Section" "wiki" -}}
+  {{- if eq (.Params.slug | default "") $slug -}}
+    {{- $target = . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if $target -}}
+<a class="wiki-link" href="{{ $target.RelPermalink }}" data-wiki-slug="{{ $slug }}" title="wiki: {{ $target.Title }}">{{ .Inner }}</a>
+{{- else -}}
+  {{- warnf "wiki shortcode in %s: no wiki page for slug %q" .Page.RelPermalink $slug -}}
+<span class="wiki-link wiki-link--missing" data-wiki-slug="{{ $slug }}">{{ .Inner }}</span>
+{{- end -}}

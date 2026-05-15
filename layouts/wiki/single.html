@@ -1,0 +1,62 @@
+{{ define "main" }}
+<div class="article-container wiki-page">
+
+  <aside class="toc-sidebar" aria-label="Table of contents">
+    {{ partial "toc.html" . }}
+    <div class="toc-meta">
+      <p class="meta-wiki-badge">Wiki</p>
+      {{ with .Params.category }}
+      <p class="meta-wiki-category">
+        <a href="{{ printf "wiki/%s/" . | relURL }}">{{ . }}</a>
+      </p>
+      {{ end }}
+    </div>
+  </aside>
+
+  <article class="article-body wiki-article">
+    <header class="article-header">
+      <a href="{{ relURL "wiki/" }}" class="article-breadcrumb">← Wiki</a>
+
+      <div class="article-topic">wiki</div>
+      <h1 class="article-title">{{ .Title }}</h1>
+
+      {{ with .Params.also_known_as }}
+      <p class="wiki-aliases">Also known as: {{ delimit . ", " }}</p>
+      {{ end }}
+    </header>
+
+    <div class="article-content wiki-content">
+
+      {{ with .Params.source_of_truth }}
+      <div class="wiki-sot">
+        <strong>Defined in →</strong>
+        <a href="{{ . | relURL }}">{{ $.Params.source_of_truth_title | default "canonical article" }}</a>
+      </div>
+      {{ end }}
+
+      {{ .Content }}
+
+      {{ with .Params.related }}
+      <div class="wiki-related">
+        <h3>See also</h3>
+        <ul>
+          {{- range . -}}
+          {{- $s := . -}}
+          {{- $found := false -}}
+          {{- range where site.RegularPages "Section" "wiki" -}}
+            {{- if and (not $found) (eq (.Params.slug | default "") $s) -}}
+              <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+              {{- $found = true -}}
+            {{- end -}}
+          {{- end -}}
+          {{- if not $found -}}<li><em>{{ $s }}</em></li>{{- end -}}
+          {{- end -}}
+        </ul>
+      </div>
+      {{ end }}
+
+    </div>
+  </article>
+
+</div>
+{{ end }}

@@ -70,7 +70,7 @@ Sketch the dependency DAG first, on paper. Nodes are articles; edges express "yo
 
 For all writing guidance — voice, narrative arc, quality checklist, formatting tools — see [`docs/writing.md`](writing.md).
 
-For the microGPT terminology contract (required for any article touching transformer internals) — see [`docs/microgpt-contract.md`](microgpt-contract.md).
+For microGPT naming rules and wiki shortcode usage (required for any article touching transformer internals) — see [`docs/microgpt-contract.md`](microgpt-contract.md) and [`docs/wiki.md`](wiki.md).
 
 For front matter schemas and file naming — see [`docs/issue-format.md`](issue-format.md).
 

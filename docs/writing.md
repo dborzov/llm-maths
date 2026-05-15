@@ -115,7 +115,7 @@ Every article must satisfy all of these before it is done:
 - [ ] **Cross-links to siblings.** Every concept with a primer must link there; every primer links forward to the mainline article that uses it.
 - [ ] **Pop-art formatting variety.** Mix `**bold**`, `*emphasis*`, tables, blockquotes, `<details>` blocks, fenced code, inline HTML/SVG. Use the component library (pullquotes, callouts, margin notes, crossheads) to break up uniform pages. The page must not be one font weight on one background.
 - [ ] **Closes with a forward link.** A "Continue to → [Next Article]" line, written as a cliffhanger.
-- [ ] **Uses microGPT terminology where applicable.** See [`docs/microgpt-contract.md`](microgpt-contract.md).
+- [ ] **Uses microGPT terminology where applicable, with wiki shortcodes on first mention.** See [`docs/microgpt-contract.md`](microgpt-contract.md) and [`docs/wiki.md`](wiki.md).
 
 ---
 

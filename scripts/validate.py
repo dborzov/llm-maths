@@ -379,6 +379,25 @@ def check_timeline_data(report: Report) -> None:
 # Driver
 # --------------------------------------------------------------------- #
 
+def check_wiki(report: Report) -> None:
+    """Run wiki_index lint and surface warnings. Errors from wiki are promoted to errors."""
+    import subprocess
+    result = subprocess.run(
+        ["uv", "run", "scripts/wiki_index.py", "lint"],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+    )
+    for line in result.stdout.splitlines():
+        line = line.strip()
+        if line.startswith("WIKI ERROR"):
+            report.err(line)
+        elif line.startswith("WIKI WARN"):
+            report.warn(line)
+    if result.returncode != 0 and result.stderr:
+        report.warn(f"wiki_index lint failed: {result.stderr.strip()[:200]}")
+
+
 def main() -> int:
     report = Report()
     issues = discover_issues(report)
@@ -390,6 +409,7 @@ def main() -> int:
         check_cross_links(issue, report)
         check_pyplot_blocks(issue, report)
     check_timeline_data(report)
+    check_wiki(report)
     return report.print_summary()
 
 

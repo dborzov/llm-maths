@@ -2849,3 +2849,159 @@ hr {
     accent-color: var(--accent-1);
 }
 
+/* =========================================================================
+   Wiki shortcode + wiki section
+   ========================================================================= */
+
+/* Inline wiki link — underline dashes, not solid */
+a.wiki-link {
+    text-decoration-style: dashed;
+    text-decoration-color: var(--accent-1);
+    text-underline-offset: 3px;
+}
+a.wiki-link:hover {
+    background: color-mix(in srgb, var(--accent-1) 12%, transparent);
+}
+.wiki-link--missing {
+    text-decoration: underline wavy var(--accent-2);
+    cursor: help;
+}
+
+/* Wiki catalog page */
+.wiki-catalog-container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+}
+.wiki-catalog-header {
+    margin-bottom: 2.5rem;
+    border-bottom: var(--border);
+    padding-bottom: 1rem;
+}
+.wiki-catalog-title {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    margin: 0 0 0.5rem;
+}
+.wiki-catalog-intro {
+    color: color-mix(in srgb, var(--color-ink) 70%, transparent);
+    font-size: 0.95rem;
+}
+.wiki-category {
+    margin-bottom: 2.5rem;
+}
+.wiki-category-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-1);
+    border-bottom: 2px solid var(--accent-1);
+    padding-bottom: 0.25rem;
+    margin-bottom: 1rem;
+}
+.wiki-page-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+}
+.wiki-page-item {
+    border: 2px solid var(--color-ink);
+    padding: 0.6rem 0.9rem;
+    background: var(--bg-surface, var(--color-cream));
+    box-shadow: var(--shadow-pop);
+}
+.wiki-page-link {
+    font-weight: 700;
+    font-family: var(--font-display);
+    text-decoration: none;
+    font-size: 1rem;
+}
+.wiki-page-link:hover {
+    text-decoration: underline;
+}
+.wiki-page-aliases {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: color-mix(in srgb, var(--color-ink) 55%, transparent);
+    margin-left: 0.5rem;
+}
+.wiki-page-desc {
+    margin: 0.25rem 0 0;
+    font-size: 0.85rem;
+    color: color-mix(in srgb, var(--color-ink) 70%, transparent);
+}
+
+/* Wiki single page */
+.wiki-article .article-topic {
+    background: var(--accent-2);
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 0.15rem 0.5rem;
+    border: 2px solid var(--color-ink);
+    margin-bottom: 0.5rem;
+}
+.wiki-aliases {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: color-mix(in srgb, var(--color-ink) 60%, transparent);
+    margin: 0.25rem 0 1rem;
+}
+.wiki-sot {
+    background: color-mix(in srgb, var(--accent-1) 10%, var(--bg-surface, white));
+    border-left: 4px solid var(--accent-1);
+    padding: 0.6rem 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+.wiki-related {
+    margin-top: 2rem;
+    border-top: 2px dashed var(--color-ink);
+    padding-top: 1rem;
+}
+.wiki-related h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+}
+.wiki-related ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.wiki-related li a {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    border: 2px solid var(--color-ink);
+    padding: 0.1rem 0.5rem;
+    text-decoration: none;
+    background: var(--bg-surface, white);
+}
+.wiki-related li a:hover {
+    background: var(--accent-1);
+    color: var(--color-cream);
+}
+.meta-wiki-badge {
+    font-size: 0.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    background: var(--accent-2);
+    border: 2px solid var(--color-ink);
+    display: inline-block;
+    padding: 0.1rem 0.4rem;
+    margin-bottom: 0.5rem;
+}
+.meta-wiki-category {
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+}
+

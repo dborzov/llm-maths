@@ -1,0 +1,37 @@
+{{ define "main" }}
+<div class="wiki-catalog-container">
+  <header class="wiki-catalog-header">
+    <h1 class="wiki-catalog-title">{{ .Title }}</h1>
+    {{ with .Content }}<div class="wiki-catalog-intro">{{ . }}</div>{{ end }}
+  </header>
+
+  {{- /* Group wiki pages by category */ -}}
+  {{- $pages := where site.RegularPages "Section" "wiki" -}}
+  {{- $categories := dict -}}
+  {{- range $pages -}}
+    {{- $cat := .Params.category | default "uncategorized" -}}
+    {{- $existing := index $categories $cat | default slice -}}
+    {{- $categories = merge $categories (dict $cat ($existing | append .)) -}}
+  {{- end -}}
+
+  {{- range $cat, $catPages := $categories -}}
+  <section class="wiki-category">
+    <h2 class="wiki-category-title">{{ $cat }}</h2>
+    <ul class="wiki-page-list">
+      {{- range $catPages -}}
+      <li class="wiki-page-item">
+        <a href="{{ .RelPermalink }}" class="wiki-page-link">{{ .Title }}</a>
+        {{ with .Params.also_known_as }}
+        <span class="wiki-page-aliases">{{ delimit . " · " }}</span>
+        {{ end }}
+        {{ with .Description }}
+        <p class="wiki-page-desc">{{ . }}</p>
+        {{ end }}
+      </li>
+      {{- end -}}
+    </ul>
+  </section>
+  {{- end -}}
+
+</div>
+{{ end }}

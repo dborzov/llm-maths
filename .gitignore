@@ -7,6 +7,9 @@ resources/
 static/plots/*/
 !static/plots/.gitkeep
 
+# Wiki derived index (rebuilt on every validate)
+scripts/wiki.db
+
 # Python
 __pycache__/
 *.pyc
