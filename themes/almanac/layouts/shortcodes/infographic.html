@@ -1,0 +1,68 @@
+{{- /*
+  infographic shortcode — interactive panel that replaces a wall-of-numbers
+  table with toggles, dropdowns, and a small live visualization. Use it
+  whenever a static table would convey the technical point less well than
+  a reader poking buttons.
+
+  Scope is deliberately small. The toolkit you have inside:
+      <button>, <select>, <input type="range|number|checkbox|radio">,
+      tabs, badges, a results pane. NO bundled charts: if you need a
+      chart, render it in vanilla JS or skip the infographic entirely
+      and use a static pyplot block.
+
+  Usage (use `<>` delimiters — inner content is raw HTML/JS):
+
+      {{< infographic title="KV Cache Inspector"
+                      description="Estimates HBM footprint as a function of model + context." >}}
+
+        {{< infographic-controls >}}
+          <label class="ig-field">
+            <span class="ig-field-label">Architecture</span>
+            <select id="ig-kv-model">
+              <option value="llama3-8b">Llama 3 (8B)</option>
+              <option value="llama3-70b">Llama 3 (70B)</option>
+            </select>
+          </label>
+          <!-- ... -->
+        {{< /infographic-controls >}}
+
+        {{< infographic-viz >}}
+          <div class="ig-bignum" id="ig-kv-out">3.5 <span>GB</span></div>
+          <script> ... vanilla JS wiring ... </script>
+        {{< /infographic-viz >}}
+
+      {{< /infographic >}}
+
+  Parameters:
+      title       — header label shown in the chrome bar (required).
+      description — small fine-print line below the controls (optional).
+      id          — anchor id (optional).
+*/ -}}
+
+{{- $title := .Get "title" -}}
+{{- $description := .Get "description" -}}
+{{- $id := .Get "id" -}}
+
+{{- if not $title -}}
+  {{- errorf "infographic shortcode at %s: missing required `title` argument" .Position -}}
+{{- end -}}
+
+<aside class="infographic"{{ with $id }} id="{{ . }}"{{ end }}>
+  <header class="infographic-bar">
+    <div class="infographic-bar-title">
+      <span class="infographic-bar-icon" aria-hidden="true"></span>
+      <span class="infographic-bar-text">{{ $title }}</span>
+    </div>
+    <div class="infographic-bar-dots" aria-hidden="true">
+      <span class="infographic-bar-dot infographic-bar-dot--1"></span>
+      <span class="infographic-bar-dot infographic-bar-dot--2"></span>
+      <span class="infographic-bar-dot infographic-bar-dot--3"></span>
+    </div>
+  </header>
+  <div class="infographic-grid">
+    {{ .Inner }}
+    {{- with $description -}}
+      <p class="infographic-footnote">{{ . }}</p>
+    {{- end -}}
+  </div>
+</aside>

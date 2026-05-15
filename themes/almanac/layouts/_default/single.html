@@ -46,7 +46,7 @@
       {{ end }}
     </header>
 
-    <div class="article-content">
+    <div class="article-content{{ if .Params.unfolded }} unfolded{{ end }}">
       {{ .Content }}
     </div>
 

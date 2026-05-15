@@ -181,8 +181,7 @@ hr {
    ============================================================ */
 
 .site-header {
-    position: sticky;
-    top: 0;
+    position: relative;
     z-index: 100;
     background: var(--bg-nav);
     border-bottom: var(--border);
@@ -317,14 +316,27 @@ hr {
     align-items: start;
 }
 
+/* On screens wide enough to host margin notes in a side rail, expand the
+   container and reserve 260px of padding on the right of the article body
+   that .marginnote-aside can float into. */
+@media (min-width: 1280px) {
+    .article-container {
+        max-width: 1400px;
+        grid-template-columns: var(--sidebar-width) 1fr;
+    }
+    .article-body {
+        padding-right: 280px;
+    }
+}
+
 /* ============================================================
    TOC SIDEBAR
    ============================================================ */
 
 .toc-sidebar {
     position: sticky;
-    top: calc(var(--nav-height) + 1.5rem);
-    max-height: calc(100vh - var(--nav-height) - 3rem);
+    top: 1.5rem;
+    max-height: calc(100vh - 3rem);
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--accent-1) transparent;
@@ -1449,11 +1461,14 @@ hr {
    RESPONSIVE
    ============================================================ */
 
-@media (max-width: 500px) {
+/* Below ~1000px the TOC sidebar would crush the article body below readable
+   width (typical content needs ≥620px). Collapse it into a foldable strip
+   at the top of the article so the body claims the full width. */
+@media (max-width: 1024px) {
     .article-container {
         grid-template-columns: 1fr;
-        gap: 0;
-        padding: 1.5rem 1rem;
+        gap: 1.25rem;
+        padding: 2rem 1.25rem;
     }
 
     .toc-sidebar {
@@ -1462,15 +1477,22 @@ hr {
     }
 
     .toc {
-        margin-bottom: 2rem;
+        margin-bottom: 1.25rem;
     }
 
-    /* Collapse TOC on mobile by default */
+    /* On narrow screens the TOC turns into a collapsed strip — readers can
+       open it on demand via the existing toc-toggle button. */
     .toc-body {
         display: none;
     }
     .toc.toc-open .toc-body {
         display: block;
+    }
+}
+
+@media (max-width: 500px) {
+    .article-container {
+        padding: 1.5rem 1rem;
     }
 
     .hero-title-row {
@@ -2061,3 +2083,761 @@ hr {
         gap: 0.4rem;
     }
 }
+
+/* ============================================================
+   COMPONENT LIBRARY — shortcodes documented in docs/components/
+   ============================================================ */
+
+/* ---- PULLQUOTE ----------------------------------------------
+   Stage-stealing excerpt panel. Three colour-variant moods:
+   profound (pink), technical (teal), counter-intuitive (orange).
+   ------------------------------------------------------------ */
+.pullquote {
+    position: relative;
+    margin: 3rem 0;
+    padding: 2.25rem 2rem 1.75rem;
+    border: 4px solid var(--color-ink);
+    box-shadow: var(--shadow-pop-lg);
+    overflow: hidden;
+    max-width: none;
+}
+.pullquote-mark {
+    position: absolute;
+    top: -0.45em;
+    left: 0.6rem;
+    font-family: var(--font-display);
+    font-size: 7rem;
+    line-height: 1;
+    opacity: 0.25;
+    pointer-events: none;
+}
+.pullquote-body {
+    position: relative;
+    z-index: 1;
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 2.4vw + 1rem, 2.6rem);
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    font-style: italic;
+    margin: 0;
+    border-left: none;
+    background: none;
+    padding: 0;
+}
+.pullquote-body p { margin: 0; max-width: none; }
+.pullquote-body::after { display: none; }
+.pullquote-author {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+    padding-top: 0.9rem;
+    border-top: 2px solid currentColor;
+    font-style: normal;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.92;
+}
+.pullquote-author-dash {
+    display: inline-block;
+    width: 24px;
+    height: 8px;
+    background: var(--color-ink);
+}
+.pullquote-halftone {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.08;
+    background-image: radial-gradient(var(--color-ink) 1px, transparent 0);
+    background-size: 6px 6px;
+}
+.pullquote--profound {
+    background: var(--accent-1);
+    color: var(--color-white);
+}
+.pullquote--profound .pullquote-mark { color: var(--accent-3); }
+.pullquote--profound .pullquote-author-dash { background: var(--color-white); }
+.pullquote--technical {
+    background: var(--accent-2);
+    color: var(--color-white);
+}
+.pullquote--technical .pullquote-mark { color: var(--accent-3); }
+.pullquote--technical .pullquote-author-dash { background: var(--color-white); }
+.pullquote--counter-intuitive {
+    background: var(--accent-4);
+    color: var(--color-ink);
+}
+.pullquote--counter-intuitive .pullquote-mark { color: var(--color-white); }
+
+/* ---- CALLOUT ------------------------------------------------
+   Boxed sidebars for tangents, tips, warnings, definitions.
+   Five colour variants: note, tip, warning, tangent, theorem.
+   ------------------------------------------------------------ */
+.callout {
+    margin: 1.75rem 0;
+    border: var(--border);
+    box-shadow: var(--shadow-pop);
+    background: var(--bg-surface);
+    overflow: hidden;
+    max-width: 72ch;
+}
+.callout-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.9rem;
+    border-bottom: var(--border);
+    color: var(--color-white);
+}
+.callout-icon {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: currentColor;
+    border: 2px solid var(--color-ink);
+    box-shadow: 1px 1px 0 var(--color-ink);
+    color: var(--color-white);
+}
+.callout-label {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+}
+.callout-body {
+    padding: 1rem 1.1rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+.callout-body > :first-child { margin-top: 0; }
+.callout-body > :last-child { margin-bottom: 0; }
+.callout-body p { margin: 0.5em 0; max-width: none; }
+.callout-body ul, .callout-body ol { margin: 0.5em 0; }
+.callout--note .callout-header { background: var(--accent-2); }
+.callout--tip .callout-header { background: var(--accent-1); }
+.callout--warning .callout-header { background: var(--accent-4); }
+.callout--tangent { background: var(--color-cream); }
+.callout--tangent .callout-header { background: var(--color-ink); }
+.callout--theorem .callout-header { background: var(--accent-3); color: var(--color-ink); }
+.callout--theorem .callout-icon { color: var(--color-ink); }
+
+/* ---- MARGIN NOTE --------------------------------------------
+   Floating sidenote on desktop (right margin), inline annotated
+   block on mobile/tablet. Inserted mid-paragraph; wrapped in a
+   <span> so it doesn't break <p> nesting.
+   ------------------------------------------------------------ */
+.marginnote {
+    position: relative;
+    display: inline;
+}
+.marginnote-marker {
+    display: inline-block;
+    width: 1.05em;
+    height: 1.05em;
+    margin: 0 0.1em;
+    background: var(--accent-1);
+    color: var(--color-white);
+    border: 2px solid var(--color-ink);
+    font-size: 0.7em;
+    font-weight: 900;
+    line-height: 0.95em;
+    text-align: center;
+    vertical-align: super;
+    cursor: help;
+}
+.marginnote-aside {
+    display: block;
+    margin: 0.75rem 0;
+    padding: 0.75rem 1rem;
+    border-left: 4px solid var(--accent-2);
+    background: color-mix(in srgb, var(--accent-2) 8%, var(--bg-surface));
+    font-size: 0.85rem;
+    line-height: 1.5;
+    font-style: italic;
+}
+.marginnote-label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-family: var(--font-body);
+    font-size: 0.62rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent-2);
+    font-style: normal;
+}
+/* On wide screens, the article body reserves a 260px right rail (see the
+   article-layout rule below) and margin notes float into it. We use float
+   + negative margin so each aside sinks into the rail at the height of
+   its inline marker — no JS, no per-note positioning. */
+@media (min-width: 1280px) {
+    .marginnote-aside {
+        float: right;
+        clear: right;
+        width: 240px;
+        margin: 0.15rem -284px 0.5rem 1rem;
+        padding: 0 0 0 0.85rem;
+        background: transparent;
+        border-left: 3px solid var(--accent-2);
+        font-size: 0.78rem;
+        line-height: 1.5;
+        font-style: italic;
+        opacity: 0.78;
+        transition: opacity 0.15s ease;
+    }
+    .marginnote:hover .marginnote-aside { opacity: 1; }
+    /* Label is redundant in the floating-rail form. */
+    .marginnote-aside .marginnote-label { display: none; }
+}
+
+/* ---- CROSSHEAD ----------------------------------------------
+   Mid-section signpost, NOT a real heading. Yellow underline
+   stripe + pink corner tick.
+   ------------------------------------------------------------ */
+.crosshead {
+    position: relative;
+    display: inline-block;
+    margin: 2.5rem 0 1rem;
+    padding-left: 1.25rem;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+}
+.crosshead .crosshead-text {
+    position: relative;
+    z-index: 1;
+    background-image: linear-gradient(transparent 65%, var(--accent-3) 65%);
+    padding: 0 0.25em;
+}
+.crosshead-tick {
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 0.7rem;
+    height: 0.7rem;
+    background: var(--accent-1);
+    border: 2px solid var(--color-ink);
+    transform: rotate(-12deg);
+}
+
+/* ---- FIGURE -------------------------------------------------
+   Image with caption; click opens the shared pyplot lightbox.
+   ------------------------------------------------------------ */
+.figure-block {
+    margin: 2rem auto;
+    border: var(--border);
+    box-shadow: var(--shadow-pop);
+    background: var(--bg-surface);
+    overflow: hidden;
+}
+.figure-image {
+    display: block;
+    position: relative;
+    cursor: zoom-in;
+    background: var(--bg-surface);
+}
+.figure-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: none;
+    box-shadow: none;
+}
+.figure-image-hint {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    background: var(--color-ink);
+    color: var(--color-cream);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.25rem 0.55rem;
+    border: 2px solid var(--color-ink);
+    opacity: 0;
+    transition: opacity 0.12s ease;
+    pointer-events: none;
+}
+.figure-image:hover .figure-image-hint,
+.figure-image:focus-visible .figure-image-hint { opacity: 1; }
+@media (hover: none) {
+    .figure-image-hint { opacity: 0.85; }
+}
+.figure-caption {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    padding: 0.7rem 1rem;
+    border-top: var(--border);
+    background: var(--bg-page);
+    font-size: 0.82rem;
+    line-height: 1.5;
+    font-weight: 600;
+    color: var(--color-ink);
+    font-style: italic;
+}
+.figure-caption-mark {
+    flex-shrink: 0;
+    margin-top: 0.4rem;
+    width: 12px;
+    height: 12px;
+    background: var(--accent-1);
+    border: 2px solid var(--color-ink);
+}
+.figure-caption-text { flex: 1; }
+.figure-caption-text p { margin: 0; max-width: none; }
+.figure-credit {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.6;
+    align-self: center;
+}
+
+/* ---- HERO IMAGE alias ---------------------------------------
+   Existing `.article-header-illustration` (set by single.html
+   and issue-cover.html) keeps working. `.article-hero` is the
+   forward-compatible name we encourage in new code.
+   ------------------------------------------------------------ */
+.article-hero { /* same rules as .article-header-illustration */ }
+
+/* ---- INFOGRAPHIC --------------------------------------------
+   Interactive panel: header bar + (controls | viz) two-pane
+   layout. Vanilla HTML + JS inside.
+   ------------------------------------------------------------ */
+.infographic {
+    margin: 2.5rem 0;
+    border: var(--border);
+    box-shadow: var(--shadow-pop-lg);
+    background: var(--bg-surface);
+    overflow: hidden;
+}
+.infographic-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 1rem;
+    background: var(--color-ink);
+    color: var(--color-white);
+}
+.infographic-bar-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+.infographic-bar-icon {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: var(--accent-3);
+    border: 2px solid var(--color-cream);
+}
+.infographic-bar-dots {
+    display: flex;
+    gap: 0.4rem;
+}
+.infographic-bar-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--color-cream);
+}
+.infographic-bar-dot--1 { background: var(--accent-1); }
+.infographic-bar-dot--2 { background: var(--accent-2); }
+.infographic-bar-dot--3 { background: var(--accent-3); }
+.infographic-grid {
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) 2fr;
+}
+@media (max-width: 720px) {
+    .infographic-grid { grid-template-columns: 1fr; }
+}
+.infographic-controls {
+    background: var(--color-cream);
+    border-right: var(--border);
+    padding: 1rem;
+}
+@media (max-width: 720px) {
+    .infographic-controls {
+        border-right: none;
+        border-bottom: var(--border);
+    }
+}
+.infographic-controls-tag {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: color-mix(in srgb, var(--color-ink) 60%, transparent);
+    margin-bottom: 0.6rem;
+}
+.infographic-viz {
+    position: relative;
+    padding: 1.25rem;
+    background: var(--bg-surface);
+}
+.infographic-viz::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: radial-gradient(var(--color-ink) 1px, transparent 0);
+    background-size: 6px 6px;
+}
+.infographic-viz > * { position: relative; z-index: 1; }
+.infographic-footnote {
+    grid-column: 1 / -1;
+    padding: 0.6rem 1rem;
+    border-top: 2px dashed var(--color-ink);
+    background: var(--bg-page);
+    font-size: 0.7rem;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.65;
+}
+/* Common infographic widget helpers */
+.ig-field {
+    display: block;
+    margin-bottom: 0.75rem;
+}
+.ig-field-label {
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.25rem;
+}
+.ig-field select,
+.ig-field input[type="number"],
+.ig-field input[type="text"] {
+    width: 100%;
+    padding: 0.45rem 0.55rem;
+    border: 2px solid var(--color-ink);
+    background: var(--bg-surface);
+    font: inherit;
+    font-weight: 600;
+}
+.ig-field input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent-1);
+}
+.ig-toggle-row {
+    display: flex;
+    gap: 0.35rem;
+}
+.ig-toggle-row button {
+    flex: 1;
+    padding: 0.35rem 0.5rem;
+    border: 2px solid var(--color-ink);
+    background: var(--bg-surface);
+    font: inherit;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.ig-toggle-row button[aria-pressed="true"] {
+    background: var(--accent-1);
+    color: var(--color-white);
+}
+.ig-bignum {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    line-height: 1;
+    text-align: center;
+    color: var(--accent-1);
+}
+.ig-bignum span {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--color-ink);
+    letter-spacing: 0.14em;
+}
+
+/* ---- INFOGRAPHIC visualization primitives -------------------
+   SVG- and CSS-driven shapes that scale with values. The basic
+   unit is ALWAYS a comparison: two bars side-by-side, two circles
+   sized by quantity, a single thing reacting to one slider input.
+   ------------------------------------------------------------ */
+
+/* The viz stage — a centered, generously-padded block that pyplot-like
+   primitives anchor inside. Keeps spacing consistent across demos. */
+.ig-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+    padding: 0.25rem 0;
+}
+.ig-stage-label {
+    font-size: 0.65rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: color-mix(in srgb, var(--color-ink) 55%, transparent);
+    margin: 0;
+}
+
+/* Horizontal bar — width-driven. Use --value (0..1) inline, or set
+   width on .ig-bar-fill directly via JS.
+
+       <div class="ig-bar"><div class="ig-bar-fill" style="width:62%"></div></div>
+*/
+.ig-bar {
+    position: relative;
+    width: 100%;
+    height: 28px;
+    background: var(--color-cream);
+    border: 2px solid var(--color-ink);
+    box-shadow: 2px 2px 0 var(--color-ink);
+    overflow: hidden;
+}
+.ig-bar-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    background: var(--accent-1);
+    border-right: 2px solid var(--color-ink);
+    transition: width 0.18s ease-out;
+    background-image: repeating-linear-gradient(
+        135deg,
+        transparent 0 6px,
+        rgba(0, 0, 0, 0.1) 6px 7px
+    );
+}
+.ig-bar-fill--teal { background-color: var(--accent-2); }
+.ig-bar-fill--yellow { background-color: var(--accent-3); }
+.ig-bar-fill--orange { background-color: var(--accent-4); }
+.ig-bar-marker {
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    width: 3px;
+    background: var(--color-ink);
+}
+.ig-bar-marker::after {
+    content: attr(data-label);
+    position: absolute;
+    top: -1.1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* Labelled bar — bar with a left label and a right numeric readout. The
+   canonical "two-things-side-by-side" comparison pattern is two of these
+   stacked. */
+.ig-bar-row {
+    display: grid;
+    grid-template-columns: minmax(80px, 1fr) 2.5fr auto;
+    gap: 0.75rem;
+    align-items: center;
+}
+.ig-bar-row-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+.ig-bar-row-value {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-ink);
+    min-width: 4.5rem;
+    text-align: right;
+}
+
+/* Scaled circle — size driven by --r (radius in px) via inline style or JS.
+   Use to show how a quantity scales by AREA (perceptually accurate),
+   not just height. Pair two circles to compare. */
+.ig-circle-stage {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 2rem;
+    min-height: 200px;
+    padding: 0.5rem 0;
+}
+.ig-circle-bundle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+.ig-circle {
+    --r: 48;
+    --color: var(--accent-1);
+    width: calc(var(--r) * 2px);
+    height: calc(var(--r) * 2px);
+    border-radius: 50%;
+    background: var(--color);
+    border: 3px solid var(--color-ink);
+    box-shadow: 4px 4px 0 var(--color-ink);
+    position: relative;
+    transition: width 0.2s ease-out, height 0.2s ease-out;
+    background-image: radial-gradient(var(--color-ink) 1px, transparent 0);
+    background-size: 6px 6px;
+    background-blend-mode: multiply;
+}
+.ig-circle-label {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+}
+.ig-circle-value {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    letter-spacing: 0.04em;
+    color: var(--accent-1);
+}
+
+/* Stacked-segment bar — show proportions of a total (vocab buckets,
+   memory budget, etc). Use up to ~5 segments; more becomes noise. */
+.ig-stack {
+    display: flex;
+    width: 100%;
+    height: 36px;
+    border: 2px solid var(--color-ink);
+    box-shadow: 2px 2px 0 var(--color-ink);
+    overflow: hidden;
+}
+.ig-stack-seg {
+    height: 100%;
+    border-right: 2px solid var(--color-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--color-ink);
+    white-space: nowrap;
+    overflow: hidden;
+    transition: flex-basis 0.18s ease-out;
+}
+.ig-stack-seg:last-child { border-right: none; }
+.ig-stack-seg--1 { background: var(--accent-1); color: var(--color-white); }
+.ig-stack-seg--2 { background: var(--accent-2); color: var(--color-white); }
+.ig-stack-seg--3 { background: var(--accent-3); }
+.ig-stack-seg--4 { background: var(--accent-4); }
+.ig-stack-seg--ink { background: var(--color-ink); color: var(--color-cream); }
+
+.ig-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+.ig-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.ig-legend-swatch {
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--color-ink);
+}
+
+/* SVG arrow primitive (use inline <svg class="ig-arrow">). Reasonable
+   default styling: ink stroke, pink head, no fill. */
+.ig-svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+.ig-svg [data-stroke="ink"] { stroke: var(--color-ink); fill: none; stroke-width: 3; }
+.ig-svg [data-stroke="pink"] { stroke: var(--accent-1); fill: none; stroke-width: 3; }
+.ig-svg [data-fill="pink"] { fill: var(--accent-1); stroke: var(--color-ink); stroke-width: 2; }
+.ig-svg [data-fill="teal"] { fill: var(--accent-2); stroke: var(--color-ink); stroke-width: 2; }
+.ig-svg [data-fill="yellow"] { fill: var(--accent-3); stroke: var(--color-ink); stroke-width: 2; }
+.ig-svg [data-fill="orange"] { fill: var(--accent-4); stroke: var(--color-ink); stroke-width: 2; }
+.ig-svg [data-fill="cream"] { fill: var(--color-cream); stroke: var(--color-ink); stroke-width: 2; }
+.ig-svg text {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    fill: var(--color-ink);
+}
+.ig-svg text[data-display] {
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 0.03em;
+}
+
+/* Slider widget — labelled range + live readout, one DOM block.
+
+       <div class="ig-slider">
+         <div class="ig-slider-header">
+           <span class="ig-slider-label">Context length</span>
+           <output class="ig-slider-readout">4096</output>
+         </div>
+         <input type="range" min="1024" max="32768" step="1024" value="4096">
+       </div>
+*/
+.ig-slider {
+    display: block;
+    margin-bottom: 0.85rem;
+}
+.ig-slider-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.3rem;
+    gap: 0.5rem;
+}
+.ig-slider-label {
+    font-size: 0.62rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+.ig-slider-readout {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    background: var(--accent-3);
+    color: var(--color-ink);
+    padding: 0.1rem 0.4rem;
+    border: 2px solid var(--color-ink);
+}
+.ig-slider input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent-1);
+}
+

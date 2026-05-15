@@ -1,0 +1,26 @@
+{{- /*
+  crosshead shortcode — short, punchy signpost heading used to break up
+  long columns of text. Visually distinct from regular `<h2>` so it can
+  punctuate the *interior* of a section without claiming a new TOC entry.
+
+  Use sparingly — every 5–8 paragraphs of running prose. If a reader
+  could lose their place skimming, drop a crosshead.
+
+  Usage (use `<>` delimiters — body is a short plain-text label):
+
+      {{< crosshead >}}The Heavy-Hitter Hypothesis{{< /crosshead >}}
+
+  Crossheads are NOT real headings — they don't appear in the TOC sidebar
+  and they don't take an id by default. If you want a TOC entry, write
+  an `## H2` instead.
+
+  Optional:
+      id — explicit anchor id (rarely needed).
+*/ -}}
+
+{{- $id := .Get "id" -}}
+
+<p class="crosshead"{{ with $id }} id="{{ . }}"{{ end }}>
+  <span class="crosshead-tick" aria-hidden="true"></span>
+  <span class="crosshead-text">{{ .Inner }}</span>
+</p>

@@ -1,0 +1,34 @@
+{{- /*
+  marginnote shortcode — Tufte-style sidenote pinned in the wide right
+  margin on desktop, and inlined as a small annotated block on mobile/tablet.
+  Use for citations, corollaries, and quick clarifications that should
+  remain optional reading.
+
+  Usage (use `%%` delimiters so Markdown renders inside the note):
+
+      We could afford to store the entire context.
+      {{% marginnote %}}
+      At 32k context on Llama-3 70B the KV cache exceeds **16 GB per user**.
+      {{% /marginnote %}}
+      But in 2024 context is the new scarcity.
+
+  Optional:
+      label — what shows on the inline-mobile label and as the hover indicator
+              (defaults to "note").
+      id    — anchor id for deep-linking.
+
+  Implementation notes:
+      The note is wrapped in a `<span>` so it can be placed inline inside
+      a paragraph without breaking <p> nesting rules. CSS handles the
+      desktop float (`.marginnote-aside`) vs. mobile inline rendering.
+*/ -}}
+
+{{- $label := .Get "label" | default "note" -}}
+{{- $id := .Get "id" -}}
+
+<span class="marginnote"{{ with $id }} id="{{ . }}"{{ end }}>
+  <span class="marginnote-marker" aria-hidden="true">⊕</span><span class="marginnote-aside" role="note">
+    <span class="marginnote-label">{{ $label }}</span>
+    {{ .Inner }}
+  </span>
+</span>

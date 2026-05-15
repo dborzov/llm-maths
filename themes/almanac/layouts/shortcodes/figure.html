@@ -1,0 +1,58 @@
+{{- /*
+  figure shortcode — image + caption, with click-to-fullscreen lightbox.
+  Use for diagrams, screenshots, third-party plots, and any explanatory
+  image that benefits from a stand-alone caption. (For our own
+  matplotlib plots, prefer the pyplot fenced block instead.)
+
+  Usage:
+
+      {{< figure src="diagrams/attention-map.webp"
+                 alt="Heatmap of attention scores"
+                 caption="Attention scores over a 2048-token window. Notice the spike at the first 4 tokens (the *attention sinks*)." >}}
+
+  Parameters:
+      src     — image URL or path. Relative paths resolve against site root
+                via Hugo's `relURL`, so prefer paths under `static/`.
+      alt     — required for accessibility. If omitted falls back to caption.
+      caption — figcaption text. May contain Markdown — it's run through
+                the inline renderer.
+      credit  — optional photographer / source attribution line.
+      width   — optional CSS width override (e.g. "60%"). Defaults full-bleed.
+      id      — anchor id for deep-linking.
+
+  The image opens in the same fullscreen lightbox used by pyplot blocks
+  (see static/js/pyplot.js — the lightbox is keyed off `data-lightbox`).
+*/ -}}
+
+{{- $page := .Page -}}
+{{- $src := .Get "src" -}}
+{{- $alt := .Get "alt" | default (.Get "caption") -}}
+{{- $caption := .Get "caption" -}}
+{{- $credit := .Get "credit" -}}
+{{- $width := .Get "width" -}}
+{{- $id := .Get "id" -}}
+
+{{- if not $src -}}
+  {{- errorf "figure shortcode at %s: missing required `src` argument" .Position -}}
+{{- end -}}
+
+{{- $resolved := $src -}}
+{{- if not (or (hasPrefix $src "http") (hasPrefix $src "/")) -}}
+  {{- $resolved = $src | relURL -}}
+{{- end -}}
+
+<figure class="figure-block"{{ with $id }} id="{{ . }}"{{ end }}{{ with $width }} style="max-width: {{ . }};"{{ end }}>
+  <a class="figure-image" href="{{ $resolved }}" data-lightbox="figure"
+     {{ with $caption }}data-caption="{{ . }}"{{ end }}
+     aria-label="Open figure at full size">
+    <img src="{{ $resolved }}" alt="{{ $alt }}" loading="lazy">
+    <span class="figure-image-hint" aria-hidden="true">⤢ zoom</span>
+  </a>
+  {{- if or $caption $credit -}}
+    <figcaption class="figure-caption">
+      <span class="figure-caption-mark" aria-hidden="true"></span>
+      {{- with $caption -}}<span class="figure-caption-text">{{ $page.RenderString . }}</span>{{- end -}}
+      {{- with $credit -}}<span class="figure-credit">{{ . }}</span>{{- end -}}
+    </figcaption>
+  {{- end -}}
+</figure>

@@ -5,6 +5,9 @@
 document.addEventListener('DOMContentLoaded', () => {
   const body = document.querySelector('.article-content');
   if (!body) return;
+  // Pages can opt out of the auto-fold by setting `unfolded: true` in front
+  // matter (showcase / reference pages where every H2 should be visible).
+  if (body.classList.contains('unfolded')) return;
 
   const headings = [...body.querySelectorAll('h2')];
   if (headings.length === 0) return;

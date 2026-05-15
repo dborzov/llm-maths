@@ -1,0 +1,38 @@
+{{- /*
+  callout shortcode — distinct boxed section running alongside the main prose.
+  Use for tangent anecdotes, "by the way" notes, definitions, or any place
+  you'd otherwise reach for a footnote that's too rich for a single line.
+
+  Usage (use `%%` delimiters so Markdown — bold, lists, KaTeX — still
+  renders inside):
+
+      {{% callout type="tip" title="Pro-Tip" %}}
+      When implementing eviction, always preserve the first 4 tokens
+      (the *attention sinks*). Otherwise perplexity spikes exponentially.
+      {{% /callout %}}
+
+  Variants (the `type` param):
+      note    — neutral teal (default). Definitions, clarifications.
+      tip     — pop-pink. Practical advice, recommended approaches.
+      warning — pop-orange. Gotchas, sharp edges, common mistakes.
+      tangent — cream + ink. Anecdotes, "by the way" detours.
+      theorem — yellow stripe. Formal definitions / named results.
+
+  Optional:
+      title — override the header label (defaults to the type, uppercased).
+      id    — anchor id for deep-linking.
+*/ -}}
+
+{{- $type := .Get "type" | default "note" -}}
+{{- $title := .Get "title" | default (upper $type) -}}
+{{- $id := .Get "id" -}}
+
+<aside class="callout callout--{{ $type }}"{{ with $id }} id="{{ . }}"{{ end }} role="note">
+  <header class="callout-header">
+    <span class="callout-icon" aria-hidden="true"></span>
+    <span class="callout-label">{{ $title }}</span>
+  </header>
+  <div class="callout-body">
+    {{ .Inner }}
+  </div>
+</aside>

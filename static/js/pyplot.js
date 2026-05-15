@@ -12,7 +12,8 @@
  */
 document.addEventListener('DOMContentLoaded', () => {
     const blocks = document.querySelectorAll('.pyplot-block');
-    if (blocks.length === 0) return;
+    const figures = document.querySelectorAll('.figure-block .figure-image');
+    if (blocks.length === 0 && figures.length === 0) return;
 
     // Build one lightbox dialog reused by every plot on the page.
     const dialog = document.createElement('dialog');
@@ -86,5 +87,18 @@ document.addEventListener('DOMContentLoaded', () => {
             details.addEventListener('toggle', update);
             update();
         }
+    });
+
+    // Wire shared lightbox into <figure> shortcode images.
+    figures.forEach((link) => {
+        link.addEventListener('click', (e) => {
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+            e.preventDefault();
+            const img = link.querySelector('img');
+            const caption = link.getAttribute('data-caption')
+                || link.closest('.figure-block')?.querySelector('.figure-caption-text')?.textContent.trim()
+                || '';
+            openLightbox(link.getAttribute('href'), img?.alt, caption);
+        });
     });
 });

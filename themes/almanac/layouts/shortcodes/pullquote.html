@@ -1,0 +1,33 @@
+{{- /*
+  pullquote shortcode — large, stylized excerpt rendered as a stage-stealing
+  panel. Use to pull a profound conclusion, a counter-intuitive result, or
+  the author voice of a famous figure out of running prose.
+
+  Usage (use the `%%` delimiter so Markdown inside the body still renders):
+
+      {{% pullquote author="Grace Hopper" type="profound" %}}
+      The most dangerous phrase in the language is, "We've always done it this way."
+      {{% /pullquote %}}
+
+  Variants (the `type` param):
+      profound          — pop-pink panel (default). Big claims, big punches.
+      technical         — pop-teal panel. Theorem statements, hard results.
+      counter-intuitive — pop-orange panel. Surprising / contrarian.
+
+  Optional:
+      author — bylined attribution rendered as a small caps cite line.
+      id     — anchor id for deep-linking.
+*/ -}}
+
+{{- $type := .Get "type" | default "profound" -}}
+{{- $author := .Get "author" -}}
+{{- $id := .Get "id" -}}
+
+<aside class="pullquote pullquote--{{ $type }}"{{ with $id }} id="{{ . }}"{{ end }}>
+  <span class="pullquote-mark" aria-hidden="true">&ldquo;</span>
+  <blockquote class="pullquote-body">{{ .Inner }}</blockquote>
+  {{- with $author -}}
+    <cite class="pullquote-author"><span class="pullquote-author-dash" aria-hidden="true"></span>{{ . }}</cite>
+  {{- end -}}
+  <span class="pullquote-halftone" aria-hidden="true"></span>
+</aside>
