@@ -1,0 +1,44 @@
+# Schema, conventions, and the 5-event cap rule: see docs/timelines-schema.md.
+# Five turning points in the KV cache pruning story — from Heavy Hitters to KVzap.
+
+title   = "KV Cache Pruning — 2023 to 2026"
+caption = "Five methods. Four production requirements. Three years before one actually shipped."
+
+[[events]]
+date  = "Mid-2023"
+title = "H₂O — Heavy Hitters"
+who   = "Zhang et al. (UT Austin)"
+body  = "First principled eviction policy: 80% of attention mass goes to 20% of tokens. Keep the heavy hitters, drop the rest."
+kind  = "paper"
+link  = "03-heavy-hitter/"
+
+[[events]]
+date  = "Late 2023"
+title = "StreamingLLM"
+who   = "Xiao et al."
+body  = "Attention sinks must be preserved — BOS and early tokens collect disproportionate softmax mass regardless of content."
+kind  = "paper"
+
+[[events]]
+date  = "2024"
+title = "SnapKV"
+who   = "Li et al."
+body  = "Pooled observation window for prefill-time importance scoring. Faster than H₂O, but fails the phase-agnostic requirement."
+kind  = "paper"
+link  = "10-pruning-landscape/"
+
+[[events]]
+date  = "2025"
+title = "KVzip — Pretext Task"
+who   = "Devoto et al."
+body  = "Copy-and-paste scoring: ask the model to predict each token from context. Near-oracle accuracy. 2× prefill cost killed it."
+kind  = "paper"
+link  = "04-copy-paste/"
+
+[[events]]
+date  = "Jan 2026"
+title = "KVzap — Ships"
+who   = "Jégou, Jebleck (NVIDIA)"
+body  = "14-line surrogate trained on hidden states. R²=0.67–0.77. Passes all four production requirements. First pruning method merged into vLLM."
+kind  = "release"
+link  = "06-kvzap/"
