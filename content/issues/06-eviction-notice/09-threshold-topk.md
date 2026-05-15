@@ -54,7 +54,7 @@ That's it. No budget. No normalization. Just a single number τ that separates "
 The compression ratio is now a *consequence* — it floats based on what the input actually contains.
 
 {{% pullquote type="counter-intuitive" %}}
-The same τ = −4 gives 74% compression on RULER and 66% on LongBench. Not because the threshold was tuned per-benchmark — because RULER's synthetic text is more repetitive and LongBench's real-world documents are more information-dense. The model adapts automatically.
+The same τ = −4 gives 74% compression on {{< wiki "long-context-benchmarks" >}}RULER{{< /wiki >}} and 66% on LongBench. Not because the threshold was tuned per-benchmark — because RULER's synthetic text is more repetitive and LongBench's real-world documents are more information-dense. The model adapts automatically.
 {{% /pullquote %}}
 
 This is the key insight: **input-adaptive compression falls out of thresholding for free.** You don't need to estimate the document's information density. The score distribution does it for you.

@@ -8,7 +8,7 @@
 
       <div class="nav-links">
         {{- with site.GetPage "/issues" }}<a href="{{ .RelPermalink }}" class="nav-link">Issues</a>{{ end -}}
-        {{- with site.GetPage "/docs" }}<a href="{{ .RelPermalink }}" class="nav-link">Docs</a>{{ end -}}
+        {{- with site.GetPage "/wiki" }}<a href="{{ .RelPermalink }}" class="nav-link">Wiki</a>{{ end -}}
         <a href="{{ site.Params.githubRepo }}" class="nav-link" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
 

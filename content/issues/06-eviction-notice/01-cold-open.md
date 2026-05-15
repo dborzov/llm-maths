@@ -44,7 +44,7 @@ The shape of the cache is `(2, L, H, T, D)`:
 
 The first four dimensions are fixed by the model architecture. The fifth — **T**, the number of tokens — grows without bound as the conversation or document gets longer.
 
-Now run the napkin math on a real model. **Llama-65B** has 80 layers, 64 attention heads, and a head dimension of 128. Each value is stored in bfloat16 — two bytes. At a context length of 128,000 tokens:
+Now run the napkin math on a real model. **Llama-65B** has 80 layers, 64 attention heads, and a head dimension of 128. Each value is stored in {{< wiki "number-formats" >}}bfloat16{{< /wiki >}} — two bytes. At a context length of 128,000 tokens:
 
 $$
 \text{KV memory} = 2 \times 80 \times 64 \times 128{,}000 \times 128 \times 2 \text{ bytes}

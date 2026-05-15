@@ -57,11 +57,72 @@ VISUAL_CONCEPTS = {
         "neon club called 'THE CACHE'. He is physically tossing out a group of 'Weak Token' characters into the street, "
         "while a 'Heavy Hitter' character in a flashy suit walks past him into the club. High-contrast noir."
     ),
+    # Issue 06 — The Eviction Notice articles
     "01-cold-open": (
-        "A sneaky-looking man in a long trench coat stands in a dark, neon-lit rainy alleyway. "
-        "He is opening one side of his coat to reveal a glowing, neon-green-and-red heatmap grid "
-        "pinned to the lining. He looks like a black-market dealer. "
-        "GTA San Andreas loading screen style, very cool and mysterious."
+        "A sharp-suited 1950s engineer at a gleaming control console is staring at two monitors side-by-side. "
+        "The left monitor glows with a triumphant green bar chart. The right monitor shows three rejection letters "
+        "in red. His tie is loosened, cigarette dangling. Behind him, a wall of tape drives spins frantically. "
+        "Pulp noir, hard shadows, halftone dots."
+    ),
+    "02-kv-crisis": (
+        "A glamorous 1950s executive lady on a transatlantic plane, first-class cabin. She has spread a napkin "
+        "across the fold-out tray and is scrawling enormous, alarming calculations with a fountain pen. "
+        "Columns of numbers march off the napkin onto her seat, the armrest, the window glass. "
+        "The number at the bottom is circled three times. Her expression is controlled alarm. Noir style."
+    ),
+    "03-heavy-hitter": (
+        "A classic 1950s gangster spotlight scene. One massive, broad-shouldered mob boss in a pinstripe suit "
+        "stands alone in a bright circle of light, commanding the room. Around him in the shadows: a hundred "
+        "identical, pale, faceless figures barely visible. The contrast is extreme — one heavy hitter, "
+        "a sea of ghosts. Film noir, halftone dots, ink outlines."
+    ),
+    "04-copy-paste": (
+        "A 1950s office scene: a determined secretary in cat-eye glasses and a pencil skirt is furiously "
+        "copy-typing a stack of documents onto carbon paper. As she types certain words they glow hot pink. "
+        "Other words stay grey and fade. She's completely focused, one eyebrow raised — she knows which "
+        "words matter. Retro-cool, high-contrast, pulp comic style."
+    ),
+    "05-ghost-state": (
+        "A moody 1950s detective's office at night. Filing cabinets line the walls, one drawer slightly ajar "
+        "with a faint golden glow spilling out — the hidden state. A detective in a fedora sits at a desk, "
+        "studying a glowing dossier labeled 'IMPORTANCE'. Outside the rain-streaked window, ghost-like "
+        "silhouettes drift past. The answer was inside all along. Hard shadows, halftone."
+    ),
+    "06-kvzap": (
+        "A 1960s mission-control room at the moment of triumph. A lone scientist in a white coat stands at "
+        "a giant wall of blinking lights and toggles. She has just flipped one big red switch. Half the lights "
+        "go dark — the cache is compressed. The remaining lights glow brighter, more intense. "
+        "She turns to camera with a cool, knowing smile. GTA loading screen energy, pop-art halftone."
+    ),
+    "07-attention-sparsity": (
+        "A 1950s Las Vegas casino roulette table. All the stacked chips — an enormous glittering mountain — "
+        "are piled on just two numbers. Every other number on the wheel is empty. The croupier in a bow tie "
+        "looks unsurprised, almost bored. A few wide-eyed observers in the background. "
+        "Winner-take-all, high contrast, pulp style."
+    ),
+    "08-contribution-norm": (
+        "A 1950s boardroom post-mortem. At the head of the table, an overbearing executive in a loud suit "
+        "is gesturing dramatically at a blank whiteboard. His name is on every slide. At the far end, a quietly "
+        "exhausted staff engineer with rolled sleeves holds up a model of an entire skyscraper he built alone. "
+        "Everyone is looking at the executive. Nobody sees the engineer. Satirical, noir, comic contrast."
+    ),
+    "09-threshold-topk": (
+        "Two 1950s managers at a performance review desk, side by side. The first has a calculator showing '50%' "
+        "and is mechanically pointing at half the employees in a line — they look shocked. The second manager "
+        "holds a clipboard with a single quality bar drawn on it and is calmly waving away only a few people. "
+        "His team looks relieved. Sharp suits, hard shadows, halftone."
+    ),
+    "10-pruning-landscape": (
+        "A 1950s detective's crime-board wall. Photographs of seven research papers pinned with red string, "
+        "each labeled with a year. Five of the photos have large red X stamps: REJECTED. Two at the end glow — "
+        "one in hot pink, one stamped PRODUCTION READY. The detective stands back, arms crossed, satisfied. "
+        "Pulp noir thriller energy."
+    ),
+    "11-bandwidth-wall": (
+        "A 1950s construction worker in a hard hat stands at the base of an enormous brick wall that fills "
+        "the entire frame. A tiny door at ground level is labeled '3.35 TB/s'. The worker holds blueprints "
+        "and stares up at the wall with resigned understanding. Behind the wall, an H100-shaped machine "
+        "sits almost completely idle. Von Neumann's bottleneck made physical. Hard ink, halftone, noir."
     ),
     "02-context-window": (
         "A flashy, 1950s used-car salesman with slicked-back hair and a loud plaid suit stands in front "

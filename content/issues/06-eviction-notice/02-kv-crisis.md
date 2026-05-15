@@ -51,7 +51,7 @@ $$
 \text{Memory} = 2 \times L \times H \times T \times D_h \times \texttt{bytes\_per\_element}
 $$
 
-In bfloat16 — the standard for production inference — each element is 2 bytes. Plug in Llama-65B's numbers (L=80, H=64, D_h=128) and you reproduce the 335 GB figure from the cold open.
+In {{< wiki "number-formats" >}}bfloat16{{< /wiki >}} — the standard for production inference — each element is 2 bytes. Plug in Llama-65B's numbers (L=80, H=64, D_h=128) and you reproduce the 335 GB figure from the cold open.
 
 To make this concrete, here is the same formula applied to three models you might actually deploy:
 
@@ -59,7 +59,7 @@ To make this concrete, here is the same formula applied to three models you migh
 |---|---|---|---|---|---|
 | Llama-65B | 80 | 64 | 128 | **84 GB** | 335 GB |
 | Llama-3.1-8B | 32 | 8 | 128 | **2.7 GB** | 10.7 GB |
-| Qwen3-32B | 64 | 16 | 128 | **8.4 GB** | 33.7 GB |
+| {{< wiki "qwen3" >}}Qwen3-32B{{< /wiki >}} | 64 | 16 | 128 | **8.4 GB** | 33.7 GB |
 
 Llama-65B at 128k context needs more memory for its cache than the entire GPU memory budget of a four-card H100 server. Llama-3.1-8B is more manageable — but at 128k context with 100 concurrent users, you need 1.07 TB just for the caches. The math keeps being unpleasant.
 
@@ -81,7 +81,7 @@ The H-axis is solved. Move on.
 
 ## The D-Axis: MLA and Low-Rank Decomposition
 
-**DeepSeek V2** (2024) introduced **Multi-head Latent Attention (MLA)**: instead of caching full-rank key and value matrices, the model caches a *low-rank latent vector* and reconstructs the keys and values on the fly. The cached object has dimension `4H/9` instead of `2HD_h` — a compression factor of roughly **4.5× on the effective cache size** relative to standard MHA.
+**{{< wiki "deepseek" >}}DeepSeek V2{{< /wiki >}}** (2024) introduced **Multi-head Latent Attention (MLA)**: instead of caching full-rank key and value matrices, the model caches a *low-rank latent vector* and reconstructs the keys and values on the fly. The cached object has dimension `4H/9` instead of `2HD_h` — a compression factor of roughly **4.5× on the effective cache size** relative to standard MHA.
 
 The trick is architectural: the attention projection weights are designed so that a single compressed latent encodes all the information needed to recover K and V at query time. You pay a small compute cost at each decode step to decompress, but you save enormously on memory bandwidth — which is the binding constraint on modern accelerators.
 

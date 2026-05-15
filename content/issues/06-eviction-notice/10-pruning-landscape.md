@@ -233,7 +233,7 @@ The KVzap curve tracks near KVzip's ceiling (the theoretical best achievable) ac
 
 {{< crosshead >}}What the KVpress Leaderboard Says{{< /crosshead >}}
 
-The NVIDIA/kvpress repository maintains a living benchmark on the RULER 4k task for Qwen3-8B and Llama-3.1-8B. As of early 2026, KVzap leads at matched compression ratios — specifically outperforming AdaKV, SnapKV, and Expected Attention at compression ratios above 50%.
+The NVIDIA/kvpress repository maintains a living benchmark on the RULER 4k task for {{< wiki "qwen3" >}}Qwen3-8B{{< /wiki >}} and Llama-3.1-8B. As of early 2026, KVzap leads at matched compression ratios — specifically outperforming AdaKV, SnapKV, and Expected Attention at compression ratios above 50%.
 
 The leaderboard is significant not just for the rankings but for what it signals: this is the first time a production-viable method (KVzap, with its < 1.1% overhead and phase-agnostic operation) leads a fair comparison. Previous leaderboard leaders were research artifacts — impressive on the eval, impractical to ship.
 
@@ -247,7 +247,7 @@ The family tree has branches that don't connect to KVzap but point toward future
 
 **End-to-end objectives** — methods like DMS (Łańcucki et al., 2025) that learn pruning policies jointly with model weights during training, rather than applying post-hoc heuristics to a frozen model. These sidestep the four-criteria problem by baking the pruning into the model itself. If a future model is trained with KV compression as a first-class objective, post-hoc methods like KVzap become unnecessary.
 
-**Architectural integration** — sparse attention mechanisms (see DeepSeek V3 MLA, Mistral sliding-window variants) that reduce KV cache *structurally* rather than through post-hoc eviction. These change the denominator rather than shrinking the numerator.
+**Architectural integration** — sparse attention mechanisms (see {{< wiki "deepseek" >}}DeepSeek V3{{< /wiki >}} MLA, Mistral sliding-window variants) that reduce KV cache *structurally* rather than through post-hoc eviction. These change the denominator rather than shrinking the numerator.
 
 The long-term question is whether post-hoc pruning methods survive the shift to architectures designed from scratch for memory efficiency. KVzap may be the apex of the post-hoc era — the method that finally solved the four-criteria problem just as the field is beginning to rethink whether post-hoc is the right frame at all.
 

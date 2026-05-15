@@ -184,7 +184,7 @@ Every result so far involves sequence-completion or retrieval tasks. The skeptic
 
 AIME 2025 is the American Invitational Mathematics Examination — high-school math olympiad problems that state-of-the-art models solve through extended chain-of-thought reasoning. Unlike retrieval, reasoning requires the model to repeatedly attend back to intermediate conclusions. Pruning the wrong KV pair can cascade: if the model loses access to a critical intermediate step, subsequent reasoning goes wrong.
 
-Qwen3-8B with KVzap-MLP at τ=−4, evaluated on pass@4:
+{{< wiki "qwen3" >}}Qwen3-8B{{< /wiki >}} with KVzap-MLP at τ=−4, evaluated on pass@4:
 
 | | Full cache | KVzap 3.5× compression |
 |---|---|---|

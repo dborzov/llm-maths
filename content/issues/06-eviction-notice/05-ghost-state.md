@@ -16,7 +16,7 @@ header: default.webp
 
 ## Late 2025, NVIDIA Research
 
-Herve Jégou has a problem that would look like success to almost anyone else in the field.
+Simon Jégou has a problem that would look like success to almost anyone else in the field.
 
 He has KVzip+ — the oracle. Feed a document into the model, run a second masked forward pass that forces the model to reconstruct token $i$ using only the other tokens' cached keys and values, and the attention weights from that pass tell you *exactly* which KV pairs are load-bearing and which are ignored. The importance score $s_i^+$ for position $i$ is clean, well-motivated, and empirically predictive of which tokens can be evicted without accuracy loss.
 

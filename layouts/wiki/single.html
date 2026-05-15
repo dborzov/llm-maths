@@ -21,7 +21,7 @@
       <h1 class="article-title">{{ .Title }}</h1>
 
       {{ with .Params.also_known_as }}
-      <p class="wiki-aliases">Also known as: {{ delimit . ", " }}</p>
+      <p class="wiki-aliases"><span class="wiki-aka-label">AKA</span>{{ delimit . " · " }}</p>
       {{ end }}
     </header>
 
@@ -29,8 +29,10 @@
 
       {{ with .Params.source_of_truth }}
       <div class="wiki-sot">
-        <strong>Defined in →</strong>
-        <a href="{{ . | relURL }}">{{ $.Params.source_of_truth_title | default "canonical article" }}</a>
+        <div class="wiki-sot-header">DEFINED IN</div>
+        <div class="wiki-sot-body">
+          <a href="{{ strings.TrimLeft "/" . | relURL }}">{{ $.Params.source_of_truth_title | default "canonical article" }}</a>
+        </div>
       </div>
       {{ end }}
 

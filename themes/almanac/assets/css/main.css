@@ -2953,15 +2953,50 @@ a.wiki-link:hover {
 .wiki-aliases {
     font-family: var(--font-mono);
     font-size: 0.78rem;
-    color: color-mix(in srgb, var(--color-ink) 60%, transparent);
-    margin: 0.25rem 0 1rem;
+    color: color-mix(in srgb, var(--color-ink) 65%, transparent);
+    margin: 0.3rem 0 1.25rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.wiki-aka-label {
+    font-family: var(--font-body);
+    font-size: 0.62rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    background: var(--accent-2);
+    border: 1.5px solid var(--color-ink);
+    padding: 0.05rem 0.35rem;
+    flex-shrink: 0;
+    color: var(--color-ink);
 }
 .wiki-sot {
-    background: color-mix(in srgb, var(--accent-1) 10%, var(--bg-surface, white));
-    border-left: 4px solid var(--accent-1);
-    padding: 0.6rem 1rem;
-    margin-bottom: 1.5rem;
+    border: var(--border);
+    box-shadow: var(--shadow-pop);
+    margin-bottom: 1.75rem;
+    overflow: hidden;
+}
+.wiki-sot-header {
+    background: var(--accent-1);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 0.4rem 0.9rem;
+    border-bottom: var(--border);
+}
+.wiki-sot-body {
+    padding: 0.65rem 1rem;
+    background: color-mix(in srgb, var(--accent-1) 8%, var(--bg-surface, white));
     font-size: 0.95rem;
+}
+.wiki-sot-body a {
+    font-family: var(--font-mono);
+    font-weight: 600;
 }
 .wiki-related {
     margin-top: 2rem;
