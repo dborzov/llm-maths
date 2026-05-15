@@ -11,7 +11,7 @@ issue: 4
 weight: 90
 techKind: primer
 techNode: latent-structure
-header: default.webp
+header: 09-latent-structure.webp
 ---
 
 ## Mountain View, Late Summer 2024

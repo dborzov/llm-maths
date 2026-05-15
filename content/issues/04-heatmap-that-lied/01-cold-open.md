@@ -11,7 +11,7 @@ issue: 4
 weight: 10
 techKind: mainline
 techNode: cold-open
-header: default.webp
+header: 01-cold-open.webp
 ---
 
 ## A Tweet, A Sandwich, A Heatmap

@@ -11,7 +11,7 @@ issue: 4
 weight: 40
 techKind: primer
 techNode: retrieval-vs-reasoning
-header: default.webp
+header: 04-retrieval-vs-reasoning.webp
 ---
 
 ## A Phone Call To A Detective

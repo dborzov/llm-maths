@@ -11,7 +11,7 @@ issue: 4
 weight: 150
 techKind: primer
 techNode: contamination-drift
-header: default.webp
+header: 15-contamination-drift.webp
 ---
 
 ## Two Different Diseases, Both First-Order Concerns

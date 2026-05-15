@@ -11,7 +11,7 @@ issue: 4
 weight: 130
 techKind: primer
 techNode: synth-vs-real
-header: default.webp
+header: 13-synth-vs-real.webp
 ---
 
 ## Two Kinds Of Yardstick, Two Kinds Of Claim

@@ -11,7 +11,7 @@ issue: 4
 weight: 140
 techKind: mainline
 techNode: agentic-turn
-header: default.webp
+header: 14-agentic-turn.webp
 ---
 
 ## A Different Question

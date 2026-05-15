@@ -11,7 +11,7 @@ issue: 4
 weight: 80
 techKind: mainline
 techNode: needle-to-graph
-header: default.webp
+header: 08-needle-to-graph.webp
 ---
 
 ## A Single Italicised Sentence

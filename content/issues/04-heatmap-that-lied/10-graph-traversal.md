@@ -11,7 +11,7 @@ issue: 4
 weight: 100
 techKind: primer
 techNode: graph-traversal
-header: default.webp
+header: 10-graph-traversal.webp
 ---
 
 ## A 1959 Algorithm Comes For Long Context

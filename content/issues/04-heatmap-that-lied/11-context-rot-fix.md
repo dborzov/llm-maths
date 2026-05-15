@@ -11,7 +11,7 @@ issue: 4
 weight: 110
 techKind: mainline
 techNode: context-rot-fix
-header: default.webp
+header: 11-context-rot-fix.webp
 ---
 
 ## A Number In A System Card, And A Public Promise

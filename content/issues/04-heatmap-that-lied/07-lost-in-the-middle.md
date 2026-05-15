@@ -11,7 +11,7 @@ issue: 4
 weight: 70
 techKind: primer
 techNode: lost-in-the-middle
-header: default.webp
+header: 07-lost-in-the-middle.webp
 ---
 
 ## July 2023, Two Months Before NIAH

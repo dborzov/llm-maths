@@ -5,7 +5,7 @@ issue: 5
 layout: issue-cover
 theme: cream
 math: false
-header: default.webp
+header: 05-microgpt-unfolded-cover.webp
 date: 2026-05-14T02:48:42-04:00
 ---
 

@@ -11,7 +11,7 @@ issue: 4
 weight: 120
 techKind: primer
 techNode: context-rot
-header: default.webp
+header: 12-context-rot.webp
 ---
 
 ## A Quiet Report From An Unexpected Lab

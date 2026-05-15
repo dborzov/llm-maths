@@ -11,7 +11,7 @@ issue: 4
 weight: 160
 techKind: boss
 techNode: eval-stack-2026
-header: default.webp
+header: 16-eval-stack-2026.webp
 ---
 
 ## Where We Are, In One Picture

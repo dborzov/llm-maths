@@ -11,7 +11,7 @@ issue: 4
 weight: 60
 techKind: primer
 techNode: measurement-saturation
-header: default.webp
+header: 06-measurement-saturation.webp
 ---
 
 ## A Bank Of England Economist In 1975

@@ -11,7 +11,7 @@ issue: 4
 weight: 50
 techKind: mainline
 techNode: saturation
-header: default.webp
+header: 05-saturation.webp
 ---
 
 ## A Wave Of Critiques, Twelve Months Long

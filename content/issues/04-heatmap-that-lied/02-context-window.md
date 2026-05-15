@@ -11,7 +11,7 @@ issue: 4
 weight: 20
 techKind: primer
 techNode: context-window
-header: default.webp
+header: 02-context-window.webp
 ---
 
 ## A Marketing Number And A Hardware Number
