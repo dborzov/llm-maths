@@ -11,7 +11,7 @@ issue: 3
 weight: 160
 techKind: mainline
 techNode: kv-distribution
-header: default.webp
+header: 16-kv-distribution.webp
 ---
 
 ## Three Microscopes

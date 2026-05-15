@@ -11,7 +11,7 @@ issue: 5
 weight: 80
 techKind: mainline
 techNode: attention
-header: default.webp
+header: 08-attention.webp
 ---
 
 ## Mountain View, Spring 2017

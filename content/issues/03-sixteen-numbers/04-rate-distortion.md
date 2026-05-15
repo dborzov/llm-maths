@@ -11,7 +11,7 @@ issue: 3
 weight: 40
 techKind: primer
 techNode: rate-distortion
-header: default.webp
+header: 04-rate-distortion.webp
 ---
 
 ## A Short Primer, Because You Already Know The Pieces

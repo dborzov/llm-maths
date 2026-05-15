@@ -11,7 +11,7 @@ issue: 3
 weight: 110
 techKind: primer
 techNode: calibration
-header: default.webp
+header: 11-calibration-and-blocks.webp
 ---
 
 ## The Quiet Trick Behind Every Method

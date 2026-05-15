@@ -11,7 +11,7 @@ issue: 3
 weight: 120
 techKind: boss
 techNode: hardware
-header: default.webp
+header: 12-hardware-horizon.webp
 ---
 
 ## Numbers Become Hardware

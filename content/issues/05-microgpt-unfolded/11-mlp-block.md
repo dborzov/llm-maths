@@ -11,7 +11,7 @@ issue: 5
 weight: 110
 techKind: primer
 techNode: mlp-block
-header: default.webp
+header: 11-mlp-block.webp
 ---
 
 ## A Throwaway Sentence In June 2017

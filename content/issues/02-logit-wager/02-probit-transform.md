@@ -11,7 +11,7 @@ issue: 2
 weight: 20
 techKind: primer
 techNode: probit-transform
-header: default.webp
+header: 02-probit-transform.webp
 ---
 
 ## Each Insect Has a Secret

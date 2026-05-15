@@ -11,7 +11,7 @@ issue: 3
 weight: 130
 techKind: primer
 techNode: calibration-survey
-header: default.webp
+header: 13-calibration-survey.webp
 ---
 
 ## A Phone Call From Murray Hill

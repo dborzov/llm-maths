@@ -11,7 +11,7 @@ issue: 3
 weight: 25
 techKind: primer
 techNode: absmax
-header: default.webp
+header: 02a-absmax.webp
 ---
 
 ## The Boring Champion

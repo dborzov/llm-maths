@@ -11,7 +11,7 @@ issue: 3
 weight: 20
 techKind: primer
 techNode: numbers
-header: default.webp
+header: 02-numbers-in-boxes.webp
 ---
 
 ## The Berkeley Cellar

@@ -11,7 +11,7 @@ issue: 3
 weight: 180
 techKind: primer
 techNode: quantization-axes
-header: default.webp
+header: 18-quantization-axes.webp
 ---
 
 ## A Picture That Keeps Coming Back

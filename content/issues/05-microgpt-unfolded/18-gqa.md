@@ -11,7 +11,7 @@ issue: 5
 weight: 180
 techKind: mainline
 techNode: gqa
-header: default.webp
+header: 18-gqa.webp
 ---
 
 ## One Write-Head Is All You Need

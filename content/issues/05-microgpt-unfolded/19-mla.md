@@ -11,7 +11,7 @@ issue: 5
 weight: 190
 techKind: mainline
 techNode: mla
-header: default.webp
+header: 19-mla.webp
 ---
 
 ## The Model Card Nobody Was Ready For

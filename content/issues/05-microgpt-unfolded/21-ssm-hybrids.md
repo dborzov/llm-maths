@@ -11,7 +11,7 @@ issue: 5
 weight: 210
 techKind: mainline
 techNode: ssm-hybrids
-header: default.webp
+header: 21-ssm-hybrids.webp
 ---
 
 ## A Paper Nobody Quite Believed

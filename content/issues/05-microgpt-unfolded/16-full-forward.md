@@ -11,7 +11,7 @@ issue: 5
 weight: 160
 techKind: boss
 techNode: full-forward
-header: default.webp
+header: 16-full-forward.webp
 ---
 
 ## The Index

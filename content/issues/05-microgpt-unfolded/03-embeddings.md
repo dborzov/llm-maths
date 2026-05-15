@@ -11,7 +11,7 @@ issue: 5
 weight: 30
 techKind: primer
 techNode: embeddings
-header: default.webp
+header: 03-embeddings.webp
 ---
 
 ## Prague, September 2013

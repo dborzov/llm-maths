@@ -11,7 +11,7 @@ issue: 5
 weight: 170
 techKind: mainline
 techNode: kv-axes
-header: default.webp
+header: 17-kv-axes.webp
 ---
 
 ## A 335 GB Footnote

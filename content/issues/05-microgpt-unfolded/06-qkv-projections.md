@@ -11,7 +11,7 @@ issue: 5
 weight: 60
 techKind: mainline
 techNode: qkv-projections
-header: default.webp
+header: 06-qkv-projections.webp
 ---
 
 ## Montréal, September 2014

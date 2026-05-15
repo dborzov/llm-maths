@@ -11,7 +11,7 @@ issue: 5
 weight: 200
 techKind: primer
 techNode: sliding-window
-header: default.webp
+header: 20-sliding-window.webp
 ---
 
 ## The Mistral Magnet Link

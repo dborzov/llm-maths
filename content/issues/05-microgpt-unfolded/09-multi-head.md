@@ -11,7 +11,7 @@ issue: 5
 weight: 90
 techKind: mainline
 techNode: multi-head
-header: default.webp
+header: 09-multi-head.webp
 ---
 
 ## The Ablation That Wasn't Supposed To Matter

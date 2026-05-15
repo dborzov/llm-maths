@@ -11,7 +11,7 @@ issue: 5
 weight: 50
 techKind: primer
 techNode: rmsnorm
-header: default.webp
+header: 05-rmsnorm.webp
 ---
 
 ## Edinburgh, 2019

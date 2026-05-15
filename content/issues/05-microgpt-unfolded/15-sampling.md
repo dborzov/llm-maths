@@ -11,7 +11,7 @@ issue: 5
 weight: 150
 techKind: primer
 techNode: sampling
-header: default.webp
+header: 15-sampling.webp
 ---
 
 ## The Paper That Renamed The Knob

@@ -11,7 +11,7 @@ issue: 3
 weight: 80
 techKind: mainline
 techNode: brain-surgery
-header: default.webp
+header: 08-brain-surgery.webp
 ---
 
 ## A Caltech Memo Nobody Read

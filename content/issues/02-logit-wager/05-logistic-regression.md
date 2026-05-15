@@ -11,7 +11,7 @@ issue: 2
 weight: 50
 techKind: mainline
 techNode: logistic-regression
-header: default.webp
+header: 05-logistic-regression.webp
 ---
 
 ## Harvard, 1974

@@ -11,7 +11,7 @@ issue: 3
 weight: 170
 techKind: primer
 techNode: rotations
-header: default.webp
+header: 17-rotations.webp
 ---
 
 ## A Trick You Already Know

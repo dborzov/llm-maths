@@ -11,7 +11,7 @@ issue: 5
 weight: 100
 techKind: primer
 techNode: residual-stream
-header: default.webp
+header: 10-residual-stream.webp
 ---
 
 ## A Net That Refused To Get Deeper

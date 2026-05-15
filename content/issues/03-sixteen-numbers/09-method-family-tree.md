@@ -11,7 +11,7 @@ issue: 3
 weight: 90
 techKind: boss
 techNode: method-family
-header: default.webp
+header: 09-method-family-tree.webp
 ---
 
 ## The Shelf

@@ -11,7 +11,7 @@ issue: 2
 weight: 40
 techKind: primer
 techNode: log-odds
-header: default.webp
+header: 04-log-odds.webp
 ---
 
 ## Gamblers Knew First

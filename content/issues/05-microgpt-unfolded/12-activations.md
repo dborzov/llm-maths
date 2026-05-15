@@ -11,7 +11,7 @@ issue: 5
 weight: 120
 techKind: primer
 techNode: activations
-header: default.webp
+header: 12-activations.webp
 ---
 
 ## The Bend In The Wire

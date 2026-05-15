@@ -11,7 +11,7 @@ issue: 5
 weight: 40
 techKind: primer
 techNode: linear
-header: default.webp
+header: 04-linear.webp
 ---
 
 ## Albuquerque, 1979

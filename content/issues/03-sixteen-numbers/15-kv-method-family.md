@@ -11,7 +11,7 @@ issue: 3
 weight: 150
 techKind: boss
 techNode: kv-method-family
-header: default.webp
+header: 15-kv-method-family.webp
 ---
 
 ## The Other Family Tree

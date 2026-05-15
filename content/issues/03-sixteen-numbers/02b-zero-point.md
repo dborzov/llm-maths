@@ -11,7 +11,7 @@ issue: 3
 weight: 27
 techKind: primer
 techNode: zero-point
-header: default.webp
+header: 02b-zero-point.webp
 ---
 
 ## The Wasted Half

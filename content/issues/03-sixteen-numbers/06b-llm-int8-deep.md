@@ -11,7 +11,7 @@ issue: 3
 weight: 65
 techKind: mainline
 techNode: llm-int8
-header: default.webp
+header: 06b-llm-int8-deep.webp
 ---
 
 ## Where We Are

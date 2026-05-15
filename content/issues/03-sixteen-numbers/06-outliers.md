@@ -11,7 +11,7 @@ issue: 3
 weight: 60
 techKind: mainline
 techNode: outliers
-header: default.webp
+header: 06-outliers.webp
 ---
 
 ## Saskatchewan To Seattle

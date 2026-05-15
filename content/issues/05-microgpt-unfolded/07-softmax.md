@@ -11,7 +11,7 @@ issue: 5
 weight: 70
 techKind: primer
 techNode: softmax
-header: default.webp
+header: 07-softmax.webp
 ---
 
 ## Eugene, Oregon, 1959

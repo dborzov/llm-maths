@@ -11,7 +11,7 @@ issue: 3
 weight: 140
 techKind: primer
 techNode: compression-roots
-header: default.webp
+header: 14-compression-roots.webp
 ---
 
 ## A Field That Forgot Its Inheritance

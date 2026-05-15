@@ -11,7 +11,7 @@ issue: 5
 weight: 20
 techKind: primer
 techNode: state-dict
-header: default.webp
+header: 02-state-dict.webp
 ---
 
 ## A Suspicious File On A Friend's Laptop

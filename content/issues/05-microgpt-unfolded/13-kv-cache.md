@@ -11,7 +11,7 @@ issue: 5
 weight: 130
 techKind: mainline
 techNode: kv-cache
-header: default.webp
+header: 13-kv-cache.webp
 ---
 
 ## The Token That Cost A Thousand Tokens

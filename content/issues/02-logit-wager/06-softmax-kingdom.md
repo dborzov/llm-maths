@@ -11,7 +11,7 @@ issue: 2
 weight: 60
 techKind: boss
 techNode: softmax-kingdom
-header: default.webp
+header: 06-softmax-kingdom.webp
 ---
 
 ## Bell Labs, 1998

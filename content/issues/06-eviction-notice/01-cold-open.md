@@ -11,7 +11,7 @@ issue: 6
 weight: 10
 techKind: mainline
 techNode: cold-open
-header: 01-cold-open.webp
+header: 01-cold-open-06.webp
 ---
 
 ## Santa Clara, January 2026

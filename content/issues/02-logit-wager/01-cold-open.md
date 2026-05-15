@@ -11,7 +11,7 @@ issue: 2
 weight: 10
 techKind: mainline
 techNode: cold-open
-header: default.webp
+header: 01-cold-open-02.webp
 ---
 
 ## Connecticut, 1934

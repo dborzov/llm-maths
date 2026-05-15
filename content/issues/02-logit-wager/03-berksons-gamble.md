@@ -11,7 +11,7 @@ issue: 2
 weight: 30
 techKind: mainline
 techNode: berksons-gamble
-header: default.webp
+header: 03-berksons-gamble.webp
 ---
 
 ## Rochester, Minnesota, 1944

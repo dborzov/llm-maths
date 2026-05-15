@@ -11,7 +11,7 @@ issue: 5
 weight: 140
 techKind: mainline
 techNode: prefill-decode
-header: default.webp
+header: 14-prefill-decode.webp
 ---
 
 ## The Berkeley Team That Looked At The Wrong Graph
