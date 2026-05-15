@@ -11,7 +11,7 @@ issue: 6
 weight: 80
 techKind: primer
 techNode: contribution-norm
-header: default.webp
+header: 08-contribution-norm.webp
 ---
 
 ## The Manager Who Fills the Room

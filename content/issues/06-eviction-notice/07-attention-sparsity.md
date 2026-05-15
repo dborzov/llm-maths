@@ -11,7 +11,7 @@ issue: 6
 weight: 70
 techKind: primer
 techNode: attention-sparsity
-header: default.webp
+header: 07-attention-sparsity.webp
 ---
 
 ## The Plot That Started an Argument

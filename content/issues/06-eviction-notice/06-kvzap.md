@@ -11,7 +11,7 @@ issue: 6
 weight: 60
 techKind: boss
 techNode: kvzap
-header: default.webp
+header: 06-kvzap.webp
 ---
 
 ## January 12, 2026

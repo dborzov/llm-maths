@@ -11,7 +11,7 @@ issue: 6
 weight: 40
 techKind: mainline
 techNode: copy-paste
-header: default.webp
+header: 04-copy-paste.webp
 ---
 
 ## The Graveyard of Good Ideas

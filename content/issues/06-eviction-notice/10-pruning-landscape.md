@@ -11,7 +11,7 @@ issue: 6
 weight: 100
 techKind: primer
 techNode: pruning-landscape
-header: default.webp
+header: 10-pruning-landscape.webp
 ---
 
 ## Late 2025, GitHub

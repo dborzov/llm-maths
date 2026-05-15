@@ -11,7 +11,7 @@ issue: 6
 weight: 90
 techKind: primer
 techNode: threshold-topk
-header: default.webp
+header: 09-threshold-topk.webp
 ---
 
 ## The Budget Meeting

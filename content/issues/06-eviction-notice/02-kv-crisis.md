@@ -11,7 +11,7 @@ issue: 6
 weight: 20
 techKind: mainline
 techNode: kv-crisis
-header: default.webp
+header: 02-kv-crisis.webp
 ---
 
 ## March 2023, Somewhere Between SFO and Heathrow

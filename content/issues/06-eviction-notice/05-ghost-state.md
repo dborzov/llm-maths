@@ -11,7 +11,7 @@ issue: 6
 weight: 50
 techKind: mainline
 techNode: ghost-state
-header: default.webp
+header: 05-ghost-state.webp
 ---
 
 ## Late 2025, NVIDIA Research

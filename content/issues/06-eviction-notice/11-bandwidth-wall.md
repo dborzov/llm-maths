@@ -11,7 +11,7 @@ issue: 6
 weight: 110
 techKind: primer
 techNode: bandwidth-wall
-header: default.webp
+header: 11-bandwidth-wall.webp
 ---
 
 ## The GPU That Is Mostly Idle

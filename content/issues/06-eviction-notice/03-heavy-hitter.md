@@ -11,7 +11,7 @@ issue: 6
 weight: 30
 techKind: mainline
 techNode: heavy-hitter
-header: default.webp
+header: 03-heavy-hitter.webp
 ---
 
 ## Twenty Percent of Your Tokens Own Eighty Percent of the Attention

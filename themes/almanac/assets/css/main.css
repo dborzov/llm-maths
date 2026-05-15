@@ -1620,6 +1620,62 @@ hr {
     padding: 0 0.2em;
     font-weight: 900;
 }
+.issue-cover-content h3 {
+    font-size: 1.1rem;
+    margin-top: 1.75rem;
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-4);
+}
+.issue-cover-content ul,
+.issue-cover-content ol {
+    max-width: 68ch;
+    list-style: none;
+    margin-left: 1rem;
+}
+.issue-cover-content ul li {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 0.5em;
+}
+.issue-cover-content ul li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.4rem;
+    width: 1rem;
+    height: 1rem;
+    background: var(--accent-1);
+    border: 2px solid var(--color-ink);
+    box-shadow: 2px 2px 0px var(--color-ink);
+}
+.issue-cover-content ol {
+    counter-reset: pop-counter;
+}
+.issue-cover-content ol li {
+    position: relative;
+    padding-left: 3rem;
+    margin-bottom: 0.5em;
+    counter-increment: pop-counter;
+}
+.issue-cover-content ol li::before {
+    content: counter(pop-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2rem;
+    height: 2rem;
+    background: var(--accent-2);
+    color: var(--color-cream);
+    border: 2px solid var(--color-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+    box-shadow: 2px 2px 0px var(--color-ink);
+}
 
 .issue-cover-section-title {
     font-size: 1.5rem;
