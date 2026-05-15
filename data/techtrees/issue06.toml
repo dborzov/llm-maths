@@ -1,0 +1,241 @@
+# Schema, conventions, and the full field reference: see docs/techtrees-schema.md.
+# Issue 06 — The Eviction Notice (KV Cache Pruning / KVzap)
+
+title  = "Tech tree — The Eviction Notice"
+width  = 1480
+height = 900
+node_w = 200
+node_h = 70
+
+# ---------------------------------------------------------------
+# Row 1 (y=80)   — Boss capstone
+# Row 2 (y=230)  — Mainline narrative (4 chapters)
+# Row 3 (y=400)  — Applied primers (3 chapters)
+# Row 4 (y=570)  — Theory primers (2 chapters)
+# Row 5 (y=730)  — External cross-issue references
+# ---------------------------------------------------------------
+
+# ---------- Row 1: Boss ----------
+
+[[nodes]]
+id    = "kvzap"
+label = "KVzap:\nThe Final Zap"
+kind  = "boss"
+x     = 740
+y     = 80
+link  = "06-kvzap/"
+sub   = "ch.6"
+
+# ---------- Row 2: Mainlines ----------
+
+[[nodes]]
+id    = "kv-crisis"
+label = "The Cache That\nAte the Server"
+kind  = "mainline"
+x     = 200
+y     = 230
+link  = "02-kv-crisis/"
+sub   = "ch.2"
+
+[[nodes]]
+id    = "heavy-hitter"
+label = "The Heavy\nHitter Oracle"
+kind  = "mainline"
+x     = 510
+y     = 230
+link  = "03-heavy-hitter/"
+sub   = "ch.3"
+
+[[nodes]]
+id    = "copy-paste"
+label = "The Pretext\nTrick"
+kind  = "mainline"
+x     = 820
+y     = 230
+link  = "04-copy-paste/"
+sub   = "ch.4"
+
+[[nodes]]
+id    = "ghost-state"
+label = "Ghost in the\nHidden State"
+kind  = "mainline"
+x     = 1150
+y     = 230
+link  = "05-ghost-state/"
+sub   = "ch.5"
+
+# ---------- Row 3: Applied primers ----------
+
+[[nodes]]
+id    = "threshold-topk"
+label = "Threshold\nor Top-k?"
+kind  = "primer"
+x     = 510
+y     = 400
+link  = "09-threshold-topk/"
+sub   = "ch.9"
+
+[[nodes]]
+id    = "pruning-landscape"
+label = "The KV Pruning\nFamily Tree"
+kind  = "primer"
+x     = 820
+y     = 400
+link  = "10-pruning-landscape/"
+sub   = "ch.10"
+
+[[nodes]]
+id    = "bandwidth-wall"
+label = "The Bandwidth\nWall"
+kind  = "primer"
+x     = 1150
+y     = 400
+link  = "11-bandwidth-wall/"
+sub   = "ch.11"
+
+# ---------- Row 4: Theory primers ----------
+
+[[nodes]]
+id    = "attention-sparsity"
+label = "Softmax's\nLong Tail"
+kind  = "primer"
+x     = 200
+y     = 570
+link  = "07-attention-sparsity/"
+sub   = "ch.7"
+
+[[nodes]]
+id    = "contribution-norm"
+label = "Weight ≠\nContribution"
+kind  = "primer"
+x     = 570
+y     = 570
+link  = "08-contribution-norm/"
+sub   = "ch.8"
+
+# ---------- Row 5: External cross-issue references ----------
+
+[[nodes]]
+id    = "ext-kv-mechanics"
+label = "KV Cache &\nK/V Internals\n(Issues 03, 05)"
+kind  = "external"
+x     = 200
+y     = 730
+
+[[nodes]]
+id    = "ext-residual"
+label = "Residual Stream\n& GQA\n(Issue 05)"
+kind  = "external"
+x     = 600
+y     = 730
+
+[[nodes]]
+id    = "ext-longctx-eval"
+label = "Long-Context\nEval (Issue 04)"
+kind  = "external"
+x     = 1050
+y     = 730
+
+# =========================================================================
+# Edges — arrows point UPWARD from prerequisite → dependent
+# =========================================================================
+
+# ---- Theory primers feed mainlines ----
+
+[[edges]]
+from = "attention-sparsity"
+to   = "heavy-hitter"
+
+[[edges]]
+from = "attention-sparsity"
+to   = "copy-paste"
+
+[[edges]]
+from = "contribution-norm"
+to   = "copy-paste"
+
+[[edges]]
+from = "contribution-norm"
+to   = "ghost-state"
+
+# ---- Mainline narrative chain ----
+
+[[edges]]
+from = "kv-crisis"
+to   = "heavy-hitter"
+
+[[edges]]
+from = "heavy-hitter"
+to   = "copy-paste"
+
+[[edges]]
+from = "copy-paste"
+to   = "ghost-state"
+
+# ---- Applied primers feed boss ----
+
+[[edges]]
+from = "threshold-topk"
+to   = "kvzap"
+
+[[edges]]
+from = "pruning-landscape"
+to   = "kvzap"
+
+[[edges]]
+from = "bandwidth-wall"
+to   = "kvzap"
+
+# ---- Mainlines feed boss ----
+
+[[edges]]
+from = "ghost-state"
+to   = "kvzap"
+
+[[edges]]
+from = "heavy-hitter"
+to   = "kvzap"
+
+# ---- Externals feed internals ----
+
+[[edges]]
+from = "ext-kv-mechanics"
+to   = "kv-crisis"
+
+[[edges]]
+from = "ext-kv-mechanics"
+to   = "attention-sparsity"
+
+[[edges]]
+from = "ext-residual"
+to   = "ghost-state"
+
+[[edges]]
+from = "ext-residual"
+to   = "kv-crisis"
+
+[[edges]]
+from = "ext-longctx-eval"
+to   = "kvzap"
+
+# =========================================================================
+# Legend
+# =========================================================================
+
+[[legend]]
+kind  = "boss"
+label = "Boss capstone"
+
+[[legend]]
+kind  = "mainline"
+label = "Mainline narrative"
+
+[[legend]]
+kind  = "primer"
+label = "Tutorial primer"
+
+[[legend]]
+kind  = "external"
+label = "Cross-issue reference"
+
+caption = 'Arrows point <em>upward</em> from prerequisite to dependent. Read the cold-open (<a href="01-cold-open/">ch.1</a>) first — it sets the mystery. The left column tracks the memory-scale problem; the center tracks the scoring methods; the right tracks the surrogate-learning breakthrough. Theory primers (bottom row) feed the mainlines above; applied primers (middle row) feed the boss capstone at the top.'
