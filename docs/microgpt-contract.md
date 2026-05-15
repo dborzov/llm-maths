@@ -61,3 +61,22 @@ When writing a new article that touches any of these concepts:
 What we did with microGPT, we would want to do with the other terminology about the other terms and notations that are not limited to a single article / issue but are recurrent themes.
 
 When in your work, you identify and notice such terms, update this docs section and document these terms, and point to the article / page that will be the source-of-truth to be referenced by other articles when mentioned.
+
+---
+
+### Long-context evaluation vocabulary (Issue 04 canonical definitions)
+
+These terms recur across articles in Issue 04 and across the site wherever long-context evaluation is discussed. Use these definitions consistently; link to the source-of-truth page on first mention.
+
+| Term | Definition | Source-of-truth |
+|---|---|---|
+| **NIAH** (Needle in a Haystack) | Benchmark where a single out-of-distribution sentence is embedded in a long haystack and the model is asked to retrieve it. The 2023–2024 industry standard, saturated by early 2024. | [ch.3 Needle in a Haystack](../content/issues/04-heatmap-that-lied/03-niah-mechanics/) |
+| **Context rot** | The observed degradation in model performance as input length grows, characterised by a plateau at short lengths, a steep drop in the 50–75% window range, and a partial recency reflex near the end. Coined by the Chroma report, July 2025. | [ch.12 The Chroma Measurement](../content/issues/04-heatmap-that-lied/12-context-rot/) |
+| **U-curve** (lost-in-the-middle) | Position-dependent retrieval accuracy curve: highest at the start, nearly as high at the end, lowest at the middle of a long prompt. Valley is often at or below the closed-book baseline. Liu et al., 2023. | [ch.7 The U-Curve](../content/issues/04-heatmap-that-lied/07-lost-in-the-middle/) |
+| **LSQ** (Latent Structure Queries) | Michelangelo framework (Vodrahalli et al., 2024): a well-designed long-context task requires the model to chisel away irrelevant context to expose a latent structure, then query that structure. | [ch.9 Vodrahalli's Chisel](../content/issues/04-heatmap-that-lied/09-latent-structure/) |
+| **MRCR** (Multi-Round Co-reference Resolution) | Retrieval-with-counting benchmark: disambiguate the *k*-th of *N* similar requests in a long context. Single-pass solvable. The standard retrieval-side benchmark from 2025 onward. | [ch.9 Vodrahalli's Chisel](../content/issues/04-heatmap-that-lied/09-latent-structure/) |
+| **GraphWalks** | Multi-hop reasoning benchmark: directed graph of hex-hash nodes encoded in the prompt; model must perform BFS from a start node and return all nodes at depth *k*. Cannot be solved by a single linear scan. OpenAI, April 2025. | [ch.8 One Pass Isn't Enough](../content/issues/04-heatmap-that-lied/08-needle-to-graph/) |
+| **OOLONG** | Aggregation benchmark: per-chunk atomic classification + aggregation across all chunks. Orthogonal to GraphWalks (tests width, not depth). Vodrahalli et al., November 2025. | [ch.9 Vodrahalli's Chisel](../content/issues/04-heatmap-that-lied/09-latent-structure/) |
+| **Benchmark saturation** | Phase III of a benchmark lifecycle: every frontier model clusters near the ceiling, variance < noise, ranking becomes unreliable. Antidote: length-conditional reporting, adversarial construction, recent-data design. | [ch.6 Goodhart's Ceiling](../content/issues/04-heatmap-that-lied/06-measurement-saturation/) |
+| **Retrieval is not reasoning** | Slogan summarising the 2024 benchmark-wave finding: a model that retrieves single facts from a long context does not necessarily chain dependent lookups or aggregate across many facts. | [ch.5 When Everyone Scored 99](../content/issues/04-heatmap-that-lied/05-saturation/) |
+| **The 2026 layered eval stack** | Five-layer long-context evaluation framework: (1) Retrieval, (2) Multi-hop reasoning, (3) Aggregation, (4) Realistic application, (5) Agentic, plus FACTS for grounding. | [ch.16 The 2026 Layered Stack](../content/issues/04-heatmap-that-lied/16-eval-stack-2026/) |

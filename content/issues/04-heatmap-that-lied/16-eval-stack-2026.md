@@ -106,10 +106,18 @@ Not the aggregate. Models routinely have flat scores at 8-32K and collapse at 25
 
 ### Step 3 — Apply the *discount stack* from [Leakage and Drift](../15-contamination-drift/)
 
-- Contamination: 0-15 pp depending on benchmark age and public-source content.
-- Methodology drift: 0-20 pp when comparing across versions.
-- U-curve: 0-15 pp if information will sit in the middle of the prompt.
-- NoLiMa discount: 20-50 pp if your real queries don't share tokens with the answer.
+{{% callout type="warning" title="The Practitioner's Discount Stack" %}}
+Every quoted long-context benchmark score needs these adjustments before you believe it:
+
+| Discount | Size | When it applies |
+|---|---|---|
+| **Contamination** | 0–15 pp | Benchmark is public; model may have trained on it |
+| **Methodology drift** | 0–20 pp | Comparing scores across different versions of the same benchmark |
+| **U-curve** | 0–15 pp | Critical information sits in the middle of the prompt |
+| **NoLiMa discount** | 20–50 pp | Your real queries don't share tokens with their answers |
+
+Honest production estimates routinely come out **30–50 pp below marketing numbers**. That's not a bug — that's the correct discount for overfitted, contamination-inflated, retrieval-biased benchmark conditions versus real-world use.
+{{% /callout %}}
 
 Honest production performance estimates routinely come out 30-50 pp below marketing numbers. This is *fine* — it's the way evaluation now works. Plan for the discounted number.
 
@@ -157,7 +165,11 @@ The Opus 4.6 / BrowseComp incident showed that agentic systems can *attack* benc
 
 ## A Last Look At The Mystery
 
-The cold open posed a paradox: every frontier model scoring 99% on the headline 2023-2024 long-context benchmark, while users complained their long context windows felt rotten. The resolution, after sixteen chapters, is:
+The cold open posed a paradox: every frontier model scoring 99% on the headline 2023-2024 long-context benchmark, while users complained their long context windows felt rotten.
+
+{{< crosshead >}}The Resolution, In Four Lines{{< /crosshead >}}
+
+The answer, after sixteen chapters, is:
 
 - **The 99% was real** — for that specific narrow capability (exact-string retrieval of an alien-styled sentence under a sentence-extraction prompt convention).
 - **The rotten window was also real** — for the *other* capabilities (multi-hop reasoning, aggregation, position-sensitive retrieval, semantic-only retrieval, absence detection, agentic coherence).
@@ -166,9 +178,11 @@ The cold open posed a paradox: every frontier model scoring 99% on the headline 
 
 That culture change took three years and a wave of benchmarks. It is, at the time of this writing in May 2026, the most consequential methodological shift in AI evaluation since the GLUE → SuperGLUE → MMLU cascade of 2018-2021. And it is far from finished: the open problems above are real, the benchmarks will keep evolving, and the *next* version of this issue will be published in 2028 telling a story we cannot yet see.
 
-The James Burke moral, written down: **a measurement is not a fact about the world. It is a culturally negotiated artifact, and what it measures will keep changing as the field changes its mind about what it wants to know.** Greg Kamradt's heatmap, in November 2023, was the field's first try at saying out loud what it wanted long-context to mean. The 2026 layered stack is the field's third or fourth try, and not the last.
+{{% pullquote type="profound" %}}
+A measurement is not a fact about the world. It is a culturally negotiated artifact. **The yardstick keeps moving because the room keeps changing.**
+{{% /pullquote %}}
 
-The yardstick keeps moving because the *room* keeps changing.
+Greg Kamradt's heatmap, in November 2023, was the field's first try at saying out loud what it wanted long-context to mean. The 2026 layered stack is the field's third or fourth try, and not the last.
 
 ## What To Remember
 

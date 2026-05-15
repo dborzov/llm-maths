@@ -1,0 +1,42 @@
+title   = "From Dead Insects to PyTorch — the Logit's 90-Year Journey"
+caption = "Five inflection points. Hundreds of papers and statisticians omitted."
+
+[[events]]
+date  = "1934"
+title = "The Probit Is Born"
+who   = "Chester Ittner Bliss"
+body  = "A Connecticut entomologist models insect mortality as a normal CDF, inventing probit analysis and the first practical S-curve fitting method."
+kind  = "paper"
+link  = "01-cold-open/"
+
+[[events]]
+date  = "1944"
+title = "Berkson Names the Logit"
+who   = "Joseph Berkson, Mayo Clinic"
+body  = "A Mayo Clinic physician replaces the intractable normal CDF with the logistic function, coins the term 'logit' by analogy with 'probit', and starts a 80-year debate about which S-curve is correct."
+kind  = "paper"
+link  = "03-berksons-gamble/"
+
+[[events]]
+date  = "1958"
+title = "Logistic Regression Formalized"
+who   = "David Cox"
+body  = "Cox publishes the definitive statistical treatment of binary logistic regression, establishing it as a general-purpose tool far beyond dose-response studies."
+kind  = "paper"
+link  = "05-logistic-regression/"
+
+[[events]]
+date  = "1986"
+title = "Backprop + Sigmoid = Deep Learning's Foundation"
+who   = "Rumelhart, Hinton, Williams"
+body  = "The backpropagation paper popularizes multi-layer networks with sigmoid activations and cross-entropy loss. Berkson's logistic function becomes the canonical output nonlinearity."
+kind  = "paper"
+link  = "05-logistic-regression/"
+
+[[events]]
+date  = "2016"
+title = "PyTorch Ships CrossEntropyLoss"
+who   = "Facebook AI Research"
+body  = "PyTorch's first release includes CrossEntropyLoss expecting raw 'logits' — Berkson's 1944 term — cementing the vocabulary used by every practitioner today."
+kind  = "release"
+link  = "06-softmax-kingdom/"

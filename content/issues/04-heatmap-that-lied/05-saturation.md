@@ -22,6 +22,10 @@ If 2023 was the year of *one* long-context benchmark, **2024 was the year of fif
 
 This chapter is the story of how that slogan was constructed, paper by paper. We will visit seven benchmarks — RULER, ∞Bench, BABILong, LOFT, NoCha, HELMET, LongBench v2 — and a single conceptual scaffold (Michelangelo's *Latent Structure Queries*) that ties them together. The point is not to memorise each test's exact construction — that's what the primers underneath are for — but to absorb the *coordinated movement* of the field, and what it concluded.
 
+{{% pullquote type="profound" %}}
+**Retrieval is not reasoning.** It emerged from seven benchmarks in eight months, never as a formal thesis — just the shared annotation the field kept writing in the margins.
+{{% /pullquote %}}
+
 ```pyplot {id="benchmark-timeline" caption="The 2024 long-context benchmark wave. Each marker is a paper that explicitly framed itself as a NIAH successor or critique. Seven benchmarks in eight months — and three more (Michelangelo, NoCha, LongBench v2) in the same window. Single field, coordinated shift in evaluation philosophy."}
 import datetime
 events = [
@@ -134,6 +138,8 @@ June 2024 produced three benchmarks in three weeks, each piling onto RULER's arg
 Read that finding twice. It is not "the model is bad at long context." It is *quantitative*. **For every 10 tokens the model is given, it operationally uses 1 or 2.** The other 8 are silicon waste. This is the empirical seed of the "context rot" complaint that will dominate 2025.
 
 **LOFT (Long-Context Frontiers)** from Google DeepMind (Lee et al., arXiv:2406.13121) asked a different question: *"Can long-context language models subsume retrieval, RAG, SQL, and more?"* The benchmark spanned six task categories across 35 datasets, in text, vision, and audio, scaling from 32K to 1M tokens. The pitch — implicit but obvious to anyone running production AI — was that if long context could replace whole pipelines (vector databases, retrieval encoders, SQL engines), the engineering economics of the field would shift dramatically. LOFT's verdict, summarised generously: *partially*. Long-context models could rival small RAG systems on simple retrieval-style tasks, but lagged badly on aggregation, ranking, and structured-data queries.
+
+{{< crosshead >}}June 2024 — NoCha Closes the Door{{< /crosshead >}}
 
 **NoCha** (Novel Challenge) from Karpinska, Iyyer and colleagues at UMass (arXiv:2406.16264, EMNLP 2024) attacked from the *human-task* end. The setup is constructed adversarially: **1,001 minimal-pair true/false claims about 67 *recently-published* English novels**, designed so that verification requires reading the whole book. ("Recently-published" was deliberate — to defend against training-set contamination. We will see more of this concern in [Leakage and Drift](../15-contamination-drift/).) The finding was the most damning of 2024:
 

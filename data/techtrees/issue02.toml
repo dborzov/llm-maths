@@ -1,0 +1,108 @@
+# Schema and conventions: see docs/techtrees-schema.md.
+# Canonical example: data/techtrees/issue03.toml.
+
+title  = "Tech tree — The Logit Wager"
+width  = 1100
+height = 580
+node_w = 200
+node_h = 70
+
+# ---------------------------------------------------------------
+# Row 1 (y=80):   softmax-kingdom (boss)
+# Row 2 (y=260):  logistic-regression (mainline) | berksons-gamble (mainline)
+# Row 3 (y=440):  probit-transform (primer)      | log-odds (primer)
+# Arrows point UPWARD from prerequisite to user.
+# ---------------------------------------------------------------
+
+# ---------- Row 1: boss capstone ----------
+
+[[nodes]]
+id    = "softmax-kingdom"
+label = "The Softmax\nKingdom"
+kind  = "boss"
+x     = 540
+y     = 80
+link  = "06-softmax-kingdom/"
+sub   = "ch.6"
+
+# ---------- Row 2: mainline narrative ----------
+
+[[nodes]]
+id    = "logistic-regression"
+label = "From Insects\nto ImageNet"
+kind  = "mainline"
+x     = 280
+y     = 260
+link  = "05-logistic-regression/"
+sub   = "ch.5"
+
+[[nodes]]
+id    = "berksons-gamble"
+label = "The Simpler\nS-Curve"
+kind  = "mainline"
+x     = 800
+y     = 260
+link  = "03-berksons-gamble/"
+sub   = "ch.3"
+
+# ---------- Row 3: primers ----------
+
+[[nodes]]
+id    = "probit-transform"
+label = "Cramming the Bell\nCurve Into a Line"
+kind  = "primer"
+x     = 280
+y     = 440
+link  = "02-probit-transform/"
+sub   = "ch.2"
+
+[[nodes]]
+id    = "log-odds"
+label = "The Language\nof Risk"
+kind  = "primer"
+x     = 800
+y     = 440
+link  = "04-log-odds/"
+sub   = "ch.4"
+
+# =========================================================================
+# Edges — arrows point UPWARD from prerequisite to user
+# =========================================================================
+
+[[edges]]
+from = "probit-transform"
+to   = "berksons-gamble"
+
+[[edges]]
+from = "probit-transform"
+to   = "logistic-regression"
+
+[[edges]]
+from = "log-odds"
+to   = "logistic-regression"
+
+[[edges]]
+from = "berksons-gamble"
+to   = "softmax-kingdom"
+
+[[edges]]
+from = "logistic-regression"
+to   = "softmax-kingdom"
+
+# =========================================================================
+# Legend
+# =========================================================================
+
+[[legend]]
+kind  = "boss"
+label = "Boss capstone"
+
+[[legend]]
+kind  = "mainline"
+label = "Mainline narrative"
+
+[[legend]]
+kind  = "primer"
+label = "Tutorial primer"
+
+caption = 'Arrows point <em>upward</em> from prerequisite to user. Read the cold-open (<a href="01-cold-open/">ch.1</a>) first — it sets the question the whole issue answers. Both primer columns feed the central mainline; all paths converge at the Softmax Kingdom capstone.'

@@ -75,6 +75,10 @@ Look at the picture. *It looks like a measurement.* It has a clean x-axis (a hyp
 
 And here's the thing nobody admits at first: the *visual* is doing a lot of work the *math* is not. We will spend this issue, in twelve primers and four more mainline chapters, picking apart what that heatmap was actually saying — and what it was not.
 
+{{% callout type="tangent" title="Why The Image Went Viral" %}}
+A scalar score — *"Claude 2.1 retrieved the needle 27% of the time"* — is dry. A 2-D heatmap with green and red regions is **immediately legible** to a non-technical audience. It looks like a thermal image of a brain; it looks like a battery health diagnostic. For the first time in AI, a lab could paste a single picture into a launch deck and have the slide write itself. The *visual rhetoric* ran years ahead of the underlying measurement validity.
+{{% /callout %}}
+
 ## The Trap, In Three Acts
 
 ### Act I — Claude 2.1, And The 27% Panic
@@ -83,7 +87,7 @@ The first dramatic act happens almost immediately. Just **two days** before Kamr
 
 When Kamradt's heatmap arrives — and it arrives, on Claude 2.1, scoring an embarrassing **27%** average retrieval — the timing is calamitous. The screenshot ricochets around AI Twitter. Anthropic, the lab founded on the importance of *honest* AI behaviour, has apparently shipped a 200K-token window that *cannot find a sentence about a sandwich*.
 
-Anthropic responds in a way that, on rereading from 2026, is genuinely fascinating. On **December 6, 2023** they post a blog titled *"Long context prompting for Claude 2.1"*. The argument is sober and counterintuitive. Claude, they write, was trained — deliberately — to refuse to answer when a question is grounded in a passage that seems out of context. Adding the sandwich sentence to Paul Graham essays *should* feel suspicious to a well-aligned model. The 27% wasn't a memory failure; it was a *politeness* failure of the benchmark.
+Anthropic responds in a way that, on rereading from 2026, is genuinely fascinating. On **December 6, 2023** they post a blog titled *"Long context prompting for Claude 2.1"*.{{% marginnote %}}The full text of the December 6 post survives in the Anthropic blog archive. Its most important paragraph is paragraph three — not the headline fix, but the diagnosis that precedes it. Most coverage at the time quoted the fix; almost nobody quoted the diagnosis.{{% /marginnote %}} The argument is sober and counterintuitive. Claude, they write, was trained — deliberately — to refuse to answer when a question is grounded in a passage that seems out of context. Adding the sandwich sentence to Paul Graham essays *should* feel suspicious to a well-aligned model. The 27% wasn't a memory failure; it was a *politeness* failure of the benchmark.
 
 Then comes the kicker. Anthropic shows that if you prepend a single line to the prompt — *"Here is the most relevant sentence in the context:"* — Claude 2.1's NIAH score jumps from **27% to 98%**. Ten extra words. Not a model update. Not a training run. Not a knob inside the transformer. *Words to the user-facing prompt.*
 
@@ -112,7 +116,11 @@ print("Model: identical.  Weights: identical.  Training: identical.")
 print("Only the user-facing prompt template changed.")
 ```
 
-Read that print-out twice. The same model, the same context window, the same haystack, the same needle — *the same everything except the framing sentence at the top of the user prompt* — and the headline benchmark number swings by **71 percentage points**. The most-watched long-context number of late 2023 is essentially measuring **whether your prompt engineer remembered to write a specific magic incantation**.
+Read that print-out twice. The same model, the same context window, the same haystack, the same needle — *the same everything except the framing sentence at the top of the user prompt* — and the headline benchmark number swings by **71 percentage points**.
+
+{{% pullquote type="counter-intuitive" %}}
+The most-watched long-context number of late 2023 is essentially measuring **whether your prompt engineer remembered to write a specific magic incantation**.
+{{% /pullquote %}}
 
 This is the buried tactical observation that will eventually unravel the entire 2023–2024 evaluation paradigm. We unpack it in detail in [Needle In A Haystack](../03-niah-mechanics/) and connect it to a deeper concept in [Scan vs Think](../04-retrieval-vs-reasoning/).
 

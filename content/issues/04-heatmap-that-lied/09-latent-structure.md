@@ -18,7 +18,13 @@ header: default.webp
 
 The setting is unglamorous. Some windowless room in Mountain View at the **Google DeepMind** campus. **Kiran Vodrahalli** is sketching, with a small team, what would become **Michelangelo** — a long-context benchmark suite whose paper would land on arXiv on September 19, 2024 (arXiv:2409.12640). The team has read RULER, BABILong, NoCha, ∞Bench. They have seen every flavour of "NIAH is broken." They are not trying to write the 13th critique. They are trying to figure out the **shape of the abstraction** that would generate all of these benchmarks at once.
 
-The contribution they end up with is a single metaphor. **Long-context evaluation tasks should require the model to chisel away the irrelevant context, revealing a latent structure** — and the structure is then queried for details. They call this the **Latent Structure Queries (LSQ) framework**.
+The contribution they end up with is a single metaphor.
+
+{{% pullquote type="profound" author="Vodrahalli et al., Michelangelo (2024)" %}}
+A well-designed long-context task requires the model to **chisel away the irrelevant context, revealing a latent structure** — and then query that structure for details.
+{{% /pullquote %}}
+
+They call this the **Latent Structure Queries (LSQ) framework**.
 
 The metaphor is shamelessly art-historical: Michelangelo claimed (apocryphally) that *"the sculpture is already there in the block of marble; the artist's job is to remove the parts that do not belong."* Vodrahalli's claim is the same for long contexts. The answer to a well-designed long-context question is *already implicit* in the prompt, encoded as a latent structure (a list, a chain of co-references, a graph, an aggregate). The model's job is to *chisel away the irrelevant text* and *expose the structure* — and then read off the answer.
 
@@ -154,6 +160,10 @@ The single biggest contribution of Michelangelo's LSQ framework is not the three
 | RULER multi-hop   | variable assignment chain                  | symbolic dereference                 |
 | OOLONG            | per-chunk atomic facts + aggregation rule | reduce / aggregate across chunks     |
 | BABILong (bAbI)   | logical relations between entities        | inference / entailment               |
+
+{{% callout type="theorem" title="The LSQ Taxonomy" %}}
+**How to read the table:** each row is a benchmark; the "latent structure" column is what the model must extract from the context; the "query type" column is what the evaluation asks about that structure. If you can describe the latent structure without using the word "retrieval", you have a post-NIAH benchmark. If you can't, you have an NIAH variant.
+{{% /callout %}}
 
 Reading the rows in order is reading the **conceptual difficulty gradient** of the field. Each task asks the model to extract a more complex latent structure. NIAH demands one entity; MRCR demands an ordered set; GraphWalks demands a graph; OOLONG demands an aggregate. The 2025-onward benchmark culture is *explicitly designed* to walk down this gradient, picking benchmarks whose latent structure is at the right level of difficulty for what you want to claim about your model.
 

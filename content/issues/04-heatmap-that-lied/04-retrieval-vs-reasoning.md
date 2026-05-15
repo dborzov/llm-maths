@@ -36,16 +36,16 @@ This primer is about why a transformer's attention mechanism is *built* for the 
 
 Strip a transformer down to bare metal. Each decoder block does two operations that take a sequence of $n$ token vectors and return another sequence of $n$ token vectors. The first is self-attention: for each output token $i$, look at every previous token $j$, compute a scalar **attention weight** $\alpha_{ij}$ that says "how much should token $j$ influence token $i$'s output?", and then take a weighted sum.
 
-The attention weight $\alpha_{ij}$ is the dot product of token $i$'s **query** vector and token $j$'s **key** vector, normalised by softmax:
+The attention weight $\alpha_{ij}$ is the dot product of token $i$'s **query** vector (`q` in the [microGPT reference](../../05-microgpt-unfolded/08-attention/)) and token $j$'s **key** vector (`k`), normalised by softmax — these are the `attn_logits` and `attn_weights` from the listing:
 
 $$
-\alpha_{ij} = \frac{\exp(Q_i \cdot K_j / \sqrt{d})}{\sum_{k \leq i} \exp(Q_i \cdot K_k / \sqrt{d})}
+\alpha_{ij} \;=\; \frac{\exp(q_i \cdot k_j / \sqrt{\text{head\_dim}})}{\sum_{k \leq i} \exp(q_i \cdot k_k / \sqrt{\text{head\_dim}})}
 $$
 
-The output for token $i$ is a weighted blend of the value vectors of every previous token:
+The output for token $i$ is a weighted blend of the value vectors (`v`, cached as `values[li]`) of every previous token:
 
 $$
-O_i = \sum_{j \leq i} \alpha_{ij} \, V_j
+O_i = \sum_{j \leq i} \alpha_{ij} \, v_j
 $$
 
 In a single attention layer, then, *each output token sees every previous input token*, with a learned per-pair weighting. If you draw the attention pattern $\alpha$ for a typical sentence, you see something like this:
@@ -105,7 +105,13 @@ Let's formalise. Suppose a question requires $k$ sequential hops to answer. *Ali
 
 How many attention layers does this take? In the worst case — when none of the facts can be co-located or precomputed in earlier layers — **at least one attention layer per hop**. The first layer does Hop 1 and writes "Alice → Bob" into Alice's residual stream. The second layer reads "Alice → Bob" out of the residual, does Hop 2 (look up Bob's parent), and writes "Alice → Carol" back. And so on.
 
-This is a real, formal result. It's been studied under various names — *circuit depth*, *reasoning depth*, *attention compositionality* — by interpretability researchers like Sanford et al. (2024) and the Anthropic interpretability group. The bottom line: **with $L$ decoder layers, a transformer can chain at most $L$ dependent attention hops within a single forward pass.** Beyond that, it has to either *parallelize* the hops (which only works if they're independent) or *defer* the answer until generation time (which only works if it can write intermediate tokens).
+This is a real, formal result. It's been studied under various names — *circuit depth*, *reasoning depth*, *attention compositionality* — by interpretability researchers like Sanford et al. (2024) and the Anthropic interpretability group.
+
+{{% pullquote type="technical" %}}
+**With $L$ decoder layers, a transformer can chain at most $L$ dependent attention hops within a single forward pass.** Beyond that, it must either parallelise the hops (which only works if they're independent) or defer the answer to generation time (chain-of-thought).
+{{% /pullquote %}}
+
+Beyond that, it has to either *parallelize* the hops (which only works if they're independent) or *defer* the answer until generation time (which only works if it can write intermediate tokens).
 
 ```pyplot {id="hops-vs-layers" caption="The reasoning-depth ceiling. For a model with L decoder layers, the number of sequential dependent hops it can chain in a single forward pass is bounded by L. Llama-3.1 70B has L=80, which sounds like plenty — but real reasoning chains overflow this rapidly when the chain has branches, when hops are noisy, and when multiple sub-questions compete for the same layers."}
 L_values = [16, 32, 64, 80, 96]   # decoder depths of common models

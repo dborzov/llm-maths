@@ -43,11 +43,13 @@ When the prompt is one million tokens long, every single one of those tokens is 
 
 ## Bill #1 — The KV Cache (Linear In Length, Punishing Constant)
 
-In a vanilla multi-head attention block, each token $t$ produces, per layer, a key vector $K_t \in \mathbb{R}^{d_{\text{model}}}$ and a value vector $V_t \in \mathbb{R}^{d_{\text{model}}}$. Both have to be kept around for the rest of the sequence. So the **per-token** KV cache footprint, in bytes, is:
+In a vanilla multi-head attention block, each token $t$ produces, per layer, a key vector $K_t$ and a value vector $V_t$ that must be kept for every later token to attend to. In the [microGPT reference implementation](../../05-microgpt-unfolded/13-kv-cache/), these accumulate as `keys[li]` and `values[li]` — one growing list per layer `li`. Both have to be kept around for the rest of the sequence. So the **per-token** KV cache footprint, in bytes, is:
 
 $$
-\text{bytes per token} \;=\; \underbrace{2}_{K,\,V} \;\times\; n_{\text{kv heads}} \;\times\; d_{\text{head}} \;\times\; L \;\times\; \text{(bytes per value)}
+\text{bytes per token} \;=\; \underbrace{2}_{K,\,V} \;\times\; n_{\text{kv\_head}} \;\times\; \text{head\_dim} \;\times\; L \;\times\; \text{(bytes per value)}
 $$
+
+where `n_kv_head` and `head_dim` are the microGPT architecture constants (see [ch.18 Grouped-Query Attention](../../05-microgpt-unfolded/18-gqa/)).{{% marginnote %}}Full-precision (FP16) `keys` and `values` occupy `2 × n_kv_head × head_dim` bytes per token per layer. KV quantization — dropping to INT8 or INT4 — is covered in depth in [Issue 03, The KV Method Family](../../03-sixteen-numbers/15-kv-method-family/).{{% /marginnote %}}
 
 For Llama-3.1 70B at FP16 (2 bytes per value), and using **Grouped-Query Attention** (GQA) with 8 KV heads of width 128:
 
@@ -55,7 +57,11 @@ $$
 2 \times 8 \times 128 \times 80 \times 2 \;\text{bytes} \;=\; 327{,}680 \;\text{bytes} \;\approx\; 320 \;\text{KB per token}
 $$
 
-This number — 320 KB per cached token — is the first **napkin fact** of long-context inference. Stare at it for a moment. A single token, in a 70B model, leaves a footprint about the size of a small JPEG photograph in your model's working RAM.
+{{% pullquote type="technical" %}}
+**320 KB per cached token.** A single token in a 70B model leaves a footprint the size of a small JPEG photograph in working RAM. At 1M tokens that's 320 GB — four times the weight of the model itself.
+{{% /pullquote %}}
+
+This number is the first **napkin fact** of long-context inference. Stare at it for a moment.
 
 Now scale up:
 
@@ -103,14 +109,14 @@ Read the print-out. At the **128K** window Llama-3.1 advertises, the KV cache is
 
 This is why "1M context" is — for many production deployments — a marketing claim built on infrastructure most users will never touch.
 
-### Mitigations (Names, Briefly)
+{{< crosshead >}}Mitigations (Names, Briefly){{< /crosshead >}}
 
 The KV-cache bill has driven most of the architectural ferment in transformers since 2022:
 
-- **Grouped-Query Attention (GQA)** — shrinks $n_{\text{kv heads}}$ relative to query heads. Llama-3 uses 8 KV heads sharing 64 query heads, an **8× shrink** vs. multi-head attention. *Already applied in our number.*
-- **Multi-head Latent Attention (MLA)** — DeepSeek-V2's trick: cache a low-rank latent factor instead of full K and V. Saves another **4–8×**.
-- **KV-cache quantization** — drop the cache from FP16 to FP8 or INT4. The whole second half of Issue 03 (the [KV Method Family Tree](https://borzov.ca/llm-maths/issues/03-sixteen-numbers/15-kv-method-family/)) is about this.
-- **Sliding-window or sparse attention** — discard old K, V beyond a fixed window. Reduces the cache to constant size but *also* changes what the model can attend to.
+- **Grouped-Query Attention (GQA)** — shrinks `n_kv_head` relative to query heads (the [`n_kv_head` / `group_size` extension](../../05-microgpt-unfolded/18-gqa/) in microGPT). Llama-3 uses 8 KV heads sharing 64 query heads, an **8× shrink** vs. multi-head attention. *Already applied in our number.*
+- **Multi-head Latent Attention (MLA)** — DeepSeek-V2's trick: cache a low-rank latent `c` (`kv_down` projection, see [ch.19 Multi-head Latent Attention](../../05-microgpt-unfolded/19-mla/)) instead of full K and V. Saves another **4–8×**.
+- **KV-cache quantization** — drop the cache from FP16 to FP8 or INT4. Issue 03's [KV Method Family Tree](../../03-sixteen-numbers/15-kv-method-family/) is dedicated to this.
+- **Sliding-window or sparse attention** — discard old `keys[li]` / `values[li]` beyond a fixed window `W` (the [ch.20 Sliding-Window extension](../../05-microgpt-unfolded/20-sliding-window/)). Reduces cache to constant size but *also* changes what the model can attend to.
 
 Each is a story. The high-level point for *this* primer is that **the headline "1M tokens" almost always assumes one or more of these tricks is on**, and the trick has its own accuracy footprint — which is what the rest of this issue is, in part, measuring.
 
@@ -204,6 +210,16 @@ The marketing number is set by **what the architecture accepts without crashing*
 Each of these effects deserves a chapter in some other book. For *this* issue, what matters is the **aggregate**: the gap between the advertised window and the empirically usable window, as measured by benchmarks like MRCR v2 and GraphWalks, is large, predictable, and the central technical fact this whole issue revolves around.
 
 ## A Tiny Sanity Check You Can Run In Your Head
+
+{{% callout type="tip" title="The 3-Second Lab-Number Check" %}}
+When a lab quotes you a context-window number, run this fast:
+
+- **KV cache footprint:** `2 × n_kv_head × head_dim × L` bytes per token. For 70B-scale GQA at FP16 that's ~300 KB/token, or ~300 GB/million tokens.
+- **Attention compute:** $4 L n^2 d$. For 70B-scale at $n = 10^6$ that's ~10 EFLOPs — several seconds per forward step at H100 peak.
+- **RoPE extension:** did they train natively at that length, or are they interpolating? Interpolated RoPE degrades quality at long positions.
+
+If any of these checks look fishy, the "M-token context window" is probably a marketing ceiling, not a usable floor.
+{{% /callout %}}
 
 When a lab quotes you a number — say, "we built a 1M-token context window" — you can do the napkin math in three seconds:
 

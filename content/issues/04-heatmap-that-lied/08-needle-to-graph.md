@@ -24,7 +24,11 @@ That's the *first* paragraph. It explains why OpenAI is shipping their own imple
 
 > *"Many developer use cases for long context require multiple logical hops within the context, like jumping between multiple files when writing code or cross referencing documents when answering complicated legal questions. **A model (or even a human) could theoretically solve an OpenAI-MRCR problem by doing one pass or read-through of the prompt, but Graphwalks is designed to require reasoning across multiple positions in the context and cannot be solved sequentially.** Graphwalks fills the context window with a directed graph composed of hexadecimal hashes, and then asks the model to perform a breadth-first search (BFS) starting from a random node in the graph. We then ask it to return all nodes at a certain depth."*
 
-That bolded sentence is, in the entire long-context literature, **the cleanest articulation of why the field had to move on**. NIAH and even MRCR, the post is admitting, can be solved by a single linear scan. GraphWalks cannot. Whatever model architecture is going to claim "long context understanding" from this point forward had better be capable of *non-linear traversal through arbitrary information embedded throughout the prompt*.
+{{% pullquote type="profound" author="OpenAI GPT-4.1 launch blog, April 14 2025" %}}
+A model could theoretically solve MRCR by doing one pass through the prompt. **GraphWalks is designed to require reasoning across multiple positions in the context and cannot be solved sequentially.**
+{{% /pullquote %}}
+
+This is, in the entire long-context literature, **the cleanest articulation of why the field had to move on**. NIAH and even MRCR can be solved by a single linear scan. GraphWalks cannot. Whatever model architecture is going to claim "long context understanding" from this point forward had better be capable of *non-linear traversal through arbitrary information embedded throughout the prompt*.
 
 The launch blog quietly inaugurates the third era of long-context benchmarking.
 
@@ -133,6 +137,8 @@ Watching Anthropic's system cards across the 2024–2026 arc tells the long-cont
 - **Claude 4 / Opus 4 (May 2025)**: 213-page system card devoted most of its attention to safety/agentic/CBRN. Long-context evaluation appears in a smaller role; NIAH dropped to a sanity check, MRCR adopted.
 - **Claude Sonnet 4.5 (Sep 2025)** / **Opus 4.5 (Nov 2025)**: **OpenAI MRCR v2** and **GraphWalks** become the core long-context capability evals. Sonnet 4.5's MRCR v2 score at 1M is **18.5%** — a deliberate humbling baseline.
 - **Claude Opus 4.6 (Feb 2026)**: Section 2.18 "Long Context" makes the philosophy explicit. On MRCR v2: *"Unlike simpler 'needle in a haystack' tests, MRCR challenges models to identify the correct ordinal instance among identical requests…"* That clause — *"unlike simpler 'needle in a haystack' tests"* — is the most pointed sentence in any Claude system card. It is Anthropic stating, in their flagship release document, that NIAH-style retrieval is **not** what they consider long-context evaluation anymore.
+
+{{< crosshead >}}NIAH Boast → NIAH Footnote → NIAH Gone{{< /crosshead >}}
 
 That sequence — NIAH boast → NIAH sanity check → NIAH demoted → NIAH dismissed — is the four-step shorthand for the entire third-era shift. **Anthropic did not stop *reporting* MRCR or NIAH.** They continued to run them, often for cross-lab continuity. What changed was the *narrative weight*: GraphWalks and OOLONG-style evals are now the headline numbers. The retrieval tests live in the appendix.
 

@@ -40,6 +40,10 @@ The headline number:
 
 > **MRCR v2 8-needle 1M: 76.0%**
 
+{{% pullquote type="counter-intuitive" %}}
+From 18.5% to 76% on the same benchmark, in five months, between two consecutive releases. **+57.5 percentage points.** The single largest single-version leap in long-context benchmark history.
+{{% /pullquote %}}
+
 From Sonnet 4.5's **18.5%** to Opus 4.6's **76.0%** — a **57.5-percentage-point jump** on the same benchmark, in five months, between two consecutive Anthropic releases. That ratio — **roughly 4×** — became the marketing slogan of the launch, and gives this chapter its title.
 
 ```pyplot {id="anthropic-mrcr-progression" caption="Anthropic's MRCR v2 8-needle scores across model versions. Sonnet 4.5 baseline (Sep 2025) at 18.5%; Opus 4.6 (Feb 2026) at 76%. The largest single-version jump in long-context benchmark history. Opus 4.7 (Apr 2026) regressed to 32.2% — see the asterisk."}
@@ -185,7 +189,13 @@ Two months after Opus 4.6 lands, on **April 11, 2026**, Anthropic ships **Claude
 
 > *"Opus 4.7 improves upon Opus 4.6 on most evaluations — particularly coding, complex agentic tasks, and tool use. However, we observed that Opus 4.7 underperforms Opus 4.6 specifically on MRCR v2 at the 1M context length (32.2% vs 76.0%). We recommend developers using long-context RAG patterns continue to use Opus 4.6 for those workloads, while migrating to Opus 4.7 for coding-agent and tool-use applications."*
 
-Read that statement. **Anthropic is publicly recommending users keep using the previous model for one specific workload.** This is *unprecedented* in frontier-lab release practice. The implicit admission: **the long-context retrieval capability and the agentic-tool capability are now optimised against each other**, and any given training run has to pick a side.
+Read that statement. **Anthropic is publicly recommending users keep using the previous model for one specific workload.** This is *unprecedented* in frontier-lab release practice.
+
+{{% callout type="warning" title="The Pareto Frontier Is Now Visible" %}}
+The implicit admission in the Opus 4.7 release notes: **long-context retrieval quality and agentic-tool quality are now optimised against each other**. A training run that skews toward 1M-context RAG improves MRCR v2 at 1M but regresses on coding benchmarks. One that skews toward short-context coding agents does the reverse.
+
+The single-number era of "best model" is structurally over. Plan your model selection per workload type.
+{{% /callout %}}
 
 The technical reason, as far as it's been publicly discussed: Opus 4.7's training mixture skewed back toward shorter-context agentic data (tool calls, code patches, multi-turn tool use), and the long-context retrieval improvements from 4.6 partially regressed under the new mixture. The Pareto frontier between *long-context-RAG-quality* and *agentic-coding-quality* is real and Opus 4.7 traded off in the opposite direction from 4.6.
 

@@ -22,11 +22,11 @@ Within months it stops working. The relationship between M3 and inflation breaks
 
 > *"Any observed statistical regularity will tend to collapse once pressure is placed upon it for control purposes."*
 
-A decade later, the anthropologist **Marilyn Strathern** restates Goodhart's law in a form that fits on a mug:
+{{% pullquote type="profound" author="Marilyn Strathern (1997)" %}}
+When a measure becomes a target, it ceases to be a good measure.
+{{% /pullquote %}}
 
-> *"When a measure becomes a target, it ceases to be a good measure."*
-
-This is the primer's title sentence. Once a benchmark is being **optimised against**, the correlation that made it useful in the first place starts to erode. The number goes up; the underlying capability does not. **Eventually the number reaches a ceiling and stops moving, while the capability it was supposed to track is somewhere else entirely.**
+Once a benchmark is being **optimised against**, the correlation that made it useful in the first place starts to erode. The number goes up; the underlying capability does not. **Eventually the number reaches a ceiling and stops moving, while the capability it was supposed to track is somewhere else entirely.**
 
 Every benchmark in machine learning has lived this arc. NIAH lived it in 2024.
 
@@ -193,6 +193,12 @@ The 2026 evaluation stack ([The 2026 Layered Stack](../16-eval-stack-2026/)) use
 The deep observation hiding inside Goodhart's law is that **any quantitative success criterion you can write down will eventually be gamed**, whether by deliberate gaming or by selection pressure that looks indistinguishable from gaming. The Bank of England's M3 → inflation correlation broke down not because British bankers *cheated* — they didn't have to. The correlation broke because once M3 was the target, every actor in the system optimised for whatever side of M3 they cared about, and the side that "improving M3" was supposed to capture stopped being the one that mattered.
 
 For ML benchmarks, the same logic applies. *Optimising your model against NIAH* in 2024 was not cheating. But it was also not the same as *optimising your model for long-context understanding*. As the field gradually realised, those two optimisation targets *diverged*. The benchmark crisis of 2024 is what happens when the field collectively discovers the divergence.
+
+{{% callout type="tip" title="Reading Benchmark Numbers After Saturation" %}}
+- When a frontier model scores **above 95%** on a benchmark, treat that number as a *sanity check*, not a *measurement*. The discriminating information lives in length-conditional, task-conditional, and adversarial-variant sub-scores.
+- When a benchmark is being promoted in marketing materials, expect Phase III collapse within **12–24 months**. The successor should be designed before it's urgently needed.
+- A healthy benchmark should separate today's models by **>10 pp**. If it doesn't, it's a sanity check — name it that way.
+{{% /callout %}}
 
 Two practical takeaways for the rest of this issue:
 

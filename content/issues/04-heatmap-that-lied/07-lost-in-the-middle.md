@@ -22,7 +22,9 @@ The paper is **"Lost in the Middle: How Language Models Use Long Contexts"** by 
 
 The plot that comes out is a **smile**. Models score highest when the gold document is **at the start** (~75% on GPT-3.5-turbo at 20 docs). They score nearly as high when it is **at the end** (~63%). They score *catastrophically* when it is **in the middle** (~52%). The dip in the middle is *larger* than the dip you get if you simply remove the gold document and ask the same questions of the model from its prior knowledge alone (52% vs 56% closed-book).
 
-Read that result a second time. **Putting the right answer in the middle of the prompt was worse than not putting it in the prompt at all.** The model was so distracted by the surrounding context that its parametric knowledge served it better than its in-context retrieval.
+{{% pullquote type="counter-intuitive" %}}
+Putting the right answer in the **middle** of a long prompt was *worse* than not putting it in the prompt at all. The surrounding context distracted the model so badly that its parametric memory outperformed its in-context retrieval.
+{{% /pullquote %}}
 
 This is the **U-curve**. It is the single most reproduced finding in long-context literature, and it explains a lot of what users feel as "context rot" without needing any new vocabulary.
 
@@ -125,6 +127,17 @@ A short tour of where the U-curve shows up in the wild, post-2023:
 The U-curve is, in short, *not a quirk of the Liu et al. experimental setup*. It is a fundamental fact about how long-context attention allocates probability across positions, and it shows up in every test that varies the position of a key piece of information.
 
 ## Why The Edges Matter, Operationally
+
+{{% callout type="tip" title="Defeating the U-Curve in Practice" %}}
+The U-curve is a training-distribution artifact — you can't fix it by changing the model. You can route around it:
+
+- **Put the critical instruction at the very end** of the prompt. Recency bias is your friend.
+- **Restate key facts at the end** if they appear in the middle of a long document.
+- **Use structured headers** (`## Section`, `def function_name():`) — models trained on code and web text have learned to attend to these as anchors.
+- **Split very long contexts** into two passes with an explicit hand-off if the information you need is buried past the 50% mark.
+
+None of these require changing the model. All of them cost tokens. That's the deal.
+{{% /callout %}}
 
 Here is the practical observation for any developer using a long-context model. **The position of your most important information inside the prompt matters more than the size of the prompt.**
 
