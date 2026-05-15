@@ -491,8 +491,12 @@ hr {
 
 .article-description {
     font-size: 1.125rem;
-    line-height: 1.6;
-    opacity: 0.8;
+    line-height: 1.7;
+    background: var(--color-cream);
+    border: var(--border);
+    box-shadow: var(--shadow-pop);
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0 0;
     max-width: 65ch;
 }
 
