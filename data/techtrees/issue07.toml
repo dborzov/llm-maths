@@ -3,7 +3,7 @@
 
 title  = "Tech tree — The Sparse Lab"
 width  = 1660
-height = 980
+height = 1050
 node_w = 200
 node_h = 72
 
@@ -103,6 +103,15 @@ sub   = "ch.9"
 # ---------- Row 3: Applied primers ----------
 
 [[nodes]]
+id    = "cache-engineering"
+label = "Engineering\nthe V4 Cache"
+kind  = "primer"
+x     = 150
+y     = 420
+link  = "19-cache-engineering/"
+sub   = "ch.19"
+
+[[nodes]]
 id    = "topk-routing"
 label = "Hard Top-k\nWithout Crying"
 kind  = "primer"
@@ -166,6 +175,15 @@ x     = 1150
 y     = 600
 link  = "17-attention-sink/"
 sub   = "ch.17"
+
+[[nodes]]
+id    = "inverse-rope"
+label = "Inverse RoPE:\nShared K and V"
+kind  = "primer"
+x     = 1450
+y     = 600
+link  = "18-inverse-rope/"
+sub   = "ch.18"
 
 # ---------- Row 5: External cross-issue references ----------
 
@@ -293,6 +311,22 @@ to   = "csa"
 
 [[edges]]
 from = "mixed-precision-kv"
+to   = "hca"
+
+[[edges]]
+from = "cache-engineering"
+to   = "csa"
+
+[[edges]]
+from = "cache-engineering"
+to   = "hca"
+
+[[edges]]
+from = "inverse-rope"
+to   = "csa"
+
+[[edges]]
+from = "inverse-rope"
 to   = "hca"
 
 # ---- Mainlines + applied primers feed the boss ----
