@@ -4,6 +4,7 @@ title = "LLM Maths Comics"
 theme = "almanac"
 
 enableGitInfo = false
+buildFuture = true
 
 [taxonomies]
   tag = "tags"
