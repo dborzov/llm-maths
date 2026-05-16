@@ -210,7 +210,7 @@ $$o_{t,i} = \text{CoreAttn}(\text{query}=q_{t,i},\; \text{key}=\mathcal{C}^{\tex
 
 The compressed entries serve as *both* keys and values — the same vector. This is a stronger form of MQA than usual: not just shared KV across heads, but also shared K and V with each other.
 
-The **inverse RoPE** trick, introduced in V4 and explained in the vLLM engineering blog, is relevant here. Because K and V are shared (the same compressed vector serves both roles), the attention output carries absolute position information through the rotation matrices. V4 applies an inverse RoPE $R(-i)$ to the output to restore translation invariance:
+The **[inverse RoPE](../18-inverse-rope/)** trick, introduced in V4 and explained in the vLLM engineering blog, is relevant here. Because K and V are shared (the same compressed vector serves both roles), the attention output carries absolute position information through the rotation matrices. V4 applies an inverse RoPE $R(-i)$ to the output to restore translation invariance:
 
 $$R(-i) \cdot a_i = \sum_p \frac{\exp(q_i^\top R(j_p - i) k_{j_p})}{\sum_r \exp(q_i^\top R(j_r - i) k_{j_r})} R(j_p - i) k_{j_p}$$
 

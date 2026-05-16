@@ -16,11 +16,13 @@ header: default.png
 
 ## The Heatmap
 
-[Open with the empirical picture. Show a real attention heatmap from a trained model on a 4K-token sequence. The hot regions cluster in:
-1. The first 1-3 tokens (attention sinks).
-2. The recent ~128 tokens (local window).
-3. A small number of "heavy hitter" content tokens scattered through the middle.
-The rest is cold.]
+Plot the {{< wiki "attention" >}}attention{{< /wiki >}} weights for a single query over a 4K-token past. The picture is striking: the heatmap is almost entirely black. What little heat there is clusters in three places:
+
+1. The first 1-3 tokens — the attention sinks.
+2. The recent ~128 tokens — the local sliding window.
+3. A sparse scatter of "heavy hitter" content tokens spread through the middle of the sequence.
+
+Everything else is cold. The model is simply not reading most of the context.
 
 ```pyplot {id="attention-heatmap" caption="STYLIZED ATTENTION HEATMAP FOR A SINGLE QUERY OVER A 4K-TOKEN PAST. HEAVY HITTERS AT POSITIONS 0-3 (SINKS), THE LOCAL WINDOW (RIGHT-MOST 128), AND A SCATTER OF MID-CONTEXT TOKENS."}
 import numpy as np
@@ -68,28 +70,29 @@ ax2.spines[['top','right']].set_visible(False)
 
 ## The Power Law
 
-[Across many empirical studies (H₂O 2023, KVzip 2025, the NSA paper 2025), attention weights follow a power law:
+Across many empirical studies — H₂O (2023), KVzip (2025), the NSA paper (2025) — attention weights follow a power law:
 
 $$p(w \ge t) \propto t^{-\alpha}$$
 
-with $\alpha \approx 1.5$ for most heads of most layers. This means:
+with $\alpha \approx 1.5$ for most heads of most layers. That exponent has teeth:
+
 - Top 1% of tokens absorb 50% of attention mass.
 - Top 5% absorb 80-90%.
 - Top 10% absorb 95%+.
 
-The exact thresholds vary per head, per layer, per query. The *qualitative shape* is universal.]
+The exact thresholds vary per head, per layer, per query — but not by much. The *qualitative shape* is universal. Heavy-tail distributions concentrate. This one concentrates hard.
 
 ## What Is The 90% Made Of
 
-[Three components, in roughly this order:
+Three components, in roughly this order of importance:
 
-1. **Attention sinks at positions 0-3.** Xiao et al. (StreamingLLM, 2023) showed these are not informational — they are a *softmax escape valve*. The model dumps "I have nothing to attend to" probability mass at the start of the sequence. Always there. Always large.
+1. **Attention sinks at positions 0-3.** [Chapter 17](../17-attention-sink/) covers this in detail: Xiao et al. (StreamingLLM, 2023) showed these are not informational — they are a *{{< wiki "softmax" >}}softmax{{< /wiki >}} escape valve*. The model dumps "I have nothing to attend to" probability mass at the start of the sequence. Always there. Always large.
 
-2. **The local window of the last ~128 tokens.** Linguistic locality. Recent context matters more.
+2. **The local window of the last ~128 tokens.** Linguistic locality. Recent context matters more, and the model has learned to exploit it.
 
-3. **A sparse scatter of content tokens** distributed through the middle. These are the "heavy hitters" — task-relevant tokens that the model actually needs.
+3. **A sparse scatter of content tokens** distributed through the middle. These are the "heavy hitters" — task-relevant tokens that the model actually needs to do the job.
 
-A sparse-attention method has to keep all three. CSA does this with: indexer (catches content scatter) + sliding window (catches local) + attention sink mechanism (catches sinks). Three branches mapping to the three components of the 90%.]
+A sparse-attention method has to capture all three, or quality collapses. CSA does this with three branches: an indexer that catches the content scatter, a sliding window that catches the local region, and an attention sink mechanism that catches the first few tokens. Three branches, three components of the 90%.
 
 ## The Cross-Issue Connection
 

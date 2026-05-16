@@ -26,7 +26,7 @@ Actually: MLA solved *one* half correctly. Decode-time memory cost went from imp
 
 The wall had moved. MLA killed the memory wall. The compute wall was still standing.
 
-This chapter is about that wall. What it is, why it's quadratic, why FlashAttention doesn't help with it, and why it took DeepSeek until 2025 to build the thing that actually breaks it.
+This chapter is about that wall. What it is, why it's quadratic, why {{< wiki "flash-attention" >}}FlashAttention{{< /wiki >}} doesn't help with it, and why it took DeepSeek until 2025 to build the thing that actually breaks it.
 
 {{% callout type="definition" %}}
 **Prefill vs decode.** When you send a prompt to an LLM, two things happen: (1) **prefill**: the model processes all your input tokens simultaneously in one forward pass, building the KV cache. (2) **decode**: the model generates output tokens one at a time, loading the KV cache each step. Prefill is batch-parallel and compute-intensive. Decode is sequential and memory-intensive. They have fundamentally different cost profiles.
@@ -346,7 +346,7 @@ There are three answers people have tried, in rough historical order:
 
 2. **Learned topk at train time, fixed at inference.** Train a model that learns to concentrate attention on nearby tokens plus a small set of "important" positions. Works if the important positions are predictable (beginning of document, end of previous section). Fails on tasks where importance is query-dependent.
 
-3. **Dynamic routing at inference time.** For each query, predict which keys will have large attention weights before computing the full dot products. Use a cheap proxy — a low-dimensional sketch, a compressed representation, a learned scorer. This is the lightning indexer approach. It's what makes DSA actually work. The catch: the proxy must be cheap enough that computing it doesn't cost more than the attention you're trying to skip.
+3. **Dynamic routing at inference time.** For each query, predict which keys will have large attention weights before computing the full dot products. Use a cheap proxy — a low-dimensional sketch, a compressed representation, a learned scorer. This is the [lightning indexer](../06-lightning-indexer/) approach. It's what makes DSA actually work. The catch: the proxy must be cheap enough that computing it doesn't cost more than the attention you're trying to skip.
 
 The reason sparse attention took six years to ship is that approaches 1 and 2 fail the quality test at scale, and approach 3 was too expensive or too complex to implement correctly on real hardware until someone — specifically, the DSA team — figured out the right architecture for the proxy.
 

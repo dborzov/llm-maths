@@ -16,11 +16,11 @@ header: default.png
 
 ## The Three Regions
 
-[From the V4 paper §2.3.4 (Efficiency Discussion):
+The V4 {{< wiki "kv-cache" >}}KV cache{{< /wiki >}} is not stored at a single precision — it is partitioned into three regions, each with the bit budget it actually needs. The paper (§2.3.4, Efficiency Discussion) states it directly:
 
 > *"We adopt a mixed storage format for KV entries: BF16 precision is used for the rotary positional embedding (RoPE) dimensions, while FP8 precision is applied to the remaining dimensions. This hybrid representation reduces the KV cache size by nearly half compared with pure BF16 storage. Second, attention computation within the lightning indexer is performed in FP4 precision."*
 
-Three regions. Three precisions. The bit budget is allocated to where it actually matters.]
+Three regions, three precisions. The argument is not that some parts of the cache are more important — it is that different parts are differentially *sensitive* to quantization error, and the allocation tracks sensitivity rather than importance.
 
 | Region | Precision | Bits/elem | Why |
 |---|---|---|---|
@@ -30,19 +30,15 @@ Three regions. Three precisions. The bit budget is allocated to where it actuall
 
 ## Why The RoPE Channels Need More Bits
 
-[The RoPE rotation $R_\theta$ applies a position-dependent rotation matrix to each pair of channels. Small quantization errors get *rotated through trigonometric functions* and accumulate in unpredictable directions across positions.
+{{< wiki "rope" >}}RoPE{{< /wiki >}} is the culprit. The rotation $R_\theta$ applies a position-dependent rotation matrix to each pair of channels, and that rotation is not free with respect to quantization noise. A small error introduced at storage time gets *rotated through trigonometric functions* at every subsequent position, accumulating in directions that cannot be predicted or corrected by downstream layers.
 
-In contrast, the non-RoPE channels are just dot-producted directly. Quantization errors stay where you put them.
-
-This is the empirical finding from QuaRot (2024) and Atom (2024) that DeepSeek operationalizes in V4: RoPE channels need full precision; the rest can compress aggressively.]
+The non-RoPE channels face no such amplification. They pass directly into the dot-product of the attention score; a small quantization offset stays where you put it and averages out across the $d_k$ dimensions. QuaRot (2024) and Atom (2024) documented this asymmetry empirically, and DeepSeek operationalizes it in V4: keep the RoPE channels at BF16 where rotation-amplified error would be destructive; compress everything else to FP8 where errors stay bounded.
 
 ## Why The Indexer Tolerates FP4
 
-[The indexer's job is *ranking*, not numerical correctness. As long as the relative ordering of scores is approximately preserved, the top-k operator will pick the same tokens.
+The [lightning indexer](../06-lightning-indexer/) does not need to compute accurate attention scores — it needs to *rank* blocks correctly so the top-k selection lands on the right tokens. Those are very different requirements. As long as the relative ordering of scores is approximately preserved, the top-k operator selects the same blocks regardless of whether the absolute score values are off by a few percent.
 
-Quantization noise in the indexer's QK path adds ~0.3 to log-perplexity in pre-training studies, which is absorbed by the downstream attention. The compute saving (4× lower) is direct.
-
-This is the same logic Issue 3 ch.6 walks through for INT8 weights: precision is needed where amplification happens; it is not needed where downstream layers absorb the error.]
+Quantization noise in the indexer's QK path adds roughly 0.3 to log-perplexity in pre-training studies; downstream {{< wiki "attention" >}}attention{{< /wiki >}} over the retrieved tokens absorbs that residual error cleanly. The compute saving is direct: 4× fewer bits to load and multiply per score. Issue 3 ch.6 walks through the same logic for INT8 weights — precision is needed where error amplifies, not where downstream operations absorb it.
 
 ```pyplot {id="kv-cache-bit-budget" caption="V4's KV CACHE BIT BUDGET, BY REGION. BF16 ON 64 ROPE DIMS, FP8 ON THE REMAINING NON-ROPE DIMS, FP4 ON THE INDEXER QK. NET: ~5.5 BITS PER STORED FLOAT, DOWN FROM 16."}
 import numpy as np
@@ -80,18 +76,18 @@ ax.spines[['top','right','left']].set_visible(False)
 
 ## Quantization-Aware Training
 
-[V4 trains with QAT for the FP4 indexer path. From the paper §5.2.1, FP4 quantization-aware training is applied during post-training. The model adapts to the quantization noise during fine-tuning rather than seeing it for the first time at inference.
+V4 does not just apply FP4 at inference — it trains with the quantization noise present from the start of post-training. From the paper (§5.2.1), FP4 quantization-aware training is applied during fine-tuning, so the [CSA](../07-csa/) indexer path adapts its weights to the reduced precision rather than encountering it for the first time at serving time. The model that ships is a model that already knows how to work with FP4 scores.
 
-This is the same QAT pattern from Issue 3 ch.6b, but applied to a smaller and more error-tolerant submodule.]
+This is the same QAT pattern Issue 3 ch.6b covers for weight quantization, applied here to a smaller and more naturally error-tolerant submodule — which is why it works cleanly without the elaborate calibration steps required for full-model quantization.
 
 ## Cross-Link To Issue 3
 
-[Issue 3 ("Sixteen Numbers Walk Into A GPU") covers FP4, FP8, BF16, NF4, and the quantization landscape in depth. The key bridge:
+Issue 3 ("Sixteen Numbers Walk Into A GPU") covers the full quantization landscape — FP4, FP8, BF16, NF4, the number-format zoo — in depth. Two chapters are load-bearing for understanding what V4 does:
 
-- [Numbers In Boxes](/issues/03-sixteen-numbers/02-numbers-in-boxes/) — how FP8 and BF16 differ
-- [Hardware Horizon](/issues/03-sixteen-numbers/12-hardware-horizon/) — Blackwell native FP4
+- [Numbers In Boxes](/issues/03-sixteen-numbers/02-numbers-in-boxes/) — how FP8 and BF16 represent values differently and what that means for rounding behavior
+- [Hardware Horizon](/issues/03-sixteen-numbers/12-hardware-horizon/) — Blackwell's native FP4 support, which is what makes the indexer's FP4 path practical at scale
 
-V4's mixed-precision KV cache is the **applied** version of Issue 3's theory. The theory said "different distributions need different precisions"; V4 applies this within a single model.]
+V4's mixed-precision KV cache is the **applied** version of Issue 3's central argument. Issue 3 showed that different numerical distributions call for different format choices; V4 takes that principle and deploys it within a single model's KV cache, assigning precision by region sensitivity rather than by a uniform global choice.
 
 ## What To Remember
 

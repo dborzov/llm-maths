@@ -189,7 +189,7 @@ The prefill AI line (pink) starts at ~512 at T=1K and climbs linearly. It is alw
 
 ## Why FlashAttention Is Memory, Not Compute
 
-FlashAttention is the most widely deployed optimization in transformer inference. It is worth being precise about what it does and does not do.
+{{< wiki "flash-attention" >}}FlashAttention{{< /wiki >}} is the most widely deployed optimization in transformer inference. It is worth being precise about what it does and does not do.
 
 {{< crosshead >}}What FlashAttention Does{{< /crosshead >}}
 

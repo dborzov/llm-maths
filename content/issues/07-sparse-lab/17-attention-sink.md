@@ -16,17 +16,17 @@ header: default.png
 
 ## The Strange Behavior
 
-[Open with the StreamingLLM observation (Xiao et al., 2023): when you slide a window over a transformer's context (keeping only the last $W$ tokens), quality collapses *unless you also keep the first 4 tokens*. The model has "decided" that positions 0-3 are critical to its function.
+Xiao et al. (2023) made an unsettling discovery while building StreamingLLM: when you slide a window over a transformer's context — keeping only the last $W$ tokens — quality collapses *unless you also keep the first 4 tokens*. The model had "decided" that positions 0–3 were critical to its function.
 
-This is not because the first 4 tokens contain critical content. It happens with ANY 4 tokens. Replace them with `<BOS>` four times — works fine. The model is using them as a *sink*, not as content.]
+The surprising part: it has nothing to do with what's in those tokens. It happens with *any* 4 tokens in those positions. Replace them all with `<BOS>` four times and the model runs fine. The model is using early positions as a *sink* for {{< wiki "attention" >}}attention{{< /wiki >}} probability mass, not as content carriers.
 
 ## Why Softmax Needs A Sink
 
-[The softmax normalizes over all keys. The sum of attention weights is *forced* to be 1.0. The model has no way to say "I have nothing to attend to right now" — every token must absorb some probability mass.
+The {{< wiki "softmax" >}}softmax{{< /wiki >}} normalizes over all keys. The sum of attention weights is *forced* to be 1.0. The model has no mechanism to say "I have nothing useful to attend to right now" — every query must distribute its full probability mass somewhere.
 
-Solution: dump the probability mass into a token that doesn't matter (positions 0-3, the early sequence). The model effectively learns these as no-op tokens.
+The emergent solution: dump it into tokens that don't matter. Positions 0–3 appear early and are always present, so the model learns to use them as no-op tokens — structural sinks that absorb whatever mass can't go anywhere useful.
 
-The Xiao et al. paper shows this empirically: zero out the attention to positions 0-3, and the attention weights to *other* tokens skyrocket disproportionately. The model wasn't using positions 0-3 informationally — it was using them as the constant in a division.]
+Xiao et al. confirm this empirically: zero out attention to positions 0–3, and attention weights to *other* tokens spike disproportionately. The model wasn't attending to those early positions for their content. They were the constant in the denominator of a disguised division operation.
 
 ## V4's Explicit Sink
 

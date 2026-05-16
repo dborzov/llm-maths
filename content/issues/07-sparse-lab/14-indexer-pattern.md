@@ -18,45 +18,45 @@ header: default.png
 
 > **A small model produces a score over a large set of items. A bigger model uses the top-scoring subset.**
 
-[That's it. The size asymmetry is the whole point. The small model is cheap enough to run over *everything*. The big model is expensive enough that you only want to run it on the items the small model says matter.]
+That's it. The size asymmetry is the whole point. The small model is cheap enough to run over *everything*. The big model is expensive enough that you only want to run it on the items the small model says matter.
 
 ## Five Instances
 
 ### 1. Speculative Decoding (Leviathan, Chen et al., 2023)
 
-[A small draft model generates $k$ candidate tokens. The big target model verifies them in parallel. Accepts the prefix that matches; falls back to one big-model token on the first mismatch. Speedup: 2-4× for typical pairs.
+A small draft model generates $k$ candidate tokens. The big target model verifies them in parallel, accepting the prefix that matches and falling back to one big-model token on the first mismatch. Typical speedup: 2–4× for matched draft/target pairs.
 
-The indexer here: the draft model is the scorer; the target model is the executor. The "score" is the proposed token; the "selection" is the verification accept-reject.]
+The indexer here is the draft model — the scorer. The target model is the executor. The "score" is the proposed token sequence; the "selection" is the verification accept-reject pass.
 
 ### 2. KVzap Surrogate (NVIDIA, 2026)
 
-[A tiny MLP (or linear layer) on the hidden state predicts a per-token importance score. KV cache entries below a threshold get evicted. The surrogate is ~1M parameters; the model it serves is 70B+. R² of the surrogate's prediction is 0.67-0.77.
+A tiny MLP (or linear layer) on the hidden state predicts a per-token importance score. {{< wiki "kv-cache" >}}KV cache{{< /wiki >}} entries below a threshold get evicted. The surrogate is ~1M parameters; the model it serves is 70B+. R² of the surrogate's importance prediction is 0.67–0.77.
 
-Issue 6 (the previous issue on this site) covers this in depth. See [the boss chapter](/issues/06-eviction-notice/06-kvzap/).]
+Issue 6 (the previous issue on this site) covers this in depth. See [the boss chapter](/issues/06-eviction-notice/06-kvzap/).
 
 ### 3. MoE Router (Switch, DeepSeekMoE, Mixtral)
 
-[A linear layer scores each token against $E$ expert ids. Top-1 or top-2 experts are routed; the others get zero.
+A linear layer scores each token against $E$ expert ids. Top-1 or top-2 experts are routed; the rest receive zero weight.
 
-The router is one matrix multiply; the experts are the bulk of the model. The asymmetry is even larger here than in DSA — the experts are 99% of the parameters, the router is 0.01%.]
+The router is one matrix multiply; the experts are the bulk of the model. The asymmetry is even more extreme here than in DSA — the experts account for ~99% of total parameters, the router for ~0.01%.
 
 ### 4. DSA's Lightning Indexer (DeepSeek, 2025)
 
-[Issue 7 ch.6. The indexer is a bilinear scorer over MLA latents. Scores every past token; top-k goes to full attention.]
+The indexer is a bilinear scorer over MLA latents. It scores every past token; top-k goes to full attention. See [Chapter 6 — Lightning Strikes Twice](../06-lightning-indexer/).
 
 ### 5. CSA's Compressed Indexer (DeepSeek, 2026)
 
-[Issue 7 ch.7. Same lightning indexer, but it now scores *compressed* entries instead of raw tokens. Indexer queries are derived from the same latent as the main attention queries.]
+Same lightning indexer, but it now scores *compressed* entries instead of raw tokens. Indexer queries are derived from the same MLA latent as the main attention queries. See [Chapter 7 — Compressed Sparse Attention](../07-csa/).
 
 ## Why It Works
 
-[Three structural reasons:
+Three structural reasons.
 
-**1. Memory bandwidth dominates inference.** GPUs are starved for bandwidth, swimming in compute. The indexer adds compute to idle cycles while the main attention waits on HBM. The extra FLOPs cost wall-clock zero.
+**1. Memory bandwidth dominates inference.** GPUs are starved for bandwidth, swimming in compute. The indexer adds compute to idle cycles while the main {{< wiki "attention" >}}attention{{< /wiki >}} pass waits on HBM. The extra FLOPs cost wall-clock zero.
 
-**2. Predictability of the score is "good enough".** R² doesn't have to be 1.0. As long as the *ranking* of the top-k is approximately correct, the downstream attention can recover. Issue 6's KVzap surrogate gets 67% R² and that's enough to evict 70% of the cache.
+**2. Predictability of the score is "good enough".** R² doesn't have to be 1.0. As long as the *ranking* of the top-$k$ is approximately correct, the downstream attention can recover. Issue 6's KVzap surrogate gets 67% R² and that's enough to evict 70% of the cache with acceptable quality loss.
 
-**3. The big model can absorb mistakes.** Sparse attention misses some relevant tokens; the multi-layer stack and the sliding-window branch cover the gap. Speculative decoding falls back to the target model on misses. The indexer doesn't have to be *right*; it has to be *cheap and approximately right*.]
+**3. The big model can absorb mistakes.** Sparse attention misses some relevant tokens; the multi-layer stack and the sliding-window branch cover the gap. Speculative decoding falls back to the target model on misses. The indexer doesn't have to be *right*; it has to be *cheap and approximately right*.
 
 ```pyplot {id="indexer-asymmetry" caption="THE COMPUTE ASYMMETRY OF THE INDEXER PATTERN. INDEXERS ARE 100-10000× CHEAPER THAN THE MODELS THEY SERVE. WHITE-COLLAR ATTENTION OF FUTURE HARDWARE."}
 import numpy as np
@@ -83,22 +83,23 @@ ax.spines[['top','right']].set_visible(False)
 
 ## When The Pattern Fails
 
-[Three failure modes:
+Three failure modes.
 
-1. **Score-loss mismatch.** If the indexer's scores correlate with the wrong thing (e.g., raw attention weight when the downstream task cares about contribution norm), the selected items are wrong. Issue 6 ch.8 covers this.
+1. **Score-loss mismatch.** If the indexer's scores correlate with the wrong proxy (raw attention weight when the downstream task cares about contribution norm, for instance), the selected items are wrong. Issue 6 ch.8 covers this case in detail.
 
-2. **Indexer parameter starvation.** Too small and the indexer can't learn anything useful. Below ~1M params, lightning indexers stop discriminating.
+2. **Indexer parameter starvation.** Too small and the indexer can't learn a useful discriminator. Below ~1M parameters, lightning indexers lose their ability to separate relevant from irrelevant tokens.
 
-3. **Distribution shift.** Indexer trained on one regime, served on another. Continue-training is the standard fix.]
+3. **Distribution shift.** An indexer trained on one data regime and served on another degrades silently. Continue-training on the new distribution is the standard fix.
 
 ## The Pattern Going Forward
 
-[Speculation. The indexer pattern is going to recur in every part of the inference stack where item selection happens:
-- Tool selection in agentic LLMs ("which tool should I call?")
-- Context-window curation across sessions ("which past sessions are relevant?")
-- Multi-token prediction (MTP) verification heads
+The indexer pattern will keep appearing wherever the inference stack has to select a few items from many. Some candidates for the next wave:
 
-Wherever a model has to pick a few items from many, expect a tiny scorer + big executor.]
+- **Tool selection in agentic LLMs.** A small scorer ranks available tools before the main model runs the chosen one.
+- **Cross-session context curation.** A lightweight retrieval head decides which past sessions are relevant before loading them into the context window.
+- **Multi-token prediction (MTP) verification heads.** Draft heads score candidate continuations; a single forward pass of the full model verifies the top candidates.
+
+The underlying logic is the same in all three cases: cheap, approximate, then expensive and exact.
 
 ## What To Remember
 
