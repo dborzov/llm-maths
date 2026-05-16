@@ -241,6 +241,8 @@ The chart above shows this visually. The red and teal lines cross somewhere in t
 
 The formula $T^* = d_\text{model} \times d_\text{ff} / (H \times D)$ is worth memorizing. It's the context length at which your attention bill equals your MLP bill. For any model where you're serving significant traffic above $T^*$, attention optimization is more valuable than MLP optimization. For Llama-70B with GQA-8, that threshold is around 229K tokens. For models with fewer KV heads (more aggressive GQA), the threshold is lower and the quadratic effect hits harder.
 
+The pattern also tells you something about MoE models. DeepSeek-V2 has a huge $d_\text{ff}$ in each expert — around 1536 per expert, but with 160 experts and only 2 active per token, the effective $d_\text{ff}$ per token is much smaller. This pushes $T^*$ lower for DeepSeek-V2 than for Llama-70B, meaning attention dominates at shorter contexts in MoE architectures. The economics for MoE long-context serving are even more brutal than for dense models, which is exactly why DeepSeek needed MLA first and sparse attention second.
+
 ```python
 import numpy as np
 
@@ -285,7 +287,7 @@ At 128K context, attention is already 36% of the per-token compute per layer. At
 Why? That's the next chapter. The short version: sparse attention patterns that are fixed at design time (sliding windows, global tokens, stride patterns) leave too much signal on the floor. The model can't learn to attend to the tokens it actually needs. And learned sparse attention patterns from 2020–2022 had one fatal flaw: the sparsity pattern was computed from the queries and keys in the standard way, which still required the full $T \times T$ pass to figure out which entries to skip.
 
 {{% callout type="tangent" %}}
-There's a deep irony in the sparse attention literature: the most natural way to decide which attention weights to skip is to compute them, check if they're small, and then discard them. But you've already done the expensive computation. The trick is to predict which entries will be small *without computing them*, using a cheap proxy. That's what the lightning indexer in DSA does — and it's the insight that makes native sparse attention actually work.
+There's a deep irony in the sparse attention literature: the most natural way to decide which attention weights to skip is to compute them, check if they're small, and then discard them. But you've already done the expensive computation. The trick is to predict which entries will be small *without computing them*, using a cheap proxy — a lower-dimensional sketch of the query and key that runs orders of magnitude faster than the full dot product, and produces a signal good enough to identify the top-K positions with high recall. That's what the lightning indexer in DSA does — and it's the insight that makes native sparse attention actually work.
 {{% /callout %}}
 
 The field knew the quadratic wall existed. The field had been trying to break it for six years. The field had given up, essentially, by 2023. FlashAttention had made the quadratic cost more bearable (better memory bandwidth, longer practical context without OOM), and the community had mostly concluded that the real answer was "just add more GPUs."
@@ -330,13 +332,29 @@ The speedup is a constant 10× regardless of context length, because both dense 
 
 Is 90% achievable without quality loss? That's the deep empirical question. Research into [empirical sparsity patterns](../16-empirical-sparsity/) shows that at long contexts, most attention weights are indeed near-zero — the model concentrates its attention on a small fraction of positions. But "near-zero" is not "exactly zero," and the challenge is identifying *which* fraction without computing all of them. We'll see that challenge in detail starting in the next chapter.
 
-## Connections
+{{< crosshead >}}What Would You Need to See to Believe Sparse Attention Works?{{< /crosshead >}}
 
-- **[MLA chapter](../02-mla-rewind/)**: The wall we solved before reaching this one.
-- **[attention compute primer](../11-attention-compute/)**: Full arithmetic intensity analysis, GPU roofline models, and why the ridge point matters. Read this if the FLOP/byte argument felt too hand-wavy.
-- **[empirical sparsity primer](../16-empirical-sparsity/)**: What real attention patterns look like at 128K context. The empirical foundation for why sparse attention is possible.
-- **[Issue 5, ch.8 — Attention](/issues/05-microgpt-unfolded/08-attention/)**: The mechanics of standard attention. Everything in this chapter assumes you understand the baseline.
-- **[Issue 5, ch.13 — KV Cache](/issues/05-microgpt-unfolded/13-kv-cache/)**: Why the cache exists and how it grows.
+Here's a useful way to frame the stakes of the next few chapters.
+
+Suppose I tell you that at 128K context, **95% of attention weights are below 0.001** — basically zero. The model concentrates almost all its attention on a few hundred positions out of 128,000. If that's true, you could skip 95% of the $T \times T$ computation and lose essentially no information. Prefill time drops 20×. Long-document analysis becomes economically trivial.
+
+The question is not whether this pattern exists — it does, and we'll see the evidence in the [empirical sparsity primer](../16-empirical-sparsity/). The question is: *how do you know which 5% to keep before you compute the full attention?*
+
+There are three answers people have tried, in rough historical order:
+
+1. **Fixed structure.** Decide in advance: keep local windows plus a few global tokens. Longformer, BigBird, Sparse Transformer. No routing overhead. But the structure is baked in at design time — if the model needs to attend to something outside the window, it can't. Quality degrades on tasks requiring long-range recall.
+
+2. **Learned topk at train time, fixed at inference.** Train a model that learns to concentrate attention on nearby tokens plus a small set of "important" positions. Works if the important positions are predictable (beginning of document, end of previous section). Fails on tasks where importance is query-dependent.
+
+3. **Dynamic routing at inference time.** For each query, predict which keys will have large attention weights before computing the full dot products. Use a cheap proxy — a low-dimensional sketch, a compressed representation, a learned scorer. This is the lightning indexer approach. It's what makes DSA actually work. The catch: the proxy must be cheap enough that computing it doesn't cost more than the attention you're trying to skip.
+
+The reason sparse attention took six years to ship is that approaches 1 and 2 fail the quality test at scale, and approach 3 was too expensive or too complex to implement correctly on real hardware until someone — specifically, the DSA team — figured out the right architecture for the proxy.
+
+The three approaches aren't equally hopeless. Approach 1 (fixed structure) fails badly on tasks requiring dynamic retrieval — needle-in-a-haystack queries, long-range coreference, multi-hop reasoning. Approach 2 (learned fixed patterns) is better but brittle: it works for training distribution but generalizes poorly. Approach 3 (dynamic routing) is the only one that can in principle match full attention quality on all tasks. The challenge is purely engineering: make the proxy fast enough that the overhead doesn't eat the savings.
+
+{{% callout type="tip" %}}
+**The routing problem is the hard part, not the sparsity.** Any idiot can skip 90% of the attention computation. The question is whether you can skip the *right* 90% — the weights that were going to be near zero anyway — as opposed to the wrong 90%, which destroys quality. All the failed sparse attention papers from 2019–2023 solved the "skip something" problem. None of them solved the "skip the right thing" problem robustly across diverse tasks at 128K context.
+{{% /callout %}}
 
 {{< crosshead >}}Two Walls, Two Timelines{{< /crosshead >}}
 
@@ -355,6 +373,12 @@ The arc of this issue is the story of breaking Wall 2. It required:
 
 That's six years of accumulated failure converted, by a team in Hangzhou, into a working system. The chapters ahead walk through each step.
 
+One more observation before we move on: the two walls are not independent. MLA's existence is a prerequisite for attacking Wall 2. Without MLA, the KV cache at 128K requires so much GPU memory that you can't fit the additional indexer structures, the staging buffers for sparse kernel execution, or the secondary attention path. MLA didn't just fix decode cost — it freed up the engineering headroom that made DSA implementable. The first bet enabled the second.
+
+The two walls solved sequentially: first memory, then compute. May 2024 to August 2025. Fifteen months apart.
+
+The rest of this issue explains what happened in between.
+
 ## What To Remember
 
 1. **MLA cut cache, not compute.** Attention's prefill FLOPs are $O(T^2)$ regardless of how you store the cache.
@@ -362,6 +386,16 @@ That's six years of accumulated failure converted, by a team in Hangzhou, into a
 3. **Prefill and decode have different walls.** Decode is memory-bound (cache loads). Prefill is compute-bound (score matrix). MLA addressed the decode wall. Something else has to address the prefill wall.
 4. **FlashAttention changes the memory access pattern, not the FLOP count.** When you're compute-bound, improving memory access doesn't help.
 5. **90% sparsity = 10× speedup, context-independent.** If you can skip 90% of the score matrix without hurting quality, you win — at every context length.
-6. **The field knew this in 2021.** Sparse attention is six years old. It just didn't ship until someone solved the routing problem.
+6. **The routing problem is the hard part.** Skipping *something* is easy. Skipping the *right* things — the near-zero entries — without computing all entries first is the six-year unsolved problem.
+7. **The field knew this in 2021.** Sparse attention is six years old. It just didn't ship until someone solved the routing problem.
 
-**Continue to** → [Sparse Attention's Lost Decade](../04-sparse-detour/) — the forensic tour of why six years of efficient-transformer research failed to produce a single shipping production model.
+**Continue to** → [Sparse Attention's Lost Decade](../04-sparse-detour/) — the forensic tour of why six years of efficient-transformer research failed to produce a single shipping production model. Every dead end in that history is a clue to what the working solution had to do differently.
+
+## Connections
+
+- **[MLA chapter](../02-mla-rewind/)**: The wall we solved before reaching this one. The 30× cache reduction that fixed decode but not prefill.
+- **[attention compute primer](../11-attention-compute/)**: Full arithmetic intensity analysis, GPU roofline models, and why the ridge point matters. Read this if the FLOP/byte argument felt too hand-wavy.
+- **[empirical sparsity primer](../16-empirical-sparsity/)**: What real attention patterns look like at 128K context. The empirical foundation for why sparse attention is possible — and why 90% sparsity is not a fantasy.
+- **[Sparse Attention's Lost Decade](../04-sparse-detour/)**: The forensic tour of why Longformer, BigBird, Reformer, and friends never shipped at frontier scale. What they got wrong, and what that tells us about what you need to get right.
+- **[Issue 5, ch.8 — Attention](/issues/05-microgpt-unfolded/08-attention/)**: The mechanics of standard attention. Everything in this chapter assumes you understand the baseline.
+- **[Issue 5, ch.13 — KV Cache](/issues/05-microgpt-unfolded/13-kv-cache/)**: Why the cache exists and how it grows. The problem MLA solved.
