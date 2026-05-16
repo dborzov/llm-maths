@@ -16,13 +16,13 @@ header: default.png
 
 ## The Differentiability Problem
 
-[The top-k operator $\text{Top-k}(I_{t,:})$ returns a discrete set. Its derivative is zero almost everywhere and undefined at the boundaries. You cannot backpropagate through it.
+The top-k operator $\text{Top-k}(I_{t,:})$ returns a discrete set. Its derivative is zero almost everywhere and undefined at the boundaries. You cannot backpropagate through it.
 
-Yet DSA, CSA, NSA all *train* the lightning indexer via gradient descent on the downstream attention loss. How?]
+Yet DSA, CSA, and NSA all *train* the lightning indexer via gradient descent on the downstream {{< wiki "attention" >}}attention{{< /wiki >}} loss. How?
 
 ## The Straight-Through Estimator (STE)
 
-[The forward pass uses hard top-k. The backward pass pretends the operator was identity. Gradients flow through the selected tokens as if they were soft-weighted; the unselected tokens get zero gradient.
+The forward pass uses hard top-k. The backward pass pretends the operator was identity. Gradients flow through the selected tokens as if they were soft-weighted; the unselected tokens get zero gradient.
 
 In code:
 
@@ -37,19 +37,19 @@ def hard_topk_ste(scores, k):
 
 The trick: `mask + (scores - scores.detach()) * mask` evaluates to `mask` in the forward pass, but `(scores - scores.detach()) * mask` has gradient `mask` w.r.t. `scores` in the backward pass.
 
-This is the workhorse of every production sparse-selection method.]
+This is the workhorse of every production sparse-selection method.
 
 ## Soft Top-k Relaxations
 
-[Alternative: replace top-k with a differentiable approximation.
+The alternative to STE is replacing top-k with a differentiable approximation entirely.
 
-**Gumbel-Softmax / Concrete:** Add Gumbel noise, temperature-anneal a softmax that asymptotically becomes a one-hot. Pros: smooth. Cons: noisy at high temperature, slow to converge at low temperature.
+**Gumbel-{{< wiki "softmax" >}}Softmax{{< /wiki >}} / Concrete:** Add Gumbel noise, temperature-anneal a softmax that asymptotically becomes a one-hot. Pros: smooth. Cons: noisy at high temperature, slow to converge at low temperature.
 
 **Sinkhorn for entropic optimal transport:** Solve a regularized assignment problem. Pros: theoretically clean. Cons: needs an iterative solver, expensive.
 
 **Differentiable sorting networks:** Replace argmax with a differentiable sort. Pros: math is beautiful. Cons: kernels don't exist; would be slow.
 
-DeepSeek's choice across NSA, DSA, and V4: **STE for the hard top-k**, plus an *auxiliary loss* on the indexer to teach it to match the dense attention pattern. The auxiliary loss is the differentiability that matters; STE is the runtime mechanism.]
+DeepSeek's choice across NSA, DSA, and V4: **STE for the hard top-k**, plus an *auxiliary loss* on the indexer to teach it to match the dense attention pattern. The auxiliary loss is the differentiability that matters; STE is the runtime mechanism.
 
 ```pyplot {id="ste-vs-soft" caption="STE PASSES SCORE GRADIENT THROUGH THE TOP-K SELECTOR. SOFT TOP-K RELAXATIONS USE A SHARPNESS-CONTROLLED SOFTMAX THAT BECOMES ONE-HOT AS TEMPERATURE → 0."}
 import numpy as np
@@ -87,28 +87,30 @@ ax.spines[['top','right']].set_visible(False)
 
 ## The Production Recipe
 
-[What DeepSeek actually does (from V3.2-Exp and V4 technical reports):
+What DeepSeek actually does, drawn from the V3.2-Exp and V4 technical reports:
+
 1. Pre-train with **dense attention** for the first ~1T tokens.
 2. **Warm up the lightning indexer**: a short stage where the indexer is trained with a soft loss to predict the dense attention's top-k pattern.
 3. **Switch to hard top-k via STE**: the indexer's gradients now come from the downstream LM loss directly.
 4. **Auxiliary indexer loss** continues: a small term that encourages the indexer's scores to correlate with what the dense attention would have weighted.
 
-No exotic relaxation. STE plus an auxiliary loss is what works.]
+No exotic relaxation. STE plus an auxiliary loss is what works — as used in [the lightning indexer](../06-lightning-indexer/) and [CSA](../07-csa/).
 
 ## The Routing Connection
 
-[Top-k selection is also the heart of MoE routing. Switch Transformer, DeepSeekMoE, Mixtral — every MoE router is a top-k operator over expert scores.
+Top-k selection is also the heart of MoE routing. Switch Transformer, DeepSeekMoE, Mixtral — every MoE router is a top-k operator over expert scores.
 
 Same problem, same solution: STE for the hard routing, plus auxiliary loss for load balancing.
 
-The pattern transfers cleanly between MoE and sparse attention. Anyone who has trained an MoE router has effectively trained 80% of a lightning indexer.]
+The pattern transfers cleanly between MoE and sparse attention. Anyone who has trained an MoE router has effectively trained 80% of a lightning indexer.
 
 ## What Goes Wrong
 
-[Failure modes:
-1. **Stuck routing.** If the auxiliary loss is too weak, the indexer collapses to selecting the same tokens always (the "router collapse" problem).
-2. **Dead tokens.** Tokens that are *never* selected get no gradient, ever. Initialization matters.
-3. **Distribution shift.** If the indexer was trained on 64K context and you serve at 1M, the score distribution shifts. Continue-training helps.]
+Three failure modes surface consistently in production:
+
+1. **Stuck routing.** If the auxiliary loss is too weak, the indexer collapses to selecting the same tokens always — the "router collapse" problem. The model still runs; it just quietly ignores most of the context.
+2. **Dead tokens.** Tokens that are *never* selected get no gradient, ever. Once a token is frozen out of the top-k, no signal arrives to reconsider it. Initialization matters a lot.
+3. **Distribution shift.** If the indexer was trained on 64K context and you serve at 1M, the score distribution shifts in ways the indexer was never calibrated for. Continue-training on long-context data helps.
 
 ## What To Remember
 
@@ -117,4 +119,4 @@ The pattern transfers cleanly between MoE and sparse attention. Anyone who has t
 3. **The same pattern runs MoE routers.** Sparse attention training is a transfer from MoE training.
 4. **Watch for router collapse and dead tokens.** Both kill quality silently.
 
-**Continue to** → [Lightning Strikes Twice](../06-lightning-indexer/), where the lightning indexer uses exactly this recipe.
+**Continue to** → [Lightning Strikes Twice](../06-lightning-indexer/), where the lightning indexer uses exactly this recipe, and [Compressed Sparse Attention](../07-csa/), where top-k selection filters the compressed sequence.

@@ -16,21 +16,21 @@ header: default.png
 
 ## The Operator
 
-[The CSA/HCA compressor takes a window of $m$ token hidden states $h_j$, projects them to KV space $C_j = h_j W^{KV}$ and compression-weight space $Z_j = h_j W^Z$, then computes:
+Both [CSA](../07-csa/) and [HCA](../08-hca/) collapse a window of $m$ token hidden states into a single compressed {{< wiki "kv-cache" >}}KV cache{{< /wiki >}} entry using the same core operator. Given $m$ hidden states $h_j$, the compressor projects each one into KV space ($C_j = h_j W^{KV}$) and into a compression-weight space ($Z_j = h_j W^Z$), then blends them with {{< wiki "softmax" >}}softmax{{< /wiki >}}-normalized weights:
 
 $$S = \text{Softmax}(Z + B), \quad C^{\text{Comp}} = \sum_j S_j \odot C_j$$
 
-Plain English: each compressed entry is a softmax-weighted *element-wise* blend of $m$ raw KV vectors. The weights are *learned* and *positional* — $B$ is a learnable positional bias per intra-block slot.]
+Each compressed entry is a softmax-weighted *element-wise* blend of $m$ raw KV vectors. The weights are *learned* and *positional*: $B$ is a learnable positional bias, one scalar per intra-block slot, so the model can systematically up- or down-weight a token based on its position within the block independent of content.
 
 ## Three Ways To Compress
 
-[Compare three candidate compressors:
+Three designs compete for this slot, and the differences are not subtle.
 
-**1. Average pool.** $C^{\text{Comp}} = \frac{1}{m} \sum_j C_j$. Cheap, no params. But: every token weighted equally, regardless of importance. A "the" averaged in with a content word at equal weight wrecks the content word.
+**1. Average pool.** $C^{\text{Comp}} = \frac{1}{m} \sum_j C_j$. No parameters, zero overhead — and exactly the problem. Every token is weighted equally regardless of its content, so a function word like "the" averaged alongside a key content word pulls the compressed vector away from the thing the model actually needs to retrieve.
 
-**2. Strided conv.** $C^{\text{Comp}} = \text{Conv1D}(C, \text{stride}=m)$. Learnable weights, but the weights are *position-independent* — every $m$-token block uses the same kernel. Cannot adapt to whether the first or last token of the block is more important *for that token's content*.
+**2. Strided conv.** $C^{\text{Comp}} = \text{Conv1D}(C, \text{stride}=m)$. Learnable weights, which is progress — but the kernel is *position-independent*, fixed the same across every block. Whether the critical token is first or last in the block, the kernel applies the same schedule.
 
-**3. Softmax-weighted pool (the V4 choice).** Each block's compression weights are produced by the data itself ($Z = HW^Z$). The model learns to compress *each block differently* based on what is in the block.]
+**3. Softmax-weighted pool (the V4 choice).** The compression weights are produced by the data itself ($Z = HW^Z$), so each block is compressed differently based on what is actually in that block. A block dominated by a single high-information token can concentrate nearly all weight there; a uniformly mixed block spreads weight more evenly.
 
 ```pyplot {id="compression-comparison" caption="THREE COMPRESSORS ON A TOY SEQUENCE WHERE TOKEN 3 IS A KEY CONTENT WORD AND OTHERS ARE FUNCTION WORDS. AVERAGE POOL FLATTENS IT. STRIDED CONV PARTIALLY PRESERVES IT. SOFTMAX-WEIGHTED LEARNS TO UPWEIGHT IT."}
 import numpy as np
@@ -72,22 +72,20 @@ ax.axhline(0, color='#1A1A1A', linewidth=0.5)
 
 ## The Two-Stream Overlap (CSA only)
 
-[CSA has *two* parallel compressor streams, $C^a$ and $C^b$, with the $b$ stream offset by half a block. The compressed entry $i$ pools from:
-- $C^a$ over tokens $[mi, m(i+1) - 1]$
-- $C^b$ over tokens $[m(i-1), mi - 1]$
+The [CSA chapter](../07-csa/) runs *two* parallel compressor streams, $C^a$ and $C^b$, with the $b$ stream offset by half a block. Compressed entry $i$ therefore pools from two non-overlapping windows:
 
-So each compressed entry covers $2m$ raw tokens, but adjacent compressed entries share $m$ of those tokens. This makes information flow smoothly across block boundaries — important when content doesn't respect the arbitrary $m$-stride alignment.
+- $C^a$: tokens $[mi,\, m(i+1) - 1]$
+- $C^b$: tokens $[m(i-1),\, mi - 1]$
 
-HCA does *not* do this — single stream, no overlap. The reason: at $m'=128$, blocks are large enough that boundary effects matter less, and the extra parameter cost of two streams isn't justified.]
+Each compressed entry effectively covers $2m$ raw tokens, but adjacent compressed entries share $m$ of those tokens — a sliding-window effect at the compressed level. This makes information flow smoothly across block boundaries, which matters when a sentence or semantic unit straddles an arbitrary $m$-stride cut.
+
+The [HCA chapter](../08-hca/) uses a single stream with no overlap. At $m'=128$, blocks are large enough that boundary artifacts are diluted across many tokens, so the extra stream's parameter cost is not justified by the marginal quality gain.
 
 ## What Compression Destroys
 
-[Hard truth: compressing $m$ tokens into one *loses information*. The token-level identity is gone. You cannot, in general, recover from $C^{\text{Comp}}$ the original $m$ KV vectors.
+Compressing $m$ tokens into one is irreversible: token-level identity is gone, and you cannot in general recover the original $m$ KV vectors from $C^{\text{Comp}}$. The architecture absorbs this loss through three complementary mechanisms rather than trying to prevent it.
 
-The model compensates in three ways:
-1. **The sliding window branch** keeps the last $n_{\text{win}}=128$ tokens uncompressed.
-2. **The lightning indexer** (in CSA) operates on compressed entries but can still discriminate which block is relevant — coarse retrieval over a long history.
-3. **Multiple layers**, each with their own compressor, can collectively *re-distribute* information by reading-then-re-compressing at different points in the depth.]
+First, the sliding window branch keeps the last $n_{\text{win}}=128$ tokens fully uncompressed, so recent context is always exact. Second, the lightning indexer operates on compressed entries but is trained to preserve *relative ranking* across blocks — coarse retrieval over a long history does not require fine-grained reconstruction. Third, multiple {{< wiki "attention" >}}attention{{< /wiki >}} layers, each with their own compressor, can collectively re-distribute information: an early layer compresses a block, a later layer reads the compressed representation and decides which signals to carry forward. The loss at each individual layer is small; it does not compound catastrophically.
 
 ## What To Remember
 
