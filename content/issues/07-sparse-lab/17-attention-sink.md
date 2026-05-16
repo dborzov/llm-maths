@@ -30,7 +30,7 @@ Xiao et al. confirm this empirically: zero out attention to positions 0–3, and
 
 ## V4's Explicit Sink
 
-[V4 formalizes this. From the V4 paper §2.3.3:
+V4 formalizes this. Instead of relying on the model to discover sink positions by accident, V4 introduces a learnable sink logit $z'_h$ per attention head. From the V4 paper §2.3.3:
 
 > *"In the core attention of CSA and HCA, we employ the trick of attention sink. To be specific, we set a series of learnable sink logits $\{z'_1, z'_2, \ldots, z'_{n_h}\}$. For the $h$-th attention head, $\text{Exp}(z'_h)$ will be added to the denominator of the attention score:*
 > 
@@ -38,17 +38,17 @@ Xiao et al. confirm this empirically: zero out attention to positions 0–3, and
 > 
 > *This technique allows each query head to adjust its total attention scores to be not equal to 1, and even to be near 0."*
 
-The learnable $z'_h$ is a per-head escape valve. When a head has nothing relevant to attend to, it cranks $z'_h$ up, the denominator inflates, the attention weights collapse toward zero, and the head's output is effectively zero.]
+The learnable $z'_h$ is a per-head escape valve. When a head has nothing relevant to attend to, it cranks $z'_h$ up; the denominator inflates, the attention weights collapse toward zero, and the head's output contribution is effectively nil. No wasted cache slots, no implicit sink tokens — just a single learned scalar per head doing the job explicitly.
 
 ## What This Frees Up
 
-[Two things:
+The learnable sink frees up two things that the implicit-sink approach could not.
 
-1. **No "wasted" position-0 tokens.** V4 doesn't need to dedicate any cache entries to sink behavior. The mechanism is structural.
+1. **No "wasted" position-0 tokens.** V4 doesn't need to reserve any KV cache entries for sink behavior. The mechanism lives in the model weights, not in the context window. Sliding-window deployments no longer need to pin early tokens.
 
-2. **Per-head abstention.** A head can effectively disable itself for a particular query. This is *attention sparsity at the head granularity*, on top of the token-level sparsity DSA provides.
+2. **Per-head abstention.** A head can effectively disable itself for a particular query by driving its sink logit high. This is *attention sparsity at the head granularity* — on top of the token-level sparsity that DSA provides.
 
-The combination is powerful: per-head abstention via sink logit + per-query token selection via DSA + compressed sequence via CSA. Three orthogonal sparsity mechanisms.]
+The combination stacks cleanly: per-head abstention via the sink logit, plus per-query token selection via DSA, plus compressed sequence representation via CSA. Three orthogonal sparsity mechanisms, all active simultaneously.
 
 ```pyplot {id="sink-effect" caption="ATTENTION WEIGHT DISTRIBUTION FOR A SINGLE HEAD, WITH AND WITHOUT A LEARNED SINK LOGIT. THE SINK ALLOWS THE WEIGHTS TO SUM TO < 1, MEANING THE HEAD CAN ABSTAIN."}
 import numpy as np
@@ -81,23 +81,22 @@ ax.spines[['top','right']].set_visible(False)
 
 ## The Connection To Sparse Attention
 
-[Why does this matter for an issue about sparse attention?
+Sparse attention sharpens the problem. When you sparsify to top-$k$ and renormalize over those $k$ tokens, you lose the ability to "vote for none of the above." If a head's actual best top-$k$ candidates are all useless for this query — say the head is specialized for long-range syntactic agreement and the current query has no relevant syntax — the renormalization still forces large attention weights over useless tokens. The head can't abstain; it can only mis-attend.
 
-When you sparsify attention to top-$k$, you renormalize over those $k$. If the head's actual best top-$k$ are all *useless* (e.g., the head is specialized for syntax and there's no relevant syntax in this query), the renormalization still produces large attention weights over useless tokens.
+The learnable sink logit closes that gap. The head's logit vector now includes the sink term in the denominator. When the top-$k$ logits are all low, the sink dominates, the attention weights collapse, and the head output approaches zero. The model learns to route "nothing to say here" through the sink rather than through a random token.
 
-The learnable sink logit fixes this. The head sees `useless_logit_1 + useless_logit_2 + ... + sink`. The sink wins, attention to the useless tokens collapses, the head abstains.
-
-This is why V4's CSA and HCA both ship with sink logits as a default. Sparsity + abstention together close the loop.]
+This is why the [CSA chapter](../07-csa/) and the [HCA chapter](../08-hca/) both treat sink logits as non-optional. Sparsity without abstention concentrates mass on the wrong tokens; abstention without sparsity can't scale. The two mechanisms close the loop together.
 
 ## A Brief History
 
-[Timeline:
-- **2023, June** — Xiao et al., StreamingLLM. First empirical observation of attention sinks.
-- **2023-2024** — implicit sinks (the first 4 tokens) become standard in sliding-window deployments.
-- **2024** — OpenAI's GPT-OSS paper formalizes attention sinks as a learnable parameter.
-- **2026** — V4 adopts the OpenAI formulation, per-head learnable sink logits.
+The mechanism developed quickly once people knew what they were looking for.
 
-The mechanism is two-and-a-half years old. V4's contribution is making it standard equipment.]
+- **2023, June** — Xiao et al., StreamingLLM. First empirical observation that models implicitly learn attention sinks at early positions.
+- **2023–2024** — Implicit sinks (pinning the first 4 tokens) become a standard engineering workaround in sliding-window deployments.
+- **2024** — OpenAI's GPT-OSS paper formalizes attention sinks as a learnable scalar parameter added to the softmax denominator, removing the need for pinned tokens.
+- **2026** — V4 adopts the OpenAI formulation with per-head learnable sink logits in both CSA and HCA.
+
+The core observation is two-and-a-half years old. V4's contribution isn't the idea — it's making explicit learnable sinks standard equipment in a state-of-the-art production model.
 
 ## What To Remember
 

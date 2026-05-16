@@ -96,18 +96,19 @@ A sparse-attention method has to capture all three, or quality collapses. CSA do
 
 ## The Cross-Issue Connection
 
-[The empirical sparsity of attention is the *same* observation that drives KV cache pruning (Issue 6). Heavy hitters get evicted last; cold tokens get evicted first. KV pruning *deletes* the cold; sparse attention *doesn't read* the cold. Same data, two strategies.
+The empirical sparsity of attention is the *same* observation that drives [Issue 6 — Eviction Notice](/issues/06-eviction-notice/). {{< wiki "kv-cache" >}}KV cache{{< /wiki >}} pruning reads the same heavy-hitter data and draws the same conclusion: most tokens are cold. Heavy hitters get evicted last; cold tokens get evicted first. KV pruning *deletes* the cold tokens from the cache; sparse attention *doesn't read* them in the first place. Same empirical fact, two different mechanisms.
 
-The strategies compose. You can prune (Issue 6) and then sparse-attend over what's left (Issue 7).]
+The strategies also compose. You can prune the KV cache (Issue 6) and then sparse-attend over what remains (Issue 7). Both layers of optimization are justified by the same underlying power law.
 
 ## When Sparsity Breaks Down
 
-[Failure cases:
-1. **Synthetic needle-in-haystack tasks.** When the relevant token is *anywhere* in the context, the model can't predict its position. Indexer scores degrade.
-2. **Very short queries.** With ~100 tokens of context, full attention is fine and sparsity overhead isn't worth it.
-3. **Training distribution shift.** Sparsity patterns learned on natural text don't always transfer to code.
+The power law is real, but it is not a law of nature. Three failure cases surface in practice:
 
-Production methods (DSA, CSA) survive these by maintaining the sliding window branch and the attention sink mechanism — backstops for when the indexer is confused.]
+1. **Synthetic needle-in-haystack tasks.** When the relevant token can sit *anywhere* in the context, the model cannot predict its position from the query alone. The indexer sees no signal; scores degrade toward uniform noise. The sparse method misses the needle.
+2. **Very short contexts.** With ~100 tokens of context, full attention is cheap and sparsity overhead isn't worth it. The regime where sparsity pays starts around 4K tokens and up.
+3. **Training distribution shift.** Sparsity patterns learned on natural language don't automatically transfer to code, structured data, or other domains with very different locality statistics.
+
+Production methods (DSA, CSA) survive these failure modes by maintaining the sliding window branch and the attention sink mechanism as backstops. When the indexer is confused, the window and the sinks still catch the structure that was always there.
 
 ## What To Remember
 
