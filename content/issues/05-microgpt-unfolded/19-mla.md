@@ -251,6 +251,14 @@ So the choice between MLA and GQA is, in the end, an *engineering* choice, not j
 5. **RoPE forces a split.** A small `k_rope` sub-vector bypasses the latent and is cached uncompressed; the bulk `k_nope` goes through MLA.
 6. **DeepSeek V2 at 128K context: ~9 GB of cache vs. ~335 GB for vanilla MHA on equivalent dims.** A 30×+ win, with the read path costing the same compute as vanilla MHA.
 
+{{% callout type="tangent" title="Where MLA leads next" %}}
+MLA solved the *memory* problem. It did not solve the *compute* problem — attention is still $O(T^2)$ per layer regardless of how small the cache is. DeepSeek's subsequent papers (NSA, DSA in V3.2-Exp, then CSA + HCA in V4) attack the compute side. The trajectory is the subject of **[Issue 7: The Sparse Lab](/issues/07-sparse-lab/)**:
+
+- The same K/V latent that MLA introduced here becomes the *query latent* $c^Q_t$ that drives the **lightning indexer** in V3.2-Exp's DSA — [Issue 7 ch.6](/issues/07-sparse-lab/06-lightning-indexer/).
+- The RoPE-vs-NOPE split from this chapter becomes the architectural seed for the indexer's separate scoring head — [Issue 7 ch.2 (MLA, rewound)](/issues/07-sparse-lab/02-mla-rewind/).
+- V4 wraps the whole machinery in a **token-level compressor** (CSA) — [Issue 7 ch.7](/issues/07-sparse-lab/07-csa/).
+{{% /callout %}}
+
 ---
 
 **Continue to** → [Sliding-Window Attention](../20-sliding-window/) — once you have squeezed each cache entry as small as MLA allows, the next question is whether every layer needs to keep *every* entry around, which is the L-axis trick Gemma 3 leans on for another 6× on top.
