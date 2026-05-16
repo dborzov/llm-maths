@@ -350,11 +350,51 @@ This is a design pattern, not just a workaround. And patterns in deep learning d
 
 The RoPE compromise from May 2024 is the first time the pattern appears. By late 2025, it's the architectural load-bearing beam.
 
+{{< crosshead >}}The Three Axes of Attention Cost{{< /crosshead >}}
+
+To fully understand what MLA did and didn't do, it helps to catalog what you can actually optimize. Attention cost during long-context inference has three orthogonal dimensions:
+
+| Axis | What it governs | Who attacked it | Method |
+|---|---|---|---|
+| **$H$** — number of KV heads | Cache size per token, linear in $H$ | GQA (Meta, 2023) | Share KV heads across query head groups |
+| **$D$** — per-head dimension | Cache size per token, linear in $D$ | MLA (DeepSeek, 2024) | Low-rank latent projection |
+| **$T^2$** — sequence length squared | Prefill FLOPs, quadratic in $T$ | (open as of MLA) | Sparse attention — coming in this issue |
+
+MHA attacks none of these explicitly; it's the baseline. GQA reduces $H$ from 128 to 8 or 16 by sharing KV heads across groups of query heads — effective but limited by how far you can push group sharing before quality degrades. MLA replaces the $D$ axis with $d_c \ll H \times D$ — a more aggressive compression that doesn't require sharing heads, just a compact latent.
+
+The third row — the $T^2$ axis — is the unfixed one. MLA leaves it completely alone. At 128K context, the KV cache is tiny (wall one solved), but you still multiply two $128{,}000$-length vectors for every head in every layer during prefill. That's the other wall.
+
+{{% callout type="tip" %}}
+**Quantization attacks a fourth axis**: the bit-width of cached values. Caching KV in INT8 rather than BF16 halves the cache size. INT4 halves it again. These compose multiplicatively with MLA — a model using MLA + INT4 KV cache can achieve 100× smaller cache than BF16 MHA. Quantization doesn't affect FLOPs either, so it has the same limitation: helps decode, not prefill.
+{{% /callout %}}
+
+The story of Issue 7 is the story of attacking that $T^2$ axis. MLA was the opening move. But the field had known about the quadratic wall since 2019, and had been failing to solve it for years. Why did it take until 2025? That's what the next four chapters answer.
+
+{{< crosshead >}}What It Felt Like From Inside DeepSeek{{< /crosshead >}}
+
+Here's what makes MLA interesting as a *strategic* choice, not just a technical one. The DeepSeek team was training a 236B MoE model with 128K context. MoE models already have a thorny engineering problem: routing overhead, expert affinity, load balancing. Adding 128K context on top of that means KV cache is enormous — you're holding state for 128,000 tokens across 60 layers simultaneously for every sequence in your batch.
+
+Without MLA, at DeepSeek-V2 scale: a single 128K sequence requires 400 GB for the KV cache. Your batch size is constrained to whatever fits in the remaining GPU memory after weights. That's essentially batch size 1 or 2 on an H100 cluster. Your GPU utilization is low. Your cost per token is high.
+
+With MLA: a single 128K sequence takes 8.8 GB. You can fit dozens of sequences in the same GPU memory. Batch size goes up. GPU utilization goes up. Cost per token drops. The economics of offering 128K context at $0.14/M tokens — one hundredth of GPT-4 pricing — became feasible.
+
+This is why MLA was the *necessary first move*. Without solving the memory wall, you can't even begin to think about the compute wall — you're too bandwidth-starved and memory-starved to iterate on anything else. MLA cleared the board. It made the next experiment possible.
+
+## Connections
+
+For readers who want to go deeper:
+
+- **[Issue 5, ch.19 — MLA](/issues/05-microgpt-unfolded/19-mla/)**: The full microGPT implementation walk-through with code. This chapter gave you the strategic frame; that one gives you the code.
+- **[Issue 5, ch.13 — KV Cache](/issues/05-microgpt-unfolded/13-kv-cache/)**: Why the KV cache exists and how standard MHA populates it. Start here if the (2, L, H, T, D) shape was unfamiliar.
+- **[Issue 5, ch.8 — Attention](/issues/05-microgpt-unfolded/08-attention/)**: The base attention mechanism. MLA modifies the K/V projection; everything else is standard attention.
+- **[attention compute primer](../11-attention-compute/)**: Deep dive into FLOPs, arithmetic intensity, and why compute vs memory bound matters. Pairs with the next chapter.
+
 ## What To Remember
 
 1. **MLA is the first cut.** Cache memory per token drops ~30× — the first axis of cost that decouples from $T$ at constant scale.
 2. **The absorption identity does the work.** $q^\top (W_{uk} c) = (W_{uk}^\top q)^\top c$ means the cache's expansion to K can be pre-folded into Q. The compute stays put; the storage shrinks.
 3. **The RoPE split introduces a side channel.** A small per-token vector $k_\text{rope}$ flows alongside the latent. This pattern — main path + small side channel — recurs in NSA's branches and again in DSA's lightning indexer.
 4. **MLA leaves attention FLOPs untouched.** The $T \times T$ score matrix per layer is still computed in full. At 128K context this is the next wall.
+5. **Three axes, two solved.** H-axis: GQA. D-axis: MLA. T^2-axis: still open at V2 launch. This issue is about closing that third axis.
 
 **Continue to** → [The Other Wall](../03-quadratic-wall/) — the compute side of long-context attention. The wall MLA didn't touch, and the reason DSA had to exist.

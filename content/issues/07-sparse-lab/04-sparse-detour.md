@@ -373,14 +373,13 @@ ax.set_title("The sparse attention design space: 2020–2025", fontsize=11)
 ax.set_xlim(0, 1.1)
 ax.set_ylim(0, 1.1)
 
-# Legend for color families
-from matplotlib.patches import Patch
+# Legend for color families using proxy artists (no import needed)
 legend_elements = [
-    Patch(facecolor='#FF007F', label='Fixed-pattern family'),
-    Patch(facecolor='#00A8A8', label='Learned (kernel-breaking) family'),
-    Patch(facecolor='#FFD700', label='Approximation family'),
-    Patch(facecolor='#FF8C00', label='Hybrid/eviction'),
-    Patch(facecolor='#1A1A1A', label='NSA/DSA (2025)'),
+    plt.Rectangle((0,0), 1, 1, facecolor='#FF007F', label='Fixed-pattern family'),
+    plt.Rectangle((0,0), 1, 1, facecolor='#00A8A8', label='Learned (kernel-breaking) family'),
+    plt.Rectangle((0,0), 1, 1, facecolor='#FFD700', label='Approximation family'),
+    plt.Rectangle((0,0), 1, 1, facecolor='#FF8C00', label='Hybrid/eviction'),
+    plt.Rectangle((0,0), 1, 1, facecolor='#1A1A1A', label='NSA/DSA (2025)'),
 ]
 ax.legend(handles=legend_elements, loc='lower right', fontsize=8)
 ax.spines[['top', 'right']].set_visible(False)
