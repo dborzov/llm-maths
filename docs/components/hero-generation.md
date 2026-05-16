@@ -14,10 +14,12 @@ Our illustrations follow a specific aesthetic: **"Pulp Fiction" meets "GTA San A
 - **No Text:** Explicitly forbid the AI from adding headers, labels, captions, or digital artifacts.
 
 ### Thematic Guidelines
-- **Cheeky & Inventive:** Don't depict literal tech objects (no "glowing brains" or "blue circuit boards").
+- **Cheeky & Inventive:** Don't depict literal tech objects (no "glowing brains", no "blue circuit boards").
 - **Human-Centric Noir:** Use larger-than-life 1950s/60s characters (detectives, gangsters, high-fashion ladies, gamblers) to personify technical concepts.
-- **Metaphor over Literalism:** 
-    - Instead of "Retrieval," show a gritty detective with a flashlight.
+- - **No Computers, Robots, future Tech stuff**. Its a metaphor. Think a relevant screenshot from 1950s movie. 
+- **Metaphor over Literalism.**
+- Examples: 
+    - Instead of "Retrieval," you can show a gritty detective with a flashlight.
     - Instead of "Quantization," show an accountant with a briefcase of golden numbers.
     - Instead of "NIAH," show a fancy lady repulsed by a literal pile of hay.
 
