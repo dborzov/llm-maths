@@ -11,7 +11,7 @@ issue: 8
 weight: 80
 techKind: mainline
 techNode: continuous-batching
-header: default.png
+header: 08-continuous-batching.webp
 ---
 
 

@@ -11,7 +11,7 @@ issue: 8
 weight: 40
 techKind: primer
 techNode: roofline
-header: default.png
+header: 04-roofline.webp
 ---
 
 

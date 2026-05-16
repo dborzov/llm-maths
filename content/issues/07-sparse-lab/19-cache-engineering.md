@@ -11,7 +11,7 @@ issue: 7
 weight: 190
 techKind: primer
 techNode: cache-engineering
-header: default.png
+header: 19-cache-engineering.webp
 ---
 
 ## Three Caches, One Budget

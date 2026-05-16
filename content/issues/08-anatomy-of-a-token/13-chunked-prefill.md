@@ -11,7 +11,7 @@ issue: 8
 weight: 130
 techKind: mainline
 techNode: chunked-prefill
-header: default.png
+header: 13-chunked-prefill.webp
 ---
 
 

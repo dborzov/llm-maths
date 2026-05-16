@@ -11,7 +11,7 @@ issue: 8
 weight: 170
 techKind: mainline
 techNode: disagg-pd
-header: default.png
+header: 17-disagg-pd.webp
 ---
 
 

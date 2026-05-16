@@ -11,7 +11,7 @@ issue: 7
 weight: 80
 techKind: mainline
 techNode: hca
-header: default.png
+header: 08-hca.webp
 ---
 
 ## Figure 4

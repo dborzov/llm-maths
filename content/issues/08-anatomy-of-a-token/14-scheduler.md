@@ -11,7 +11,7 @@ issue: 8
 weight: 140
 techKind: mainline
 techNode: scheduler
-header: default.png
+header: 14-scheduler.webp
 ---
 
 

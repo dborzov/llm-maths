@@ -11,7 +11,7 @@ issue: 7
 weight: 150
 techKind: primer
 techNode: mixed-precision-kv
-header: default.png
+header: 15-mixed-precision-kv.webp
 ---
 
 ## The Three Regions

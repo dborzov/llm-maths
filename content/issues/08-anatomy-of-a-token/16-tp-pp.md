@@ -11,7 +11,7 @@ issue: 8
 weight: 160
 techKind: primer
 techNode: tp-pp
-header: default.png
+header: 16-tp-pp.webp
 ---
 
 

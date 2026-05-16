@@ -11,7 +11,7 @@ issue: 7
 weight: 10
 techKind: mainline
 techNode: cold-open
-header: default.png
+header: 01-cold-open-07.webp
 ---
 
 ## The Drop

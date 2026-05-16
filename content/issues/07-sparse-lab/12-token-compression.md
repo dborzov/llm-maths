@@ -11,7 +11,7 @@ issue: 7
 weight: 120
 techKind: primer
 techNode: token-compression
-header: default.png
+header: 12-token-compression.webp
 ---
 
 ## The Operator

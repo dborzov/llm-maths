@@ -4,10 +4,11 @@ This project uses a custom AI-driven workflow to generate "Hero" (header) illust
 
 ## The Vibe (Art Direction)
 
-Our illustrations follow a specific aesthetic: **"Pulp Fiction" meets "GTA San Andreas" loading screens.**
+Our illustrations follow a specific aesthetic: pixel-grainy 1950s comic book panel with larger-than-life scene.
 
 ### Visual Rules
 - **Neubrutalist:** Thick black ink outlines, hard shadows (no gradients), and halftone dots.
+-**Cool badasses**. Visually appealing characters. Think "Pulp Fiction" meets "GTA San Andreas" loading screens.
 - **No Rounded Corners:** Everything should feel sharp and structural.
 - **High Contrast:** Leverage the theme-specific palettes.
 - **Cinematic Framing:** Wide, edge-to-edge "full-bleed" composition (21:9 aspect ratio).

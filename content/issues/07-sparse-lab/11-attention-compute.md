@@ -11,7 +11,7 @@ issue: 7
 weight: 110
 techKind: primer
 techNode: attention-compute
-header: default.png
+header: 11-attention-compute.webp
 ---
 
 ## The T² Monster in the Room

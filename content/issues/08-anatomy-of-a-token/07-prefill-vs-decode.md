@@ -11,7 +11,7 @@ issue: 8
 weight: 70
 techKind: mainline
 techNode: prefill-vs-decode
-header: default.png
+header: 07-prefill-vs-decode.webp
 ---
 
 

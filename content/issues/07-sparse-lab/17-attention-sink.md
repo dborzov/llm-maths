@@ -11,7 +11,7 @@ issue: 7
 weight: 170
 techKind: primer
 techNode: attention-sink
-header: default.png
+header: 17-attention-sink.webp
 ---
 
 ## The Strange Behavior

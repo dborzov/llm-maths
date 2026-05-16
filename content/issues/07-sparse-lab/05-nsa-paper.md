@@ -11,7 +11,7 @@ issue: 7
 weight: 50
 techKind: mainline
 techNode: nsa-paper
-header: default.png
+header: 05-nsa-paper.webp
 ---
 
 ## A Preprint, Not A Product

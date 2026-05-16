@@ -11,7 +11,7 @@ issue: 7
 weight: 160
 techKind: primer
 techNode: empirical-sparsity
-header: default.png
+header: 16-empirical-sparsity.webp
 ---
 
 ## The Heatmap

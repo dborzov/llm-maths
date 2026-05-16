@@ -11,7 +11,7 @@ issue: 7
 weight: 70
 techKind: mainline
 techNode: csa
-header: default.png
+header: 07-csa.webp
 ---
 
 ## Figure 3, As Promised

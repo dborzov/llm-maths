@@ -11,7 +11,7 @@ issue: 8
 weight: 20
 techKind: primer
 techNode: gpu-anatomy
-header: default.png
+header: 02-gpu-anatomy.webp
 ---
 
 

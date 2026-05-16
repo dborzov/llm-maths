@@ -5,7 +5,7 @@ issue: 8
 layout: issue-cover
 theme: cream
 math: false
-header: default.webp
+header: 08-anatomy-of-a-token-cover.webp
 date: 2026-05-16T09:00:00-04:00
 ---
 

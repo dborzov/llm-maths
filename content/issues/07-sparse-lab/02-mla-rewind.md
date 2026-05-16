@@ -11,7 +11,7 @@ issue: 7
 weight: 20
 techKind: mainline
 techNode: mla-rewind
-header: default.png
+header: 02-mla-rewind.webp
 ---
 
 ## Why We Are Doing This Again

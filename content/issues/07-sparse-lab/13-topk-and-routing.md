@@ -11,7 +11,7 @@ issue: 7
 weight: 130
 techKind: primer
 techNode: topk-routing
-header: default.png
+header: 13-topk-and-routing.webp
 ---
 
 ## The Differentiability Problem

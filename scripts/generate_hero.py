@@ -404,7 +404,211 @@ VISUAL_CONCEPTS = {
     "11-bandwidth-wall": (
         "A 1950s construction worker in a hard hat stands at the base of an enormous brick wall that fills "
         "the entire frame. A tiny door at ground level is labeled '3.35 TB/s'."
-    )
+    ),
+
+    # Issue 07: The Sparse Lab
+    "07-sparse-lab-cover": (
+        "A shadowy research laboratory at midnight in a high-rise building, venetian blinds casting noir stripes "
+        "across the walls. A lone researcher in a sharp double-breasted suit pins the final piece of a massive "
+        "attention-architecture diagram to a corkboard surrounded by rejected competitor papers stamped 'FAILED'. "
+        "A single neon spotlight glows on the breakthrough. Outside the window: a neon city skyline. Spy-thriller "
+        "meets GTA loading screen."
+    ),
+    "01-cold-open-07": (
+        "A 1950s newsroom at midnight. The ticker-tape machine explodes into life. A reporter in rolled-up "
+        "shirtsleeves rips the tape, reads it with widening eyes — his cigarette drops. On the tape: 'API PRICE: -50%'. "
+        "Through the window: a neon city skyline. Every journalist frozen in shock. The biggest scoop of the year, "
+        "dropped at midnight."
+    ),
+    "02-mla-rewind": (
+        "A 1950s couture fashion designer at a massive cutting table makes the first decisive scissor-cut into "
+        "an enormous bolt of fabric labeled 'MEMORY'. Thirty percent of the fabric falls away cleanly as offcuts. "
+        "She looks up with cool, precise satisfaction: this was always obvious. High-fashion noir studio."
+    ),
+    "03-quadratic-wall": (
+        "A lone athlete in 1950s track gear has just run full-speed into a massive, perfectly vertical concrete wall "
+        "that fills the entire frame. Stamped on the wall: 'T²'. He's staring up at it, hands on knees. Every runner "
+        "who tried this path hit the same wall. Cinematic wide shot, hard noir shadows."
+    ),
+    "04-sparse-detour": (
+        "A weary detective in a trench coat stands before a corkboard covered in ten years of pinned research papers — "
+        "each one stamped with a large red 'FAILED'. Empty coffee cups surround him. Dozens of red strings lead nowhere. "
+        "He lights another cigarette and stares at the wall. A decade of dead ends. Cold-case forensic noir."
+    ),
+    "05-nsa-paper": (
+        "A master architect at a 1950s drafting room unrolls a massive blueprint across the table. The design shows "
+        "three distinct wings labeled 'COMPRESS', 'SELECT', 'SLIDE'. Engineers crowd around, stunned — this solves "
+        "everything. The architect has a cool, I-told-you-so expression. Cinematic hard shadows."
+    ),
+    "06-lightning-indexer": (
+        "A 1950s telegraph operator at midnight — the machine suddenly roars to life at full speed. She reads "
+        "the incoming tape with wide eyes: prices are collapsing in real-time. A clock on the wall strikes twelve. "
+        "Outside: neon lightning flashes over a city skyline. Speed, drama, irreversibility. Pulp Fiction energy."
+    ),
+    "07-csa": (
+        "A 1950s factory floor. A mechanical press runs at full speed — for every four items entering the conveyor "
+        "belt, it stamps them into a single dense cube. Three inputs disappear, one compressed output emerges. "
+        "The supervisor watches with clipboard satisfaction. Industrial precision, GTA loading screen aesthetic."
+    ),
+    "08-hca": (
+        "A 1950s archaeologist at a museum display table, methodically condensing 128 unearthed artifacts into "
+        "a single dense, labeled display case. He distills an entire excavation into one representative object. "
+        "'128 into 1,' his notepad reads. Sparse and contemplative — the extreme version. Noir museum atmosphere."
+    ),
+    "09-hybrid-pattern": (
+        "A 1950s jazz orchestra conductor in a neon-lit concert hall, alternating his baton between two sections — "
+        "'CSA' brass on the left, 'HCA' strings on the right — in precise alternating sequence. The interleaving "
+        "creates something richer than either section alone. Cinematic wide, viewed from the back of the hall."
+    ),
+    "10-decoupling": (
+        "A 1950s wrecking-ball operator swinging a massive chrome ball into a ceiling labeled 'QUADRATIC WALL'. "
+        "The ceiling shatters — fragments rain down, and beyond the rubble: an infinite open sky. The operator "
+        "is grinning. Boss-chapter finale energy. Epic scale, triumph, hard noir shadows."
+    ),
+    "11-attention-compute": (
+        "A sharp-suited 1950s accountant at a massive mechanical adding machine, the paper receipt unspooling "
+        "across the floor and down the hall. He's jabbing one line with a sharp finger: 'QK^T' — ten times longer "
+        "than everything else on the receipt. Absurdist bureaucratic noir, precision arithmetic."
+    ),
+    "12-token-compression": (
+        "A 1950s industrial juice-press operator feeding a long chain of individual fruit pieces into a giant "
+        "compression machine. Out the other end: a single dense, glowing cube. A sign reads '4 INTO 1'. "
+        "The operator watches with satisfaction. Factory noir, high contrast."
+    ),
+    "13-topk-and-routing": (
+        "A 1950s judge slams a gavel: from a lineup of twenty, exactly three are selected for trial. The rest "
+        "are dismissed with a wave. But the jury box is in uproar — the selection cannot be appealed through "
+        "normal legal channels, the decision is irreversible. Dramatic courtroom noir."
+    ),
+    "14-indexer-pattern": (
+        "A 1950s talent scout at the back of a smoky nightclub, quietly watching acts and making tiny tick marks "
+        "on a notepad. He hands his short list to the big boss at the front table — who only auditions the "
+        "top-scored performers. Efficient two-tier selection. Cool, precise, understated noir."
+    ),
+    "15-mixed-precision-kv": (
+        "A 1950s master jeweler at three sorting trays — platinum on the left (finest), gold in the center, "
+        "silver on the right. Each gemstone gets exactly the tray its grade deserves, assessed with jeweler's loupes. "
+        "Meticulous sorting of different-value materials. Noir gem-dealer precision."
+    ),
+    "16-empirical-sparsity": (
+        "A 1950s nightclub — a hundred people in the audience, but only one performer under a single spotlight "
+        "absorbs all the applause. The rest of the stage is dark and empty. Power law: five percent of the "
+        "performers, ninety percent of the attention. High-contrast lighting, dramatic spotlight."
+    ),
+    "17-attention-sink": (
+        "A 1950s plumbing engineer watching water flow through a complex pipe junction. Almost all the water "
+        "funnels into one massive outlet labeled 'SINK' in the corner of the system. The engineer studies it "
+        "carefully, noting it on his clipboard. Not a bug — a feature. Pipes and noir."
+    ),
+    "18-inverse-rope": (
+        "A 1950s telephone exchange operator who has just spotted two lines crossed — the same wire is serving "
+        "two signals (K and V) simultaneously. She makes one swift, precise cable swap with a single hand motion "
+        "and the system snaps back into order. The one-line fix. Telephone switchboard noir."
+    ),
+    "19-cache-engineering": (
+        "A 1950s railroad switching yard manager directing three separate tracks: fast express trains on the right "
+        "(raw tokens), mid-speed commuter cars in the center (4× compressed), slow heavy freight on the left "
+        "(128× compressed). He dispatches each with a different signal flag. Systems logistics noir, cinematic wide."
+    ),
+
+    # Issue 08: Anatomy of a Token
+    "08-anatomy-of-a-token-cover": (
+        "A glamorous 1950s anatomist in a lab coat over a pinstripe suit, standing over a dissection table "
+        "lit by a single harsh spotlight. On the table: a single glowing token the size of a human, fully "
+        "opened and labeled inside. She gestures with an elegant pointer, cool and clinical. Medical precision "
+        "meets GTA loading screen style."
+    ),
+    "01-cold-open-08": (
+        "A single small package on a 1950s factory receiving dock, the shipping label reading 'HTTP REQUEST'. "
+        "Behind it: a cathedral-sized factory stretching to the horizon labeled 'H200 INFERENCE ENGINE'. "
+        "The scale contrast is staggering — one tiny package, one enormous machine waiting to process it. "
+        "Cinematic wide, noir industrial."
+    ),
+    "02-gpu-anatomy": (
+        "A 1950s anatomy lecturer stands at a massive chalkboard showing a cutaway schematic of a machine "
+        "instead of a human body. 132 identical compartments are labeled 'SM'. He traces the interconnections "
+        "with a pointer, explaining the floor plan to stunned colleagues. Engineering-as-dissection noir."
+    ),
+    "03-memory-hierarchy": (
+        "A 1950s archaeologist standing in an Egyptian desert before a massive four-level stone pyramid. "
+        "Tiny gold peak at the top ('REGISTERS — blazing fast'), vast stone base at the bottom ('HBM — slow'). "
+        "He gestures upward with a torch. The trade-off is architectural and ancient. Desert noir, cinematic wide."
+    ),
+    "04-roofline": (
+        "A 1950s factory architect inside a cavernous building, pointing at a sloped roofline overhead. "
+        "She's marking a line on the floor with chalk: 'RIDGE POINT'. 'To the left: memory-bound. "
+        "To the right: compute-bound.' She's explaining the building's fate in one gesture. Architectural industrial noir."
+    ),
+    "05-cuda-graphs": (
+        "A 1950s Hollywood director on a soundstage. First take: twelve technicians scramble chaotically. "
+        "He shouts 'CUT!' then presses a single button — the entire crew replays the scene automatically, "
+        "perfectly synchronized. One button for a thousand actions. The director's confident smirk. GTA loading screen style."
+    ),
+    "06-flash-attention": (
+        "A 1950s mental prodigy — a woman in a sharp suit — sitting at a bare table, eyes closed, computing "
+        "an enormous calculation entirely in her head. Other scientists fill ten blackboards around her with "
+        "partial equations. She opens her eyes and writes just one line: the final answer. Never touched paper until the end."
+    ),
+    "07-prefill-vs-decode": (
+        "Two 1950s athletes on a track side by side: a massive weightlifter (labeled 'PREFILL') taking one "
+        "single earth-shaking stride; a sleek sprinter (labeled 'DECODE') taking hundreds of tiny rapid steps. "
+        "Same race, completely different gaits. Perfectly contrasted. Cinematic wide, GTA loading screen style."
+    ),
+    "08-continuous-batching": (
+        "A 1950s assembly-line manager at a non-stop conveyor belt factory. He's pulling finished parts off "
+        "without stopping the belt and slapping new ones on in the same motion. Behind him: the old system "
+        "where the belt grinds to a halt — crossed out in chalk. 'Keep it moving.' Clever efficiency noir."
+    ),
+    "09-kv-fragmentation": (
+        "A 1950s property developer walking through a massive warehouse chopped into hundreds of oddly-shaped, "
+        "incompatible storage compartments. Most are empty but nothing useful fits the gaps. She gestures at "
+        "the wasted space with visible frustration. Memory fragmentation as real-estate disaster. Noir."
+    ),
+    "10-paged-attention": (
+        "A 1960s IBM mainframe operator in thick glasses connecting cables at a massive switchboard. "
+        "Top panel: logical order (VIRTUAL). Bottom panel: physical machine chaos (REAL). The cables cross "
+        "and redirect — she knows exactly where everything lands. 'Borrowing from 1965.' Elegant cable-management noir."
+    ),
+    "11-block-manager": (
+        "A 1950s warehouse foreman with a clipboard at a block-storage yard, assigning numbered slots to "
+        "incoming pallets, chalk-marking reference counts on each. His filing system is flawless — every "
+        "block accounted for, free slots known instantly. Efficient, calm, noir logistics precision."
+    ),
+    "12-prefix-caching": (
+        "A 1950s librarian who has pre-assembled the first three chapters of every book as starter kits on "
+        "a special shelf. When a reader walks in, she's already handing them chapter four. "
+        "'The prologue is ready,' she says with a knowing smile. Cache hit as librarian elegance. Noir efficiency."
+    ),
+    "13-chunked-prefill": (
+        "A 1950s short-order chef slicing one enormous steak into equal portions, grilling them one at a time "
+        "while smaller orders interleave on the same grill. Nobody monopolizes the cook. He surveys the diner "
+        "with calm authority — fair, fast, no single customer hogging the heat. Pulp Fiction diner efficiency."
+    ),
+    "14-scheduler": (
+        "A 1950s government budget director at a massive mahogany desk, distributing tokens from a single fat "
+        "envelope across a row of competing requests. Calm, powerful, impartial — each department gets exactly "
+        "its allocation. Hard shadows, noir bureaucracy as precision art."
+    ),
+    "15-speculative-decoding": (
+        "A 1950s heist crew: a fast sketch artist rapidly draws 32 rough scene thumbnails while the master "
+        "planner reviews all 32 in one sweep. 'If 28 are right, we proceed.' Speed through parallel speculation. "
+        "The sketch artist works in a blur; the master verifies in seconds. Cool noir workflow."
+    ),
+    "16-tp-pp": (
+        "A 1950s moving crew using a crane to split a massive safe into two halves — one team hoists the "
+        "top half across the street, another takes the bottom half. Both halves will reunite at the destination. "
+        "Coordinated distributed heist. Powerful noir logistics, cinematic wide."
+    ),
+    "17-disagg-pd": (
+        "Two separate 1950s factories connected by a pneumatic tube system. Factory A ('PREFILL PLANT') is "
+        "a massive compute-heavy foundry. Factory B ('DECODE WORKS') is a sleek, high-speed assembly line. "
+        "Between them: bronze tubes firing glowing canisters of KV data at high velocity. Industrial disaggregation noir."
+    ),
+    "18-full-anatomy": (
+        "A 1950s surgeon stepping back from a completed operation, gesturing over a patient whose body is "
+        "now fully labeled — every organ named, every nerve mapped, every system annotated in chalk. "
+        "The full picture, at last. He looks at the camera with quiet triumph. Grand finale, complete mastery. Noir medical."
+    ),
 }
 
 THEME_COLORS = {

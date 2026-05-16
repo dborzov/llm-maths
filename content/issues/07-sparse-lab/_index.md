@@ -5,7 +5,7 @@ issue: 7
 layout: issue-cover
 theme: cream
 math: false
-header: default.png
+header: 07-sparse-lab-cover.webp
 date: 2026-05-16T09:00:00-04:00
 ---
 

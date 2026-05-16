@@ -11,7 +11,7 @@ issue: 8
 weight: 110
 techKind: primer
 techNode: block-manager
-header: default.png
+header: 11-block-manager.webp
 ---
 
 

@@ -11,7 +11,7 @@ issue: 8
 weight: 50
 techKind: primer
 techNode: cuda-graphs
-header: default.png
+header: 05-cuda-graphs.webp
 ---
 
 

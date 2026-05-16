@@ -11,7 +11,7 @@ issue: 7
 weight: 90
 techKind: mainline
 techNode: hybrid-pattern
-header: default.png
+header: 09-hybrid-pattern.webp
 ---
 
 ## Two Tools for Two Jobs

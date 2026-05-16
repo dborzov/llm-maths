@@ -11,7 +11,7 @@ issue: 8
 weight: 30
 techKind: primer
 techNode: memory-hierarchy
-header: default.png
+header: 03-memory-hierarchy.webp
 ---
 
 

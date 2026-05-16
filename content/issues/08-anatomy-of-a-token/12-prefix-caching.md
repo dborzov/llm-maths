@@ -11,7 +11,7 @@ issue: 8
 weight: 120
 techKind: mainline
 techNode: prefix-caching
-header: default.png
+header: 12-prefix-caching.webp
 ---
 
 

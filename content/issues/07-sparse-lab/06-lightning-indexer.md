@@ -11,7 +11,7 @@ issue: 7
 weight: 60
 techKind: mainline
 techNode: lightning-indexer
-header: default.png
+header: 06-lightning-indexer.webp
 ---
 
 ## The Drop, Re-Examined

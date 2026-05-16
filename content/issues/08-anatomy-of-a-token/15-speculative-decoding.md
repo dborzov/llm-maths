@@ -11,7 +11,7 @@ issue: 8
 weight: 150
 techKind: mainline
 techNode: speculative-decoding
-header: default.png
+header: 15-speculative-decoding.webp
 ---
 
 

@@ -11,7 +11,7 @@ issue: 7
 weight: 100
 techKind: boss
 techNode: decoupling
-header: default.png
+header: 10-decoupling.webp
 ---
 
 ## Here Is How We Got Here

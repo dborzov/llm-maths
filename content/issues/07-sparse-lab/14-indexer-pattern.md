@@ -11,7 +11,7 @@ issue: 7
 weight: 140
 techKind: primer
 techNode: indexer-pattern
-header: default.png
+header: 14-indexer-pattern.webp
 ---
 
 ## The Pattern, Stated Once

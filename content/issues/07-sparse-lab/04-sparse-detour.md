@@ -11,7 +11,7 @@ issue: 7
 weight: 40
 techKind: mainline
 techNode: sparse-detour
-header: default.png
+header: 04-sparse-detour.webp
 ---
 
 ## A Stack of Papers and Zero Products

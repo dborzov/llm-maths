@@ -11,7 +11,7 @@ issue: 8
 weight: 100
 techKind: mainline
 techNode: paged-attention
-header: default.png
+header: 10-paged-attention.webp
 ---
 
 

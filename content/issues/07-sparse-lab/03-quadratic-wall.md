@@ -11,7 +11,7 @@ issue: 7
 weight: 30
 techKind: mainline
 techNode: quadratic-wall
-header: default.png
+header: 03-quadratic-wall.webp
 ---
 
 ## August 2025, The Second Admission

@@ -11,7 +11,7 @@ issue: 7
 weight: 180
 techKind: primer
 techNode: inverse-rope
-header: default.png
+header: 18-inverse-rope.webp
 ---
 
 ## The Price of Sharing

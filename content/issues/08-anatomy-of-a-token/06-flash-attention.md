@@ -11,7 +11,7 @@ issue: 8
 weight: 60
 techKind: primer
 techNode: flash-attention
-header: default.png
+header: 06-flash-attention.webp
 ---
 
 

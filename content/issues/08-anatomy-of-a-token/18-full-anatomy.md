@@ -11,7 +11,7 @@ issue: 8
 weight: 180
 techKind: boss
 techNode: full-anatomy
-header: default.png
+header: 18-full-anatomy.webp
 ---
 
 

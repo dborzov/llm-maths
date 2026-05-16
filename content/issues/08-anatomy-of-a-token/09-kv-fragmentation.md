@@ -11,7 +11,7 @@ issue: 8
 weight: 90
 techKind: mainline
 techNode: kv-fragmentation
-header: default.png
+header: 09-kv-fragmentation.webp
 ---
 
 
