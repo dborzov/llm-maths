@@ -70,4 +70,12 @@ By the end of this issue you should be able to answer, with confidence and the n
 
 ---
 
+{{% callout type="tangent" title="Two strategies, one observation" %}}
+This issue is about **deleting** tokens from the cache. The complement strategy — keeping every token in the cache but **not attending to most of them** — is the subject of [Issue 7: The Sparse Lab](/issues/07-sparse-lab/), which traces DeepSeek's MLA → DSA → CSA/HCA arc from May 2024 through V4 in 2026.
+
+Both strategies exploit the same empirical fact: 5-10% of past tokens absorb 90% of attention mass (see [Where Attention Is Sparse](/issues/07-sparse-lab/16-empirical-sparsity/)). Issue 6 turns this into eviction; Issue 7 turns it into selection. They compose — production systems quantize, prune, *and* sparse-attend.
+{{% /callout %}}
+
+---
+
 *Each chapter is self-contained. Mainline chapters link liberally to the primer chapters they build on — and each primer links forward to the mainline chapter where it pays off.*
