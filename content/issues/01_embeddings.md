@@ -6,7 +6,7 @@ tags: [word2vec, numpy, linear-algebra]
 theme: cream
 header: word2vec.webp
 math: true
-draft: false
+draft: true
 date: 2026-04-01T09:00:00-04:00
 issue: 1
 ---

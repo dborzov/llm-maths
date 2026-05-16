@@ -1,0 +1,41 @@
+# Schema, conventions, and the 5-event cap rule: see docs/timelines-schema.md.
+
+title   = "From Distributional Hypothesis to Modern Embeddings"
+caption = "Five turning points. <em>Decades of NLP research condensed.</em>"
+
+[[events]]
+date  = "1954"
+title = "Distributional Hypothesis"
+who   = "Zellig Harris, Columbia"
+body  = "\"Words that occur in the same contexts tend to have similar meanings.\" The theoretical foundation for everything that follows."
+kind  = "paper"
+
+[[events]]
+date  = "2003"
+title = "Neural Language Model"
+who   = "Bengio, Ducharme, Vincent, Jauvin"
+body  = "First neural model to learn dense word embeddings — beautiful vectors, but training cost was prohibitive at scale."
+kind  = "paper"
+
+[[events]]
+date  = "2013"
+title = "Word2Vec"
+who   = "Mikolov, Chen, Corrado, Dean (Google)"
+body  = "The embarrassingly simple skip-gram model. Trained in hours on 100B words. king − man + woman ≈ queen."
+kind  = "paper"
+link  = "04-word2vec/"
+
+[[events]]
+date  = "2018"
+title = "BERT"
+who   = "Devlin, Chang, Lee, Toutanova (Google)"
+body  = "Contextual embeddings: the same word gets different vectors depending on its sentence. The embedding idea, turbocharged by attention."
+kind  = "paper"
+link  = "07-inheritance/"
+
+[[events]]
+date  = "2025"
+title = "4096-Dim Embeddings"
+who   = "All frontier LLM labs"
+body  = "Modern LLMs embed every token in 4,096 to 16,384 dimensions. Word2Vec's geometry of meaning, operating at alien scale."
+kind  = "release"
