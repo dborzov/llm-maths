@@ -226,4 +226,3 @@ For inference at one token at a time, it's still pocket change. The residual str
 ---
 
 **Continue to** → [The MLP Block](../11-mlp-block/) — now that you know the residual stream is the highway, the next question is what those big `mlp_fc1` and `mlp_fc2` matrices actually *write* into it.
-
