@@ -6,7 +6,7 @@
   </header>
 
   <div class="article-grid">
-    {{ range (.Pages.ByParam "issue" | reverse) }}
+    {{ range (.Pages.ByParam "issue").Reverse }}
     <a href="{{ .RelPermalink }}" class="article-card">
       {{ with .Params.header }}
       <div class="card-illustration">
