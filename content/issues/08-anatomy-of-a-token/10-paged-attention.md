@@ -1,12 +1,12 @@
 ---
 title: "Borrowing From 1965"
-description: ""
+description: "PagedAttention is virtual memory for KV caches: a per-request block table maps logical token positions to non-contiguous physical KV blocks, eliminating fragmentation. The same abstraction enables prefix sharing, copy-on-write branching for beam search, and tiered KV offload — all for free."
 topics: []
 tags: []
 theme: teal
 math: true
 draft: false
-date: 2026-05-16T05:05:21-04:00
+date: 2026-05-16T13:30:00-04:00
 issue: 8
 weight: 100
 techKind: mainline
@@ -14,7 +14,6 @@ techNode: paged-attention
 header: default.png
 ---
 
-> **Scaffold note.** The marquee chapter. The reader should leave this chapter understanding *why the operating-systems analogy is exact*, *what the block table physically is*, and *what changes inside the attention kernel*. This is the central trick of the entire field.
 
 ## Anchor and Frame
 

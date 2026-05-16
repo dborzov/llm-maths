@@ -1,12 +1,12 @@
 ---
 title: "The Roofline"
-description: ""
+description: "The roofline model tells you in one number — arithmetic intensity — whether a kernel is compute-bound or memory-bound. Decode attention sits at roughly 1 FLOP/byte, catastrophically to the left of the ridge point. That single fact predicts the shape of every optimization in modern LLM serving."
 topics: []
 tags: []
 theme: teal
 math: true
 draft: false
-date: 2026-05-16T05:05:21-04:00
+date: 2026-05-16T10:30:00-04:00
 issue: 8
 weight: 40
 techKind: primer
@@ -14,7 +14,7 @@ techNode: roofline
 header: default.png
 ---
 
-> **Scaffold note.** The fulcrum primer of the issue. Once the reader has internalized the roofline, every later chapter — chunked prefill, speculative decoding, disagg P/D — becomes a forced move.
+
 >
 > The companion plot in [Issue 06's Bandwidth Wall](/llm-maths/issues/06-eviction-notice/11-bandwidth-wall/) already exists. Here the focus is the *roofline model itself* as a piece of intellectual machinery, not just one labelled dot on it.
 

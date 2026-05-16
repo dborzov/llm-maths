@@ -1,12 +1,12 @@
 ---
 title: "Inside the Silicon"
-description: ""
+description: "A GPU is a throughput machine: 132 streaming multiprocessors, thousands of simultaneous threads, and a memory hierarchy that spans four orders of magnitude. Understanding the hardware is the foundation for every inference optimization that follows."
 topics: []
 tags: []
 theme: teal
 math: true
 draft: false
-date: 2026-05-16T05:05:21-04:00
+date: 2026-05-16T09:30:00-04:00
 issue: 8
 weight: 20
 techKind: primer
@@ -14,7 +14,6 @@ techNode: gpu-anatomy
 header: default.png
 ---
 
-> **Scaffold note.** First of five GPU primers. Goal: by the end, the reader knows what an SM, a warp, a thread, and a kernel are — and feels in their bones that a GPU is a *throughput* machine, not a *latency* machine.
 
 ## Anchor and Frame
 

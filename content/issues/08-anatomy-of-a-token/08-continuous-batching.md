@@ -1,12 +1,12 @@
 ---
 title: "The Conveyor Belt"
-description: ""
+description: "Static batching wastes most of the GPU whenever sequences finish at different lengths — the GPU idles waiting for the longest sequence. Orca's iteration-level scheduling (OSDI 2022) fixed this: swap finished requests out and new ones in at every decode step, not at batch boundaries."
 topics: []
 tags: []
 theme: teal
 math: true
 draft: false
-date: 2026-05-16T05:05:21-04:00
+date: 2026-05-16T12:30:00-04:00
 issue: 8
 weight: 80
 techKind: mainline
@@ -14,7 +14,6 @@ techNode: continuous-batching
 header: default.png
 ---
 
-> **Scaffold note.** This is the engineering breakthrough that made LLM serving economically viable. Orca (Yu et al., OSDI 2022) introduced *iteration-level scheduling*; vLLM and every successor adopted it. Without it, GPU utilization at serving time is roughly the inverse of the variance in output lengths — i.e. terrible.
 
 ## Anchor and Frame
 

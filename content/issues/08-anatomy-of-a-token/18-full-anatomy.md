@@ -1,12 +1,12 @@
 ---
 title: "The Full Anatomy of a Token"
-description: ""
+description: "The cold-open trace, re-annotated end to end: the same packet, the same H200 box, the same user — but every layer now named, every component explained, every latency budget itemized. Everything the issue introduced, assembled into one complete, labelled picture."
 topics: []
 tags: []
 theme: teal
 math: true
 draft: false
-date: 2026-05-16T05:05:29-04:00
+date: 2026-05-16T17:30:00-04:00
 issue: 8
 weight: 180
 techKind: boss
@@ -14,7 +14,6 @@ techNode: full-anatomy
 header: default.png
 ---
 
-> **Scaffold note.** The boss capstone. Re-walk the cold-open trace from chapter 1 — same packet, same Anya, same H200 box — but this time annotate every step with the chapter and the component. The article is structured as a *vertical timeline* with side-notes; pages should feel like a labelled diagram.
 
 ## Frame
 

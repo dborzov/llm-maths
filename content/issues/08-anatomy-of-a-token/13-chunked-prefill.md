@@ -1,12 +1,12 @@
 ---
 title: "Slicing The Prefill"
-description: ""
+description: "A 100K-token prefill can monopolize the GPU for seconds, wrecking inter-token latency for every other user in the batch. Chunked prefill slices long prompts into token-budget-sized pieces that interleave with decode steps, giving every user bounded and predictable time-to-first-token."
 topics: []
 tags: []
 theme: cream
 math: true
 draft: false
-date: 2026-05-16T05:05:29-04:00
+date: 2026-05-16T15:00:00-04:00
 issue: 8
 weight: 130
 techKind: mainline
@@ -14,7 +14,6 @@ techNode: chunked-prefill
 header: default.png
 ---
 
-> **Scaffold note.** Chunked prefill is the *fairness* mechanism — without it, one long-context request can wreck inter-token latency for every other user in the batch. With it, every step has bounded compute and predictable wall time.
 
 ## Anchor and Frame
 

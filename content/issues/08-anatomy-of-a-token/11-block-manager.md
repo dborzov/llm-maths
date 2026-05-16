@@ -1,12 +1,12 @@
 ---
 title: "The Block Manager"
-description: ""
+description: "The block manager is the data structure that implements paging for KV caches: a free-block pool, per-request block tables with reference counting, and an O(1) LRU eviction policy. Understanding it is the key to understanding how prefix caching, copy-on-write, and KV offload work at the implementation level."
 topics: []
 tags: []
 theme: cream
 math: true
 draft: false
-date: 2026-05-16T05:05:29-04:00
+date: 2026-05-16T14:00:00-04:00
 issue: 8
 weight: 110
 techKind: primer
@@ -14,7 +14,6 @@ techNode: block-manager
 header: default.png
 ---
 
-> **Scaffold note.** A primer for the curious. The block manager is the engineering inside the paging abstraction. Cover the data structures and the O(1) operations that make it fast enough to run on the critical path.
 
 ## Anchor and Frame
 

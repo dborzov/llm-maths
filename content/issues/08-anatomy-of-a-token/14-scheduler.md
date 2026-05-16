@@ -1,12 +1,12 @@
 ---
 title: "The Token Budget"
-description: ""
+description: "vLLM V1's scheduler is deliberately simple: allocate a fixed token budget per step, let each request spend it on prefill or decode tokens, and let the prefill-versus-decode distinction dissolve. This chapter traces the years of layered complexity that one clean abstraction quietly deletes."
 topics: []
 tags: []
 theme: teal
 math: true
 draft: false
-date: 2026-05-16T05:05:29-04:00
+date: 2026-05-16T15:30:00-04:00
 issue: 8
 weight: 140
 techKind: mainline
@@ -14,7 +14,6 @@ techNode: scheduler
 header: default.png
 ---
 
-> **Scaffold note.** The conceptual climax of the engine half of the issue. vLLM V1's scheduler is *deliberately simple*. The point of the chapter is to make the reader feel the years of layered complexity that the V1 design quietly deletes.
 
 ## Anchor and Frame
 

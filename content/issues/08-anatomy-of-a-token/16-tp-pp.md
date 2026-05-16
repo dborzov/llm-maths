@@ -1,12 +1,12 @@
 ---
 title: "Splitting the Model"
-description: ""
+description: "Tensor parallelism splits weight matrices column-by-column across GPUs, with one all-reduce per transformer block. Pipeline parallelism stacks layers across machines. Both fit large models into finite HBM — the trade-offs are latency (all-reduce cost) versus throughput (micro-batch fill)."
 topics: []
 tags: []
 theme: teal
 math: true
 draft: false
-date: 2026-05-16T05:05:29-04:00
+date: 2026-05-16T16:30:00-04:00
 issue: 8
 weight: 160
 techKind: primer
@@ -14,7 +14,6 @@ techNode: tp-pp
 header: default.png
 ---
 
-> **Scaffold note.** Primer chapter on multi-GPU parallelism. Goal: enough to follow the disagg P/D chapter, not a full distributed-training treatise. Stay focused on *inference* — TP for decode, PP for big models / prefill, expert parallel for MoE, briefly mention sequence parallel.
 
 ## Anchor and Frame
 

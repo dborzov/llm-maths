@@ -1,12 +1,12 @@
 ---
 title: "The Draft Trick"
-description: ""
+description: "Decode is so bandwidth-bound that verifying 32 candidate tokens costs the same memory pass as verifying 1. Run a small draft model to speculate several tokens ahead, then let the target model verify all of them in a single forward pass — a 2–3× throughput gain if the draft is even modestly accurate."
 topics: []
 tags: []
 theme: cream
 math: true
 draft: false
-date: 2026-05-16T05:05:29-04:00
+date: 2026-05-16T16:00:00-04:00
 issue: 8
 weight: 150
 techKind: mainline
@@ -14,7 +14,6 @@ techNode: speculative-decoding
 header: default.png
 ---
 
-> **Scaffold note.** The cleanest illustration of "the roofline determines the architecture." Decode is so bandwidth-bound that verifying 32 candidate tokens costs the same memory pass as verifying 1. The whole field discovered this independently around 2023; by 2025 every serving system has it.
 
 ## Anchor and Frame
 

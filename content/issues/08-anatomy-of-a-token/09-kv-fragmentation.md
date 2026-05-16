@@ -1,12 +1,12 @@
 ---
 title: "The KV Cache Is A Heap"
-description: ""
+description: "The KV cache grows one token at a time, to unpredictable lengths, and must be contiguous in naive implementations. The result is a fragmented heap that wastes 60–80 percent of HBM in the worst case. This is the problem PagedAttention was built to solve."
 topics: []
 tags: []
 theme: cream
 math: true
 draft: false
-date: 2026-05-16T05:05:21-04:00
+date: 2026-05-16T13:00:00-04:00
 issue: 8
 weight: 90
 techKind: mainline
@@ -14,7 +14,6 @@ techNode: kv-fragmentation
 header: default.png
 ---
 
-> **Scaffold note.** The *problem* chapter. Sets up the answer (PagedAttention) in the next chapter. Goal: by the end, the reader should *feel the pain* of allocating KV cache for variable-length sequences in contiguous tensor land.
 
 ## Anchor and Frame
 

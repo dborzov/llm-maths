@@ -1,12 +1,12 @@
 ---
 title: "Two Houses, Divided"
-description: ""
+description: "Prefill needs high compute throughput; decode needs high memory bandwidth. Running them on the same GPU is the worst of both worlds. Disaggregated prefill/decode splits the job across two purpose-built machine types connected by an RDMA KV-cache fabric — DistServe, Mooncake, and NIXL are the field's answers."
 topics: []
 tags: []
 theme: cream
 math: true
 draft: false
-date: 2026-05-16T05:05:29-04:00
+date: 2026-05-16T17:00:00-04:00
 issue: 8
 weight: 170
 techKind: mainline
@@ -14,7 +14,6 @@ techNode: disagg-pd
 header: default.png
 ---
 
-> **Scaffold note.** The 2025 architectural rethink. After chunked prefill and the V1 scheduler dissolved the prefill/decode boundary inside one engine, the field had a counter-thought: *put them on separate machines entirely*. Prefill and decode have such different hardware needs that mixing them on the same SKU is the worst of both worlds.
 
 ## Anchor and Frame
 

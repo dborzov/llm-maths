@@ -1,12 +1,12 @@
 ---
 title: "The Pyramid of Speed"
-description: ""
+description: "Registers, shared memory, L2, and HBM: four orders of magnitude of bandwidth separate the fastest storage from the slowest. Every inference optimization is a trade along this pyramid — capacity for speed, or speed for capacity."
 topics: []
 tags: []
 theme: cream
 math: true
 draft: false
-date: 2026-05-16T05:05:21-04:00
+date: 2026-05-16T10:00:00-04:00
 issue: 8
 weight: 30
 techKind: primer
@@ -14,7 +14,6 @@ techNode: memory-hierarchy
 header: default.png
 ---
 
-> **Scaffold note.** The most important primer in the issue. If the reader leaves with one image, it should be the pyramid: registers at the top (tiny, fast), HBM at the bottom (huge, slow), four orders of magnitude separating them. Every later chapter trades capacity for speed within this pyramid.
 
 ## Anchor and Frame
 

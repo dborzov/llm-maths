@@ -6,7 +6,7 @@ tags: [vllm, gpu, inference, serving, cold-open]
 theme: cream
 math: true
 draft: false
-date: 2026-05-16T05:05:21-04:00
+date: 2026-05-16T09:00:00-04:00
 issue: 8
 weight: 10
 techKind: mainline
@@ -14,7 +14,6 @@ techNode: cold-open
 header: default.png
 ---
 
-> **Scaffold note.** This is the *cold-open* — the narrative entrance, not in the tech tree. Goal: name every component the issue will dissect, in the right order, without explaining any of them yet. The reader leaves this chapter with a *map* and a *question*, not an answer.
 
 ## Anchor and Frame
 

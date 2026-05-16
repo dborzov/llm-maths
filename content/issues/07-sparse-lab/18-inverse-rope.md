@@ -6,7 +6,7 @@ tags: [inverse-rope, rope, shared-kv, mqa, translation-invariance, csa, hca]
 theme: cream
 math: true
 draft: false
-date: 2026-05-16T11:50:00-04:00
+date: 2026-05-16T12:10:00-04:00
 issue: 7
 weight: 180
 techKind: primer

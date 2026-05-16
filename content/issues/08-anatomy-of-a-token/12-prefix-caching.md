@@ -1,12 +1,12 @@
 ---
 title: "Reusing The Prologue"
-description: ""
+description: "Every conversation in a deployment starts with the same system prompt. Hashing prefix blocks and re-using their physical memory turns a full prefill into a cache hit — the single highest-leverage optimization in modern LLM serving, and an almost embarrassingly simple one in hindsight."
 topics: []
 tags: []
 theme: teal
 math: true
 draft: false
-date: 2026-05-16T05:05:29-04:00
+date: 2026-05-16T14:30:00-04:00
 issue: 8
 weight: 120
 techKind: mainline
@@ -14,7 +14,6 @@ techNode: prefix-caching
 header: default.png
 ---
 
-> **Scaffold note.** The dollar-per-day chapter. Prefix caching is the single highest-leverage server-side optimization in modern LLM serving — bigger TTFT win than every other engine optimization combined. Yet it's almost embarrassingly simple in hindsight.
 
 ## Anchor and Frame
 

@@ -1,12 +1,12 @@
 ---
 title: "Two Phases, Two Personalities"
-description: ""
+description: "Prefill is compute-bound; decode is bandwidth-bound. They have opposite hardware personalities, opposite bottlenecks, and opposite optimal batch sizes — and every major inference engine decision flows from that asymmetry."
 topics: []
 tags: []
 theme: cream
 math: true
 draft: false
-date: 2026-05-16T05:05:21-04:00
+date: 2026-05-16T12:00:00-04:00
 issue: 8
 weight: 70
 techKind: mainline
@@ -14,7 +14,7 @@ techNode: prefill-vs-decode
 header: default.png
 ---
 
-> **Scaffold note.** First *mainline* chapter. The narrative entry point into the engine story.
+
 >
 > microGPT issue 05 already has [Prefill vs Decode](/llm-maths/issues/05-microgpt-unfolded/14-prefill-decode/) as a transformer-internals chapter. This article is the **systems-engineering re-framing** of the same split: two workloads with opposite arithmetic intensity, fighting over the same hardware, with different latency metrics.
 

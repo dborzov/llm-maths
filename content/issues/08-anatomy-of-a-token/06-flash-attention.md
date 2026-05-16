@@ -1,12 +1,12 @@
 ---
 title: "Attention In SRAM"
-description: ""
+description: "FlashAttention is the most important inference kernel of the decade: it computes attention without ever materializing the score matrix in HBM, using tiled SRAM computation and online softmax. It is also the direct skeleton that PagedAttention extends with paged indirection."
 topics: []
 tags: []
 theme: teal
 math: true
 draft: false
-date: 2026-05-16T05:05:21-04:00
+date: 2026-05-16T11:30:00-04:00
 issue: 8
 weight: 60
 techKind: primer
@@ -14,7 +14,6 @@ techNode: flash-attention
 header: default.png
 ---
 
-> **Scaffold note.** The last GPU primer. FlashAttention is the *kernel* that the rest of the issue takes for granted. It deserves one chapter because (a) it's the most influential single kernel in transformer history and (b) PagedAttention is built on the same tiling skeleton with paged indirection added.
 
 ## Anchor and Frame
 

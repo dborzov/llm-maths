@@ -1,12 +1,12 @@
 ---
 title: "Launches Aren't Free"
-description: ""
+description: "A decode-step forward pass launches hundreds of tiny CUDA kernels. The Python scheduling overhead can eat the entire latency budget before the GPU starts. CUDA graphs capture the launch sequence and replay it as a single GPU command, dropping CPU-side overhead from milliseconds to microseconds."
 topics: []
 tags: []
 theme: cream
 math: true
 draft: false
-date: 2026-05-16T05:05:21-04:00
+date: 2026-05-16T11:00:00-04:00
 issue: 8
 weight: 50
 techKind: primer
@@ -14,7 +14,6 @@ techNode: cuda-graphs
 header: default.png
 ---
 
-> **Scaffold note.** Primer on the *other* memory-system bottleneck — the CPU-side cost of launching work. The short version: a forward pass at decode time is hundreds of tiny kernels, and the Python launch loop can eat the latency budget before the GPU even starts. CUDA graphs and `torch.compile`'s piecewise compilation are the field's answer.
 
 ## Anchor and Frame
 
