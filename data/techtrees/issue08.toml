@@ -1,0 +1,369 @@
+# Schema and conventions: see docs/techtrees-schema.md.
+# Canonical example: data/techtrees/issue03.toml.
+
+title  = "Tech tree — Anatomy of a Token"
+width  = 1700
+height = 1140
+node_w = 200
+node_h = 70
+
+# ---------------------------------------------------------------
+# Layout (top → bottom; arrows point UPWARD prerequisite → user):
+#
+# Row 1 (y=80)    — boss: the full annotated request path
+# Row 2 (y=220)   — top-level serving topologies: disagg P/D, speculative
+# Row 3 (y=360)   — unified scheduler (V1 insight)
+# Row 4 (y=500)   — engine mainline: prefix-caching, chunked-prefill
+# Row 5 (y=640)   — PagedAttention + block manager + TP/PP wing
+# Row 6 (y=780)   — fragmentation problem + continuous batching
+# Row 7 (y=920)   — prefill-vs-decode (top of GPU-primer funnel)
+# Row 8 (y=1060)  — GPU primer foundation: roofline, flash-attn,
+#                   cuda-graphs, memory-hierarchy, gpu-anatomy
+# ---------------------------------------------------------------
+
+# =========================================================================
+# Row 1: boss capstone — the full annotated walk-through
+# =========================================================================
+
+[[nodes]]
+id    = "full-anatomy"
+label = "The Full Anatomy\nof a Token"
+kind  = "boss"
+x     = 850
+y     = 80
+link  = "18-full-anatomy/"
+sub   = "ch.18"
+
+# =========================================================================
+# Row 2: top-level serving topologies that sit just below the boss
+# =========================================================================
+
+[[nodes]]
+id    = "disagg-pd"
+label = "Two Houses,\nDivided (P/D split)"
+kind  = "mainline"
+x     = 400
+y     = 220
+link  = "17-disagg-pd/"
+sub   = "ch.17"
+
+[[nodes]]
+id    = "speculative-decoding"
+label = "The Draft Trick\n(Speculative Decode)"
+kind  = "mainline"
+x     = 1300
+y     = 220
+link  = "15-speculative-decoding/"
+sub   = "ch.15"
+
+# =========================================================================
+# Row 3: the unified scheduler — the engine's traffic cop
+# =========================================================================
+
+[[nodes]]
+id    = "scheduler"
+label = "The Token Budget\n(V1 Scheduler)"
+kind  = "mainline"
+x     = 850
+y     = 360
+link  = "14-scheduler/"
+sub   = "ch.14"
+
+# =========================================================================
+# Row 4: engine-level optimizations
+# =========================================================================
+
+[[nodes]]
+id    = "prefix-caching"
+label = "Reusing the\nPrologue"
+kind  = "mainline"
+x     = 550
+y     = 500
+link  = "12-prefix-caching/"
+sub   = "ch.12"
+
+[[nodes]]
+id    = "chunked-prefill"
+label = "Slicing the\nPrefill"
+kind  = "mainline"
+x     = 1150
+y     = 500
+link  = "13-chunked-prefill/"
+sub   = "ch.13"
+
+# =========================================================================
+# Row 5: PagedAttention + its support data structures + parallelism wing
+# =========================================================================
+
+[[nodes]]
+id    = "paged-attention"
+label = "Borrowing\nfrom 1965"
+kind  = "mainline"
+x     = 700
+y     = 640
+link  = "10-paged-attention/"
+sub   = "ch.10"
+
+[[nodes]]
+id    = "block-manager"
+label = "The Block\nManager"
+kind  = "primer"
+x     = 1000
+y     = 640
+link  = "11-block-manager/"
+sub   = "ch.11"
+
+[[nodes]]
+id    = "tp-pp"
+label = "Splitting\nthe Model"
+kind  = "primer"
+x     = 1450
+y     = 640
+link  = "16-tp-pp/"
+sub   = "ch.16"
+
+# =========================================================================
+# Row 6: the fragmentation problem + the continuous-batching breakthrough
+# =========================================================================
+
+[[nodes]]
+id    = "kv-fragmentation"
+label = "The KV Cache\nIs a Heap"
+kind  = "mainline"
+x     = 700
+y     = 780
+link  = "09-kv-fragmentation/"
+sub   = "ch.9"
+
+[[nodes]]
+id    = "continuous-batching"
+label = "The Conveyor\nBelt (Orca)"
+kind  = "mainline"
+x     = 1100
+y     = 780
+link  = "08-continuous-batching/"
+sub   = "ch.8"
+
+# =========================================================================
+# Row 7: prefill-vs-decode — top of the GPU-primer funnel
+# =========================================================================
+
+[[nodes]]
+id    = "prefill-vs-decode"
+label = "Two Phases,\nTwo Personalities"
+kind  = "mainline"
+x     = 900
+y     = 920
+link  = "07-prefill-vs-decode/"
+sub   = "ch.7"
+
+# =========================================================================
+# Row 8: GPU primer foundation row
+# =========================================================================
+
+[[nodes]]
+id    = "flash-attention"
+label = "Attention\nin SRAM"
+kind  = "primer"
+x     = 250
+y     = 1060
+link  = "06-flash-attention/"
+sub   = "ch.6"
+
+[[nodes]]
+id    = "roofline"
+label = "The\nRoofline"
+kind  = "primer"
+x     = 550
+y     = 1060
+link  = "04-roofline/"
+sub   = "ch.4"
+
+[[nodes]]
+id    = "memory-hierarchy"
+label = "The Pyramid\nof Speed"
+kind  = "primer"
+x     = 850
+y     = 1060
+link  = "03-memory-hierarchy/"
+sub   = "ch.3"
+
+[[nodes]]
+id    = "cuda-graphs"
+label = "Launches\nAren't Free"
+kind  = "primer"
+x     = 1150
+y     = 1060
+link  = "05-cuda-graphs/"
+sub   = "ch.5"
+
+[[nodes]]
+id    = "gpu-anatomy"
+label = "Inside the\nSilicon"
+kind  = "primer"
+x     = 1450
+y     = 1060
+link  = "02-gpu-anatomy/"
+sub   = "ch.2"
+
+# =========================================================================
+# Edges — arrows point UPWARD from prerequisite to user
+# =========================================================================
+
+# ---- GPU foundation: gpu-anatomy + memory-hierarchy are the bedrock ----
+
+[[edges]]
+from = "gpu-anatomy"
+to   = "memory-hierarchy"
+
+[[edges]]
+from = "gpu-anatomy"
+to   = "cuda-graphs"
+
+[[edges]]
+from = "memory-hierarchy"
+to   = "roofline"
+
+[[edges]]
+from = "memory-hierarchy"
+to   = "flash-attention"
+
+# ---- GPU foundation feeds the prefill/decode story ----
+
+[[edges]]
+from = "roofline"
+to   = "prefill-vs-decode"
+
+[[edges]]
+from = "flash-attention"
+to   = "prefill-vs-decode"
+
+# ---- The prefill/decode split is the gateway to engine-level concerns ----
+
+[[edges]]
+from = "prefill-vs-decode"
+to   = "continuous-batching"
+
+[[edges]]
+from = "prefill-vs-decode"
+to   = "kv-fragmentation"
+
+# ---- Continuous batching exposes fragmentation; both feed paged attention ----
+
+[[edges]]
+from = "continuous-batching"
+to   = "kv-fragmentation"
+
+[[edges]]
+from = "kv-fragmentation"
+to   = "paged-attention"
+
+[[edges]]
+from = "flash-attention"
+to   = "paged-attention"
+
+# ---- Paged attention requires a block manager ----
+
+[[edges]]
+from = "paged-attention"
+to   = "block-manager"
+
+# ---- Block manager + paging enable prefix caching ----
+
+[[edges]]
+from = "block-manager"
+to   = "prefix-caching"
+
+[[edges]]
+from = "paged-attention"
+to   = "prefix-caching"
+
+# ---- Continuous batching + prefill/decode tension motivate chunked prefill ----
+
+[[edges]]
+from = "continuous-batching"
+to   = "chunked-prefill"
+
+[[edges]]
+from = "prefill-vs-decode"
+to   = "chunked-prefill"
+
+# ---- All four engine optimizations roll up into the unified scheduler ----
+
+[[edges]]
+from = "paged-attention"
+to   = "scheduler"
+
+[[edges]]
+from = "prefix-caching"
+to   = "scheduler"
+
+[[edges]]
+from = "chunked-prefill"
+to   = "scheduler"
+
+[[edges]]
+from = "cuda-graphs"
+to   = "scheduler"
+
+# ---- Tensor / pipeline parallelism is its own wing into disagg-pd ----
+
+[[edges]]
+from = "gpu-anatomy"
+to   = "tp-pp"
+
+[[edges]]
+from = "tp-pp"
+to   = "disagg-pd"
+
+# ---- Speculative decoding pays its rent thanks to the bandwidth-bound regime ----
+
+[[edges]]
+from = "roofline"
+to   = "speculative-decoding"
+
+[[edges]]
+from = "scheduler"
+to   = "speculative-decoding"
+
+# ---- Disaggregated prefill/decode is built on the scheduler + paged KV ----
+
+[[edges]]
+from = "scheduler"
+to   = "disagg-pd"
+
+[[edges]]
+from = "paged-attention"
+to   = "disagg-pd"
+
+# ---- Everything walks up to the boss ----
+
+[[edges]]
+from = "disagg-pd"
+to   = "full-anatomy"
+
+[[edges]]
+from = "scheduler"
+to   = "full-anatomy"
+
+[[edges]]
+from = "speculative-decoding"
+to   = "full-anatomy"
+
+# =========================================================================
+# Legend
+# =========================================================================
+
+[[legend]]
+kind  = "boss"
+label = "Boss capstone"
+
+[[legend]]
+kind  = "mainline"
+label = "Mainline narrative"
+
+[[legend]]
+kind  = "primer"
+label = "Tutorial primer"
+
+caption = 'Arrows point <em>upward</em> from prerequisite to user. Read the cold-open (<a href="01-cold-open/">ch.1</a>) first — it follows a single HTTP request through every layer the tree will unpack. The bottom row (<a href="02-gpu-anatomy/">GPU anatomy</a> → <a href="03-memory-hierarchy/">memory hierarchy</a>) is the bedrock; everything in the engine and serving layers hangs off it. The capstone (<a href="18-full-anatomy/">ch.18</a>) returns to the cold-open packet and re-annotates it with every component named.'
