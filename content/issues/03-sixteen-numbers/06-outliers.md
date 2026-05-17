@@ -24,7 +24,7 @@ He ran the quantization. The model output collapsed.
 
 Not "got 3% worse on benchmarks" collapsed — *catastrophically* collapsed. Perplexity exploded by orders of magnitude. The model could no longer construct coherent sentences. It was as if quantization had erased something essential.
 
-What followed is one of the cleanest examples of empirical detective work in modern ML. Dettmers wrote about it later in a [long blog post](https://timdettmers.com/2022/08/17/llm-int8-and-emergent-features/) that you should read if you can. We'll summarize the detective story here.
+What followed is one of the cleanest examples of empirical detective work in modern ML. The story was eventually written up as the **LLM.int8()** paper ({{< cite text="Dettmers et al., 2022" url="https://arxiv.org/abs/2208.07339" kind="paper" >}}); Dettmers also wrote about it on his blog at {{< cite text="timdettmers.com (Aug 2022)" url="https://timdettmers.com/2022/08/17/llm-int8-and-emergent-features/" kind="blog" >}} — both worth reading. We'll summarize the detective story here.
 
 ## What Naïve INT8 Does
 

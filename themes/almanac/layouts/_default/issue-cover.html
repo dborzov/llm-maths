@@ -3,7 +3,12 @@
   <header class="issue-cover-header">
     {{ with .Params.issue }}<div class="issue-cover-eyebrow">Issue #{{ . }}</div>{{ end }}
     <h1 class="issue-cover-title">{{ .Title }}</h1>
-    {{ with .Description }}<p class="issue-cover-description">{{ . }}</p>{{ end }}
+    {{ with .Description }}
+    <aside class="issue-cover-description" role="note" aria-label="Issue description">
+      <span class="issue-cover-description-tag">In this issue</span>
+      <p>{{ . }}</p>
+    </aside>
+    {{ end }}
 
     {{ $headerImg := "" }}
     {{ with .Params.header }}{{ $headerImg = printf "header-illustrations/%s" . }}{{ end }}
@@ -21,22 +26,36 @@
   {{ $articles := .Pages.ByWeight }}
   {{ if not $articles }}{{ $articles = .Pages }}{{ end }}
   {{ if $articles }}
-  <section class="issue-cover-articles">
-    <h2 class="issue-cover-section-title">All Articles In This Issue</h2>
+  <section class="issue-cover-articles" id="reading-list">
+    <h2 class="issue-cover-section-title">Recommended Reading Order</h2>
+    <p class="issue-cover-section-intro">A linear walk through every article in this issue. Each title expands to reveal its section outline — tap to jump straight into a chapter.</p>
     <ol class="issue-cover-article-list">
       {{ range $articles }}
       <li class="issue-cover-article-item">
-        <a href="{{ .RelPermalink }}" class="issue-cover-article-link">
-          <span class="issue-cover-article-num">{{ .Params.techNode | default "" }}</span>
-          <span class="issue-cover-article-body">
-            <span class="issue-cover-article-title">{{ .Title }}</span>
-            {{ with .Description }}<span class="issue-cover-article-desc">{{ . }}</span>{{ end }}
-            <span class="issue-cover-article-meta">
-              <span>{{ .ReadingTime }} min</span>
-              {{ with .Params.techKind }}<span class="issue-cover-article-kind issue-cover-article-kind--{{ . }}">{{ . }}</span>{{ end }}
+        <details class="issue-cover-article-detail">
+          <summary class="issue-cover-article-summary">
+            <span class="issue-cover-article-num" aria-hidden="true"></span>
+            <span class="issue-cover-article-body">
+              <a href="{{ .RelPermalink }}" class="issue-cover-article-title">{{ .Title }}</a>
+              {{ with .Description }}<span class="issue-cover-article-desc">{{ . }}</span>{{ end }}
+              <span class="issue-cover-article-meta">
+                <span>{{ .ReadingTime }} min</span>
+                {{ with .Params.techKind }}<span class="issue-cover-article-kind issue-cover-article-kind--{{ . }}">{{ . }}</span>{{ end }}
+                <a href="{{ .RelPermalink }}" class="issue-cover-article-open">Read →</a>
+              </span>
             </span>
-          </span>
-        </a>
+            <span class="issue-cover-article-chev" aria-hidden="true" title="Show section outline">▾</span>
+          </summary>
+          <div class="issue-cover-article-toc">
+            {{ $toc := .TableOfContents }}
+            {{ if $toc }}
+              {{ $rewrite := printf "href=\"%s#" .RelPermalink }}
+              {{ replaceRE "href=\"#" $rewrite (string $toc) | safeHTML }}
+            {{ else }}
+              <p class="issue-cover-article-toc-empty">No section outline — <a href="{{ .RelPermalink }}">read the chapter</a>.</p>
+            {{ end }}
+          </div>
+        </details>
       </li>
       {{ end }}
     </ol>

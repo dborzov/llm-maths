@@ -1,0 +1,29 @@
+{{- /*
+  cite shortcode — render an external reference (paper, blog post, webpage,
+  documentation) as a small, marked-up link with an "ext" badge so readers
+  can spot it as off-site.
+
+  Usage (positional, terse — the common case):
+      {{< cite "LLM.int8()" "https://arxiv.org/abs/2208.07339" >}}
+
+  Or named (use this when the link text contains commas):
+      {{< cite text="Dettmers et al., 2022"
+               url="https://arxiv.org/abs/2208.07339"
+               kind="paper" >}}
+
+  kind  one of: paper | blog | doc | repo | site   (default: site)
+*/ -}}
+
+{{- $text := .Get "text" -}}
+{{- $url  := .Get "url"  -}}
+{{- if not $text -}}{{- $text = .Get 0 -}}{{- end -}}
+{{- if not $url  -}}{{- $url  = .Get 1 -}}{{- end -}}
+{{- $kind := .Get "kind" | default "site" -}}
+
+{{- if and $text $url -}}
+<a class="cite cite--{{ $kind }}" href="{{ $url }}" target="_blank" rel="noopener external">
+  <span class="cite-text">{{ $text | safeHTML }}</span><span class="cite-badge" aria-hidden="true">{{ $kind }}</span><span class="visually-hidden"> (external link)</span>
+</a>
+{{- else -}}
+  {{- errorf "cite shortcode in %s: missing text or url (got text=%q url=%q)" .Page.RelPermalink $text $url -}}
+{{- end -}}
