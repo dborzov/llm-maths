@@ -1,17 +1,12 @@
 /**
  * widgets.js — wire up interactive bits of the techtree and timeline
- * shortcodes:
- *
- *   • Tech tree: clicking the Graph/List buttons swaps which pane is
- *     visible. On mobile (<700px) we default to the list pane.
- *
- *   • Timeline: a small dot-row reflects scroll position on narrow screens
- *     so readers can see how many milestones remain.
+ * shortcodes, plus a few small UX helpers on the issue cover page.
  */
-document.addEventListener('DOMContentLoaded', () => {
-  /* ---------- Issue-cover article list: keep "Open →" link clean ----------
-     A link inside <summary> normally still toggles the parent <details>.
-     For the explicit "Open →" link we want a pure navigation. */
+function setupWidgets() {
+  /* ---------- Issue-cover article list: keep title / Read links clean ----
+     Anchors inside <summary> normally still toggle the parent <details>.
+     For the explicit title link and "Read →" button we want pure
+     navigation, so swallow propagation. */
   document.querySelectorAll('.issue-cover-article-open, a.issue-cover-article-title').forEach(a => {
     a.addEventListener('click', (e) => e.stopPropagation());
   });
@@ -46,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const events = timeline.querySelectorAll('.timeline-event');
     if (!rail || events.length === 0) return;
 
-    /* Build a dot per event — purely a position indicator on mobile. */
     const dots = document.createElement('div');
     dots.className = 'timeline-dots';
     dots.setAttribute('aria-hidden', 'true');
@@ -88,4 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (ev) ev.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     });
   });
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', setupWidgets);
+} else {
+  setupWidgets();
+}

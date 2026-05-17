@@ -47,6 +47,11 @@ Thumbs.db
 # Scratch directory for unsorted authoring material
 raw-sort-me/
 
+# Playwright UI test artifacts
+tests/node_modules/
+tests/test-results/
+tests/playwright-report/
+
 # this file contains the secret Google API API_KEY
 # NEVER git commit this file
 api_key.sh

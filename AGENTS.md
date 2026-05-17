@@ -303,6 +303,10 @@ make plots-force     # re-run all pyplot blocks regardless of cache
 make clean           # delete public/ + resources/
 make clean-all       # + delete plot cache and generated PNGs
 
+make test-ui-install # one-time: install Playwright + chromium under tests/
+make test-ui         # run the mobile/tablet/desktop UI test suite
+make test-ui-debug   # same, with PWDEBUG inspector
+
 make new-issue NN=04 SLUG=foo TITLE='Foo'
 make new-article ISSUE=04-foo SLUG=cold-open TITLE='Cold Open' KIND=mainline
 ```
@@ -316,9 +320,11 @@ After every significant change (CSS, templates, content, scripts):
 1. `make validate` — must exit clean.
 2. `uv run scripts/run_plots.py` — must exit with 0 errors.
 3. `hugo` — must build cleanly.
-4. `make preview` and visually inspect affected pages at `http://localhost:1313/llm-maths/`.
+4. **If you touched CSS, JS, templates, shortcodes, or layouts:**
+   `make test-ui` — must exit with 0 failed. See [`docs/dev.md`](docs/dev.md) → "Testing" and [`tests/README.md`](tests/README.md) for the work-until-green loop, when to add tests, and the spec-file conventions.
+5. `make preview` and visually inspect affected pages at `http://localhost:1313/llm-maths/`.
 
-`make build` chains 1–3 in order, so it's the single command to run for a full pre-deploy check.
+`make build` chains 1–3 in order, so it's the single command to run for a full pre-deploy check. The Playwright suite (step 4) is separate because it's slower (~45s) and only relevant when interactive code changed — but it is **not optional** when it is.
 
 ## The Two Themes
 
@@ -371,3 +377,4 @@ Never use bare `pip install`. Never use `apt` for Python packages.
 - "What does a good tech tree look like?" → see `data/techtrees/issue03.toml`; schema in `docs/techtrees-schema.md`.
 - "What does a good timeline look like?" → see `data/timelines/quantization2019to2026.toml`; schema in `docs/timelines-schema.md`.
 - "What conventions am I forgetting?" → run `make validate`. It tells you.
+- "Is my UI change actually working on phones?" → `make test-ui`. If you changed anything interactive and didn't add a test for the new behaviour (or for the bug you just fixed), you're not done. Full loop in [`docs/dev.md`](docs/dev.md) → "Testing".
