@@ -42,7 +42,10 @@
       </div>
 
       {{ with .Description }}
-      <p class="article-description">{{ . }}</p>
+      <aside class="article-description" role="note" aria-label="Article description">
+        <span class="article-description-tag">In this article</span>
+        <p>{{ . }}</p>
+      </aside>
       {{ end }}
     </header>
 

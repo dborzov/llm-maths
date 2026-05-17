@@ -489,15 +489,52 @@ hr {
     color: var(--text-body);
 }
 
+/* The "In this article" lead-in panel. Marked as a visually distinct
+   role-note so it doesn't read like another body paragraph. */
 .article-description {
-    font-size: 1.125rem;
-    line-height: 1.7;
-    background: var(--color-cream);
+    position: relative;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    background:
+        linear-gradient(135deg,
+            color-mix(in srgb, var(--accent-3) 35%, var(--bg-surface)) 0%,
+            color-mix(in srgb, var(--accent-3) 18%, var(--bg-surface)) 100%);
     border: var(--border);
+    border-left: 8px solid var(--accent-1);
     box-shadow: var(--shadow-pop);
-    padding: 1rem 1.25rem;
-    margin: 1.25rem 0 0;
-    max-width: 65ch;
+    padding: 1.1rem 1.3rem 1.1rem 1.4rem;
+    margin: 1.5rem 0 0;
+    max-width: 70ch;
+    overflow: hidden;
+}
+.article-description::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(var(--color-ink) 1px, transparent 0);
+    background-size: 6px 6px;
+    opacity: 0.05;
+}
+.article-description > p {
+    margin: 0;
+    position: relative;
+    font-weight: 500;
+    color: var(--color-ink);
+}
+.article-description-tag {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.62rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    background: var(--accent-1);
+    color: var(--color-white);
+    border: 2px solid var(--color-ink);
+    padding: 0.15em 0.55em;
+    margin-bottom: 0.6rem;
+    position: relative;
 }
 
 .article-header-illustration {
@@ -1475,23 +1512,9 @@ hr {
         padding: 2rem 1.25rem;
     }
 
-    .toc-sidebar {
-        position: static;
-        max-height: none;
-    }
-
-    .toc {
-        margin-bottom: 1.25rem;
-    }
-
-    /* On narrow screens the TOC turns into a collapsed strip — readers can
-       open it on demand via the existing toc-toggle button. */
-    .toc-body {
-        display: none;
-    }
-    .toc.toc-open .toc-body {
-        display: block;
-    }
+    /* On narrow screens the TOC sticks to the top of the viewport so readers
+       can always reach it; the toggle bar collapses the panel by default
+       (see the .toc-toggle/.toc-panel rules near the end of this file). */
 }
 
 @media (max-width: 500px) {
@@ -1576,10 +1599,49 @@ hr {
 }
 
 .issue-cover-description {
-    font-size: 1.2rem;
+    position: relative;
+    font-size: 1.15rem;
     line-height: 1.55;
-    opacity: 0.85;
-    max-width: 60ch;
+    background:
+        linear-gradient(135deg,
+            color-mix(in srgb, var(--accent-3) 35%, var(--bg-surface)) 0%,
+            color-mix(in srgb, var(--accent-3) 15%, var(--bg-surface)) 100%);
+    border: var(--border);
+    border-left: 10px solid var(--accent-1);
+    box-shadow: var(--shadow-pop-lg);
+    padding: 1.1rem 1.4rem 1.2rem 1.5rem;
+    margin: 1.25rem 0 0;
+    max-width: 64ch;
+    overflow: hidden;
+}
+.issue-cover-description::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(var(--color-ink) 1px, transparent 0);
+    background-size: 6px 6px;
+    opacity: 0.05;
+}
+.issue-cover-description > p {
+    margin: 0;
+    position: relative;
+    font-weight: 500;
+    color: var(--color-ink);
+}
+.issue-cover-description-tag {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.66rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    background: var(--accent-1);
+    color: var(--color-white);
+    border: 2px solid var(--color-ink);
+    padding: 0.18em 0.6em;
+    margin-bottom: 0.6rem;
+    position: relative;
 }
 
 .issue-cover-illustration {
@@ -1753,6 +1815,16 @@ hr {
     letter-spacing: 0.03em;
     text-transform: uppercase;
     color: var(--text-body);
+    text-decoration: none;
+    align-self: flex-start;
+}
+a.issue-cover-article-title {
+    border-bottom: 3px solid transparent;
+    transition: color 0.1s, border-color 0.1s;
+}
+a.issue-cover-article-title:hover {
+    color: var(--accent-1);
+    border-bottom-color: var(--accent-1);
 }
 
 .issue-cover-article-desc {
@@ -3098,5 +3170,571 @@ a.wiki-link:hover {
 .meta-wiki-category {
     font-size: 0.8rem;
     font-family: var(--font-mono);
+}
+
+/* ============================================================
+   SECTION NUMBERING — fold.js injects `.section-number` spans
+   into H2/H3 headings (and matching `.toc-number` spans into
+   TOC links) so readers see where they are at a glance.
+   ============================================================ */
+
+.section-number {
+    display: inline-block;
+    margin-right: 0.5em;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--accent-1);
+    letter-spacing: 0.02em;
+    /* Counterweight the Bangers display font's optical heaviness. */
+    transform: translateY(-1px);
+}
+.article-content summary .section-number {
+    color: var(--accent-1);
+    font-size: 0.85em;
+}
+.article-content h3 .section-number {
+    color: var(--accent-4);
+    font-size: 0.85em;
+}
+
+.toc-number {
+    display: inline-block;
+    min-width: 2.1em;
+    margin-right: 0.45em;
+    font-family: var(--font-mono);
+    font-size: 0.78em;
+    font-weight: 700;
+    color: var(--accent-1);
+    opacity: 0.8;
+}
+.toc-body nav ul ul .toc-number {
+    color: var(--accent-4);
+    opacity: 0.7;
+}
+
+/* ============================================================
+   TOC TOGGLE — pill-shaped header that becomes a sticky
+   floating bar on mobile.
+   ============================================================ */
+
+.toc-toggle {
+    width: 100%;
+    background: var(--accent-1);
+    color: var(--color-cream);
+    border: var(--border);
+    border-bottom-width: 2px;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.55rem 0.85rem;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: none;
+    transition: background 0.1s;
+}
+.toc-toggle:hover {
+    background: color-mix(in srgb, var(--accent-1) 88%, var(--color-ink));
+}
+.toc-toggle:focus-visible {
+    outline: 3px solid var(--accent-3);
+    outline-offset: 2px;
+}
+
+.toc-toggle-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 18px;
+    height: 14px;
+}
+.toc-toggle-icon span {
+    display: block;
+    height: 2px;
+    background: var(--color-cream);
+    border-radius: 1px;
+}
+.toc-toggle-icon span:nth-child(1) { width: 100%; }
+.toc-toggle-icon span:nth-child(2) { width: 75%; }
+.toc-toggle-icon span:nth-child(3) { width: 90%; }
+
+.toc-toggle-text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem;
+    line-height: 1.1;
+}
+.toc-toggle-label {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.toc-toggle-current {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.toc-toggle-current:empty::before {
+    content: "Jump to a section";
+    opacity: 0.7;
+    font-weight: 500;
+}
+
+.toc-toggle-chev {
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    line-height: 1;
+    transition: transform 0.15s;
+}
+.toc.toc-open .toc-toggle-chev { transform: rotate(180deg); }
+
+.toc-panel {
+    overflow: hidden;
+}
+
+/* On wide screens the panel is always open and the chevron disappears —
+   the toggle decays into a non-interactive header. */
+@media (min-width: 1025px) {
+    .toc-toggle {
+        cursor: default;
+        pointer-events: none;
+    }
+    .toc-toggle-chev,
+    .toc-toggle-current { display: none; }
+    .toc-toggle-icon { display: none; }
+    .toc-panel { display: block !important; }
+}
+
+/* ============================================================
+   MOBILE TOC — sticky floating bar (≤1024px).
+   ============================================================ */
+
+@media (max-width: 1024px) {
+    .toc-sidebar {
+        position: sticky;
+        top: 0.6rem;
+        z-index: 50;
+        max-height: none;
+        overflow: visible;
+        margin-bottom: 1rem;
+    }
+    .toc {
+        background: var(--bg-toc);
+        border: var(--border);
+        box-shadow: var(--shadow-pop);
+    }
+
+    /* Collapsed: only the toggle bar is visible. Open: a dropdown
+       panel with a scrollable list of links. */
+    .toc-panel {
+        max-height: 0;
+        transition: max-height 0.18s ease;
+        background: var(--bg-toc);
+    }
+    .toc.toc-open .toc-panel {
+        max-height: min(70vh, 540px);
+        overflow-y: auto;
+        border-top: 2px solid var(--color-ink);
+    }
+    .toc-body {
+        padding: 0.6rem 0;
+    }
+    .toc-body nav a {
+        padding: 0.55rem 0.9rem;   /* bigger tap target */
+        font-size: 0.9rem;
+    }
+    .toc-body nav ul ul a {
+        padding-left: 2rem;
+        font-size: 0.82rem;
+    }
+
+    /* On mobile, hide the side-meta block by default — it duplicates
+       front-matter that's already in the breadcrumb. Keep it visible
+       below the article instead. */
+    .toc-meta {
+        display: none;
+    }
+}
+
+/* ============================================================
+   ISSUE COVER — nested reading list (per article details).
+   ============================================================ */
+
+.issue-cover-section-intro {
+    max-width: 65ch;
+    margin: 0.25rem 0 1rem;
+    font-size: 0.95rem;
+    opacity: 0.8;
+}
+
+.issue-cover-article-detail {
+    border: var(--border);
+    background: var(--bg-surface);
+    box-shadow: var(--shadow-pop);
+    overflow: hidden;
+    transition: box-shadow 0.1s, transform 0.1s;
+}
+.issue-cover-article-detail[open] {
+    box-shadow: var(--shadow-pop-lg);
+}
+
+.issue-cover-article-summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--bg-surface);
+    user-select: none;
+    transition: background 0.1s;
+}
+.issue-cover-article-summary::-webkit-details-marker { display: none; }
+.issue-cover-article-summary:hover {
+    background: color-mix(in srgb, var(--accent-3) 14%, var(--bg-surface));
+}
+.issue-cover-article-detail[open] > .issue-cover-article-summary {
+    border-bottom: 2px solid var(--color-ink);
+    background: color-mix(in srgb, var(--accent-3) 18%, var(--bg-surface));
+}
+
+.issue-cover-article-chev {
+    flex-shrink: 0;
+    margin-left: auto;
+    font-size: 1.1rem;
+    color: var(--accent-1);
+    transition: transform 0.15s;
+}
+.issue-cover-article-detail[open] > .issue-cover-article-summary .issue-cover-article-chev {
+    transform: rotate(180deg);
+}
+
+.issue-cover-article-toc {
+    padding: 0.9rem 1.25rem 1.1rem;
+    background: var(--bg-page);
+    border-top: 1px dashed color-mix(in srgb, var(--color-ink) 25%, transparent);
+    font-size: 0.9rem;
+}
+.issue-cover-article-toc nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.issue-cover-article-toc nav > ul {
+    display: grid;
+    gap: 0.15rem;
+}
+.issue-cover-article-toc nav li {
+    margin: 0;
+    padding: 0;
+}
+.issue-cover-article-toc nav li::before { display: none !important; }
+.issue-cover-article-toc nav a {
+    display: block;
+    padding: 0.3rem 0.55rem;
+    text-decoration: none;
+    color: var(--color-ink);
+    border-left: 3px solid color-mix(in srgb, var(--accent-1) 30%, transparent);
+    font-size: 0.85rem;
+    line-height: 1.35;
+    transition: background 0.1s, color 0.1s, border-color 0.1s;
+}
+.issue-cover-article-toc nav a:hover {
+    background: color-mix(in srgb, var(--accent-1) 12%, transparent);
+    border-left-color: var(--accent-1);
+    color: var(--accent-1);
+}
+.issue-cover-article-toc nav ul ul a {
+    padding-left: 1.6rem;
+    font-size: 0.78rem;
+    opacity: 0.85;
+    border-left-color: color-mix(in srgb, var(--accent-4) 30%, transparent);
+}
+.issue-cover-article-toc-empty {
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.7;
+}
+
+.issue-cover-article-meta {
+    flex-wrap: wrap;
+}
+.issue-cover-article-open {
+    margin-left: auto;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-1);
+    text-decoration: none;
+    padding: 0.15rem 0.5rem;
+    border: 2px solid var(--accent-1);
+    background: var(--bg-surface);
+    transition: background 0.1s, color 0.1s;
+}
+.issue-cover-article-open:hover {
+    background: var(--accent-1);
+    color: var(--color-white);
+}
+
+/* On smaller screens, let the row breathe vertically. */
+@media (max-width: 700px) {
+    .issue-cover-article-summary {
+        flex-wrap: wrap;
+        gap: 0.6rem;
+    }
+    .issue-cover-article-num {
+        min-width: 2rem;
+        font-size: 1.25rem;
+    }
+    .issue-cover-article-chev {
+        order: 99;
+    }
+}
+
+/* ============================================================
+   TECH TREE — toolbar + list view
+   ============================================================ */
+
+.techtree-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.5rem 0.9rem;
+    border-bottom: var(--border);
+    background: color-mix(in srgb, var(--accent-3) 22%, var(--bg-surface));
+}
+.techtree-toolbar-label {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+}
+.techtree-view-toggle {
+    display: inline-flex;
+    border: 2px solid var(--color-ink);
+    background: var(--bg-surface);
+    box-shadow: 2px 2px 0 var(--color-ink);
+}
+.techtree-view-btn {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    padding: 0.3rem 0.85rem;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-ink);
+    cursor: pointer;
+    border-right: 2px solid var(--color-ink);
+}
+.techtree-view-btn:last-child { border-right: 0; }
+.techtree-view-btn.is-active {
+    background: var(--accent-1);
+    color: var(--color-white);
+}
+
+.techtree-hint {
+    margin: 0;
+    padding: 0.4rem 1rem 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: color-mix(in srgb, var(--color-ink) 55%, transparent);
+    text-align: center;
+}
+@media (min-width: 901px) {
+    .techtree-hint { display: none; }
+}
+
+.techtree-list {
+    list-style: none !important;
+    padding: 0.9rem !important;
+    margin: 0 !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.7rem;
+    background: var(--bg-surface);
+}
+.techtree-list[hidden],
+.techtree-graph[hidden] { display: none !important; }
+.techtree-list-item {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+.techtree-list-item::before { display: none !important; }
+
+.techtree-list-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.65rem 0.85rem;
+    background: var(--bg-surface);
+    border: 2px solid var(--color-ink);
+    box-shadow: 3px 3px 0 var(--color-ink);
+    text-decoration: none;
+    color: var(--color-ink);
+    transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+    position: relative;
+}
+.techtree-list-link:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--color-ink);
+    background: color-mix(in srgb, var(--accent-3) 25%, var(--bg-surface));
+    color: var(--color-ink);
+}
+.techtree-list-link--inert {
+    opacity: 0.6;
+    cursor: default;
+    box-shadow: none;
+}
+.techtree-list-link--inert:hover {
+    transform: none;
+    box-shadow: none;
+    background: var(--bg-surface);
+}
+.techtree-list-sub {
+    font-family: var(--font-body);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-1);
+}
+.techtree-list-label {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    color: var(--color-ink);
+}
+.techtree-list-kind {
+    align-self: flex-start;
+    margin-top: 0.25rem;
+    font-family: var(--font-body);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.05em 0.45em;
+    border: 2px solid var(--color-ink);
+    color: var(--color-ink);
+    background: var(--bg-page);
+}
+.techtree-list-item--mainline .techtree-list-link { background: color-mix(in srgb, var(--accent-1) 14%, var(--bg-surface)); }
+.techtree-list-item--mainline .techtree-list-kind { background: var(--accent-1); color: var(--color-white); }
+.techtree-list-item--boss .techtree-list-link     { background: color-mix(in srgb, var(--accent-3) 35%, var(--bg-surface)); }
+.techtree-list-item--boss .techtree-list-kind     { background: var(--accent-3); }
+.techtree-list-item--primer .techtree-list-link   { background: var(--bg-surface); }
+.techtree-list-item--primer .techtree-list-kind   { background: var(--accent-2); color: var(--color-white); }
+.techtree-list-item--external .techtree-list-link { background: color-mix(in srgb, var(--accent-2) 12%, var(--bg-surface)); }
+.techtree-list-item--external .techtree-list-kind { background: var(--accent-2); color: var(--color-white); }
+
+/* ============================================================
+   TIMELINE — scroll-snap + dot indicator on mobile
+   ============================================================ */
+
+@media (max-width: 700px) {
+    .timeline-rail {
+        scroll-snap-type: x mandatory;
+        scroll-padding: 0 12%;
+    }
+    .timeline-event {
+        scroll-snap-align: center;
+    }
+}
+
+.timeline-dots {
+    display: none;
+    gap: 0.45rem;
+    justify-content: center;
+    padding: 0.6rem;
+    border-top: 2px dashed color-mix(in srgb, var(--color-ink) 25%, transparent);
+    background: var(--bg-page);
+}
+@media (max-width: 700px) {
+    .timeline-dots { display: flex; }
+}
+.timeline-dot {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--color-ink);
+    background: var(--bg-surface);
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.12s, transform 0.12s;
+}
+.timeline-dot.is-active {
+    background: var(--accent-1);
+    transform: scale(1.15);
+}
+
+/* ============================================================
+   CITE shortcode — external reference link with kind badge
+   ============================================================ */
+
+.cite {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.32em;
+    padding: 0 0.15em;
+    text-decoration: none;
+    color: var(--accent-2);
+    border-bottom: 2px dotted var(--accent-2);
+    transition: color 0.1s, background 0.1s, border-color 0.1s;
+}
+.cite:hover {
+    color: var(--color-ink);
+    background: color-mix(in srgb, var(--accent-3) 35%, transparent);
+    border-bottom-style: solid;
+}
+.cite-text {
+    font-weight: 600;
+}
+.cite-badge {
+    font-family: var(--font-body);
+    font-size: 0.6em;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.1em 0.35em;
+    border: 1.5px solid currentColor;
+    color: var(--accent-2);
+    transform: translateY(-0.15em);
+}
+.cite--paper .cite-badge { color: var(--accent-1); border-color: var(--accent-1); }
+.cite--blog  .cite-badge { color: var(--accent-2); border-color: var(--accent-2); }
+.cite--doc   .cite-badge { color: var(--accent-4); border-color: var(--accent-4); }
+.cite--repo  .cite-badge { color: var(--color-ink); border-color: var(--color-ink); }
+.cite--site  .cite-badge { color: var(--accent-2); border-color: var(--accent-2); }
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
 }
 
