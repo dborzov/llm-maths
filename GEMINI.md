@@ -31,6 +31,8 @@ This project is a serialized collection of long-form deep-learning mathematics a
 - `make build`: Validates, runs plots, and builds the production site to `public/`.
 - `make validate`: Runs the project-specific linter (`scripts/validate.py`) to check front matter, links, and conventions.
 - `make plots`: Executes `pyplot` blocks in markdown files (cached in `scripts/.plot_cache.json`).
+- `make test-ui-install`: One-time install of Playwright + chromium under `tests/`.
+- `make test-ui`: Runs the Playwright UI test suite (mobile / tablet / desktop). Required after any CSS, JS, template, or shortcode change. Loop until 0 failed — see [`docs/dev.md`](docs/dev.md) → "Testing".
 - `make clean-all`: Resets the build environment, including plot caches.
 
 ## Development Conventions
@@ -74,6 +76,10 @@ All articles must use the variable names and architectural structure of the **mi
 - `scripts/`: Python tools for validation, plotting, and scaffolding.
 - `static/header-illustrations/`: WebP hero images (see `docs/components/hero.md`).
 - `static/plots/`: Generated PNGs from `pyplot` blocks (gitignored).
+- `tests/`: Playwright UI test suite (mobile / tablet / desktop). See [`tests/README.md`](tests/README.md).
 
 ## Validation
 `make validate` is mandatory before committing. It enforces front matter fields, tech tree integrity, cross-link resolution, and `pyplot` constraints.
+
+## UI Testing (Playwright)
+`make test-ui` is mandatory before committing any change to CSS, JS, templates, or shortcodes. The suite pins down tap, click, keyboard, and viewport-breakpoint behaviour across mobile / tablet / desktop. When fixing a UI bug, add a test that reproduces the bug before fixing it. Loop until 0 failed — never weaken or skip assertions to make the red go away. Full operating procedure (when to add tests, what to add, work-until-green loop) in [`docs/dev.md`](docs/dev.md) → "Testing" and [`tests/README.md`](tests/README.md).

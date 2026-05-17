@@ -23,6 +23,7 @@ Live at: `https://borzov.ca/llm-maths/`
 | microGPT naming rules + wiki shortcode usage | [`docs/microgpt-contract.md`](docs/microgpt-contract.md) + [`docs/wiki.md`](docs/wiki.md) |
 | Wiki / glossary — add or update concept stubs | [`docs/wiki.md`](docs/wiki.md) |
 | CSS, templates, scripts, validation, CI, pitfalls | [`docs/dev.md`](docs/dev.md) |
+| **Adding or running UI tests** | [`tests/README.md`](tests/README.md) + [`docs/dev.md`](docs/dev.md) → "Testing" |
 | Tech tree TOML schema | [`docs/techtrees-schema.md`](docs/techtrees-schema.md) |
 | Timeline TOML schema | [`docs/timelines-schema.md`](docs/timelines-schema.md) |
 
@@ -35,12 +36,62 @@ make validate        # lint front matter, tech tree, links, pyplot rules, wiki
 make preview         # validate + plots + serve at localhost:1313/llm-maths/
 make build           # validate + plots + minified build to public/
 
+make test-ui-install # one-time: install Playwright + chromium under tests/
+make test-ui         # run the mobile/tablet/desktop UI test suite
+
 uv run scripts/wiki_index.py search <term>   # find the right wiki slug for a concept
 uv run scripts/wiki_index.py show <slug>     # full record + usages
 uv run scripts/wiki_index.py lint            # wiki-only warnings (also run by make validate)
 ```
 
 Full command reference in [`docs/dev.md`](docs/dev.md).
+
+---
+
+## Testing — Non-Negotiable Rules
+
+The `tests/` directory holds a Playwright UI test suite that pins down
+how every interactive component is supposed to behave. Treat the suite
+the way you treat `make validate`: **a green test run is part of
+"done", not an optional extra**.
+
+**When to run tests:**
+
+- Before you call any task involving CSS, templates, JS, shortcodes, or
+  layouts complete — `make test-ui` must pass on all three viewports.
+- After every fix you push in response to a regression — the failure
+  that motivated the fix should now be covered by a test.
+
+**When to add or expand tests:**
+
+- You add a new interactive component or shortcode → add a new
+  `tests/ui/<feature>.spec.js` covering its tap, click, keyboard,
+  and viewport-breakpoint behaviour.
+- You fix a UI bug → write a test that fails on the unfixed code and
+  passes after your fix. This is non-optional. If the bug was "tapping
+  on X did nothing", the test taps on X and asserts the expected state
+  change. See `tests/ui/toc.spec.js` for the pattern that the iOS
+  Safari toggle bug spawned.
+- You change a layout breakpoint or a JS handler → update the relevant
+  spec to assert the new behaviour, don't loosen it to "make it pass".
+- The user's intent in the prompt implies a contract ("must work on
+  phones", "every node should be tappable", "all UI is expandable")
+  → translate that intent into a test before declaring the task
+  complete.
+
+**Work-until-green loop.** If `make test-ui` reports failures:
+
+1. Read the failure (Playwright prints the call log + a trace path).
+2. Open the failing page in `make preview` and reproduce it manually.
+3. Fix the underlying code — never weaken or skip the assertion to
+   "make the red go away".
+4. Re-run `make test-ui`. Repeat until 0 failed.
+5. If you cannot make a test pass and you believe the test is wrong,
+   stop and ask the user — don't quietly delete or disable it.
+
+The test infrastructure, file conventions, and worked examples live in
+[`tests/README.md`](tests/README.md). The "Testing" section of
+[`docs/dev.md`](docs/dev.md) explains the loop in more depth.
 
 ---
 
@@ -52,3 +103,4 @@ Full command reference in [`docs/dev.md`](docs/dev.md).
 - "What does a good timeline look like?" → see `data/timelines/quantization2019to2026.toml`; schema in [`docs/timelines-schema.md`](docs/timelines-schema.md).
 - "What conventions am I forgetting?" → run `make validate`. It tells you.
 - "What's the canonical slug/name for this concept?" → `uv run scripts/wiki_index.py search <term>`. If not found, add a wiki page per [`docs/wiki.md`](docs/wiki.md).
+- "Is my UI change actually working on phones?" → `make test-ui`. If you changed anything interactive and didn't add a test for it, you're not done.
