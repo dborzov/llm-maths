@@ -1,0 +1,14 @@
+{
+  "name": "llm-maths-ui-tests",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Playwright UI tests for the LLM Maths Comics Hugo site.",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "PWDEBUG=1 playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0"
+  }
+}
