@@ -44,7 +44,7 @@ uv run scripts/generate_hero.py content/issues/NN-slug/article.md
 The script will:
 1. Detect the theme (Cream/Teal) and set the color palette.
 2. Request a **21:9** image from the API.
-3. Perform a high-quality **center-crop to 1600x600**.
+3. Perform a high-quality **center-crop to 800×300** (see sizing note below).
 4. Save the output as a **WebP** file in `static/header-illustrations/`.
 
 ### 4. Updating Front Matter
@@ -55,7 +55,21 @@ header: slug-of-article.webp
 ```
 
 ## Maintenance
-- **Resizing:** The script handles resizing automatically, but if you do it manually, use `LANCZOS` resampling and save as WebP (quality 85) to keep file sizes < 300KB.
-- **Colors:** 
-    - **Cream:** Vibrant Pop Pink (`#FF007F`) and warm Cream (`#FDF5E6`).
-    - **Teal:** Golden Yellow (`#FFD700`) and deep Dark Teal (`#007A7A`).
+
+### Target Image Size
+Hero images are decorative ("visual sugar") — high fidelity is not needed.
+
+- **Target dimensions:** 800 × 300 px (8:3 aspect ratio)
+- **Format:** WebP, quality 80
+- **Max file size target:** ~100 KB
+
+If you need to manually resize/re-encode existing images, use the Pillow script pattern:
+```python
+from PIL import Image
+with Image.open('in.webp') as img:
+    img.convert('RGB').resize((800, 300), Image.LANCZOS).save('out.webp', 'WEBP', quality=80, method=6)
+```
+
+### Colors
+- **Cream:** Vibrant Pop Pink (`#FF007F`) and warm Cream (`#FDF5E6`).
+- **Teal:** Golden Yellow (`#FFD700`) and deep Dark Teal (`#007A7A`).

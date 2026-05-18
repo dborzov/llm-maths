@@ -2,10 +2,6 @@
 # Issue 07 — The Sparse Lab (DeepSeek's attention arc: MLA → DSA → CSA/HCA → V4)
 
 title  = "Tech tree — The Sparse Lab"
-width  = 1660
-height = 1050
-node_w = 200
-node_h = 72
 
 # ---------------------------------------------------------------
 # Row 1 (y=80)   — Boss capstone
@@ -21,8 +17,6 @@ node_h = 72
 id    = "decoupling"
 label = "Decoupling\nMemory From Time"
 kind  = "boss"
-x     = 830
-y     = 80
 link  = "10-decoupling/"
 sub   = "ch.10"
 
@@ -32,8 +26,6 @@ sub   = "ch.10"
 id    = "mla-rewind"
 label = "MLA:\nThe First Cut"
 kind  = "mainline"
-x     = 150
-y     = 240
 link  = "02-mla-rewind/"
 sub   = "ch.2"
 
@@ -41,8 +33,6 @@ sub   = "ch.2"
 id    = "quadratic-wall"
 label = "The Other Wall"
 kind  = "mainline"
-x     = 350
-y     = 240
 link  = "03-quadratic-wall/"
 sub   = "ch.3"
 
@@ -50,8 +40,6 @@ sub   = "ch.3"
 id    = "sparse-detour"
 label = "Sparse Attention's\nLost Decade"
 kind  = "mainline"
-x     = 550
-y     = 240
 link  = "04-sparse-detour/"
 sub   = "ch.4"
 
@@ -59,8 +47,6 @@ sub   = "ch.4"
 id    = "nsa-paper"
 label = "The NSA Blueprint"
 kind  = "mainline"
-x     = 750
-y     = 240
 link  = "05-nsa-paper/"
 sub   = "ch.5"
 
@@ -68,8 +54,6 @@ sub   = "ch.5"
 id    = "lightning-indexer"
 label = "Lightning Strikes\nTwice (DSA)"
 kind  = "mainline"
-x     = 950
-y     = 240
 link  = "06-lightning-indexer/"
 sub   = "ch.6"
 
@@ -77,8 +61,6 @@ sub   = "ch.6"
 id    = "csa"
 label = "Compressed Sparse\nAttention (V4)"
 kind  = "mainline"
-x     = 1150
-y     = 240
 link  = "07-csa/"
 sub   = "ch.7"
 
@@ -86,8 +68,6 @@ sub   = "ch.7"
 id    = "hca"
 label = "Heavily Compressed\nAttention (V4)"
 kind  = "mainline"
-x     = 1350
-y     = 240
 link  = "08-hca/"
 sub   = "ch.8"
 
@@ -95,8 +75,6 @@ sub   = "ch.8"
 id    = "hybrid-pattern"
 label = "The Hybrid\nPattern (V4)"
 kind  = "mainline"
-x     = 1550
-y     = 240
 link  = "09-hybrid-pattern/"
 sub   = "ch.9"
 
@@ -106,8 +84,6 @@ sub   = "ch.9"
 id    = "cache-engineering"
 label = "Engineering\nthe V4 Cache"
 kind  = "primer"
-x     = 150
-y     = 420
 link  = "19-cache-engineering/"
 sub   = "ch.19"
 
@@ -115,8 +91,6 @@ sub   = "ch.19"
 id    = "topk-routing"
 label = "Hard Top-k\nWithout Crying"
 kind  = "primer"
-x     = 480
-y     = 420
 link  = "13-topk-and-routing/"
 sub   = "ch.13"
 
@@ -124,8 +98,6 @@ sub   = "ch.13"
 id    = "indexer-pattern"
 label = "The Indexer\nPattern"
 kind  = "primer"
-x     = 750
-y     = 420
 link  = "14-indexer-pattern/"
 sub   = "ch.14"
 
@@ -133,8 +105,6 @@ sub   = "ch.14"
 id    = "token-compression"
 label = "Compressing m\nTokens Into One"
 kind  = "primer"
-x     = 1050
-y     = 420
 link  = "12-token-compression/"
 sub   = "ch.12"
 
@@ -142,8 +112,6 @@ sub   = "ch.12"
 id    = "mixed-precision-kv"
 label = "Mixed-Precision\nKV Cache"
 kind  = "primer"
-x     = 1350
-y     = 420
 link  = "15-mixed-precision-kv/"
 sub   = "ch.15"
 
@@ -153,8 +121,6 @@ sub   = "ch.15"
 id    = "attention-compute"
 label = "The Compute Bill\nof Attention"
 kind  = "primer"
-x     = 350
-y     = 600
 link  = "11-attention-compute/"
 sub   = "ch.11"
 
@@ -162,8 +128,6 @@ sub   = "ch.11"
 id    = "empirical-sparsity"
 label = "Where Attention\nIs Sparse"
 kind  = "primer"
-x     = 750
-y     = 600
 link  = "16-empirical-sparsity/"
 sub   = "ch.16"
 
@@ -171,8 +135,6 @@ sub   = "ch.16"
 id    = "attention-sink"
 label = "Attention Sinks\nRevisited"
 kind  = "primer"
-x     = 1150
-y     = 600
 link  = "17-attention-sink/"
 sub   = "ch.17"
 
@@ -180,8 +142,6 @@ sub   = "ch.17"
 id    = "inverse-rope"
 label = "Inverse RoPE:\nShared K and V"
 kind  = "primer"
-x     = 1450
-y     = 600
 link  = "18-inverse-rope/"
 sub   = "ch.18"
 
@@ -191,29 +151,21 @@ sub   = "ch.18"
 id    = "ext-mla-canon"
 label = "MLA (Issue 5\nch.19)"
 kind  = "external"
-x     = 150
-y     = 770
 
 [[nodes]]
 id    = "ext-attention"
 label = "Multi-head Attention\n(Issue 5 ch.8–9)"
 kind  = "external"
-x     = 480
-y     = 770
 
 [[nodes]]
 id    = "ext-kv-pruning"
 label = "KV Cache Pruning\n(Issue 6)"
 kind  = "external"
-x     = 950
-y     = 770
 
 [[nodes]]
 id    = "ext-mixed-precision"
 label = "FP4/FP8 formats\n(Issue 3)"
 kind  = "external"
-x     = 1350
-y     = 770
 
 # =========================================================================
 # Edges — arrows point UPWARD from prerequisite → dependent

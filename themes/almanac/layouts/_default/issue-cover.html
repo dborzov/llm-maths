@@ -14,7 +14,7 @@
     {{ with .Params.header }}{{ $headerImg = printf "header-illustrations/%s" . }}{{ end }}
     {{ with $headerImg }}
     <div class="issue-cover-illustration">
-      <img src="{{ . | relURL }}" alt="{{ $.Title }}">
+      <img src="{{ . | relURL }}" alt="{{ $.Title }}" loading="lazy">
     </div>
     {{ end }}
   </header>

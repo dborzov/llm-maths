@@ -240,11 +240,6 @@ hr {
     line-height: 1.1;
     color: var(--text-nav);
 }
-.nav-brand-text small {
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    opacity: 0.6;
-}
 
 /* Nav links */
 .nav-links {
@@ -272,27 +267,6 @@ hr {
     border-color: var(--color-ink);
 }
 
-/* Search */
-.nav-search {
-    margin-left: auto;
-}
-
-.search-input {
-    border: var(--border);
-    padding: 0.4rem 0.9rem;
-    background: var(--bg-page);
-    color: var(--text-body);
-    font-size: 0.875rem;
-    width: 220px;
-    outline: none;
-    transition: background 0.1s;
-}
-.search-input:focus {
-    background: var(--accent-3);
-}
-.search-input::placeholder {
-    opacity: 0.5;
-}
 
 /* ============================================================
    SITE MAIN
@@ -1415,8 +1389,178 @@ hr {
     max-width: 60ch;
 }
 
-.recent-articles {
-    margin-top: 3rem;
+/* ============================================================
+   HOME ISSUES GRID
+   Three-up issue showcase on homepage and 404 page.
+   ============================================================ */
+
+.home-issues {
+    margin-top: 3.5rem;
+}
+
+.home-issues-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+}
+
+.home-issue-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-surface);
+    border: var(--border);
+    box-shadow: var(--shadow-pop);
+    text-decoration: none;
+    color: var(--text-body);
+    overflow: hidden;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+.home-issue-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 7px 7px 0 var(--color-ink);
+    color: var(--text-body);
+}
+.home-issue-card:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--color-ink);
+}
+
+.home-issue-card-img {
+    width: 100%;
+    line-height: 0;
+    border-bottom: var(--border);
+}
+.home-issue-card-img img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+}
+
+.home-issue-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.25rem;
+    flex: 1;
+}
+
+.home-issue-card-num {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent-1);
+}
+
+.home-issue-card-title {
+    font-size: 1.15rem;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.home-issue-card-desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    opacity: 0.8;
+    flex: 1;
+    margin: 0;
+}
+
+.home-issue-card-cta {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-1);
+    margin-top: 0.25rem;
+}
+
+@media (max-width: 768px) {
+    .home-issues-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .home-issue-card-img img {
+        height: 160px;
+    }
+}
+
+/* ============================================================
+   404 PAGE
+   ============================================================ */
+
+.notfound-container {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+}
+
+.notfound-hero {
+    text-align: center;
+    padding: 4rem 1rem;
+    border: var(--border);
+    background: var(--bg-surface);
+    box-shadow: var(--shadow-pop-lg);
+    margin-bottom: 4rem;
+    position: relative;
+    overflow: hidden;
+}
+.notfound-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(var(--color-ink) 1px, transparent 0);
+    background-size: 6px 6px;
+    opacity: 0.04;
+    pointer-events: none;
+}
+
+.notfound-code {
+    font-family: var(--font-display);
+    font-size: clamp(6rem, 20vw, 14rem);
+    line-height: 0.85;
+    letter-spacing: 0.05em;
+    color: var(--accent-1);
+    text-shadow: 6px 6px 0 var(--color-ink);
+    position: relative;
+}
+
+.notfound-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 1rem 0 0.75rem;
+    position: relative;
+}
+
+.notfound-body {
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 52ch;
+    margin: 0 auto 2rem;
+    opacity: 0.8;
+    position: relative;
+}
+
+.notfound-hero .btn-primary,
+.notfound-hero .btn-secondary {
+    position: relative;
+}
+
+.notfound-hero .btn-secondary {
+    margin-left: 1rem;
+}
+
+.notfound-issues-title {
+    font-size: 1.25rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
 }
 
 /* ============================================================
@@ -1547,9 +1691,6 @@ hr {
         padding: 0.65rem 0.9rem;
     }
 
-    .nav-search {
-        display: none;
-    }
 }
 
 @media (max-width: 600px) {
@@ -1971,12 +2112,17 @@ a.issue-cover-article-title:hover {
     position: relative;
 }
 
+.techtree-canvas {
+    /* Container that techtree.js renders the SVG into. */
+    min-height: 200px;
+}
+
 .techtree-svg {
     display: block;
     width: 100%;
     height: auto;
-    min-width: 760px;
-    max-width: 100%;
+    min-width: 600px;
+    max-width: none;
 }
 
 .techtree-node {

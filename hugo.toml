@@ -1,9 +1,9 @@
-baseURL = "https://dborzov.github.io/llm-maths/"
+baseURL = "https://borzov.ca/llm-maths/"
 languageCode = "en-us"
-title = "LLM Maths Comics"
+title = "Borzov's LLM Maths"
 theme = "almanac"
 
-enableGitInfo = false
+enableGitInfo = true
 buildFuture = true
 
 [taxonomies]
@@ -37,12 +37,16 @@ buildFuture = true
     ordered    = false
 
 [outputs]
-  home    = ["HTML"]
-  section = ["HTML"]
+  home    = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
   page    = ["HTML"]
 
+[sitemap]
+  changefreq = "weekly"
+  priority   = 0.5
+
 [params]
-  description  = "Long-form deep-learning mathematics articles — comic-style."
+  description  = "Long-form articles on the maths behind LLMs — written to build real intuition, not just surface-level familiarity."
   author       = "borzov.ca"
   githubRepo   = "https://github.com/dborzov/llm-maths"
   katexVersion = "0.16.11"

@@ -1,10 +1,6 @@
 # Schema, conventions, and the full field reference: see docs/techtrees-schema.md.
 
 title  = "Tech tree — The Geometry of Meaning"
-width  = 960
-height = 680
-node_w = 200
-node_h = 70
 
 # ---------------------------------------------------------------
 # Row 1 (y=80)   — boss capstone
@@ -19,8 +15,6 @@ node_h = 70
 id    = "inheritance"
 label = "The Living\nInheritance"
 kind  = "boss"
-x     = 550
-y     = 80
 link  = "07-inheritance/"
 sub   = "ch.7"
 
@@ -30,8 +24,6 @@ sub   = "ch.7"
 id    = "meaning-as-geometry"
 label = "Words That Know\nTheir Place"
 kind  = "mainline"
-x     = 550
-y     = 250
 link  = "06-meaning-as-geometry/"
 sub   = "ch.6"
 
@@ -41,8 +33,6 @@ sub   = "ch.6"
 id    = "one-hot-problem"
 label = "Why Every Word\nWas An Island"
 kind  = "mainline"
-x     = 200
-y     = 420
 link  = "02-one-hot-problem/"
 sub   = "ch.2"
 
@@ -50,8 +40,6 @@ sub   = "ch.2"
 id    = "word2vec"
 label = "Embarrassingly\nSimple"
 kind  = "mainline"
-x     = 620
-y     = 420
 link  = "04-word2vec/"
 sub   = "ch.4"
 
@@ -61,8 +49,6 @@ sub   = "ch.4"
 id    = "dot-product"
 label = "The Geometry\nof Agreement"
 kind  = "primer"
-x     = 380
-y     = 590
 link  = "03-dot-product/"
 sub   = "ch.3"
 
@@ -70,8 +56,6 @@ sub   = "ch.3"
 id    = "high-dimensional"
 label = "The Stranger\nCountry"
 kind  = "primer"
-x     = 760
-y     = 590
 link  = "05-high-dimensional/"
 sub   = "ch.5"
 

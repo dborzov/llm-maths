@@ -185,9 +185,11 @@ Never use bare `pip install`. Never use `apt` for Python packages.
 
 ## Hugo Notes
 
-- `enableGitInfo = false` in `hugo.toml`. CI passes `--enableGitInfo` explicitly.
+- `enableGitInfo = true` in `hugo.toml`. CI also passes `--enableGitInfo`.
 - `baseURL = "https://borzov.ca/llm-maths/"` — all URLs include the `/llm-maths/` prefix.
-- CSS via Hugo Pipes: `resources.Get | minify | fingerprint`.
+- **CSS pipeline:** `themes/almanac/assets/css/main.css` → Hugo Pipes `minify | fingerprint` → served as `/css/main.<hash>.css`.
+- **JS pipeline:** `themes/almanac/assets/js/*.js` → Hugo Pipes `minify | fingerprint` per file. Add new JS files here (not in `static/js/`). The old `static/js/` copies are kept for backwards compatibility but are unused by Hugo.
+- **KaTeX:** loaded from jsDelivr CDN only on pages with `math: true` front matter. Do not add `.IsHome` back — the homepage has no math.
 - The `prompts/` section lives **outside** `content/` (at repo root) — Hugo never sees it.
 
 ---

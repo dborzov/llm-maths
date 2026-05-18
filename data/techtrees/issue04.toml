@@ -2,10 +2,6 @@
 # Canonical example: data/techtrees/issue03.toml.
 
 title  = "Tech tree — The Heatmap That Lied"
-width  = 1500
-height = 940
-node_w = 200
-node_h = 70
 
 # ---------------------------------------------------------------
 # Row 1 (y=80)   — boss capstone (the 2026 layered eval stack)
@@ -23,8 +19,6 @@ node_h = 70
 id    = "eval-stack-2026"
 label = "The 2026\nLayered Stack"
 kind  = "boss"
-x     = 800
-y     = 80
 link  = "16-eval-stack-2026/"
 sub   = "ch.16"
 
@@ -34,8 +28,6 @@ sub   = "ch.16"
 id    = "cold-open"
 label = "The Heatmap\nThat Lied"
 kind  = "mainline"
-x     = 140
-y     = 240
 link  = "01-cold-open/"
 sub   = "ch.1"
 
@@ -43,8 +35,6 @@ sub   = "ch.1"
 id    = "saturation"
 label = "When Everyone\nScored 99"
 kind  = "mainline"
-x     = 380
-y     = 240
 link  = "05-saturation/"
 sub   = "ch.5"
 
@@ -52,8 +42,6 @@ sub   = "ch.5"
 id    = "needle-to-graph"
 label = "One Pass\nIsn't Enough"
 kind  = "mainline"
-x     = 620
-y     = 240
 link  = "08-needle-to-graph/"
 sub   = "ch.8"
 
@@ -61,8 +49,6 @@ sub   = "ch.8"
 id    = "context-rot-fix"
 label = "The 4× Jump"
 kind  = "mainline"
-x     = 860
-y     = 240
 link  = "11-context-rot-fix/"
 sub   = "ch.11"
 
@@ -70,8 +56,6 @@ sub   = "ch.11"
 id    = "agentic-turn"
 label = "A Day's Worth\nof Work"
 kind  = "mainline"
-x     = 1100
-y     = 240
 link  = "14-agentic-turn/"
 sub   = "ch.14"
 
@@ -81,8 +65,6 @@ sub   = "ch.14"
 id    = "latent-structure"
 label = "Vodrahalli's\nChisel"
 kind  = "primer"
-x     = 500
-y     = 400
 link  = "09-latent-structure/"
 sub   = "ch.9"
 
@@ -90,8 +72,6 @@ sub   = "ch.9"
 id    = "graph-traversal"
 label = "BFS as\nReasoning"
 kind  = "primer"
-x     = 700
-y     = 400
 link  = "10-graph-traversal/"
 sub   = "ch.10"
 
@@ -99,8 +79,6 @@ sub   = "ch.10"
 id    = "contamination-drift"
 label = "Leakage &\nDrift"
 kind  = "primer"
-x     = 1100
-y     = 400
 link  = "15-contamination-drift/"
 sub   = "ch.15"
 
@@ -108,8 +86,6 @@ sub   = "ch.15"
 id    = "synth-vs-real"
 label = "Synthetic vs\nRealistic"
 kind  = "primer"
-x     = 1340
-y     = 400
 link  = "13-synth-vs-real/"
 sub   = "ch.13"
 
@@ -119,8 +95,6 @@ sub   = "ch.13"
 id    = "retrieval-vs-reasoning"
 label = "Scan vs\nThink"
 kind  = "primer"
-x     = 380
-y     = 570
 link  = "04-retrieval-vs-reasoning/"
 sub   = "ch.4"
 
@@ -128,8 +102,6 @@ sub   = "ch.4"
 id    = "measurement-saturation"
 label = "Goodhart's\nCeiling"
 kind  = "primer"
-x     = 200
-y     = 570
 link  = "06-measurement-saturation/"
 sub   = "ch.6"
 
@@ -137,8 +109,6 @@ sub   = "ch.6"
 id    = "mrcr"
 label = "The Fourth\nPoem"
 kind  = "primer"
-x     = 590
-y     = 570
 link  = "17-mrcr/"
 sub   = "ch.17"
 
@@ -146,8 +116,6 @@ sub   = "ch.17"
 id    = "context-rot"
 label = "The Chroma\nMeasurement"
 kind  = "primer"
-x     = 860
-y     = 570
 link  = "12-context-rot/"
 sub   = "ch.12"
 
@@ -155,8 +123,6 @@ sub   = "ch.12"
 id    = "oolong"
 label = "The Tallying\nProblem"
 kind  = "primer"
-x     = 1080
-y     = 570
 link  = "18-oolong/"
 sub   = "ch.18"
 
@@ -166,8 +132,6 @@ sub   = "ch.18"
 id    = "niah-mechanics"
 label = "Needle in a\nHaystack"
 kind  = "primer"
-x     = 140
-y     = 720
 link  = "03-niah-mechanics/"
 sub   = "ch.3"
 
@@ -175,8 +139,6 @@ sub   = "ch.3"
 id    = "lost-in-the-middle"
 label = "The U-Curve"
 kind  = "primer"
-x     = 1100
-y     = 720
 link  = "07-lost-in-the-middle/"
 sub   = "ch.7"
 
@@ -186,8 +148,6 @@ sub   = "ch.7"
 id    = "context-window"
 label = "What 1M Tokens\nActually Costs"
 kind  = "primer"
-x     = 140
-y     = 860
 link  = "02-context-window/"
 sub   = "ch.2"
 

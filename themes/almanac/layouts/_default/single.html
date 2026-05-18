@@ -38,7 +38,7 @@
       {{ $headerImg := "header-illustrations/default.webp" }}
       {{ with .Params.header }}{{ $headerImg = printf "header-illustrations/%s" . }}{{ end }}
       <div class="article-header-illustration">
-        <img src="{{ $headerImg | relURL }}" alt="{{ .Title }}">
+        <img src="{{ $headerImg | relURL }}" alt="{{ .Title }}" loading="lazy">
       </div>
 
       {{ with .Description }}
