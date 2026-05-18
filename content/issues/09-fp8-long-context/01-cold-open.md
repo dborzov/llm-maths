@@ -1,6 +1,11 @@
 ---
-title: "Thirteen Percent"
-description: "March 2026. A routine validation sweep at AWS turns up a 78-point accuracy drop on a flag that's been shipping in vLLM for nearly three years. The detective story begins."
+title: "FP8 KV Cache: 91% to 13%"
+description: "March 2026. A routine AWS validation sweep finds a 78-point accuracy collapse at 128K tokens — on a flag that's been shipping in vLLM for nearly three years."
+blurb:
+  - "H100, 128K context, `--kv-cache-dtype fp8`: needle-in-a-haystack drops from 91% to 13%."
+  - "The flag has shipped in vLLM tutorials for nearly three years. Nobody tested at these context lengths."
+  - "Three teams, two continents, one Slack message: *\"what.\"*"
+  - "The bug is older than the chip it lives on."
 topics: [quantization, inference, kv-cache]
 tags: [fp8, vllm, flash-attention-3, needle-in-a-haystack, long-context]
 theme: cream

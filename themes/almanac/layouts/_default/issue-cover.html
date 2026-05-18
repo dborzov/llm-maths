@@ -1,11 +1,11 @@
 {{ define "main" }}
 <div class="issue-cover-container">
   <header class="issue-cover-header">
-    {{ with .Params.issue }}<div class="issue-cover-eyebrow">Issue #{{ . }}</div>{{ end }}
+    {{ with .Params.issue }}<div class="issue-cover-eyebrow">Comic Book #{{ . }}</div>{{ end }}
     <h1 class="issue-cover-title">{{ .Title }}</h1>
     {{ with .Description }}
-    <aside class="issue-cover-description" role="note" aria-label="Issue description">
-      <span class="issue-cover-description-tag">In this issue</span>
+    <aside class="issue-cover-description" role="note" aria-label="Comic book description">
+      <span class="issue-cover-description-tag">In this comic book</span>
       <p>{{ . }}</p>
     </aside>
     {{ end }}
@@ -28,7 +28,7 @@
   {{ if $articles }}
   <section class="issue-cover-articles" id="reading-list">
     <h2 class="issue-cover-section-title">Recommended Reading Order</h2>
-    <p class="issue-cover-section-intro">A linear walk through every article in this issue. Each title expands to reveal its section outline — tap to jump straight into a chapter.</p>
+    <p class="issue-cover-section-intro">A linear walk through every article in this comic book. Each title expands to reveal its section outline — tap to jump straight into a chapter.</p>
     <ol class="issue-cover-article-list">
       {{ range $articles }}
       <li class="issue-cover-article-item">

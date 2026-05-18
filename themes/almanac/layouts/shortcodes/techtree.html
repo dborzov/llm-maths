@@ -63,6 +63,8 @@
           {{- $linkURL := $node.link -}}
           {{- if not (hasPrefix $linkURL "/") -}}
             {{- $linkURL = printf "%s%s" $pageBase $node.link -}}
+          {{- else -}}
+            {{- $linkURL = $linkURL | relURL -}}
           {{- end -}}
           <a class="techtree-list-link" href="{{ $linkURL }}">
         {{- else -}}

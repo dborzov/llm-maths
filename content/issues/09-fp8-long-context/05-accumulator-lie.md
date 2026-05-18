@@ -1,6 +1,11 @@
 ---
-title: "The Accumulator Lie"
-description: "The autopsy. Hopper's FP8 tensor cores are documented as accumulating into FP32 registers. They don't, quite. At long contraction dimensions the precision quietly evaporates — the bug DeepSeek-V3 hit during training and the AWS / Red Hat team hit during inference."
+title: "Hopper FP8: when the FP32 accumulator stops accumulating"
+description: "NVIDIA documents FP8 tensor cores as accumulating into FP32 registers. At long contraction dimensions the precision quietly evaporates — the same bug DeepSeek-V3 hit during training five months earlier."
+blurb:
+  - "NVIDIA docs: FP8 tensor cores accumulate into FP32 registers. Mostly true."
+  - "At long contraction dimensions, the effective precision quietly evaporates."
+  - "DeepSeek-V3 hit the same hardware quirk five months earlier, during training."
+  - "The question nobody asked for three years: *\"Is the FP32 accumulator actually FP32?\"*"
 topics: [quantization, hardware, kv-cache, attention]
 tags: [fp8, hopper, tensor-cores, fp32-accumulator, flash-attention-3, deepseek-v3]
 theme: cream

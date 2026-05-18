@@ -1,6 +1,11 @@
 ---
-title: "E4M3 In Three Steps"
-description: "What FP8 actually is in this issue: the E4M3 layout, the 16 mantissa rungs per binade, why softmax forgives precision loss, and what 'per-tensor scale = 1.0' assumes about the KV cache."
+title: "FP8 E4M3: three mantissa bits in attention math"
+description: "The E4M3 layout, why softmax is forgiving of precision loss, and what per-tensor scale = 1.0 assumes about the KV cache."
+blurb:
+  - "1 sign bit, 4 exponent bits, 3 mantissa bits — 16 representable values per binade."
+  - "Softmax is unusually forgiving: relative order of scores matters more than absolute precision."
+  - "The default vLLM scale factor is literally 1.0. No calibration, no per-head tuning."
+  - "Why this works on most models — and what assumption it quietly makes about KV activation distributions."
 topics: [quantization, primer]
 tags: [fp8, e4m3, softmax, ieee754, number-formats]
 theme: cream

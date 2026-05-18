@@ -1,6 +1,11 @@
 ---
-title: "Slope vs Intercept"
-description: "Primer. The two-parameter linear ITL model used throughout this issue. What the slope physically measures, what the intercept buys you, how to fit the line from a benchmark sweep, and what 'break-even' actually means in practice."
+title: "Decode Latency: the linear model behind FP8's break-even"
+description: "The two-parameter ITL model: slope measures bandwidth pressure, intercept measures overhead, and their ratio defines the context length where FP8 starts winning."
+blurb:
+  - "ITL(T) = slope × context_length + intercept. Two numbers predict decode latency."
+  - "Slope is the bandwidth tax per token — FP8 cuts it. Intercept is conversion overhead — FP8 raises it."
+  - "Below the break-even: FP8 is slower. Above it: FP8 wins."
+  - "One model's break-even was 741,565 tokens — meaning the flag was, in practice, a no-op."
 topics: [primer, performance, inference]
 tags: [itl, ttft, benchmarking, linear-regression, decode, vllm]
 theme: teal

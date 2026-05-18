@@ -1,6 +1,11 @@
 ---
-title: "Scale Equals One"
-description: "Primer. The default for FP8 KV in vLLM is no calibration — per-tensor scale = 1.0. Why this works for most models, why Kimi-K2.5 on FlashMLA shows a consistent downward shift, and what LLM-Compressor does when the simple default isn't enough."
+title: "FP8 Calibration: why scale = 1.0 usually works"
+description: "Every other KV quantization method requires calibration data. FP8 doesn't — by default. Why E4M3's dynamic range is usually wide enough, and when it isn't."
+blurb:
+  - "KIVI, KVQuant, GEAR, ATOM, QServe all require calibration. FP8 KV in vLLM doesn't, by default."
+  - "E4M3's three orders of dynamic range are wide enough that most KV activations just fit."
+  - "Kimi-K2.5 on FlashMLA shows a consistent downward accuracy shift — the exception that proves the rule."
+  - "LLM-Compressor: what to reach for when scale = 1.0 isn't enough."
 topics: [quantization, calibration, primer]
 tags: [fp8, calibration, llm-compressor, per-tensor, per-head, kimi-k2, flashmla]
 theme: teal

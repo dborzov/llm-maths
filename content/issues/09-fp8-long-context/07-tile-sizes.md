@@ -1,6 +1,11 @@
 ---
-title: "Register Wars"
-description: "Primer. Tile size optimization in FA3 FP8 after two-level accumulation: why head_dim 64 and 128 absorbed the new register, why head_dim 256 spilled, and what the optimization PRs actually did."
+title: "GPU Registers: why head_dim 256 broke the fix"
+description: "Tile-size optimization in FA3 FP8: why head_dim 64 and 128 absorbed the new accumulator register, why 256 spilled to local memory, and what three PRs over six weeks did about it."
+blurb:
+  - "Every warp in a fused attention kernel owns a fixed slice of the register file."
+  - "Add one accumulator register: head_dim 64 and 128 absorb it. Head_dim 256 spills."
+  - "Spilling to local memory costs ~60% prefill throughput at the worst tile size."
+  - "Three PRs over six weeks traded tile sizes until the regression closed."
 topics: [kernel-engineering, primer, performance]
 tags: [flash-attention-3, tile-size, register-pressure, occupancy, head-dim, fp8]
 theme: cream

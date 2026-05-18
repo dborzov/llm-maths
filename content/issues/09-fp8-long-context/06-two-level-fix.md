@@ -1,6 +1,11 @@
 ---
-title: "Two Levels of Honesty"
-description: "The fix. SageAttention2's two-level accumulation strategy, adapted to FA3 FP8. Inner fast accumulator, outer true-FP32 register, periodic promotion. The 91→89% accuracy recovery — and the register pressure it triggered."
+title: "FlashAttention-3 FP8: the two-level accumulator fix"
+description: "SageAttention2's two-level accumulation adapted to FA3: inner fast register, outer true FP32, periodic flush. Accuracy from 13% back to 89% — and the register pressure that followed."
+blurb:
+  - "Accumulate into the fast tensor-core register; every N steps, flush to a real FP32 register and reset."
+  - "SageAttention2 published the same idea in November 2024 for diffusion model kernels."
+  - "Accuracy recovered: 91% → 13% → 89%. Close enough to ship."
+  - "The cost: register pressure. At head_dim = 256, prefill regressed ~60%."
 topics: [quantization, inference, kv-cache, kernel-engineering]
 tags: [fp8, flash-attention-3, sageattention2, two-level-accumulation, kahan, register-pressure]
 theme: teal
