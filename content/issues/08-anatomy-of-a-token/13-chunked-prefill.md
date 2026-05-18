@@ -1,6 +1,12 @@
 ---
-title: "Slicing The Prefill"
-description: "A 100K-token prefill can monopolize the GPU for seconds, wrecking inter-token latency for every other user in the batch. Chunked prefill slices long prompts into token-budget-sized pieces that interleave with decode steps, giving every user bounded and predictable time-to-first-token."
+title: "Chunked Prefill: cap the stall at 2,048 tokens"
+short_title: "Chunked Prefill"
+description: "A 64,000-token document summarization holds every decode user's next token hostage for five seconds; chunked prefill slices the prompt into 2,048-token pieces interleaved with decode steps, capping p99 inter-token latency for all users."
+blurb:
+  - "A single 64K-token prefill through a 70B model takes ~5 seconds, freezing all 500 co-batched users mid-stream."
+  - "Chunked prefill works because attention is associative over the token axis — you can process any contiguous slice and resume."
+  - "SARATHI (Microsoft Research India, ASPLOS 2024) crystallized the technique; vLLM and SGLang adopted it within a release cycle."
+  - "With 2,048-token chunks, every scheduler step is bounded — no single request can monopolize more than its chunk budget."
 topics: []
 tags: []
 theme: cream

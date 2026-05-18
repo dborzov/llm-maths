@@ -1,6 +1,12 @@
 ---
-title: "Attention In SRAM"
-description: "FlashAttention is the most important inference kernel of the decade: it computes attention without ever materializing the score matrix in HBM, using tiled SRAM computation and online softmax. It is also the direct skeleton that PagedAttention extends with paged indirection."
+title: "FlashAttention: never write the score matrix to HBM"
+short_title: "FlashAttention"
+description: "Naive attention at T=8192 writes and re-reads 686 GB of intermediate scores per forward pass across Llama-3-70B's heads — FlashAttention tiles the computation in SRAM and runs online softmax so that matrix never crosses the HBM bus."
+blurb:
+  - "Tri Dao's 2022 insight: the FLOPs are nearly free; the bytes are murder — and the score matrix doesn't have to leave SRAM."
+  - "At T=128K, a single FP16 score matrix is 32 GB per head — the naive pipeline is architecturally impossible, not just slow."
+  - "Tiled SRAM + online softmax gives the same exact output as the naive formula, 2–4× faster, with no accuracy change."
+  - "FlashAttention is the skeleton every modern attention variant — paged, sliding-window, GQA, MLA — is layered on top of."
 topics: []
 tags: []
 theme: teal

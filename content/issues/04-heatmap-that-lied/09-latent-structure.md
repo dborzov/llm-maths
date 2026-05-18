@@ -1,6 +1,12 @@
 ---
-title: "Vodrahalli's Chisel"
-description: "September 2024, Google DeepMind. Kiran Vodrahalli proposes a sculptor's metaphor for long-context evaluation: chisel away the irrelevant context until the latent structure is revealed. From this single idea fall MRCR, OOLONG, and the whole 2025-onward benchmark taxonomy."
+title: "Latent Structure: Vodrahalli's chisel and the Michelangelo framework"
+short_title: "Latent Structure"
+description: "September 2024, Google DeepMind: Kiran Vodrahalli's Michelangelo paper proposes that every well-designed long-context task requires chiseling away irrelevant context to reveal a latent structure — the abstraction that generates MRCR, OOLONG, and GraphWalks at once."
+blurb:
+  - "Michelangelo landed arXiv on September 19, 2024 (arXiv:2409.12640)."
+  - "Three LSQ task types: Latent List (state tracking), Latent Graph (traversal), Latent Structure Retrieval."
+  - "The sculptor metaphor: the answer is already in the marble; the model's job is to remove what doesn't belong."
+  - "MRCR and OOLONG both fall directly out of the LSQ framework as special cases."
 topics: [evaluation, long-context, methodology]
 tags: [michelangelo, mrcr, lsq, latent-structure, oolong, vodrahalli]
 theme: cream

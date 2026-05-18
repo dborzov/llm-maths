@@ -1,5 +1,6 @@
 ---
 title: "FlashAttention-3 FP8: the two-level accumulator fix"
+short_title: "FlashAttention-3 FP8"
 description: "SageAttention2's two-level accumulation adapted to FA3: inner fast register, outer true FP32, periodic flush. Accuracy from 13% back to 89% — and the register pressure that followed."
 blurb:
   - "Accumulate into the fast tensor-core register; every N steps, flush to a real FP32 register and reset."

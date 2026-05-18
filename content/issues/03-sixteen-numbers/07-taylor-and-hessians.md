@@ -1,6 +1,12 @@
 ---
-title: "Taylor & Hessians"
-description: "A primer on second-order Taylor expansion of the loss, the Hessian as a sensitivity matrix, and why curvature tells you which weights are safe to wreck."
+title: "Hessians: curvature tells you which weights are safe to round"
+short_title: "Hessians"
+description: "The second-order Taylor expansion of the loss turns the quantization error in each weight into a precise cost: diagonal Hessian entries are a map of sensitivity."
+blurb:
+  - "At a trained minimum, gradients ≈ 0. The damage from rounding a weight is entirely governed by the Hessian: ΔL ≈ ½δᵀHδ."
+  - "Flat loss directions (small Hessian eigenvalues) can absorb large weight perturbations at almost no cost."
+  - "Steep ridge directions (large eigenvalues) explode the loss even for tiny rounding errors."
+  - "GPTQ uses the layer-wise Hessian H = XᵀX, computed from calibration activations, to prioritize which weights to quantize first."
 topics: [calculus, optimization]
 tags: [taylor-series, hessian, calculus, sensitivity]
 theme: cream

@@ -1,6 +1,12 @@
 ---
-title: "Mixed-Precision KV Cache"
-description: "Primer. V4 stores KV in three precisions at once: BF16 for the RoPE-rotated channels, FP8 for the rest of the KV body, FP4 for the indexer's QK path. Why each region gets the bit budget it deserves — and why this is the natural endpoint of Issue 3's quantization arc."
+title: "Mixed-Precision KV: three regions, three bit budgets"
+short_title: "Mixed-Precision KV"
+description: "V4 stores its KV cache in three precisions simultaneously — BF16 for RoPE-rotated channels, FP8 for the body, FP4 for the indexer's QK path — because precision requirements track error amplification, not importance."
+blurb:
+  - "BF16 for 64 RoPE dimensions: rotation amplifies quantization error through trigonometric functions at every position."
+  - "FP8 for the KV body: errors in the dot product average out across d_k dimensions and never amplify."
+  - "FP4 for the indexer QK path: ranking needs to be approximately correct, not accurate — 4 bits is enough."
+  - "Net result: ~5.5 bits per stored float on average, down from 16. The KV cache size drops by nearly half versus pure BF16."
 topics: [quantization, attention, kv-cache, primer]
 tags: [mixed-precision, fp4, fp8, bf16, kv-cache, deepseek-v4, quantization-aware-training]
 theme: teal

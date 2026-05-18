@@ -1,6 +1,12 @@
 ---
-title: "Multi-Head Attention"
-description: "Single-head attention with a `for h in range(n_head)` wrapper. Why we slice the same Q, K, V into shorter chunks rather than projecting them separately, and what `attn_wo` is putting back together."
+title: "Multi-Head Attention: one loop, many subspaces"
+short_title: "Multi-Head Attention"
+description: "Single-head attention wrapped in `for h in range(n_head)` — each head slices the same Q, K, V into shorter chunks and attends independently."
+blurb:
+  - "The 2017 ablation nobody expected: h=1 was a full BLEU point worse than h=8. Larger than the entire gap between the Transformer and the best LSTM of that year."
+  - "The slicing trick: one Q, one K, one V computed once; heads divvy them up by index range. No separate projections per head."
+  - "After the loop, `x_attn` is concatenated head outputs. `attn_wo` (16×16) mixes them back together."
+  - "By 2026, frontier models run 32 to 128 heads. What have those heads learned to do differently?"
 topics: [transformer, attention]
 tags: [microgpt, multi-head, attn_wo]
 theme: cream

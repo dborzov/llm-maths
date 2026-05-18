@@ -1,6 +1,12 @@
 ---
-title: "Calibration, A Field Guide"
-description: "The other half of every quantization method: how it picks its scales. A taxonomy of calibration strategies, the tradeoff each one makes, and the eighty years of compression work they all rest on."
+title: "Calibration: the art that matters more than the bit format"
+short_title: "Calibration"
+description: "Two methods using identical 4-bit grids with different calibration can differ by 3× in perplexity; two methods with different grids but identical calibration often differ by less than 1%."
+blurb:
+  - "Five calibration families in 2026: data-free (RTN, HQQ), statistics-only (AWQ, SmoothQuant), second-order (GPTQ), gradient-based (OmniQuant), full QAT."
+  - "The production sweet spot is second-order: GPTQ-family methods, ~128 calibration samples, minutes to hours."
+  - "The art of low-bit quantization is mostly the art of calibration — the grid choice matters far less than where you place it."
+  - "A 1976 Bell Labs adaptive PCM paper by Patrick Crochiere has the same structure as GPTQ's per-block-scale scheme, 46 years earlier."
 topics: [quantization, calibration]
 tags: [calibration, ptq, qat, hqq, gptq, awq, smoothquant, omniquant, history]
 theme: cream

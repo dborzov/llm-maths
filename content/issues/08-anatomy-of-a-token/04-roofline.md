@@ -1,6 +1,12 @@
 ---
-title: "The Roofline"
-description: "The roofline model tells you in one number — arithmetic intensity — whether a kernel is compute-bound or memory-bound. Decode attention sits at roughly 1 FLOP/byte, catastrophically to the left of the ridge point. That single fact predicts the shape of every optimization in modern LLM serving."
+title: "Roofline: the one number that predicts everything"
+short_title: "Roofline"
+description: "Arithmetic intensity — FLOPs divided by bytes moved — tells you in one ratio whether a kernel is starved for compute or starved for bandwidth; decode attention sits at roughly 1 FLOP/byte, catastrophically left of the H100 ridge point at ~93."
+blurb:
+  - "Sam Williams drew two lines on a Berkeley whiteboard in 2008. Reviewers rejected the paper three times for being too simple."
+  - "SAXPY: 0.17 FLOP/byte. Decode attention: ~1 FLOP/byte. Dense 4K×4K matmul: ~680 FLOP/byte."
+  - "The H100 ridge point is ~93 FLOP/byte — decode is two orders of magnitude below it, every step, by construction."
+  - "Every inference optimization — FlashAttention, speculative decoding, batching — is an attempt to move the dot rightward on this plot."
 topics: []
 tags: []
 theme: teal

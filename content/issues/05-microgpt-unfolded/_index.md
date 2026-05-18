@@ -1,5 +1,5 @@
 ---
-title: "MicroGPT, Unfolded"
+title: "MicroGPT: a complete inference engine in 60 lines of Python"
 description: "A complete LLM inference engine in 60 lines of plain Python — and a line-by-line tour of every concept inside it. The canonical reference implementation for this whole project."
 issue: 5
 layout: issue-cover

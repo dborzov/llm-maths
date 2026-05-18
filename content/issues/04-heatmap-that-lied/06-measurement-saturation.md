@@ -1,6 +1,12 @@
 ---
-title: "Goodhart's Ceiling"
-description: "When a measure becomes a target, it ceases to be a good measure. A short primer on why benchmarks die — and why NIAH dying in 2024 was inevitable, predictable, and a textbook case."
+title: "Goodhart's Law: why the benchmark had to die"
+short_title: "Goodhart's Law"
+description: "Charles Goodhart observed in 1975 that any statistical regularity collapses once it becomes a control target — NIAH's 2024 collapse is a textbook case."
+blurb:
+  - "Goodhart's original 1975 note concerned M3 money supply and British inflation policy."
+  - "GLUE saturated in 18 months; ImageNet took 5 years; NIAH took under 5 months."
+  - "Three phases: discriminating signal → productive optimisation → ceiling-hugging."
+  - "When a benchmark is being optimised against, the correlation that made it useful erodes."
 topics: [evaluation, methodology, history]
 tags: [goodhart, saturation, benchmarks, ceiling-effect, measurement]
 theme: teal

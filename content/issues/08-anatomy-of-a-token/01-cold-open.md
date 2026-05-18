@@ -1,6 +1,12 @@
 ---
-title: "The Cold Open"
-description: "One HTTP packet, one H200 box, one streamed reply — a five-minute tour of every layer the token will visit, every component named, no detail explained yet. The whole issue is the explanation."
+title: "LLM Inference: one packet, one box, eighteen layers"
+short_title: "LLM Inference"
+description: "One HTTP request enters an 8×H200 chassis in Ohio shared by 793 users — this chapter names every layer it touches, from tokenizer to streamed reply, before the rest of the issue explains each one."
+blurb:
+  - "User #347 of 793 on a single box: Anya's 12-token prompt joins a 312-token system prompt and runs through a 70B FP8 model sliced across four GPUs."
+  - "325 milliseconds from send to first character — each millisecond is a different piece of the stack."
+  - "Every optimization in the issue is already running: paged KV, continuous batching, prefix caching, CUDA graphs."
+  - "The cold open names them all. The other seventeen chapters explain why each one had to be invented."
 topics: [inference, vllm]
 tags: [vllm, gpu, inference, serving, cold-open]
 theme: cream

@@ -1,5 +1,6 @@
 ---
 title: "FP8 KV in vLLM: the 2026 report card"
+short_title: "FP8 KV"
 description: "Four model families, two GPU generations, one verdict: mostly safe to ship. Three named exceptions — and where FP8 fits in the broader KV quantization family tree."
 blurb:
   - "Four model families, two GPU generations (Hopper and Blackwell): mostly safe to enable."

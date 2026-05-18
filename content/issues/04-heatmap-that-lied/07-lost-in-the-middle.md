@@ -1,6 +1,12 @@
 ---
-title: "The U-Curve"
-description: "Liu et al., July 2023: plot retrieval accuracy against the position of the answer inside a long prompt. The shape that comes out is a smile. The model is best at the start, best at the end, worst in the middle — and the curve is everywhere."
+title: "Lost in the Middle: the U-curve every model draws"
+short_title: "Lost in the Middle"
+description: "Liu et al. July 2023 hid a gold document at different positions in a 20-document prompt and plotted accuracy: highest at start and end, catastrophic in the middle."
+blurb:
+  - "GPT-3.5-turbo: 75% accuracy when the answer is first, 52% when it is in the middle."
+  - "Putting the right answer in the middle was worse than not including it at all (52% vs 56% closed-book)."
+  - "Published July 6, 2023 — two months before NIAH, largely ignored until 2024."
+  - "The U-curve is the single most reproduced finding in long-context literature."
 topics: [evaluation, long-context, attention]
 tags: [lost-in-the-middle, position, liu-2023, u-curve, primacy, recency]
 theme: cream

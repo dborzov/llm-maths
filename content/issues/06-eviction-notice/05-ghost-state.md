@@ -1,6 +1,12 @@
 ---
-title: "Ghost in the Hidden State"
-description: "Late 2025. Jégou has oracle importance scores but generating them costs a second forward pass. The shortcut turns out to be already inside the model — encoded in the residual stream."
+title: "Residual Stream: the oracle hiding in the hidden state"
+short_title: "Residual Stream"
+description: "Jégou and Jebleck discovered that KVzip+'s oracle importance scores are already latent in the transformer's residual stream — a tiny surrogate model trained on 1.2 million (hidden-state, log-score) pairs achieves R²=0.67–0.77."
+blurb:
+  - "KVzip+ (the oracle) costs two full forward passes per prompt — impossible during autoregressive decode."
+  - "Hypothesis: if a token will be ignored by all future positions, the transformer already knows — it's encoded in h_t."
+  - "Training data: 27,000 prompts from Nemotron-Pretraining-Dataset-sample, filtered to 750–1,250 tokens, yielding 1.2M (h, log s⁺) pairs per KV head."
+  - "KVzap-MLP has ~2.1M parameters for Qwen3-8B — 0.025% of the base model — and fits in a single matmul."
 topics: [kv-cache, attention, transformers]
 tags: [kvzap, hidden-state, residual-stream, r-squared, surrogate-model]
 theme: cream

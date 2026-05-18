@@ -1,6 +1,12 @@
 ---
-title: "Where Attention Is Sparse"
-description: "Primer. Empirical data on attention weights from trained transformers: 5-10% of past tokens absorb 90% of attention mass. Power-law distribution per query, per head, per layer. The structural foundation every sparse-attention method exploits."
+title: "Empirical Sparsity: 5% of tokens, 90% of the mass"
+short_title: "Empirical Sparsity"
+description: "In trained transformers, 5–10% of past tokens absorb 90% of attention mass per query — a power-law distribution with three structural clusters: attention sinks, the local sliding window, and scattered heavy-hitter content tokens."
+blurb:
+  - "Plot attention weights for a single query over 4K tokens. The heatmap is almost entirely black."
+  - "Three warm clusters: the first 1–3 tokens (sinks), the recent ~128 tokens (sliding window), and ~50 scattered heavy hitters."
+  - "The model is simply not reading most of the context — and it doesn't need to, because the information isn't uniformly distributed."
+  - "Power-law distribution per query, per head, per layer: the sparsity structure is not a bug the indexer introduces, it is a fact the indexer exploits."
 topics: [attention, sparsity, empirical, primer]
 tags: [empirical-sparsity, attention-weights, power-law, heavy-tail, attention-sinks]
 theme: cream

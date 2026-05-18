@@ -1,6 +1,12 @@
 ---
-title: "Scaled Dot-Product Attention"
-description: "The actual `q · k / √d` computation, line by line. What `attn_logits` is, what `attn_weights` is, why the scale factor is exactly `sqrt(head_dim)`, and what `head_out` is when you stare at the indexing."
+title: "Attention: why divide by sqrt(head_dim)?"
+short_title: "Attention"
+description: "The six lines of microGPT that implement scaled dot-product attention — `attn_logits`, `attn_weights`, `head_out` — and why the scale factor is exactly `sqrt(head_dim)`."
+blurb:
+  - "Additive attention (Bahdanau) vs. dot-product (Luong): the team expected the MLP scorer to win. It didn't."
+  - "Without the `/ head_dim**0.5` scale, softmax saturates into a one-hot at initialization. Training stops."
+  - "Three variables: `attn_logits` (raw similarity, length T), `attn_weights` (probability distribution, length T), `head_out` (weighted average of values, length head_dim)."
+  - "The description calls attention 'a content-addressable database.' What does that mean in terms of the six lines?"
 topics: [transformer, attention]
 tags: [microgpt, attention, scaled-dot-product]
 theme: teal

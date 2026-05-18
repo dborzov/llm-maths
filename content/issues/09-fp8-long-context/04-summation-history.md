@@ -1,5 +1,6 @@
 ---
 title: "Kahan Summation: a 1965 fix inside your 2026 GPU"
+short_title: "Kahan Summation"
 description: "Floating-point addition is non-associative. The error grows with n. Wilkinson named it in 1960; Kahan fixed it in 1965. The same class of bug lived in vLLM's attention kernel."
 blurb:
   - "(a + b) + c ≠ a + (b + c) in floating point. This is always true."

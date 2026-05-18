@@ -1,6 +1,12 @@
 ---
-title: "Absmax — The One-Line Quantizer"
-description: "The simplest quantization scheme that works: find the biggest number, scale, round. Three lines of numpy that became the default 8-bit baseline of the LLM era."
+title: "Absmax: three lines of numpy that every paper benchmarks against"
+short_title: "Absmax"
+description: "Find the biggest absolute value, scale the tensor to fit INT8, round — and you have the baseline that every quantization method in this issue has to beat."
+blurb:
+  - "The entire algorithm fits on a business card: divide by the max absolute value, multiply by 127, round."
+  - "Zero is always preserved exactly. The quantization grid is always uniform."
+  - "Uniform spacing is absmax's blessing and its curse: hardware loves it; non-uniform data wastes bits."
+  - "Every modern LLM quantization paper lists absmax in its comparison table. If you can't beat it, you have nothing."
 topics: [quantization, number-formats]
 tags: [absmax, int8, scaling, baseline]
 theme: cream

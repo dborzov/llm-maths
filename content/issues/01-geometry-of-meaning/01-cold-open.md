@@ -1,6 +1,12 @@
 ---
-title: "The Arrow and the Island"
-description: "Mountain View, September 2012. Tomáš Mikolov is debugging a language model when he notices that the embedding matrix — the part nobody cares about — is doing something extraordinary."
+title: "Word Embeddings: what if the lookup table was the whole point?"
+short_title: "Word Embeddings"
+description: "September 2012: Mikolov is debugging a language model and notices the part everyone ignores — the embedding matrix — has quietly learned the geometry of meaning."
+blurb:
+  - "Every word entered Mikolov's model as a one-hot vector: a list of zeros with a single 1. Every pair of words was equally distant from every other."
+  - "Backpropagation was updating the embedding matrix as a side effect. Nobody had asked it to learn anything — and yet the structure was there."
+  - "\"Cat\" and \"dog\" had drifted together. \"King\" minus \"man\" plus \"woman\" landed near \"queen.\" The lookup table was doing the hard part."
+  - "What if you threw away the rest of the model and trained *only* the lookup table?"
 topics: [embeddings, representations]
 tags: [word2vec, one-hot, representation]
 theme: cream

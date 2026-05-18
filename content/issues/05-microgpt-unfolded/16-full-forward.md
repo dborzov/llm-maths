@@ -1,6 +1,12 @@
 ---
-title: "The Full Forward Pass"
-description: "The capstone. The microGPT listing reprinted one final time, with every variable and every loop hyperlinked to the chapter that explains it. This is the index to the rest of the project."
+title: "Full Forward Pass: the annotated listing"
+short_title: "Full Forward Pass"
+description: "The microGPT listing reprinted one final time — every variable, every loop bound, every arithmetic operation linked to the chapter that explains it."
+blurb:
+  - "Sixty lines. Fifteen chapters of setup. Every comment on this page points at a chapter that earned the right to say what its line means."
+  - "Read it top-to-bottom after finishing the issue. When the comments become unnecessary, the issue has done its job."
+  - "When a later issue says 'the K-channel outliers in `attn_wk` are why naive 4-bit quantization breaks' — this is the page to open first."
+  - "Five constants, four helpers, one forward function, one driver loop. What's the minimum you'd need to delete to break the model?"
 topics: [transformer, inference]
 tags: [microgpt, reference]
 theme: teal

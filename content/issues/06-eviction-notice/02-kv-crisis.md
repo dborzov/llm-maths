@@ -1,6 +1,12 @@
 ---
-title: "The Cache That Ate the Server"
-description: "Five axes, four solutions, one stubborn frontier. The anatomy of the KV cache and how the field compressed every dimension except the one that mattered most."
+title: "KV Cache Anatomy: four axes compressed, one exploding"
+short_title: "KV Cache Anatomy"
+description: "The KV cache has five dimensions; the field compressed four of them with GQA, MLA, quantization, and hybrid attention — but the sequence-length axis grows without bound."
+blurb:
+  - "At 32k tokens, a single Llama-65B user session needs 84 GB — more than the model weights. Ten concurrent users need 840 GB."
+  - "Grouped-query attention, multi-latent attention, INT8/INT4 quantization: each shaves one axis."
+  - "The T dimension — sequence length — is the only one that cannot be fixed at training time."
+  - "Four solutions, one stubborn frontier: why wasn't pruning the obvious answer?"
 topics: [kv-cache, attention, architecture]
 tags: [gqa, mla, hybrid-models, long-context, kv-cache]
 theme: teal

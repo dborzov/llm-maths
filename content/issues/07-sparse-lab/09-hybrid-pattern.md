@@ -1,6 +1,12 @@
 ---
-title: "The Hybrid Pattern (V4)"
-description: "V4 interleaves CSA and HCA layers. V4-Flash uses sliding window for the first two layers, then alternates. V4-Pro uses HCA for the first two layers, then alternates. What does the interleaving buy you that pure CSA or pure HCA does not?"
+title: "Hybrid Pattern: why V4 alternates CSA and HCA"
+short_title: "Hybrid Pattern"
+description: "V4-Pro opens with two HCA layers then alternates CSA and HCA for all 61 layers; V4-Flash opens with two sliding-window layers then alternates for all 43 — different warmup strategies, same interleaving logic."
+blurb:
+  - "V4-Pro: layers 1–2 are HCA (global coarse context), then ~30 CSA and ~29 HCA interleaved through layer 61."
+  - "V4-Flash: layers 1–2 are sliding-window only (no compression), then ~20 CSA and ~21 HCA through layer 43."
+  - "Fine-grained retrieval and coarse aggregation are orthogonal needs. Neither CSA-only nor HCA-only can serve both."
+  - "The two warmup strategies reflect different deployment targets: V4-Pro on 8×B200, V4-Flash on 4×B200."
 topics: [attention, deepseek, hybrid, v4]
 tags: [hybrid-attention, csa, hca, deepseek-v4, layer-mixing, sliding-window]
 theme: cream

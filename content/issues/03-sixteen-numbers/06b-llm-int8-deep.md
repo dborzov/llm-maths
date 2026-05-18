@@ -1,6 +1,12 @@
 ---
-title: "Inside LLM.int8() — The Two-Path MatMul"
-description: "The 2022 algorithm that broke the 175B accessibility wall, dissected. Vector-wise scaling. The threshold of 6. Why three matmuls beat one. And why it is still 3-4× slower than FP16."
+title: "LLM.int8(): why splitting one matmul into three is faster"
+short_title: "LLM.int8()"
+description: "Outlier columns go through FP16; the rest go through INT8 with vector-wise scales; the two results add back together — and the threshold that makes it work is exactly 6."
+blurb:
+  - "Threshold α = 6.0: the smallest value at which OPT and BLOOM accuracy stays flush with the FP16 baseline."
+  - "Per-row vector-wise scaling instead of per-tensor: each row of the activation matrix gets its own INT8 scale."
+  - "The result is three matmuls (outlier FP16 + bulk INT8 + dequant-and-add) that together beat one per-tensor INT8 matmul on accuracy."
+  - "The cost: 3–4× slower throughput than native FP16 at the same batch size."
 topics: [quantization]
 tags: [llm-int8, bitsandbytes, dettmers, matmul, vector-wise]
 theme: teal

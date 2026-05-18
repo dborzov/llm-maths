@@ -1,6 +1,12 @@
 ---
-title: "Borrowing From 1965"
-description: "PagedAttention is virtual memory for KV caches: a per-request block table maps logical token positions to non-contiguous physical KV blocks, eliminating fragmentation. The same abstraction enables prefix sharing, copy-on-write branching for beam search, and tiered KV offload — all for free."
+title: "PagedAttention: virtual memory for KV caches"
+short_title: "PagedAttention"
+description: "Woosuk Kwon borrowed Corbató's 1965 page-table abstraction and applied it to KV caches: a per-request block table maps logical token positions to non-contiguous physical blocks, turning 38% HBM utilization into 96%."
+blurb:
+  - "Fernando Corbató's 1965 Multics page table and Kwon's 2023 KV block table solve the same problem on different substrates."
+  - "A per-request block table decouples logical token indices from physical HBM addresses — fragmentation disappears by definition."
+  - "Prefix sharing, copy-on-write beam search, and KV offload to CPU all fall out of the abstraction without extra mechanisms."
+  - "The SOSP 2023 paper spawned vLLM, then SGLang, then TRT-LLM's KV reuse — every production serving stack today."
 topics: []
 tags: []
 theme: teal

@@ -1,6 +1,12 @@
 ---
-title: "LM Head and Sampling"
-description: "One linear layer (`lm_head`) turns a 16-vector into a distribution over the vocabulary. After that comes a small zoo of tricks — temperature, top-k, top-p, min-p — to bend that distribution into the next token."
+title: "LM Head: from residual vector to next token"
+short_title: "LM Head"
+description: "One final linear projection turns the residual vector into raw logits over the full vocabulary — and then temperature, top-k, and top-p decide which token actually gets picked."
+blurb:
+  - "Holtzman et al.'s 2019 'Curious Case of Neural Text Degeneration': greedy decoding (always pick the top token) collapses into repetition loops within a paragraph."
+  - "`lm_head` shape: `(vocab_size, n_embd)`. One row per vocabulary token. The dot product is 'how aligned is the residual with the template for the word cat?'"
+  - "`wte` and `lm_head` are the same shape. GPT-2 tied them (shared storage). Llama 3 8B doesn't — that's a third of a gigabyte difference."
+  - "The model returns raw logits and stops. No softmax inside `gpt()`. Why is that separation deliberate?"
 topics: [transformer, sampling]
 tags: [microgpt, lm_head, sampling, temperature, top-p]
 theme: cream

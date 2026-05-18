@@ -1,6 +1,12 @@
 ---
-title: "From Insects to ImageNet"
-description: "The logistic regression gradient turns out to be the cleanest computation in all of machine learning — and it is identical to backpropagation through a sigmoid output neuron."
+title: "Sigmoid Gradient: the cleanest computation in machine learning"
+short_title: "Sigmoid Gradient"
+description: "The gradient of logistic regression is (σ(z)−y)·x — prediction error times input — and it is identical to backpropagation through a sigmoid output neuron."
+blurb:
+  - "Maximum likelihood estimation gives a loss function: negative binary cross-entropy. No least squares."
+  - "Differentiate the log-likelihood: ∂ℓ/∂β = Σ(yᵢ − p̂ᵢ)xᵢ. The gradient is prediction error times input, nothing else."
+  - "David Cox published the definitive treatment in 1958. Paul Werbos showed in 1974 that the same formula is backprop through a sigmoid neuron."
+  - "Berkson's 1944 approximation, originally built to avoid table lookups, turns out to produce the most numerically convenient gradient in deep learning."
 topics: [machine-learning, statistics, optimization]
 tags: [logistic-regression, cross-entropy, gradient, sigmoid, backpropagation]
 theme: cream

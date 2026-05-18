@@ -1,6 +1,12 @@
 ---
-title: "The Pyramid of Speed"
-description: "Registers, shared memory, L2, and HBM: four orders of magnitude of bandwidth separate the fastest storage from the slowest. Every inference optimization is a trade along this pyramid — capacity for speed, or speed for capacity."
+title: "Memory Hierarchy: four orders of magnitude on one chip"
+short_title: "Memory Hierarchy"
+description: "Registers run at 20,000 GB/s; HBM runs at 4.8 TB/s; NVLink at 900 GB/s; PCIe at 64 GB/s — four orders of magnitude of bandwidth across four rungs, and every inference optimization is a deliberate trade between them."
+blurb:
+  - "Seymour Cray's 1976 line still holds: memory bandwidth is the only thing that matters."
+  - "The H200's 4.8 TB/s HBM3e alone exceeds the combined bandwidth of every Cray supercomputer ever shipped."
+  - "Each rung of the pyramid is roughly 10× faster and 100× smaller than the one below it."
+  - "FlashAttention, quantization, and paging are all just different ways to spend less time on the slow rungs."
 topics: []
 tags: []
 theme: cream

@@ -1,6 +1,12 @@
 ---
-title: "The KV Pruning Family Tree"
-description: "A chronological tour of every KV cache pruning method from 2023 to 2026 — and the four-criteria filter that explains why none of them shipped in production before KVzap."
+title: "KV Pruning Landscape: 20+ methods, zero shipped before 2026"
+short_title: "KV Pruning Landscape"
+description: "H₂O, StreamingLLM, SnapKV, DuoAttention, KVzip, and 15+ more KV pruning methods were all declined by vLLM, SGLang, and TensorRT-LLM operators — a four-criteria filter (fast, phase-agnostic, optimization-friendly, faithful) explains every rejection."
+blurb:
+  - "The NVIDIA/kvpress leaderboard lists 20+ methods. The Awesome-KV-Cache-Compression list has dozens more. Merged into production: zero."
+  - "H₂O fails optimization-friendly (requires a custom kernel) and phase-agnostic (decode-only running sum)."
+  - "KVzip fails fast (2× prefill overhead) and phase-agnostic (second forward pass impossible during decode)."
+  - "KVzap, January 2026, is the first method to pass all four — here is why every predecessor fell short of at least one."
 topics: [kv-cache, pruning, survey]
 tags: [h2o, streamingllm, snapkv, duoattention, kvzip, kvzap, landscape]
 theme: teal

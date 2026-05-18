@@ -1,6 +1,12 @@
 ---
-title: "Inverse RoPE: When Keys and Values Share a Vector"
-description: "Primer. In CSA and HCA, the compressed key and value are the same vector. RoPE applied to shared K=V breaks translation invariance — the attention output shifts with absolute position. Inverse RoPE is the one-line fix."
+title: "Inverse RoPE: the one-line fix for shared K=V"
+short_title: "Inverse RoPE"
+description: "CSA and HCA use the same compressed vector as both key and value — halving storage and compute — but RoPE applied to a shared K=V vector embeds absolute position into the attention output, breaking translation invariance until the inverse rotation undoes it."
+blurb:
+  - "Standard attention: R(i)^T R(j) = R(j-i). Absolute positions cancel; only relative position j-i survives in the score."
+  - "Shared K=V: the rotation R(j) that encodes position into the key also encodes it into the value — so the output shifts with absolute position."
+  - "The fix: apply the inverse rotation R(-j) to the value output after attention. One line. Restores translation invariance exactly."
+  - "Half the projection matrices, half the cache slots, half the matrix-multiply passes at decode time — paid for by one extra rotation."
 topics: [attention, rope, primer, theory]
 tags: [inverse-rope, rope, shared-kv, mqa, translation-invariance, csa, hca]
 theme: cream

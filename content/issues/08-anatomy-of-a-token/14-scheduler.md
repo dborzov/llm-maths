@@ -1,6 +1,12 @@
 ---
-title: "The Token Budget"
-description: "vLLM V1's scheduler is deliberately simple: allocate a fixed token budget per step, let each request spend it on prefill or decode tokens, and let the prefill-versus-decode distinction dissolve. This chapter traces the years of layered complexity that one clean abstraction quietly deletes."
+title: "vLLM Scheduler: one integer per request, twenty-six lines"
+short_title: "vLLM Scheduler"
+description: "vLLM V1's scheduler replaces a 13-node state machine with a single counter per request — num_computed_tokens — and a 26-line schedule_step function that treats prefill, decode, and chunked-prefill as the same operation with different N."
+blurb:
+  - "V0's scheduler had 13 lifecycle states by Q3 2024; its test suite took longer to run than the actual model."
+  - "The V1 insight: prefill and decode are the same forward pass — just different values of T in the (B, T, D) activation tensor."
+  - "Chunked prefill was the missing piece: once any prefill fits in a bounded token budget, the distinction with decode dissolves."
+  - "The V1 rewrite shipped January 27, 2025 and collapsed the 13-node diagram to a single integer per request."
 topics: []
 tags: []
 theme: teal

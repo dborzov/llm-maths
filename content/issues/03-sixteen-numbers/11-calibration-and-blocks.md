@@ -1,6 +1,12 @@
 ---
-title: "Calibration & Blocks"
-description: "A primer on the machinery that makes everything work: per-group scales, why 128 is the magic block size, and stochastic vs deterministic rounding."
+title: "Block Quantization: why group_size=128 is the quiet load-bearer"
+short_title: "Block Quantization"
+description: "Every modern quantization method has a block_size parameter, almost always 32–128, that determines one shared scale per group of weights — and it's the difference between working and broken."
+blurb:
+  - "Per-tensor scale: one number for the whole matrix. Fails when rows have different magnitudes. Near-universal before 2022."
+  - "Per-block scale: one scale per 128 consecutive elements. Adapts to local heterogeneity that per-row scaling misses."
+  - "The metadata cost of block scaling is a fraction of the precision gain: 128 × 4-bit values + 1 FP16 scale ≈ 4.125 bits/value."
+  - "Stochastic rounding — add uniform noise before truncating — makes quantization unbiased over many updates, critical for training."
 topics: [quantization]
 tags: [calibration, block-quantization, group-quantization, stochastic-rounding]
 theme: cream

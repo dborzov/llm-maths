@@ -1,6 +1,12 @@
 ---
-title: "Words That Know Their Place"
-description: "Late 2013. Mikolov's team is stress-testing their embeddings when they notice that king − man + woman ≈ queen. This is not magic. It is what a good geometry of meaning looks like."
+title: "Analogy Arithmetic: why king − man + woman = queen"
+short_title: "Analogy Arithmetic"
+description: "Vector arithmetic over Word2Vec embeddings solves analogy problems at scale — not because the model was designed to, but because consistent displacement vectors emerge from training on context."
+blurb:
+  - "king − man + woman ≈ queen. On thousands of test analogies — capital cities, currencies, verb tenses — the arithmetic was right at a rate that shocked everyone."
+  - "The reason is concrete: if a consistent \"gender direction\" exists in the space, then king + gender_direction = queen follows from the geometry."
+  - "The gender direction is not aligned with any coordinate axis. It is a direction discovered organically by gradient descent."
+  - "Inspecting individual dimensions of a word vector tells you nothing. Meaning is in the directions, not the coordinates."
 topics: [embeddings, word2vec, geometry]
 tags: [word2vec, analogy, semantic-directions, word-clusters]
 theme: teal

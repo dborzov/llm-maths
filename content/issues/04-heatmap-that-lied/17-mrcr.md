@@ -1,6 +1,12 @@
 ---
-title: "The Fourth Poem"
-description: "A long conversation. Eight similar requests scattered through 200,000 tokens. The question: reproduce the fourth poem about tapirs. MRCR — the benchmark that defined 'retrieval with bookkeeping' and became long-context evaluation's de facto retrieval yardstick."
+title: "MRCR: retrieval with bookkeeping across 200K tokens"
+short_title: "MRCR"
+description: "Vodrahalli's MRCR embeds eight similar requests in 200,000 tokens and asks the model to reproduce one specific instance — turning long-context retrieval from needle-finding into ordinal disambiguation."
+blurb:
+  - "Eight requests spanning two forms (poem, story) and topics that deliberately repeat across forms."
+  - "The hard part is not distance — it is finding the second poem about tapirs, not the first."
+  - "MRCR can theoretically be solved with one linear pass; that limitation prompted GraphWalks."
+  - "OpenAI adopted MRCR and released it as a public dataset alongside GPT-4.1 in April 2025."
 topics: [evaluation, long-context, methodology]
 tags: [mrcr, mrcr-v2, vodrahalli, michelangelo, openai-mrcr, long-context-benchmarks, retrieval, ordinal]
 theme: teal

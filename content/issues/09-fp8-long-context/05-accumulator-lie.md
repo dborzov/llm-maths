@@ -1,5 +1,6 @@
 ---
 title: "Hopper FP8: when the FP32 accumulator stops accumulating"
+short_title: "Hopper FP8"
 description: "NVIDIA documents FP8 tensor cores as accumulating into FP32 registers. At long contraction dimensions the precision quietly evaporates — the same bug DeepSeek-V3 hit during training five months earlier."
 blurb:
   - "NVIDIA docs: FP8 tensor cores accumulate into FP32 registers. Mostly true."

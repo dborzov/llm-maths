@@ -1,6 +1,12 @@
 ---
-title: "Sixty Lines, One LLM"
-description: "A complete, working transformer language model in 60 lines of plain Python. No torch. No numpy. No magic. Read it once, then we spend the rest of the issue unpacking it."
+title: "MicroGPT: a complete transformer in 60 lines of Python"
+short_title: "MicroGPT"
+description: "A complete, working transformer language model in 60 lines of plain Python — no torch, no numpy, no magic."
+blurb:
+  - "60 lines. No libraries. One working autoregressive transformer language model."
+  - "One engineer printed a 37,000-line model.py. The other wrote the same model on a sheet of A4."
+  - "Every variable name fits on a sticky note. Every intermediate value is printable."
+  - "The listing that pins a production `position_id` bug in 40 minutes — after 3 days of CUDA dead ends."
 topics: [transformer, inference]
 tags: [microgpt, gpt, pure-python, kv-cache]
 theme: cream

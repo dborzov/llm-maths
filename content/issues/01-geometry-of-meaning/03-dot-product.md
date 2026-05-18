@@ -1,6 +1,12 @@
 ---
-title: "The Geometry of Agreement"
-description: "The dot product is the simplest way to ask 'how much do these two vectors agree?' — and it turns out to be exactly the right question to ask about word meanings."
+title: "Dot Product: the one question that runs all of NLP"
+short_title: "Dot Product"
+description: "The dot product measures how much two vectors agree in direction — and that single question turns out to be the right one for measuring similarity between word meanings."
+blurb:
+  - "`a · b = ‖a‖ ‖b‖ cos θ`. Large when vectors point the same way. Zero when perpendicular. Negative when opposite."
+  - "Cosine similarity strips out magnitude: two vectors pointing the same direction score 1.0 regardless of length."
+  - "Word2Vec's entire training objective is a dot product comparison: push real pairs high, push random pairs low."
+  - "One-hot vectors are always perpendicular — their dot product is always zero. That is the problem the whole issue is solving."
 topics: [embeddings, linear-algebra]
 tags: [dot-product, cosine-similarity, projection, geometry]
 theme: cream

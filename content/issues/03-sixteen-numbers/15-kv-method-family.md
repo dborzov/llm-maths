@@ -1,6 +1,12 @@
 ---
-title: "The KV Cache Method Family Tree"
-description: "Eight modern KV-cache quantization methods on one shelf. KIVI, KVQuant, GEAR, ATOM, QServe, KVTuner, TurboQuant, and the FP8-native option. Which trick each one is making, and which to pick when."
+title: "KV Method Family Tree: KIVI, KVQuant, GEAR, ATOM, QServe"
+short_title: "KV Method Family Tree"
+description: "Eight KV-cache quantization methods on one shelf — what trick each makes, why none of the weight-side methods (GPTQ, AWQ) translates directly, and which to use when."
+blurb:
+  - "FP8 KV: hardware-native, zero-cost on Hopper, 2× compression. The floor — enable it first, before anything else."
+  - "KIVI: per-channel INT2 for K, per-token INT2 for V. 2-bit, online, no calibration set needed."
+  - "GEAR: low-rank approximation + sparse outlier residual + quantized remainder. Targets the structure, not just the scale."
+  - "KVTuner: assigns different bit-widths to different layers based on sensitivity — some layers at 2-bit, others at 4-bit."
 topics: [quantization, attention]
 tags: [kv-cache, kivi, kvquant, gear, atom, qserve, turboquant, kvtuner]
 theme: cream

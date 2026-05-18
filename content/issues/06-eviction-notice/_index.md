@@ -1,6 +1,6 @@
 ---
-title: "The Eviction Notice"
-description: "KV cache pruning for LLMs — from Heavy Hitters to KVzap, and why the first method to actually ship took three years to arrive."
+title: "KV Cache Pruning: from Heavy Hitters to shipping KVzap"
+description: "KV cache pruning for LLMs — from the Heavy Hitter Oracle (2023) to KVzap (2026), and why the first method to actually ship in production took three years to arrive."
 issue: 6
 layout: issue-cover
 theme: cream

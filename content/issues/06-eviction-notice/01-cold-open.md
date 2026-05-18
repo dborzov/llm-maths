@@ -1,6 +1,12 @@
 ---
-title: "Memory Full"
-description: "January 2026. Simon Jégou stares at a rejection email and a benchmark he can't ship. The KV cache is too big to fit, too important to delete — and a 14-line Python function is about to change that."
+title: "KV Cache: why 335 GB doesn't fit in 320 GB"
+short_title: "KV Cache"
+description: "At 128,000 tokens, the KV cache for Llama-65B consumes 335 GB — more than the 320 GB total on a 4×H100 server. Simon Jégou's January 2026 solution is a 14-line function that runs in under 1.1% of inference compute."
+blurb:
+  - "Llama-65B at 128k tokens: 335 GB for KV cache alone. A 4×H100 server has 320 GB total."
+  - "Three rejection emails — vLLM, SGLang, TRT-LLM — all say the same thing: 2× prefill overhead, decode incompatible."
+  - "By late 2025, 20+ KV pruning papers existed. Zero were merged into any production inference engine."
+  - "What did Jégou type into that terminal?"
 topics: [kv-cache, inference, pruning]
 tags: [kvzap, nvidia, kv-cache, long-context, inference-efficiency]
 theme: cream

@@ -1,6 +1,12 @@
 ---
-title: "The 4× Jump"
-description: "Five months. One Anthropic release cycle. MRCR v2 8-needle at 1M context: 18.5% → 76%. The single largest single-version capability jump in long-context benchmark history — and what 'fixing context rot' actually meant."
+title: "Context Rot Fix: 18.5% to 76% in five months"
+short_title: "Context Rot Fix"
+description: "Between September 2025 and February 2026 Anthropic went from 18.5% to 76% on MRCR v2 8-needle at 1M context — a 57.5-point jump, the largest single-version leap in long-context benchmark history."
+blurb:
+  - "Claude Sonnet 4.5 (Sep 2025): 18.5% on MRCR v2 8-needle at 1M — mid-pack among frontier models."
+  - "Claude Opus 4.6 (Feb 2026): 76.0% on the same benchmark, five months later."
+  - "Anthropic was the first frontier lab to adopt 'context rot' as an acknowledged, named problem to fix."
+  - "Opus 4.7 (Apr 2026) regressed to 32.2% — showing the score is a real signal, not a saturated one."
 topics: [evaluation, anthropic, long-context]
 tags: [claude-opus-4.6, sonnet-4.5, mrcr-v2, context-rot, anthropic]
 theme: cream

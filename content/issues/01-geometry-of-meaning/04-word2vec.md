@@ -1,6 +1,12 @@
 ---
-title: "Embarrassingly Simple"
-description: "January 2013. Mikolov submits a four-page paper to ICLR: a model with no hidden layers that beats everything, trains in hours, and secretly encodes the geometry of human language."
+title: "Word2Vec: no hidden layers, beats everything"
+short_title: "Word2Vec"
+description: "Mikolov's January 2013 paper described a model with no hidden layers, two matrices, and a dot product — and it outperformed every existing embedding method."
+blurb:
+  - "The full softmax over a 100k-word vocabulary requires 100,000 dot products per training step. At 10 billion steps, that's 10¹⁵ dot products just for the denominator."
+  - "Negative sampling replaces the full softmax with a binary question: is this (center, context) pair real or randomly sampled?"
+  - "Two matrices: `W_in` for center words, `W_out` for context words. After training, `W_out` is discarded. The geometry lives in `W_in`."
+  - "The model that removed the hidden layer beat the model that had one. The genius was in what was removed."
 topics: [embeddings, word2vec]
 tags: [word2vec, skip-gram, negative-sampling, training]
 theme: teal

@@ -1,6 +1,12 @@
 ---
-title: "When Everyone Scored 99"
-description: "By March 2024 every frontier model is hitting near-perfect NIAH. The benchmark is over. Within eight months, seven new benchmarks appear — and every one of them lands the same verdict: retrieval is not reasoning."
+title: "Saturation: seven benchmarks, one verdict, eight months"
+short_title: "Saturation"
+description: "By March 2024 every frontier model scores 99% on NIAH; seven successor benchmarks appear in the next eight months and every one reaches the same conclusion: retrieval is not reasoning."
+blurb:
+  - "RULER, ∞Bench, BABILong, LOFT, NoCha, HELMET, LongBench v2 — all within 10 months."
+  - "LongBench v2: humans score 53.7%, OpenAI o1 scores 57.7% — barely above human."
+  - "BABILong finding: models effectively utilize only 10–20% of their advertised window."
+  - "The coordinated slogan that emerged: 'Retrieval is not reasoning.'"
 topics: [evaluation, long-context, history]
 tags: [ruler, infinitebench, babilong, michelangelo, nocha, helmet, longbench-v2]
 theme: cream

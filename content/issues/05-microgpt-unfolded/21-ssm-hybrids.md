@@ -1,6 +1,12 @@
 ---
-title: "State-Space Hybrids"
-description: "Replace some attention layers entirely with state-space blocks (Mamba, RWKV) that maintain a *fixed-size* recurrent state instead of a growing KV cache. Jamba's 1:7 attention-to-Mamba ratio gives 8× compression; Nemotron 3 Nano gets 4.8×; the design space is large and 2026's frontier is busy mapping it."
+title: "SSM Hybrids: replace attention with a fixed-size state"
+short_title: "SSM Hybrids"
+description: "State-space layers (Mamba, RWKV) maintain a fixed-size recurrent state instead of an ever-growing KV cache — replace 7 of 8 attention blocks and the per-token cache cost drops by 8×."
+blurb:
+  - "Mamba (December 2023): attention thrown away entirely, replaced with a selective state-space layer. The community's default reaction was a polite eye-roll."
+  - "AI21's Jamba (March 2024): 52B parameter model, 1 attention block per 7 Mamba blocks. Competitive with Mixtral 8×7B on long-context benchmarks."
+  - "A state-space layer's 'memory' is one fixed vector of size d_state=16 to 64. Attention's memory is a list of T key/value pairs. The T-dependence is gone."
+  - "By end of 2025: Nemotron 3 Nano (4.8× compression), Kimi-Linear (4×), every major lab has a hybrid in research. What broke the earlier RWKV and RetNet prophecies?"
 topics: [transformer, ssm, kv-cache]
 tags: [microgpt, mamba, jamba, nemotron, kimi-linear, rwkv]
 theme: cream

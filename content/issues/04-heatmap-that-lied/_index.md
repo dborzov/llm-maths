@@ -1,6 +1,6 @@
 ---
-title: "The Heatmap That Lied"
-description: "An issue on how the long-context benchmark got invented, saturated, debunked, and reinvented — and why your million-token window still feels half empty."
+title: "Long-Context Benchmarks: invented, saturated, debunked, reinvented"
+description: "How the long-context benchmark got invented in an afternoon, saturated in months, debunked in a year, and reinvented — and why a million-token window still feels half empty."
 issue: 4
 layout: issue-cover
 theme: cream

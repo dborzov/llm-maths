@@ -1,6 +1,12 @@
 ---
-title: "The State Dict, Demystified"
-description: "The model is a Python dictionary of tensors. What's in it, what each entry is shaped like, and why these are the only nine names you need to memorize for the rest of the project."
+title: "State Dict: nine names, one Python dict"
+short_title: "State Dict"
+description: "The trained model is a Python dictionary of tensors — exactly nine distinct key patterns, two top-level and seven repeated per layer."
+blurb:
+  - "The entire 13 GB Llama 1 7B download is `collections.OrderedDict` — a friend's giddy 2023 discovery."
+  - "Nine key patterns. Two top-level (`wte`, `wpe`). Seven per-layer. For a 2-layer toy, the full key set has length 16."
+  - "Every key has a shape, a byte cost, and a single role. What role does `lm_head` share with `wte`?"
+  - "The cleverness lives in the code that reads the dict — the dict itself is, in one engineer's words, 'the world's most expensive lookup table.'"
 topics: [transformer]
 tags: [microgpt, state-dict, parameters]
 theme: teal

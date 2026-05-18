@@ -1,5 +1,6 @@
 ---
 title: "Sliding Window Attention: why FP8 broke even at 741K tokens"
+short_title: "Sliding Window Attention"
 description: "gpt-oss-20b's FP8 break-even was 741,565 tokens — the flag was a no-op. Sliding-window layers have bounded caches; the fix was a per-layer skip flag."
 blurb:
   - "gpt-oss-20b: FP8 slope was 96% of BF16. The bandwidth saving was essentially zero."

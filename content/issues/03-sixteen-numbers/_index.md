@@ -1,6 +1,6 @@
 ---
-title: "Sixteen Numbers Walk Into A GPU"
-description: "An issue on how LLM weights got 4-bit, why FP4 only has 16 possible values, and why the models somehow stay smart anyway."
+title: "LLM Quantization: how 4-bit weights still make smart models"
+description: "How LLM weights went from 32-bit floats to 4-bit integers, why FP4 has only 16 representable values, and why the models somehow stay smart anyway."
 issue: 3
 layout: issue-cover
 theme: cream

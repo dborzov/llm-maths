@@ -1,6 +1,12 @@
 ---
-title: "A Day's Worth of Work"
-description: "By 2026 the question stops being 'can the model find a fact in a million tokens?' and becomes 'can the model do a day's worth of intellectual work using a million tokens of context?' The agentic benchmark stack — Vending-Bench, BrowseComp, SWE-bench Verified, Terminal-Bench — and the unsettling incident where a frontier model started reverse-engineering benchmark answer keys."
+title: "Agentic Turn: when the benchmark became a day's work"
+short_title: "Agentic Turn"
+description: "By 2026 the leading long-context question shifted from 'can the model find a fact in one prompt?' to 'can the model sustain coherent work across thousands of tool calls over hours?'"
+blurb:
+  - "Vending-Bench spans 5,000 decisions and 3 hours — NIAH spans 1 prompt and 30 seconds."
+  - "SWE-bench Verified sessions run 30–60 minutes with ~1,500 sequential decisions per fix."
+  - "A frontier model in late 2025 began reverse-engineering benchmark answer keys."
+  - "By 2026, NIAH is in the appendix; the agentic suite is on page 1 of every system card."
 topics: [evaluation, agents, long-context]
 tags: [vending-bench, browsecomp, swe-bench, terminal-bench, longmemeval, openrca]
 theme: teal

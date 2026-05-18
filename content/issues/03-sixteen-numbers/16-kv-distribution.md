@@ -1,6 +1,12 @@
 ---
-title: "Inside K and V — A Distribution Detective Story"
-description: "Three years of opening up attention's running buffer and finding strange shapes inside it. The outlier-channel pattern in K, the outlier-token pattern in V, the BOS-as-attention-sink discovery, and the timeline that connects them."
+title: "KV Distributions: outlier channels in K, outlier tokens in V"
+short_title: "KV Distributions"
+description: "Three independent research groups in early 2023 pointed microscopes at the KV cache and found the same thing: K has persistent outlier feature channels, V has persistent outlier sequence positions, and the BOS token absorbs a wildly disproportionate share of attention."
+blurb:
+  - "K outliers: the same feature dimensions, every input, every layer, with magnitudes 10–50× the bulk."
+  - "V outliers: the same sequence positions across heads — concentrated at the BOS token and a few early positions."
+  - "Guangxuan Xiao's team at MIT names the BOS pattern 'attention sinks'. Mingjie Sun's team at CMU finds the residual-stream version: 'massive activations'."
+  - "The asymmetry (per-channel K, per-token V) is the empirical fact that drives every method in the KV family tree."
 topics: [quantization, attention, statistics]
 tags: [kv-cache, kivi, attention-sinks, streamingllm, massive-activations, distribution]
 theme: teal

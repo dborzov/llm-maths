@@ -1,6 +1,12 @@
 ---
-title: "The Softmax Kingdom"
-description: "In 1998, LeNet-5 classifies 10 handwritten digits. But sigmoid outputs don't sum to 1. The fix — softmax — is logistic regression generalized to K classes, and it still runs on Berkson's 1944 approximation."
+title: "Softmax: logistic regression for K classes"
+short_title: "Softmax"
+description: "LeNet-5 (1998) exposed the fatal flaw of K independent sigmoids: ten outputs with no reason to sum to 1. Softmax fixes this by making logistic regression a proper probability distribution over all classes."
+blurb:
+  - "Ten sigmoid outputs can sum to 2.7 on one image and 0.4 on another. That is not a probability distribution."
+  - "Softmax: divide each eᶻᵏ by the sum of all eᶻʲ. Every output is positive; they sum to 1."
+  - "When K=2, softmax reduces exactly to binary logistic regression — the single logit is z₁ − z₂."
+  - "The raw pre-softmax scores are called logits — Berkson's 1944 word — because log P(k)/P(K) = zₖ − z_K is literally a log-odds."
 topics: [machine-learning, deep-learning, probability]
 tags: [softmax, cross-entropy, logits, pytorch, lm-head, sigmoid, numerical-stability]
 theme: teal

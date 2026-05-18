@@ -1,6 +1,12 @@
 ---
-title: "Heavily Compressed Attention (V4)"
-description: "V4's complement mode. Compress every m'=128 tokens into one entry. Drop the sparse-selection machinery entirely. Run dense attention over the heavily compressed sequence. Why this works on roughly half the layers — and what it tells us about what attention actually does."
+title: "HCA: compress 128× and skip the indexer"
+short_title: "HCA"
+description: "Heavily Compressed Attention compresses every 128 tokens into one vector, then runs dense attention over the resulting short sequence — no indexer, no top-k selector, just 128× compression making dense attention already cheap."
+blurb:
+  - "m'=128: at 1M context, the compressed sequence is just 7,812 entries. Dense attention over that costs less than DSA's indexer."
+  - "HCA has no lightning indexer, no top-k selector, one compressor stream — half the diagram of CSA."
+  - "CSA retrieves the specific clause. HCA remembers the plot. A real model needs both, at every layer, in alternation."
+  - "Sparsity and compression are substitutes beyond a certain ratio: compress enough, and selection becomes unnecessary."
 topics: [attention, deepseek, hca, compression, v4]
 tags: [hca, deepseek-v4, heavily-compressed-attention, token-compression, dense-attention]
 theme: teal

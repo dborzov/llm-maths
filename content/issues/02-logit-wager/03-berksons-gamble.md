@@ -1,6 +1,12 @@
 ---
-title: "The Simpler S-Curve"
-description: "Mayo Clinic, 1944: a contrarian statistician bets that nobody can tell the difference between the normal CDF and his much simpler replacement. He names it the logit."
+title: "Logit: the 1944 wager that replaced a hard integral"
+short_title: "Logit"
+description: "Joseph Berkson, Mayo Clinic 1944: replace the probit's incalculable integral with the logistic function, whose inverse is a single log — and bet nobody can tell the difference."
+blurb:
+  - "The probit's bottleneck: evaluating Φ⁻¹(p) requires a table lookup. Berkson is fitting hundreds of patients per day."
+  - "The logistic function σ(x) = 1/(1+e⁻ˣ) has the same S-shape as the normal CDF — and its inverse is just log(p/(1−p))."
+  - "Berkson scaled both curves to the same variance and measured the maximum difference: 0.023. Smaller than any real-data noise."
+  - "He called the inverse the logit — log-odds unit — by direct analogy with Bliss's probit (probability unit)."
 topics: [probability, statistics]
 tags: [logit, logistic, berkson, mayo-clinic, probit]
 theme: cream

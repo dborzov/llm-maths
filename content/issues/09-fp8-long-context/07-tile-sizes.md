@@ -1,5 +1,6 @@
 ---
 title: "GPU Registers: why head_dim 256 broke the fix"
+short_title: "GPU Registers"
 description: "Tile-size optimization in FA3 FP8: why head_dim 64 and 128 absorbed the new accumulator register, why 256 spilled to local memory, and what three PRs over six weeks did about it."
 blurb:
   - "Every warp in a fused attention kernel owns a fixed slice of the register file."

@@ -1,6 +1,12 @@
 ---
-title: "The Stranger Country"
-description: "High-dimensional spaces do not behave like the 3D world your intuition was built for. Understanding the differences explains why 300 dimensions is both necessary and sufficient."
+title: "High-Dimensional Geometry: the curse that became a gift"
+short_title: "High-Dimensional Geometry"
+description: "The properties of high-dimensional space that Bellman called a curse in 1957 turn out to be exactly what makes 300-dimensional word embeddings work."
+blurb:
+  - "Richard Bellman, RAND Corporation 1957: sampling a 10-dimensional space on a 10-point grid requires 10¹⁰ evaluations. He called it the curse of dimensionality."
+  - "In 300 dimensions, two random vectors have a mean absolute cosine similarity of 0.04. They are almost exactly perpendicular by default."
+  - "A vocabulary of 100,000 words needs 100,000 nearly-orthogonal directions. In 300D space, that is easy. In 3D space, it is impossible."
+  - "All the volume of a high-dimensional sphere lives near its surface — not near its center. Why does this matter for embeddings?"
 topics: [embeddings, high-dimensionality, geometry]
 tags: [high-dimensions, curse-of-dimensionality, concentration-of-measure, johnson-lindenstrauss, superposition]
 theme: cream

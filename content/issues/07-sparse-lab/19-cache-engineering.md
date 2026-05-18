@@ -1,6 +1,12 @@
 ---
-title: "Engineering the V4 Cache"
-description: "Primer. V4 has three types of KV cache entry — raw sliding-window tokens, 4× compressed CSA entries, and 128× compressed HCA entries. The vLLM team unified them with a three-pool block design and three kernel fusions. This is the systems chapter."
+title: "V4 Cache Engineering: three pools, one allocator"
+short_title: "V4 Cache Engineering"
+description: "V4's three attention modes produce KV entries of three different sizes and lifetimes — the vLLM team unified them using a 256-token logical block divisible by both compression strides, with three separate physical pools behind one address space."
+blurb:
+  - "Raw sliding-window entries: 1 KV pair per token. CSA compressed entries: 1 pair per 4 tokens. HCA compressed entries: 1 pair per 128 tokens."
+  - "256 logical positions per block: divisible by 4 (64 CSA entries per block) and by 128 (2 HCA entries per block)."
+  - "The allocator never learns that pages have different physical weights — it hands out one block from each pool simultaneously."
+  - "Three kernel fusions: the vLLM April 2026 engineering blog documents exactly how compressor, indexer, and attention fuse into single CUDA passes."
 topics: [attention, cache, systems, primer, vllm]
 tags: [kv-cache, heterogeneous-cache, vllm, kernel-fusion, paged-attention, multi-stream, csa, hca]
 theme: cream

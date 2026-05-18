@@ -1,5 +1,6 @@
 ---
 title: "Decode Latency: the linear model behind FP8's break-even"
+short_title: "Decode Latency"
 description: "The two-parameter ITL model: slope measures bandwidth pressure, intercept measures overhead, and their ratio defines the context length where FP8 starts winning."
 blurb:
   - "ITL(T) = slope × context_length + intercept. Two numbers predict decode latency."

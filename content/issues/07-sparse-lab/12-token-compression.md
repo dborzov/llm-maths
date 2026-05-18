@@ -1,6 +1,12 @@
 ---
-title: "Compressing m Tokens Into One"
-description: "Primer. The softmax-weighted block compressor at the heart of CSA and HCA. Why a learned-weight pooling beats average-pool or strided convolution. The two-stream overlap trick. What gets lost, what gets preserved."
+title: "Token Compression: why learned weights beat average pool"
+short_title: "Token Compression"
+description: "CSA and HCA both compress m tokens into one using a softmax-weighted blend where weights are produced by the data itself — letting the model concentrate weight on a single high-information token rather than averaging it away."
+blurb:
+  - "Average pool weights every token equally. One function word alongside a key content word pulls the compressed vector away from what the model needs."
+  - "Strided conv uses learned weights but applies the same schedule regardless of which token in the block is critical."
+  - "Softmax-weighted pool: a block dominated by one high-information token can concentrate nearly all weight there."
+  - "CSA's two-stream overlap means each compressed entry draws from 2m=8 tokens, not m=4 — boundary information is never lost."
 topics: [attention, compression, primer]
 tags: [token-compression, block-pooling, softmax-weighted, csa, hca, learned-pooling]
 theme: cream

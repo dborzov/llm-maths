@@ -1,5 +1,6 @@
 ---
 title: "FP8 E4M3: three mantissa bits in attention math"
+short_title: "FP8 E4M3"
 description: "The E4M3 layout, why softmax is forgiving of precision loss, and what per-tensor scale = 1.0 assumes about the KV cache."
 blurb:
   - "1 sign bit, 4 exponent bits, 3 mantissa bits — 16 representable values per binade."

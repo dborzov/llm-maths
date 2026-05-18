@@ -1,6 +1,6 @@
 ---
-title: "The Logit Wager"
-description: "In 1934, an entomologist needed to kill bugs scientifically. In 1944, a physician replaced his hardest integral with a clever approximation. Ninety years later, that replacement runs inside every neural network on Earth."
+title: "Logistic Regression: the 1934 S-curve running every neural network"
+description: "In 1934, an entomologist needed to fit an S-curve to bug mortality data. In 1944, a physician replaced the hard integral with a clever approximation. That approximation runs inside every neural network on Earth."
 issue: 2
 layout: issue-cover
 theme: cream

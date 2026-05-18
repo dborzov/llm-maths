@@ -1,6 +1,12 @@
 ---
-title: "Decoupling Memory From Time"
-description: "Boss capstone. MLA shrinks cache per token to constant. CSA + HCA shrink compute per token to constant. The cost of context per inference query becomes LINEAR in T. The 10-year quadratic ceiling on long-context LLMs is gone. What does the world look like on the other side?"
+title: "Decoupling: four cuts make context cost linear"
+short_title: "Decoupling"
+description: "MLA, DSA, CSA, and HCA each attack a different dimension of attention cost — cache width, token count via selection, token count via compression before selection, and token count via compression before dense attention — and their reductions multiply."
+blurb:
+  - "MLA cut cache bytes per token per layer from 32,768 to 576 — a 57× reduction — using the absorption identity."
+  - "Three moves after MLA, the cost of a decode step at 1M context is O(T/128) for half the layers: just 7,812 attention entries."
+  - "The four cuts are orthogonal: MLA operates on the D-axis, DSA/CSA/HCA on the T-axis, GQA on the H-axis."
+  - "September 2017: the Attention Is All You Need appendix noted O(T²) in one line. Nobody worried. Context was 512 tokens."
 topics: [attention, deepseek, economics, long-context, theory]
 tags: [boss, decoupling, mla, dsa, csa, hca, linear-context, agents]
 theme: cream

@@ -1,6 +1,12 @@
 ---
-title: "Needle in a Haystack"
-description: "Late 2023, Greg Kamradt: take Paul Graham essays, glue them together, paste a sentence about a sandwich somewhere in the middle, ask the model where to eat in San Francisco. The benchmark that took over an industry."
+title: "NIAH: the sandwich sentence that ate an industry"
+short_title: "NIAH"
+description: "Greg Kamradt's November 2023 benchmark hid a single out-of-place sentence in Paul Graham essays and asked the model where to eat in San Francisco — 88 cells, one credit card, zero peer review."
+blurb:
+  - "The needle sentence is deliberately out-of-register with Paul Graham's writing style."
+  - "Full sweep cost: ~$50–$100 of API credit on Claude 2.1 at 2023 list prices."
+  - "The needle is detectable as an OOD token sequence — retrieval without understanding."
+  - "Within ten days, Anthropic, OpenAI, and Google all ran their own versions."
 topics: [evaluation, long-context]
 tags: [niah, kamradt, claude-2.1, anthropic, paul-graham]
 theme: cream

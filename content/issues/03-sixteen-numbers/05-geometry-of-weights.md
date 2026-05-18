@@ -1,6 +1,12 @@
 ---
-title: "The Geometry Of Weights"
-description: "What does a trained LLM actually look like, numerically? A primer on the empirical distribution of weights and activations — Gaussian here, heavy-tailed there, and the surprise that broke quantization."
+title: "Weight Distributions: Gaussian weights, heavy-tailed activations"
+short_title: "Weight Distributions"
+description: "Trained LLM weight rows are approximately Gaussian — NF4's entire justification — but activation distributions are heavy-tailed with outliers that shatter naive quantization."
+blurb:
+  - "Pull a random row from a feedforward weight matrix and histogram it: roughly symmetric, roughly bell-shaped, kurtosis 4–8."
+  - "That near-Gaussian shape is the *entire load-bearing assumption* of NF4 from QLoRA."
+  - "Activations are a different story: heavy tails, asymmetric, with persistent outlier channels that appear only above a certain model size."
+  - "The distribution gap between weights and activations is why weight quantization and KV-cache quantization need different algorithms."
 topics: [quantization, statistics]
 tags: [distributions, outliers, empirical, statistics]
 theme: cream

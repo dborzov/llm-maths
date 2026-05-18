@@ -1,6 +1,12 @@
 ---
-title: "ReLU and Friends"
-description: "`max(0, x)` works. So does GELU, SiLU, and the gated SwiGLU. The differences are smaller than the marketing suggests, and the reasons each one won its decade are mostly historical accident."
+title: "Activations: why max(0, x) ate the world"
+short_title: "Activations"
+description: "`max(0, x)` is not differentiable at zero, has unbounded output, and zero gradient for half its domain — the textbooks said it would fail, and it didn't."
+blurb:
+  - "Glorot, Bordes, and Bengio published ReLU at AISTATS 2010. Hinton later said it took him 'an embarrassingly long time to be willing to try it.'"
+  - "Strip the ReLU from the MLP block and two matrix multiplies collapse into one: the entire depth of the model becomes an illusion."
+  - "ReLU runs once per element of a 4096-wide hidden vector, per layer, per token: ~200 billion times in one forward pass of a frontier model."
+  - "GELU, SiLU, SwiGLU have all claimed to outperform ReLU. How much of the gap is activation choice vs. everything else that changed?"
 topics: [transformer, activations]
 tags: [microgpt, relu, gelu, swiglu]
 theme: teal

@@ -1,6 +1,12 @@
 ---
-title: "Two Phases, Two Personalities"
-description: "Prefill is compute-bound; decode is bandwidth-bound. They have opposite hardware personalities, opposite bottlenecks, and opposite optimal batch sizes — and every major inference engine decision flows from that asymmetry."
+title: "Prefill vs Decode: two workloads on one GPU"
+short_title: "Prefill vs Decode"
+description: "Prefill runs at thousands of FLOP/byte and saturates the tensor cores; decode runs at ~1 FLOP/byte and turns a $40,000 GPU into an oversized HBM controller — and those opposite bottlenecks drive every design decision in this issue."
+blurb:
+  - "Prefill arithmetic intensity scales linearly with token count: at T=4096 through Llama-70B it is well above the H100 ridge point."
+  - "Decode intensity is ~1 FLOP/byte regardless of model size — the lower bound on per-token latency is 29 ms, set by HBM bandwidth alone."
+  - "That 29 ms floor is thermodynamic: no kernel tuning moves it, only fewer bytes or fewer loads."
+  - "Every optimization in this issue — quantization, speculative decoding, batching, disaggregation — is a variation on three options."
 topics: []
 tags: []
 theme: cream

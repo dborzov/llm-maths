@@ -1989,6 +1989,20 @@ a.issue-cover-article-title:hover {
     opacity: 0.75;
 }
 
+.issue-cover-article-blurb {
+    margin: 0.3rem 0 0;
+    padding-left: 1.1rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    opacity: 0.8;
+    list-style: disc;
+}
+.issue-cover-article-blurb li {
+    margin: 0.2rem 0;
+}
+.issue-cover-article-blurb li:first-child { margin-top: 0; }
+.issue-cover-article-blurb li:last-child  { margin-bottom: 0; }
+
 .issue-cover-article-meta {
     display: flex;
     gap: 0.6rem;

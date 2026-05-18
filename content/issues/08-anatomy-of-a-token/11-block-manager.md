@@ -1,6 +1,12 @@
 ---
-title: "The Block Manager"
-description: "The block manager is the data structure that implements paging for KV caches: a free-block pool, per-request block tables with reference counting, and an O(1) LRU eviction policy. Understanding it is the key to understanding how prefix caching, copy-on-write, and KV offload work at the implementation level."
+title: "Block Manager: three data structures, zero malloc"
+short_title: "Block Manager"
+description: "vLLM's block manager is a pre-allocated slab, a doubly-linked free-block queue, and a per-request block table — all block operations are O(1) or O(blocks) with no cudaMalloc in the hot path, keeping the 2 µs per-step bookkeeping budget."
+blurb:
+  - "At 512 concurrent requests and 25 ms steps, the allocator budget is ~2 µs per request per decode — no room for malloc."
+  - "A 64 GB KV pool with 16-token blocks gives ~200,000 physical blocks, allocated once at startup."
+  - "The free list is doubly-linked so LRU eviction for prefix caching is O(1): evict from the tail, allocate from the head."
+  - "There is no memcpy in the hot path — the only copy in the system is a lazy GPU-side block copy during copy-on-write."
 topics: []
 tags: []
 theme: cream

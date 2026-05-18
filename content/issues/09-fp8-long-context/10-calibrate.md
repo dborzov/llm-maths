@@ -1,5 +1,6 @@
 ---
 title: "FP8 Calibration: why scale = 1.0 usually works"
+short_title: "FP8 Calibration"
 description: "Every other KV quantization method requires calibration data. FP8 doesn't — by default. Why E4M3's dynamic range is usually wide enough, and when it isn't."
 blurb:
   - "KIVI, KVQuant, GEAR, ATOM, QServe all require calibration. FP8 KV in vLLM doesn't, by default."

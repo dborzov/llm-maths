@@ -1,6 +1,12 @@
 ---
-title: "Brain Surgery Returns"
-description: "A 1992 paper on pruning neural networks. A 2022 paper on quantizing LLMs. Same math. The story of GPTQ, and why second-order compensation is the field's quiet workhorse."
+title: "GPTQ: a 1992 pruning algorithm reborn as the quantization workhorse"
+short_title: "GPTQ"
+description: "Hassibi and Stork's Optimal Brain Surgeon showed how to delete a weight and compensate the rest; Frantar and Alistarh replaced deletion with rounding, and GPTQ was born."
+blurb:
+  - "OBS, 1992: force weight wq to zero, solve for the optimal update to every other weight, repeat. Caltech memo, mostly forgotten."
+  - "GPTQ, 2022: replace 'set to zero' with 'round to nearest 4-bit level'. The compensation formula is identical."
+  - "The compensation vector is the q-th column of H⁻¹ — computed once via Cholesky factorization of the calibration Hessian."
+  - "30 minutes of one-time calibration on ~128 samples; at inference the weights are fixed INT4 with no runtime overhead."
 topics: [quantization]
 tags: [gptq, hassibi-stork, obs, second-order, frantar]
 theme: teal

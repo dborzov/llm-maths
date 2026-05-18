@@ -1,6 +1,12 @@
 ---
-title: "The Other Wall"
-description: "MLA cut the KV cache by 30×. It did not cut a single attention FLOP. At 128K context the T×T score matrix is 16 billion entries per layer per head — and computing those scores is what was actually expensive."
+title: "Quadratic Wall: MLA solved the wrong half"
+short_title: "Quadratic Wall"
+description: "MLA eliminated the memory bottleneck but left attention FLOPs untouched — and at 128K context, computing every T×T score entry costs 2.7 seconds per layer on an H100, before a single MLP block runs."
+blurb:
+  - "MLA solved memory. Prefill latency at 128K is still 16× worse than at 32K. The wall moved, not disappeared."
+  - "At T=128,000 with 128 heads: the score matrix has 2.1 trillion entries. In BF16, storing it would require 4 petabytes."
+  - "FlashAttention never materializes the score matrix — but you still compute every one of those entries."
+  - "The DeepSeek-V3.1 technical report admitted it openly: 'attention computation is compute-bound rather than memory-bound' at 128K context."
 topics: [attention, long-context, compute]
 tags: [deepseek, quadratic, prefill, decode, flops, kv-cache]
 theme: cream

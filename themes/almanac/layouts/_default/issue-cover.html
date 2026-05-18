@@ -37,7 +37,11 @@
             <span class="issue-cover-article-num" aria-hidden="true"></span>
             <span class="issue-cover-article-body">
               <a href="{{ .RelPermalink }}" class="issue-cover-article-title">{{ .Title }}</a>
-              {{ with .Description }}<span class="issue-cover-article-desc">{{ . }}</span>{{ end }}
+              {{ if .Params.blurb }}
+              <ul class="issue-cover-article-blurb">
+                {{ range .Params.blurb }}<li>{{ . }}</li>{{ end }}
+              </ul>
+              {{ else }}{{ with .Description }}<span class="issue-cover-article-desc">{{ . }}</span>{{ end }}{{ end }}
               <span class="issue-cover-article-meta">
                 <span>{{ .ReadingTime }} min</span>
                 {{ with .Params.techKind }}<span class="issue-cover-article-kind issue-cover-article-kind--{{ . }}">{{ . }}</span>{{ end }}

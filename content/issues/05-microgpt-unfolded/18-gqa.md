@@ -1,6 +1,12 @@
 ---
-title: "Grouped-Query Attention"
-description: "The H-axis fix that became universal. Share K/V tensors across head groups; pick a group size; ship it. Llama 3 picked 4×. Qwen3-235B picked 16×. The architectural change is one integer divide inside microGPT's multi-head loop."
+title: "GQA: share K and V across head groups"
+short_title: "GQA"
+description: "Grouped-Query Attention shrinks the H-axis by sharing K/V tensors across groups of query heads — the architectural change is one integer divide in microGPT's multi-head loop."
+blurb:
+  - "Shazeer's 2019 grumpy note: on a 6B-parameter model, KV cache reads alone took 11× longer than the actual attention math."
+  - "MQA extreme: one K, one V per layer, shared across all H heads. PaLM shipped it in 2022 — 5× decode speedup, half a benchmark point lost."
+  - "GQA (the refined version): group the H heads into buckets; each bucket shares one K/V pair. Llama 3 uses groups of 4. Qwen3-235B uses 16."
+  - "Llama1-65B with MQA: 335 GB cache becomes 5 GB. What quality did Llama 3's GQA recover that MQA gave up?"
 topics: [transformer, attention, kv-cache]
 tags: [microgpt, gqa, mqa, llama3, qwen3, glm]
 theme: teal

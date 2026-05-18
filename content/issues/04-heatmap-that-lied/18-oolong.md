@@ -1,6 +1,12 @@
 ---
-title: "The Tallying Problem"
-description: "November 2025. A Carnegie Mellon team proposes OOLONG: not 'find the fact' but 'count all the facts.' Every frontier model scores below 50% at 128K — not because reasoning is hard, but because tallying is."
+title: "OOLONG: counting all the facts, not just finding one"
+short_title: "OOLONG"
+description: "Carnegie Mellon's November 2025 OOLONG benchmark asks models to aggregate every fact in a long context rather than retrieve a single one — and every frontier model scores below 50% at 128K tokens."
+blurb:
+  - "Source material: live-play D&D transcripts counting spells cast per episode — tens of thousands of tokens."
+  - "The model that scored 88% on GraphWalks BFS at 128K returned a confident wrong count on OOLONG."
+  - "Aggregation requires running state that grows linearly with context — no shortcut from skimming."
+  - "Published arXiv:2511.02817, November 2025, by Bertsch, Pratapa, Mitamura, Neubig, and Gormley."
 topics: [evaluation, long-context, methodology]
 tags: [oolong, oolong-synth, oolong-real, bertsch, aggregation, long-context-benchmarks, cmu, dnd-transcripts]
 theme: cream

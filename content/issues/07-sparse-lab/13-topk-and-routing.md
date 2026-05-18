@@ -1,6 +1,12 @@
 ---
-title: "Hard Top-k Without Crying"
-description: "Primer. Top-k is a discrete operator that is not differentiable. Yet every sparse-attention method trains the upstream scorer via gradient descent. The straight-through estimator, soft top-k relaxations, and why the boring-but-correct answer is also the production answer."
+title: "Top-k: discrete, non-differentiable, trained anyway"
+short_title: "Top-k"
+description: "The top-k operator has zero gradient almost everywhere, yet DSA, CSA, and NSA all train the lightning indexer through it — using the straight-through estimator in the forward pass and an auxiliary loss to provide real gradient signal."
+blurb:
+  - "Hard top-k in the forward pass; identity in the backward pass. The straight-through estimator is one line of PyTorch."
+  - "Gumbel-softmax is smooth but noisy at high temperature and slow to converge at low temperature."
+  - "DeepSeek's choice across NSA, DSA, and V4: STE for runtime plus an auxiliary loss that teaches the indexer to match dense attention."
+  - "The auxiliary loss is the differentiability that matters. STE is the runtime mechanism that makes it cheap."
 topics: [attention, sparse-attention, routing, primer]
 tags: [top-k, straight-through-estimator, gumbel-softmax, soft-top-k, routing, moe]
 theme: teal

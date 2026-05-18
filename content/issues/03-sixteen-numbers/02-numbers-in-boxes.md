@@ -1,6 +1,12 @@
 ---
-title: "Numbers In Boxes"
-description: "A primer on float formats: why FP16 is not just half of FP32, why representable numbers cluster near zero, and what \"FP4 has 16 values\" actually means."
+title: "Float Formats: why FP16 and BF16 are not the same 16 bits"
+short_title: "Float Formats"
+description: "IEEE 754's logarithmic grid means representable numbers cluster near zero — and FP4, the format NVIDIA ships in Blackwell, has exactly 16 distinct values."
+blurb:
+  - "FP16 and BF16 both use 16 bits. They are not the same format: FP16 buys precision, BF16 buys range."
+  - "The spacing between consecutive floats doubles every time the exponent increments — floats are a logarithmic grid, not a uniform one."
+  - "FP4 E2M1: 1 sign + 2 exponent + 1 mantissa = 16 representable values total, including zero."
+  - "William Kahan won a Turing Award for IEEE 754 in 1989. The format he locked in became load-bearing for LLMs forty years later."
 topics: [quantization, number-formats]
 tags: [ieee-754, fp16, bf16, fp8, fp4]
 theme: teal

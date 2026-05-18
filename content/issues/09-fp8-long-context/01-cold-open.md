@@ -1,5 +1,6 @@
 ---
 title: "FP8 KV Cache: 91% to 13%"
+short_title: "FP8 KV Cache"
 description: "March 2026. A routine AWS validation sweep finds a 78-point accuracy collapse at 128K tokens — on a flag that's been shipping in vLLM for nearly three years."
 blurb:
   - "H100, 128K context, `--kv-cache-dtype fp8`: needle-in-a-haystack drops from 91% to 13%."

@@ -1,5 +1,6 @@
 ---
 title: "HBM Bandwidth: why you'd halve the KV cache"
+short_title: "HBM Bandwidth"
 description: "The bandwidth wall during decode, the linear ITL model, and the napkin math that makes FP8 KV irresistible — before anyone checked whether it still worked."
 blurb:
   - "H100 decode is bandwidth-bound: 3.35 TB/s is the constraint, not FLOPs."

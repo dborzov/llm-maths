@@ -1,6 +1,12 @@
 ---
-title: "MLA: The First Cut"
-description: "May 2024. DeepSeek-V2 ships Multi-head Latent Attention. We re-tell the algebra from Issue 5 ch.19 with a different audience in mind: not how MLA works, but why it was the first move in a longer game."
+title: "MLA: why the opening move set up every move after"
+short_title: "MLA"
+description: "DeepSeek-V2's Multi-head Latent Attention cut the KV cache ~30× by caching one short latent per token — and in doing so created the MLA-latent side channel that made DSA possible fifteen months later."
+blurb:
+  - "Without MLA: 400 GB of KV cache for one 128K-token conversation. That is five H100s, just for context."
+  - "DeepSeek-V2 launched at ¥0.001 per 1000 tokens — roughly 1/100th of GPT-4 pricing at the time."
+  - "The absorption identity makes read-time decompression of K and V from the cached latent computationally free."
+  - "The RoPE-vs-NOPE split MLA introduced is the seed of the lightning indexer — two papers later."
 topics: [attention, kv-cache, deepseek]
 tags: [mla, deepseek-v2, latent-attention, absorption, rope]
 theme: teal

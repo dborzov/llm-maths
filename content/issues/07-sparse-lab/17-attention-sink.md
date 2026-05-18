@@ -1,6 +1,12 @@
 ---
-title: "Attention Sinks Revisited"
-description: "Primer. From StreamingLLM (2023) to V4's learnable sink logits. The softmax has to send mass somewhere; sinks are the escape valve. V4 turns the implicit sink mechanism into an explicit learnable parameter per head."
+title: "Attention Sinks: from StreamingLLM to V4's learnable escape valve"
+short_title: "Attention Sinks"
+description: "Softmax forces attention weights to sum to 1.0, so when a head has nothing relevant to attend to, it dumps mass into the first 4 tokens — and V4 replaces that implicit behavior with an explicit learnable sink logit per head."
+blurb:
+  - "StreamingLLM (2023): sliding-window attention collapses unless you also keep the first 4 tokens — regardless of what they contain."
+  - "Replace positions 0–3 with four <BOS> tokens and the model still runs fine. The content doesn't matter; the structural slot does."
+  - "V4 §2.3.3: a learnable z'_h per head is added to the attention denominator. When nothing is relevant, the head drives z'_h up and its output drops to near zero."
+  - "Learnable sinks free up cache slots: V4 no longer needs to pin any early tokens to prevent quality collapse."
 topics: [attention, sinks, softmax, primer]
 tags: [attention-sinks, streamingllm, softmax, learnable-sinks, deepseek-v4, no-op-attention]
 theme: teal

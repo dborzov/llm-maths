@@ -1,6 +1,12 @@
 ---
-title: "Synthetic vs Realistic"
-description: "Every long-context benchmark sits somewhere on a spectrum from 'pure synthetic primitive' to 'expert-written real task.' Knowing where on the spectrum it sits tells you what it can and cannot predict about a model's behavior in production."
+title: "Synth vs Real: the spectrum that tells you what a benchmark predicts"
+short_title: "Synth vs Real"
+description: "Every long-context benchmark sits on a spectrum from pure synthetic primitive to expert-written realistic task — its position determines whether the score is diagnostic or predictive."
+blurb:
+  - "Synthetic benchmarks (NIAH, GraphWalks, MRCR) isolate one specific capability in a controlled setting."
+  - "Realistic benchmarks (NoCha, BrowseComp, SWE-bench) predict production behavior in messy conditions."
+  - "LongBench v2 sits at 0.78 on the spectrum; NIAH at 0.0 — the axis is purpose, not quality."
+  - "You need both ends: diagnostics to find what is broken, realistic evals to confirm it matters."
 topics: [evaluation, methodology, long-context]
 tags: [synthetic, realistic, longbench-v2, helmet, loft, diagnostic, predictive]
 theme: cream

@@ -1,6 +1,12 @@
 ---
-title: "The Three Axes of KV Compression"
-description: "The KV cache is a 5-dimensional tensor. You can only shrink it by attacking one of its axes. This chapter introduces the H/D/L framework that organizes every modern architecture-level compression trick — and rules out the one axis nobody has cracked."
+title: "KV Axes: the map behind every cache trick"
+short_title: "KV Axes"
+description: "The KV cache is a 5-dimensional tensor of shape (2, L, H, T, D) — every architecture-level compression trick attacks exactly one of those axes."
+blurb:
+  - "Llama1-65B at 128K context: weights 130 GB, KV cache 335 GB. The cache was 2.5× bigger than the model."
+  - "The formula: 2 × L × H × T × D × bytes/element. At L=80, H=64, T=128K, D=128, bf16: that's exactly 335 GB."
+  - "The H-axis (GQA), D-axis (MLA), and L-axis (SSM hybrids) each have a chapter. Which axis has no clean solution yet?"
+  - "Every frontier model released since 2023 has reshaped its attention block to shrink this number. Which axis did yours attack?"
 topics: [transformer, inference, kv-cache]
 tags: [microgpt, kv-cache, gqa, mla, sliding-window, ssm]
 theme: cream
