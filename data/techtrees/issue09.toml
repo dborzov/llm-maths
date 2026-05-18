@@ -1,0 +1,260 @@
+# Schema, conventions, and the full field reference: see docs/techtrees-schema.md.
+# Issue 09 — The Long-Context Lie (FP8 KV-Cache Quantization in vLLM)
+
+title  = "Tech tree — The Long-Context Lie"
+width  = 1500
+height = 920
+node_w = 200
+node_h = 70
+
+# ---------------------------------------------------------------
+# Row 1 (y=80)   — Boss capstone (state of FP8 KV)
+# Row 2 (y=230)  — Mainline narrative (4 chapters)
+# Row 3 (y=400)  — Applied primers (2 chapters)
+# Row 4 (y=570)  — Theory primers (3 chapters)
+# Row 5 (y=730)  — External cross-issue references
+# ---------------------------------------------------------------
+
+# ---------- Row 1: Boss ----------
+
+[[nodes]]
+id    = "state-of-fp8"
+label = "The State\nof FP8 KV"
+kind  = "boss"
+x     = 760
+y     = 80
+link  = "11-state-of-fp8/"
+sub   = "ch.11"
+
+# ---------- Row 2: Mainlines ----------
+
+[[nodes]]
+id    = "bandwidth-bargain"
+label = "The Halving:\nThe Bandwidth Bargain"
+kind  = "mainline"
+x     = 200
+y     = 230
+link  = "02-bandwidth-bargain/"
+sub   = "ch.2"
+
+[[nodes]]
+id    = "accumulator-lie"
+label = "The Accumulator\nLie"
+kind  = "mainline"
+x     = 540
+y     = 230
+link  = "05-accumulator-lie/"
+sub   = "ch.5"
+
+[[nodes]]
+id    = "two-level-fix"
+label = "Two Levels\nof Honesty"
+kind  = "mainline"
+x     = 880
+y     = 230
+link  = "06-two-level-fix/"
+sub   = "ch.6"
+
+[[nodes]]
+id    = "sliding-puzzle"
+label = "The Window That\nWouldn't Save"
+kind  = "mainline"
+x     = 1240
+y     = 230
+link  = "09-sliding-window-puzzle/"
+sub   = "ch.9"
+
+# ---------- Row 3: Applied primers ----------
+
+[[nodes]]
+id    = "tile-sizes"
+label = "Register Wars:\nTile Sizes"
+kind  = "primer"
+x     = 880
+y     = 400
+link  = "07-tile-sizes/"
+sub   = "ch.7"
+
+[[nodes]]
+id    = "calibrate"
+label = "Scale Equals\nOne"
+kind  = "primer"
+x     = 1240
+y     = 400
+link  = "10-calibrate/"
+sub   = "ch.10"
+
+# ---------- Row 4: Theory primers ----------
+
+[[nodes]]
+id    = "fp8-format"
+label = "E4M3 in\nThree Steps"
+kind  = "primer"
+x     = 200
+y     = 570
+link  = "03-what-is-fp8-here/"
+sub   = "ch.3"
+
+[[nodes]]
+id    = "summation"
+label = "The Sum Is Not\nWhat You Think"
+kind  = "primer"
+x     = 540
+y     = 570
+link  = "04-summation-history/"
+sub   = "ch.4"
+
+[[nodes]]
+id    = "itl-model"
+label = "Slope vs\nIntercept"
+kind  = "primer"
+x     = 1240
+y     = 570
+link  = "08-itl-slope-model/"
+sub   = "ch.8"
+
+# ---------- Row 5: External cross-issue references ----------
+
+[[nodes]]
+id    = "ext-fp8-hw"
+label = "FP8 Hardware\n& Number Formats\n(Issue 03)"
+kind  = "external"
+x     = 200
+y     = 730
+
+[[nodes]]
+id    = "ext-kv-family"
+label = "KV Method\nFamily Tree\n(Issue 03)"
+kind  = "external"
+x     = 540
+y     = 730
+
+[[nodes]]
+id    = "ext-flash"
+label = "FlashAttention\n(Issue 08)"
+kind  = "external"
+x     = 880
+y     = 730
+
+[[nodes]]
+id    = "ext-roofline"
+label = "Roofline &\nBandwidth Wall\n(Issues 06, 08)"
+kind  = "external"
+x     = 1240
+y     = 730
+
+# =========================================================================
+# Edges — arrows point UPWARD from prerequisite → dependent
+# =========================================================================
+
+# ---- Theory primers feed mainlines ----
+
+[[edges]]
+from = "fp8-format"
+to   = "bandwidth-bargain"
+
+[[edges]]
+from = "fp8-format"
+to   = "accumulator-lie"
+
+[[edges]]
+from = "fp8-format"
+to   = "calibrate"
+
+[[edges]]
+from = "summation"
+to   = "accumulator-lie"
+
+[[edges]]
+from = "summation"
+to   = "two-level-fix"
+
+[[edges]]
+from = "itl-model"
+to   = "bandwidth-bargain"
+
+[[edges]]
+from = "itl-model"
+to   = "sliding-puzzle"
+
+# ---- Mainline narrative chain ----
+
+[[edges]]
+from = "bandwidth-bargain"
+to   = "accumulator-lie"
+
+[[edges]]
+from = "accumulator-lie"
+to   = "two-level-fix"
+
+[[edges]]
+from = "two-level-fix"
+to   = "sliding-puzzle"
+
+# ---- Applied primers feed boss and mainlines ----
+
+[[edges]]
+from = "tile-sizes"
+to   = "two-level-fix"
+
+[[edges]]
+from = "tile-sizes"
+to   = "state-of-fp8"
+
+[[edges]]
+from = "calibrate"
+to   = "state-of-fp8"
+
+# ---- Mainlines feed boss ----
+
+[[edges]]
+from = "bandwidth-bargain"
+to   = "state-of-fp8"
+
+[[edges]]
+from = "two-level-fix"
+to   = "state-of-fp8"
+
+[[edges]]
+from = "sliding-puzzle"
+to   = "state-of-fp8"
+
+# ---- Externals feed internals ----
+
+[[edges]]
+from = "ext-fp8-hw"
+to   = "fp8-format"
+
+[[edges]]
+from = "ext-kv-family"
+to   = "bandwidth-bargain"
+
+[[edges]]
+from = "ext-flash"
+to   = "accumulator-lie"
+
+[[edges]]
+from = "ext-roofline"
+to   = "bandwidth-bargain"
+
+# =========================================================================
+# Legend
+# =========================================================================
+
+[[legend]]
+kind  = "boss"
+label = "Boss capstone"
+
+[[legend]]
+kind  = "mainline"
+label = "Mainline narrative"
+
+[[legend]]
+kind  = "primer"
+label = "Tutorial primer"
+
+[[legend]]
+kind  = "external"
+label = "Cross-issue reference"
+
+caption = 'Arrows point <em>upward</em> from prerequisite to dependent. Read the cold-open (<a href="01-cold-open/">ch.1</a>) first — it sets the 91→13% mystery. The left column is the bargain (why FP8 KV should work); the middle two columns are the catastrophe and the fix (the accumulator lie and the 1965 algorithm that solved it); the right column is the second-order trouble the fix exposed (sliding-window models, calibration). Theory primers (row 4) feed the mainlines above; applied primers (row 3) feed the boss capstone at the top.'
