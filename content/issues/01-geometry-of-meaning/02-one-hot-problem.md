@@ -1,6 +1,12 @@
 ---
-title: "Why Every Word Was An Island"
-description: "1954. Linguist Zellig Harris argues that meaning lives in context. Forty years of failed attempts to compute with that idea — until Mikolov decided to skip the middleman."
+title: "One-Hot Encoding: why the obvious representation was a lie"
+short_title: "One-Hot Encoding"
+description: "The standard word representation of the pre-embedding era guaranteed that every pair of words was equally similar — zero — regardless of what those words meant."
+blurb:
+  - "Zellig Harris, Columbia 1954: words that appear in similar contexts have similar meanings. A true insight that took forty years to compute with."
+  - "The obvious approach — count which words appear near which other words — produces a matrix with 10 billion entries for a 100k vocabulary, 99.99% of them zero."
+  - "PMI and SVD help. But you are paying to build something enormous and then throw almost all of it away."
+  - "One-hot dot product of any two distinct words: always exactly 0.0. \"Cat\" is as distant from \"dog\" as from \"democracy.\""
 topics: [embeddings, representations]
 tags: [one-hot, co-occurrence, bengio, distributional-hypothesis]
 theme: teal

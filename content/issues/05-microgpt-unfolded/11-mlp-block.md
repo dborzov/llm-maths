@@ -1,6 +1,12 @@
 ---
-title: "The MLP Block"
-description: "Fatten with `mlp_fc1`, squash with `relu`, skinny back down with `mlp_fc2`. Why the hidden dimension is conventionally 4×, and what 56% of every modern LLM's parameter budget is actually doing."
+title: "MLP Block: fatten, bend, skinny back down"
+short_title: "MLP Block"
+description: "Two linear projections around a nonlinearity: `mlp_fc1` expands the vector 4×, ReLU bends it, `mlp_fc2` collapses it back — and this one ratio defines the shape of every LLM built in the last decade."
+blurb:
+  - "The Transformer paper picked 4× in one casual sentence: `d_model=512, d_ff=2048`. No ablation. No table. Just a ratio that became a constant."
+  - "GPT-2, GPT-3, T5, Bloom, Falcon, Pythia, OPT, MPT: all 4×. A 2021 scaling-laws paper didn't even list it as a hyperparameter."
+  - "Each row of `mlp_fc1` is a feature detector. ReLU kills roughly half the 64 hidden units — the ones that pointed the wrong way."
+  - "Llama 3 8B is technically 3.5× (14336/4096). Why did Meta break the sacred ratio, and what did SwiGLU have to do with it?"
 topics: [transformer, mlp]
 tags: [microgpt, mlp_fc1, mlp_fc2, ffn]
 theme: cream

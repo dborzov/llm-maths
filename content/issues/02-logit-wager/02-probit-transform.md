@@ -1,6 +1,12 @@
 ---
-title: "Cramming the Bell Curve Into a Straight Line"
-description: "Bliss's key insight: the S-curve IS the normal CDF. Apply its inverse to both sides and you have a straight line — one you can fit by hand in 1934."
+title: "Probit: the S-curve that hides a normal CDF"
+short_title: "Probit"
+description: "Bliss's 1934 insight: every S-shaped dose-response curve is a normal CDF in disguise, and its inverse is a straight line you can fit by hand."
+blurb:
+  - "Each aphid has a personal lethal threshold. The population's S-curve is just the CDF of those thresholds."
+  - "Assume thresholds are normally distributed — the central limit theorem makes this reasonable — and the S-curve becomes Φ(x)."
+  - "Apply Φ⁻¹ to both sides: the S-curve straightens into a line. Bliss called this the probit transform."
+  - "The catch: Φ⁻¹(p) has no closed form. Every fit requires interpolating a printed table — once per data point, per iteration."
 topics: [probability, statistics]
 tags: [probit, normal-distribution, cdf, dose-response, bliss]
 theme: teal

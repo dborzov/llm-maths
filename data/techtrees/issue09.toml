@@ -1,7 +1,7 @@
 # Schema, conventions, and the full field reference: see docs/techtrees-schema.md.
-# Issue 09 — The Long-Context Lie (FP8 KV-Cache Quantization in vLLM)
+# Issue 09 — KV Cache Quantization in vLLM: the Long-Context Lie
 
-title  = "Tech tree — The Long-Context Lie"
+title  = "Tech tree — KV Cache Quantization in vLLM: the Long-Context Lie"
 
 # ---------------------------------------------------------------
 # Row 1 (y=80)   — Boss capstone (state of FP8 KV)
@@ -15,7 +15,7 @@ title  = "Tech tree — The Long-Context Lie"
 
 [[nodes]]
 id    = "state-of-fp8"
-label = "The State\nof FP8 KV"
+label = "FP8 KV 2026:\nReport Card"
 kind  = "boss"
 link  = "11-state-of-fp8/"
 sub   = "ch.11"
@@ -24,28 +24,28 @@ sub   = "ch.11"
 
 [[nodes]]
 id    = "bandwidth-bargain"
-label = "The Halving:\nThe Bandwidth Bargain"
+label = "HBM Bandwidth:\nWhy Halve KV?"
 kind  = "mainline"
 link  = "02-bandwidth-bargain/"
 sub   = "ch.2"
 
 [[nodes]]
 id    = "accumulator-lie"
-label = "The Accumulator\nLie"
+label = "Hopper FP8:\nAccumulator Lie"
 kind  = "mainline"
 link  = "05-accumulator-lie/"
 sub   = "ch.5"
 
 [[nodes]]
 id    = "two-level-fix"
-label = "Two Levels\nof Honesty"
+label = "FA3 FP8:\nTwo-Level Fix"
 kind  = "mainline"
 link  = "06-two-level-fix/"
 sub   = "ch.6"
 
 [[nodes]]
 id    = "sliding-puzzle"
-label = "The Window That\nWouldn't Save"
+label = "Sliding Window:\nFP8 Break-Even"
 kind  = "mainline"
 link  = "09-sliding-window-puzzle/"
 sub   = "ch.9"
@@ -54,14 +54,14 @@ sub   = "ch.9"
 
 [[nodes]]
 id    = "tile-sizes"
-label = "Register Wars:\nTile Sizes"
+label = "GPU Registers:\nTile Sizes"
 kind  = "primer"
 link  = "07-tile-sizes/"
 sub   = "ch.7"
 
 [[nodes]]
 id    = "calibrate"
-label = "Scale Equals\nOne"
+label = "FP8 Calibration:\nScale = 1.0"
 kind  = "primer"
 link  = "10-calibrate/"
 sub   = "ch.10"
@@ -70,21 +70,21 @@ sub   = "ch.10"
 
 [[nodes]]
 id    = "fp8-format"
-label = "E4M3 in\nThree Steps"
+label = "FP8 E4M3:\nThree Steps"
 kind  = "primer"
 link  = "03-what-is-fp8-here/"
 sub   = "ch.3"
 
 [[nodes]]
 id    = "summation"
-label = "The Sum Is Not\nWhat You Think"
+label = "Kahan Summation:\n1965 Fix"
 kind  = "primer"
 link  = "04-summation-history/"
 sub   = "ch.4"
 
 [[nodes]]
 id    = "itl-model"
-label = "Slope vs\nIntercept"
+label = "Decode Latency:\nITL Model"
 kind  = "primer"
 link  = "08-itl-slope-model/"
 sub   = "ch.8"
@@ -93,23 +93,27 @@ sub   = "ch.8"
 
 [[nodes]]
 id    = "ext-fp8-hw"
-label = "FP8 Hardware\n& Number Formats\n(Issue 03)"
+label = "FP8 Hardware\n& Number Formats\n(Issue #3)"
 kind  = "external"
+link  = "/issues/03-sixteen-numbers/02-numbers-in-boxes/"
 
 [[nodes]]
 id    = "ext-kv-family"
-label = "KV Method\nFamily Tree\n(Issue 03)"
+label = "KV Method\nFamily Tree\n(Issue #3)"
 kind  = "external"
+link  = "/issues/03-sixteen-numbers/15-kv-method-family/"
 
 [[nodes]]
 id    = "ext-flash"
-label = "FlashAttention\n(Issue 08)"
+label = "FlashAttention\n(Issue #8)"
 kind  = "external"
+link  = "/issues/08-anatomy-of-a-token/06-flash-attention/"
 
 [[nodes]]
 id    = "ext-roofline"
-label = "Roofline &\nBandwidth Wall\n(Issues 06, 08)"
+label = "Roofline &\nBandwidth Wall\n(Issues #6, #8)"
 kind  = "external"
+link  = "/issues/08-anatomy-of-a-token/04-roofline/"
 
 # =========================================================================
 # Edges — arrows point UPWARD from prerequisite → dependent

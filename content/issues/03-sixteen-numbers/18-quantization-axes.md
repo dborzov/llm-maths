@@ -1,6 +1,12 @@
 ---
-title: "The Axis Question"
-description: "Per-tensor, per-row, per-channel, per-token, per-block — every quantization method has to pick an axis, and the choice is the difference between a working scheme and a broken one. A primer on what each axis means, when it's right, and the modern stack's emerging convention of mixing them."
+title: "Quantization Axes: match the scale axis to where heterogeneity lives"
+short_title: "Quantization Axes"
+description: "Per-tensor, per-row, per-channel, per-token, per-block — each axis partitions a tensor into groups that share one scale, and getting the partition wrong breaks INT8 just as surely as wrong bit-width."
+blurb:
+  - "The whole game: pick a partition of the tensor into groups; give each group one shared scale. The bit-width question is separate."
+  - "Per-tensor (one scale for the whole matrix) fails whenever any row or column has a different magnitude — near-universal pre-2022, near-extinct now."
+  - "Per-block (one scale per 128 elements within a row) is the modern default: adapts to local heterogeneity, small metadata overhead."
+  - "The axis that works is always the axis that matches the tensor's heterogeneity: per-channel for K, per-token for V, per-row for most weights."
 topics: [quantization]
 tags: [per-channel, per-token, per-block, per-tensor, axes, scaling-granularity]
 theme: teal

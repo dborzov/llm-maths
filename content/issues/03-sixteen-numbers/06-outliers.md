@@ -1,6 +1,12 @@
 ---
-title: "The 1% That Ruins Everything"
-description: "August 2022. Tim Dettmers quantizes OPT-175B and the model collapses. The cause is six dimensions out of 12,288 — and the fix invents the modern field."
+title: "Outliers: 6 dimensions out of 12,288 collapse a 175B model"
+short_title: "Outliers"
+description: "Tim Dettmers runs INT8 quantization on OPT-175B in August 2022, the model catastrophically collapses, and the cause turns out to be six activation dimensions running 50× larger than everything else."
+blurb:
+  - "Naive per-tensor INT8 on OPT-175B: perplexity explodes by orders of magnitude, model can't form coherent sentences."
+  - "The culprit: six channels out of 12,288 with magnitudes 50× the bulk — enough to crush the scale for everyone else."
+  - "These outlier dimensions don't appear in smaller models. They *emerge* above a certain scale threshold."
+  - "The fix — handle the six outlier columns in FP16, the rest in INT8 — invents the two-path matmul that becomes LLM.int8()."
 topics: [quantization]
 tags: [llm-int8, dettmers, outliers, opt-175b]
 theme: teal

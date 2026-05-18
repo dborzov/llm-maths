@@ -1,6 +1,12 @@
 ---
-title: "The Indexer Pattern"
-description: "Primer. A tiny model scores items for a big model. Speculative decoding, KVzap's surrogate, MoE routers, DSA's lightning indexer, CSA's compressed indexer. Five places the same architectural pattern shows up. Why it works."
+title: "Indexer Pattern: one tiny scorer, five big systems"
+short_title: "Indexer Pattern"
+description: "A small model that scores items for a large model is the same pattern in speculative decoding, KVzap's surrogate MLP, MoE routers, DSA's lightning indexer, and CSA's compressed indexer — and it works because GPUs have idle compute while attention waits on memory."
+blurb:
+  - "Speculative decoding: draft model proposes k tokens, target model verifies in parallel. Typical speedup: 2–4×."
+  - "KVzap surrogate: ~1M-parameter MLP predicts per-token importance for a 70B+ model. R² of 0.67–0.77 is enough to evict 70% of the cache."
+  - "MoE router: one matrix multiply scores tokens against E expert IDs. The router is ~0.01% of total parameters; the experts are the other 99.99%."
+  - "The indexer doesn't need to be right — it needs to be cheap and approximately right. The multi-layer stack and sliding window absorb mistakes."
 topics: [attention, architecture, primer]
 tags: [indexer-pattern, speculative-decoding, kvzap, moe-routing, lightning-indexer, surrogate-model]
 theme: cream

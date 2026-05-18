@@ -1,6 +1,12 @@
 ---
-title: "The Method Family Tree"
-description: "Six modern quantization methods side by side. What trick each one is making, where they agree, where they actively disagree, and which to pick when."
+title: "Weight Method Family Tree: LLM.int8(), GPTQ, AWQ, NF4, HQQ"
+short_title: "Weight Method Family Tree"
+description: "Six post-training quantization methods on one shelf: what trick each one makes, where they agree, and which to pick for your use case."
+blurb:
+  - "LLM.int8() (Aug 2022): mixed-precision split, zero accuracy loss, 3–4× throughput penalty."
+  - "GPTQ (Oct 2022): second-order layer-wise compensation, best-in-class 4-bit accuracy, ~30 min calibration."
+  - "AWQ (2023) protects the weights that multiply large activations; SmoothQuant (2022) migrates outliers from activations into weights."
+  - "HQQ (2023): no calibration data, closed-form, seconds to run — the right choice when turnaround speed matters."
 topics: [quantization]
 tags: [gptq, awq, smoothquant, qlora, nf4, hqq]
 theme: cream

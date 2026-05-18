@@ -1,6 +1,12 @@
 ---
-title: "Two Houses, Divided"
-description: "Prefill needs high compute throughput; decode needs high memory bandwidth. Running them on the same GPU is the worst of both worlds. Disaggregated prefill/decode splits the job across two purpose-built machine types connected by an RDMA KV-cache fabric — DistServe, Mooncake, and NIXL are the field's answers."
+title: "Disaggregated PD: one machine per workload"
+short_title: "Disaggregated PD"
+description: "Prefill saturates compute; decode saturates bandwidth — running both on the same GPU is a compromise that optimizes neither; disaggregated prefill/decode routes each workload to purpose-built machines and ships the KV cache between them over RDMA."
+blurb:
+  - "The head-of-line symptom: a 32K-token RAG query arrives, decode latency for 500 other users spikes from 28 ms to 1.4 s."
+  - "Prefill and decode have opposite roofline positions — the same GPU hardware that excels at one is nearly idle during the other."
+  - "Splitwise named the problem (2023); DistServe added SLA-aware scheduling; Mooncake ran it behind Kimi at consumer scale."
+  - "NVIDIA NIXL (2025) turned the KV-transfer layer into a standardized transport, making disaggregation the default topology."
 topics: []
 tags: []
 theme: cream

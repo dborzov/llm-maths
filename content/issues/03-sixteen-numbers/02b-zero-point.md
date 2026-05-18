@@ -1,6 +1,12 @@
 ---
-title: "Zero-Point Quantization"
-description: "The asymmetric cousin of absmax. Two parameters instead of one — a scale and an offset — bought at the cost of an extra add per multiply. The default for ReLU activations and the UINT8 of mobile inference."
+title: "Zero-Point Quantization: why mobile inference adds an offset"
+short_title: "Zero-Point Quantization"
+description: "Symmetric absmax wastes half its integer codes on ReLU outputs; adding a zero-point offset shifts the grid to cover only the populated range."
+blurb:
+  - "A post-ReLU tensor lives in [0, 6]. Absmax places its grid symmetrically around zero — half the INT8 codes go unused."
+  - "Zero-point quantization adds one integer offset so the grid slides to cover exactly the data's range."
+  - "Two parameters (scale + zero-point) instead of one. The cost: an extra integer add per multiply in the matmul."
+  - "Default format for TFLite, QNN, Core ML, and ONNX Runtime — every phone-side inference runtime uses this."
 topics: [quantization, number-formats]
 tags: [zero-point, asymmetric, uint8, qnn, tflite]
 theme: teal

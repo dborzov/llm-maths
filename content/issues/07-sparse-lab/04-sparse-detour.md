@@ -1,6 +1,12 @@
 ---
-title: "Sparse Attention's Lost Decade"
-description: "From Longformer (2020) to DuoAttention (2024). Six years of credible papers, zero production deployments at the frontier. A forensic tour of why every prior sparse-attention proposal failed at least one of the four production criteria."
+title: "Sparse Attention: six years of papers, zero products"
+short_title: "Sparse Attention"
+description: "Every sparse-attention proposal from Longformer (2020) to DuoAttention (2024) failed at least one of five production criteria — fast, phase-agnostic, optimization-friendly, faithful, trainable from scratch."
+blurb:
+  - "Five criteria for production deployment. Every method from 2020 to 2024 passes at most four."
+  - "Fixed patterns (Longformer, BigBird) are fast but not faithful. Learned patterns are faithful but not optimization-friendly."
+  - "Trainable from scratch: if sparsity needs dense pretraining first, you pay twice for a $5M frontier model run."
+  - "Twelve methods. Six hundred pages of appendices. One engineer's verdict after a week of reading: none of them."
 topics: [attention, sparse-attention, history]
 tags: [longformer, bigbird, reformer, routing-transformer, linformer, performer, streamingllm, h2o, snapkv, duoattention]
 theme: teal

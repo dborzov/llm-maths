@@ -1,6 +1,12 @@
 ---
-title: "The Residual Stream"
-description: "Two `x = [a + b for a, b in zip(x, x_residual)]` lines per block. The whole network is a sequence of read-modify-write operations on a single 16-dimensional vector, and that vector has a name."
+title: "Residual Stream: every block reads, then writes back"
+short_title: "Residual Stream"
+description: "Two `x = [a + b for ...]` lines per transformer block — the entire network is a sequence of read-modify-write operations on a single persistent vector."
+blurb:
+  - "Kaiming He's 2015 insight: a 30-layer network was *worse on the training set* than the 18-layer one. The fix was one plus sign."
+  - "The pattern: save → normalize → compute → add back. Repeated twice per layer. The variable `x_residual` is reused on purpose."
+  - "The 16-dimensional `x` vector in the toy model is the residual stream. Every sub-block adds a delta to it — nothing replaces it."
+  - "Interpretability research calls this the 'residual stream.' Why does naming the vector matter for understanding what heads are doing?"
 topics: [transformer, interpretability]
 tags: [microgpt, residual-stream, residual-connection]
 theme: teal

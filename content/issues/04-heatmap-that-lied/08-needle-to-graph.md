@@ -1,6 +1,12 @@
 ---
-title: "One Pass Isn't Enough"
-description: "April 14, 2025. OpenAI ships GPT-4.1 with a new benchmark whose pitch sentence is the cleanest reframe in long-context history: 'A model could solve MRCR by one pass through the prompt. GraphWalks cannot be solved sequentially.'"
+title: "GraphWalks: the benchmark that cannot be solved sequentially"
+short_title: "GraphWalks"
+description: "April 14, 2025: OpenAI ships GPT-4.1 alongside GraphWalks, the first long-context benchmark explicitly designed to require non-linear traversal that a single pass through the prompt cannot solve."
+blurb:
+  - "GPT-4.1 scores 61.7% on GraphWalks BFS; GPT-4o scores 41.7%; GPT-4.5 scores 72.3%."
+  - "Node IDs are 128-bit hex hashes — no semantic prior the model can exploit from weights."
+  - "The benchmark inaugurates the third era of long-context evaluation on a Monday morning."
+  - "The cleanest sentence in long-context literature: 'GraphWalks cannot be solved sequentially.'"
 topics: [evaluation, long-context, reasoning]
 tags: [graphwalks, openai, gpt-4.1, mrcr-v2, oolong, multi-hop]
 theme: teal

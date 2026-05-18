@@ -1,6 +1,12 @@
 ---
-title: "The Living Inheritance"
-description: "From Word2Vec's 300-dimensional lookup table to GPT-4's 12,288-dimensional embedding layer: the same operation, at alien scale, doing everything Word2Vec promised and more."
+title: "Contextual Embeddings: one word, one vector was not enough"
+short_title: "Contextual Embeddings"
+description: "Word2Vec gave every word one vector — a compromise between all its meanings. ELMo (2018) and BERT fixed that by making embeddings depend on context, not just token identity."
+blurb:
+  - "Word2Vec's \"bank\" vector is the average of river bank, financial bank, blood bank, and aircraft bank — a point equidistant from all of them."
+  - "GPT-2 small: 50,257-token vocabulary, 768-dimensional embeddings. The embedding table alone is 38.6 million parameters, 154 MB at fp32."
+  - "The first operation of every modern transformer is still a matrix row lookup — mathematically identical to Word2Vec's `W_in`, renamed `W_E`."
+  - "Attention layers modify each token's representation using the surrounding context. Same word, different sentence: different final vector."
 topics: [embeddings, transformers, llms]
 tags: [transformers, bert, gpt, contextual-embeddings, positional-encoding, attention]
 theme: cream

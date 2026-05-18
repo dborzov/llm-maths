@@ -1,6 +1,12 @@
 ---
-title: "The Draft Trick"
-description: "Decode is so bandwidth-bound that verifying 32 candidate tokens costs the same memory pass as verifying 1. Run a small draft model to speculate several tokens ahead, then let the target model verify all of them in a single forward pass — a 2–3× throughput gain if the draft is even modestly accurate."
+title: "Speculative Decoding: verify K tokens for the price of one"
+short_title: "Speculative Decoding"
+description: "Decode is so bandwidth-bound that verifying K candidate tokens costs nearly the same memory pass as verifying one; with EAGLE-3 speculation at 70% draft accuracy, four tokens are confirmed in 31 ms instead of the 72 ms four individual steps would take."
+blurb:
+  - "Decode at batch 4 leaves the tensor cores almost idle — speculative decoding fills that gap with useful draft-verification FLOPs."
+  - "Two parallel DeepMind teams published the same trick in November 2022 and February 2023 without knowing about each other."
+  - "For K ≲ 90, adding draft tokens raises arithmetic intensity without adding meaningful HBM pressure — extra tokens are nearly free."
+  - "2.3× speedup on conversational workloads, no model surgery, no weight changes, no quality loss — just letting the GPU work harder."
 topics: []
 tags: []
 theme: cream

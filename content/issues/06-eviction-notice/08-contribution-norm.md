@@ -1,6 +1,12 @@
 ---
-title: "Weight Is Not Contribution"
-description: "Derive the KVzip+ normalization from the residual stream update equation, and understand why raw attention weight is a flawed importance score."
+title: "Contribution Norm: why attention weight misleads"
+short_title: "Contribution Norm"
+description: "A token's actual contribution to the residual stream is a_{ji} × ‖W_O v_i‖ — both the attention weight and the projected value norm matter, and conflating them with raw attention weight causes systematic mispricing of token importance."
+blurb:
+  - "The residual stream update: h_j gets added a_{ji} × W_O v_i for each past token i."
+  - "High attention weight + tiny value norm = near-zero residual change. The token barely mattered."
+  - "Low attention weight + large value norm = token may still dominate the update. It should not be evicted."
+  - "The fix: rank by a_{ji} × ‖W_O v_i‖, not by a_{ji} alone — this is the KVzip+ contribution norm."
 topics: [attention, theory]
 tags: [kv-pruning, residual-stream, contribution-norm, kvzip]
 theme: teal

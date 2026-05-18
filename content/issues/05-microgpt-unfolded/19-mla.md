@@ -1,6 +1,12 @@
 ---
-title: "Multi-head Latent Attention"
-description: "DeepSeek V2's D-axis surgery. Low-rank decompose K and V before caching, undo the decomposition at read time. The compression is ~28×, the cleverness is that an algebraic absorption trick makes the read-time decompression *free*."
+title: "MLA: compress K and V through a latent bottleneck"
+short_title: "MLA"
+description: "DeepSeek V2's Multi-head Latent Attention caches a low-rank latent instead of full K and V vectors — 28× compression, with read-time decompression algebraically absorbed into the query projection at zero cost."
+blurb:
+  - "DeepSeek V2, May 2024: 236B MoE, inference costs claimed 5.76× cheaper than comparable models. The key was one diagram — Figure 3."
+  - "Instead of caching K and V (full width n_embd), MLA caches a single latent vector of dimension d_c=512. Cache write shrinks from 2×n_embd to d_c."
+  - "The absorption trick: the up-projection from latent back to K/V can be fused into the query projection at inference time — the decompression costs zero FLOPs."
+  - "MLA attacks the D-axis; GQA attacks the H-axis. The two surgeries compose. Why does MLA subsume GQA rather than stack on top of it?"
 topics: [transformer, attention, kv-cache]
 tags: [microgpt, mla, deepseek, low-rank]
 theme: cream

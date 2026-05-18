@@ -1,6 +1,12 @@
 ---
-title: "Sliding-Window Attention"
-description: "Replace `for ki in keys[li]` with `for ki in keys[li][-W:]` in some layers. The cache stops growing past window size W in those layers; the full-attention layers keep the long-range memory. Gemma 3's 5:1 interleave is the canonical 6× recipe."
+title: "Sliding-Window Attention: truncate the T-axis"
+short_title: "Sliding-Window Attention"
+description: "Replace `keys[li]` with `keys[li][-W:]` and the T-axis stops growing past window size W — Gemma 3's 5:1 interleave of sliding-window and full-attention layers gives 6× cache compression."
+blurb:
+  - "Mistral 7B launched via a tweet and a magnet link on September 27, 2023. The blog post was two paragraphs. The trick was one slice operator."
+  - "Every query in a sliding-window layer sees only the previous W=4096 tokens. Entries outside the window are never read, so they can be evicted."
+  - "Longformer (April 2020) and Sparse Transformers (2019) both published the idea first. Mistral's contribution was nerve: shipping it at 7B scale."
+  - "GPT-OSS-120B interleaves 1:1. Gemma 3 goes 5:1 for 6×. What does full-attention every sixth layer actually preserve that sliding-window loses?"
 topics: [transformer, attention, kv-cache]
 tags: [microgpt, sliding-window, gemma, gpt-oss, mistral]
 theme: teal

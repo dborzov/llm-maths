@@ -1,6 +1,12 @@
 ---
-title: "The KV Cache Is A Heap"
-description: "The KV cache grows one token at a time, to unpredictable lengths, and must be contiguous in naive implementations. The result is a fragmented heap that wastes 60–80 percent of HBM in the worst case. This is the problem PagedAttention was built to solve."
+title: "KV Fragmentation: 62% of HBM holding nothing"
+short_title: "KV Fragmentation"
+description: "Woosuk Kwon's 2023 profiling found 38% of HBM actively holding live KV data in a 'tuned' serving setup — the other 62% was reserved padding the allocator refused to release, a structural flaw in every serving stack of the era."
+blurb:
+  - "Llama-13B with a 32-sequence batch at max 4,096 tokens requires 107 GB of KV reservation — more than the H100's 80 GB."
+  - "Production stacks of 2022–23 achieved 20–40% useful KV utilization; 60–80 cents of every HBM dollar bought nothing."
+  - "Three allocator strategies — pre-allocate max, realloc-and-copy, dynamic fragments — each fail in a different way."
+  - "Knuth named both failure modes in 1968: internal fragmentation and external fragmentation, now happening simultaneously."
 topics: []
 tags: []
 theme: cream

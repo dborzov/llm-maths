@@ -1,6 +1,12 @@
 ---
-title: "KVzap: The Final Zap"
-description: "January 12, 2026. Jégou submits KVzap to arXiv claiming 2–4× KV cache compression with negligible accuracy loss at both prefill and decode. Here is the algorithm, the evidence, and the mystery that remains."
+title: "KVzap: 4-line function, 2–4× compression, <1.1% overhead"
+short_title: "KVzap"
+description: "KVzap (arXiv, January 12 2026) is a 4-line eviction function that achieves 2–4× KV cache compression during both prefill and decode, with less than 1.1% computational overhead — the first pruning method to pass all four production requirements."
+blurb:
+  - "Without the sliding window (last 128 tokens pinned to ∞ importance): RULER accuracy drops to 28.37%. With it: 62.51%."
+  - "Threshold τ, not top-k: the same τ=−4 gives 74% compression on RULER and 66% on LongBench — the input adapts automatically."
+  - "The algorithm: score hidden states, pin the last 128 tokens, threshold everything else, return surviving keys and values."
+  - "January 12, 2026, 03:47 UTC: the arXiv timestamp on the paper that broke the two-year deadlock."
 topics: [kv-cache, attention, transformers]
 tags: [kvzap, kv-pruning, compression, ruler, longbench, aime25, sliding-window]
 theme: teal

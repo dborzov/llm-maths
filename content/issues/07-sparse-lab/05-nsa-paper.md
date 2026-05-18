@@ -1,6 +1,12 @@
 ---
-title: "The NSA Blueprint"
-description: "February 16, 2025. DeepSeek publishes 'Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention'. Three branches — compression, selection, sliding window — that compose. The paper that becomes the blueprint for DSA, CSA, and HCA all at once."
+title: "NSA: three branches, one blueprint for everything after"
+short_title: "NSA"
+description: "On February 16, 2025, DeepSeek published Native Sparse Attention — a three-branch architecture (compression, selection, sliding window) that is simultaneously a research contribution and the public blueprint for DSA, CSA, and HCA."
+blurb:
+  - "No model, no weights — just arXiv:2502.11089 and eight authors telegraphing what they were about to ship."
+  - "Global context, fine-grained retrieval, and local coherence are three distinct information needs. No single sparse pattern can satisfy all three."
+  - "The selection branch became the lightning indexer. The compression branch became CSA. The sliding window survived unchanged into V4."
+  - "Seven months before V3.2-Exp shipped, the full architecture was already visible in this preprint."
 topics: [attention, sparse-attention, deepseek]
 tags: [nsa, native-sparse-attention, deepseek, hardware-aligned, three-branch]
 theme: cream

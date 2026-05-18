@@ -1,6 +1,12 @@
 ---
-title: "Softmax's Long Tail"
-description: "Why attention distributions are empirically sparse — and why that makes throwing away most of the KV cache mathematically safe."
+title: "Attention Sparsity: why softmax buries the losers"
+short_title: "Attention Sparsity"
+description: "Softmax's exponential amplification means that a logit advantage of just 3 units gives one token 74% of the total probability mass — sparsity is structural, not accidental, which is why evicting 80–90% of the KV cache is mathematically safe."
+blurb:
+  - "A logit 3 units above its neighbors captures 74% of softmax mass. A 6-unit advantage: 98%."
+  - "For a 512-token context, maybe 8–10 tokens carry weights of 0.15–0.31; the rest are 0.0001 or less."
+  - "Is this sparsity a quirk of the task or structural? The argument is surprisingly elementary."
+  - "If sparsity were accidental, pruning the bottom 90% would occasionally catastrophically fail — but it doesn't."
 topics: [attention, theory]
 tags: [softmax, attention-sparsity, kv-pruning, temperature]
 theme: cream

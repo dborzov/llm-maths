@@ -1,6 +1,6 @@
 ---
-title: "The Sparse Lab"
-description: "How a Hangzhou quant fund quietly built the next four generations of attention — from MLA's memory cut to DSA's lightning indexer to V4's CSA+HCA hybrid that runs a million-token context on 10% of yesterday's compute."
+title: "Sparse Attention: from DeepSeek MLA to V4's million-token CSA+HCA"
+description: "How a Hangzhou quant fund quietly built four generations of sparse attention — from MLA's 30× memory cut to DSA's lightning indexer to V4's CSA+HCA hybrid running million-token context at 10% of yesterday's compute."
 issue: 7
 layout: issue-cover
 theme: cream

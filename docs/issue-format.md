@@ -30,8 +30,14 @@ Articles stay **flat** within their issue directory — do NOT nest further.
 
 ```yaml
 ---
-title: ""               # the article's pop-art display title
-description: ""         # one sentence shown in cards & issue cover list
+title: ""               # display title — format: "Keyword: hook question or statement"
+short_title: ""         # keyword anchor only (text before ":") — used in tech tree labels
+description: ""         # one sentence shown in article cards and compact list views
+blurb:                  # 3–4 bullets shown in the article header and issue cover list
+  - "First striking idea, specific fact, or question."
+  - "Second bullet."
+  - "Third bullet."
+  - "Fourth bullet (optional)."
 topics: []              # broad: [embeddings], [quantization], [optimization]
 tags: []                # specific: [numpy, gptq, fp4]
 theme: cream            # or: teal
@@ -46,6 +52,12 @@ header: default.webp    # optional hero image — see docs/components/hero.md
 ---
 ```
 
+### Field notes
+
+- `title` follows the pattern **`Keyword: hook`** — the keyword anchors the right reader instantly; the hook after the colon is often a question. Aim for ≤ 10 words total.
+- `short_title` is the keyword part before the colon (e.g., title `"Kahan Summation: a 1965 fix…"` → short_title `"Kahan Summation"`). Used in tech tree node labels. Required when title has a colon; omit or leave blank for cold-opens.
+- `description` is one clean sentence, no HTML — used in article cards (compact list views) and SEO meta.
+- `blurb` is a YAML list of 3–4 short bullets (plain text, markdown ok). Rendered as a `<ul>` in the article header "In this article" aside and in the issue cover reading list. See `docs/writing.md` for what makes a good bullet.
 - `weight` controls order on the issue cover and in prev/next navigation. Use **steps of 10** so you can insert later without renumbering.
 - `techNode` must match a node `id` in the corresponding `data/techtrees/issueNN.toml`. Exception: cold-open articles with `techKind: mainline` are not required to be in the tree.
 - `make validate` enforces every field; mismatches fail the build.

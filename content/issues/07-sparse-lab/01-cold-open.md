@@ -1,6 +1,12 @@
 ---
-title: "Five Paragraphs From Hangzhou"
-description: "September 29, 2025. DeepSeek ships V3.2-Exp with a 13-line scoring function called the lightning indexer. The API price drops 50% overnight. Six years of sparse-attention research had failed to do that. What did this lab figure out?"
+title: "DeepSeek: five paragraphs rewrote the price list"
+short_title: "DeepSeek"
+description: "September 29, 2025: DeepSeek-V3.2-Exp ships with a 13-line lightning indexer, and the API price drops 50% overnight — ending six years of efficient-transformer research that never shipped."
+blurb:
+  - "Five paragraphs on Hugging Face. The third one cut OpenAI's pricing advantage in half."
+  - "High-Flyer Capital Management hoarded 10,000 A100s for backtesting — before the October 2022 export controls locked the cap."
+  - "Six production failures: Longformer, BigBird, Reformer, Linformer, Performer, Routing Transformer — each broke on a different criterion."
+  - "DeepSeek shipped four attention variants in 23 months. Inference cost of million-token context fell by an order of magnitude."
 topics: [attention, long-context, sparse-attention]
 tags: [deepseek, dsa, v3.2-exp, mla, history]
 theme: cream

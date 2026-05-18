@@ -1,6 +1,6 @@
 ---
-title: "The Long-Context Lie"
-description: "An issue on FP8 KV-cache quantization in vLLM — the 91→13% accuracy catastrophe nobody noticed for two years, the 1965 numerical-analysis trick that fixed it, and the production engineering that turned a flag into a default."
+title: "KV Cache Quantization in vLLM: the Long-Context Lie"
+description: "FP8 KV-cache in vLLM — a 91→13% accuracy catastrophe three years in the making, the 1965 numerical fix, and the engineering that turned a broken flag into a recommended default."
 issue: 9
 layout: issue-cover
 theme: cream
@@ -40,17 +40,17 @@ This is the story of how it got there.
 | **Jintao Zhang et al. (SageAttention2)** | — | Published the two-level accumulation trick the vLLM team adopted as the fix. |
 | **William Kahan** | UC Berkeley, 1965 | Wrote the original compensated-summation paper whose algebra underlies the fix. |
 
-## How To Read This Issue
+## How To Read This Comic Book
 
 Start with the [cold open](01-cold-open/) — it puts you in front of the 13% number on the morning Kübler first reported it. After that, the **tech tree** below is the table of contents. Each node is an article; arrows show which articles build on which.
 
 {{< techtree name="issue09" >}}
 
-The four **pink mainline chapters** tell the story in order. *The Halving* explains why FP8 KV is irresistible in the first place — the linear ITL model, the bandwidth wall, the 2× memory win that should have been a free lunch. *The Accumulator Lie* is the detective story: how the team traced a 78-point accuracy drop to a quietly-imprecise FP32 accumulator inside Hopper's FP8 tensor cores. *Two Levels Of Honesty* is the fix: compensated summation, vintage 1965, adapted to a 2024 attention kernel. *The Window That Wouldn't Save* is the next problem the fix exposed — hybrid-attention models like gpt-oss-20b whose sliding-window layers refused to amortize FP8's fixed overhead.
+The four **pink mainline chapters** tell the story in order. *HBM Bandwidth* explains why FP8 KV is irresistible in the first place — the linear ITL model, the bandwidth wall, the 2× memory win that should have been a free lunch. *Hopper FP8* is the detective story: how the team traced a 78-point accuracy drop to a quietly-imprecise FP32 accumulator inside Hopper's FP8 tensor cores. *FA3 FP8* is the fix: compensated summation, vintage 1965, adapted to a 2024 attention kernel. *Sliding Window Attention* is the next problem the fix exposed — hybrid-attention models like gpt-oss-20b whose sliding-window layers refused to amortize FP8's fixed overhead.
 
-The five **cream primer chapters** give depth on demand: read them when a mainline chapter refers to them, or read all of them first if you prefer foundations before narrative. *E4M3 In Three Steps* is the specific FP8 format used here and why per-tensor scale = 1.0 is the default. *The Sum Is Not What You Think* is Kahan's 1965 paper, the numerical-analysis backbone. *Slope vs Intercept* is the two-parameter ITL model and what "break-even at 7K tokens" actually means. *Register Wars* is the tile-size engineering reality — why head_dim=256 broke things. *Scale Equals One* is the calibration question — when uncalibrated FP8 is fine and when it isn't.
+The five **cream primer chapters** give depth on demand: read them when a mainline chapter refers to them, or read all of them first if you prefer foundations before narrative. *FP8 E4M3* is the specific FP8 format used here and why per-tensor scale = 1.0 is the default. *Kahan Summation* is Kahan's 1965 paper, the numerical-analysis backbone. *Decode Latency* is the two-parameter ITL model and what "break-even at 7K tokens" actually means. *GPU Registers* is the tile-size engineering reality — why head_dim=256 broke things. *FP8 Calibration* is the calibration question — when uncalibrated FP8 is fine and when it isn't.
 
-The **yellow boss chapter** — *The State Of FP8 KV* — is the destination, where all four mainlines and all five primers reconverge into the report card: which models, which benchmarks, which workloads ship FP8 KV today, and the three places it still doesn't fit.
+The **yellow boss chapter** — *FP8 KV in vLLM* — is the destination, where all four mainlines and all five primers reconverge into the report card: which models, which benchmarks, which workloads ship FP8 KV today, and the three places it still doesn't fit.
 
 If you are in a hurry: the mainline (pink nodes) is a three-hour read. If you want the full numerical-analysis treatment — Wilkinson at NPL, Kahan summation, the DeepSeek-V3 connection, why tensor cores lie about precision, and the open questions that still face vLLM 2026 — read everything in numerical order.
 

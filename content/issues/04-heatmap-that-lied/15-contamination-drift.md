@@ -1,6 +1,12 @@
 ---
-title: "Leakage and Drift"
-description: "Two threats to benchmark integrity that 2026 evaluation culture has had to face head-on. Data contamination — the model has already seen the test — and methodology drift — what the benchmark measures has quietly shifted under your feet."
+title: "Contamination and Drift: the two diseases that kill benchmarks"
+short_title: "Contamination and Drift"
+description: "Two independent threats invalidate a benchmark score: data contamination (the model saw the test during training) and methodology drift (two reports labelled the same benchmark measure different things)."
+blurb:
+  - "Direct contamination is rare in 2026 thanks to dedup pipelines; answer leakage from blog posts is common."
+  - "NoCha tests novel comprehension — but if training data included those novels, it tests recall."
+  - "Two system cards both labelled 'MRCR v2' may not be comparable due to methodology drift."
+  - "The partial defences: recency-gated benchmarks, withheld answer keys, independent replication."
 topics: [evaluation, methodology, contamination]
 tags: [contamination, leakage, mrcr-v1-v2, nocha, browsecomp, methodology-drift]
 theme: cream

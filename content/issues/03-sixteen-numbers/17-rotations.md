@@ -1,6 +1,12 @@
 ---
-title: "Rotations — The Geometric Anti-Outlier"
-description: "If a few channels are giant, rotate the basis until they aren't. The Hadamard transform, why it's exactly right for outlier mitigation, and the family of methods (QuIP, QuaRot, SpinQuant, TurboQuant) that turned this single trick into the next generation of quantization."
+title: "Rotations: spread outlier channels across all dimensions at once"
+short_title: "Rotations"
+description: "Insert a Hadamard rotation before quantizing and the four giant channels in a 4096-dim activation get spread uniformly across all 4096 dimensions — no outlier dominates the scale."
+blurb:
+  - "The rotation identity: Y = XWᵀ = (XR)(WR)ᵀ. Insert orthogonal R and R⁻¹ that cancel inside the dot product, then quantize the rotated tensors."
+  - "Hadamard transform over a general orthogonal: O(d log d) vs O(d²) operations — fast enough to fuse into the attention kernel."
+  - "After Hadamard, the max absolute value of Hx is bounded by ‖x‖₂ √(log d / d) — far smaller than ‖x‖∞ when x has outliers."
+  - "QuIP, QuaRot, SpinQuant, TurboQuant all use this same algebraic identity; they differ in where they insert the rotation and whether they learn it."
 topics: [quantization, geometry]
 tags: [rotations, hadamard, quip, quarot, spinquant, turboquant]
 theme: cream

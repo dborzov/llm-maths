@@ -1,6 +1,12 @@
 ---
-title: "Compression's Family Tree"
-description: "Pulse code modulation. Vector quantization. Transform coding. Predictive coding. Eighty years of lossy compression engineering, and where each thread surfaces inside a modern LLM."
+title: "Compression Roots: eighty years the LLM field forgot it inherited"
+short_title: "Compression Roots"
+description: "NF4 is a Lloyd-Max quantizer from 1957, GPTQ's compensation loop is from 1970s speech vocoders, and QuaRot's rotation step is the DCT in disguise — the ML and compression fields rebuilt the same machines half a century apart."
+blurb:
+  - "PCM (1937): uniform grid, fixed scale, snap each sample. Direct ancestor of absmax."
+  - "Predictive coding (1952–1972): quantize the residual after prediction. Direct ancestor of GPTQ's sequential compensation."
+  - "Transform coding (1974–1985): rotate to a sparse basis, then quantize. Direct ancestor of QuaRot, SpinQuant, QuIP."
+  - "Vector quantization (1980–1990): quantize blocks jointly to a learned codebook. Mostly missing from modern LLM work — the reason is hardware."
 topics: [quantization, history, compression]
 tags: [pcm, dpcm, lbg, jpeg, mp3, predictive-coding, vector-quantization]
 theme: teal

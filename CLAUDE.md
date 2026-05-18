@@ -18,10 +18,11 @@ Live at: `https://borzov.ca/llm-maths/`
 
 | Task | Read |
 |---|---|
-| Write or outline a new issue from scratch | [`docs/new-issue.md`](docs/new-issue.md) |
+| Write or outline a new comic book from scratch | [`docs/new-issue.md`](docs/new-issue.md) |
 | Write, polish, or deepen an article | [`docs/writing.md`](docs/writing.md) — authoritative |
+| **Write a good title and blurb for an article** | [`docs/writing-titles.md`](docs/writing-titles.md) — the pattern, worked example, failure modes |
 | Add components or make an article visually richer | [`docs/components/README.md`](docs/components/README.md) |
-| Front matter fields, file naming, directory layout | [`docs/issue-format.md`](docs/issue-format.md) |
+| Front matter fields (`blurb`, `short_title`, etc.) | [`docs/issue-format.md`](docs/issue-format.md) |
 | microGPT naming rules + wiki shortcode usage | [`docs/microgpt-contract.md`](docs/microgpt-contract.md) + [`docs/wiki.md`](docs/wiki.md) |
 | Wiki / glossary — add or update concept stubs | [`docs/wiki.md`](docs/wiki.md) |
 | CSS, templates, scripts, validation, CI, pitfalls | [`docs/dev.md`](docs/dev.md) |

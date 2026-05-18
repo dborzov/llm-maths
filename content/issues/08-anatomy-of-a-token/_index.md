@@ -1,5 +1,5 @@
 ---
-title: "Anatomy of a Token"
+title: "LLM Inference: from TCP packet to streamed token"
 description: "From the TCP packet to the streamed character on your screen — a first-principles tour of every layer of a modern LLM inference engine, with vLLM as the worked example and a GPU as the patient on the table."
 issue: 8
 layout: issue-cover

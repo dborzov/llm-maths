@@ -1,6 +1,12 @@
 ---
-title: "BFS as Reasoning"
-description: "Why a breadth-first search through a small graph of hex-hash node ids is the right architectural stress test for a long-context transformer. The textbook 1959 algorithm, reframed as the cleanest measurement of in-context reasoning ever proposed."
+title: "BFS: the 1959 algorithm that stress-tests long-context transformers"
+short_title: "BFS"
+description: "Edward Moore's 1959 breadth-first search algorithm is the ideal long-context stress test because its depth cannot be parallelised — each BFS level must be computed after the previous one."
+blurb:
+  - "BFS was published in Moore's 1959 paper 'The shortest path through a maze.'"
+  - "Frontier depth is causally ordered: depth-3 cannot be computed without depth-2."
+  - "Width within each frontier is fully parallelisable; depth across frontiers is not."
+  - "BFS depth k on a branching-factor-b graph requires at least k dependent attention hops."
 topics: [algorithms, long-context, reasoning]
 tags: [bfs, graph-traversal, graphwalks, complexity, multi-hop]
 theme: teal

@@ -1,6 +1,12 @@
 ---
-title: "The Lloyd-Max Bargain"
-description: "Bell Labs, 1957. Stuart Lloyd asks: given n quantization levels and a signal distribution, where should the levels go? The answer reappears 65 years later, inside your LLM."
+title: "Lloyd-Max: Bell Labs 1957 picks the optimal quantization grid"
+short_title: "Lloyd-Max"
+description: "Stuart Lloyd proved where to place n quantization levels for a known distribution, declined to publish, and watched the result become foundational for speech, JPEG, and NF4."
+blurb:
+  - "Bell Labs, March 1957: Stuart Lloyd asks which 16 voltage levels minimize PCM reconstruction error for a voice signal."
+  - "His answer — levels at conditional centroids of the distribution — is the algorithm NF4 uses to place its 16 float values."
+  - "Lloyd proved it, never published. Joel Max published a less elegant version in 1960. The combined paper appeared in 1982."
+  - "The uniform grid (obvious answer) is wrong when signal density is non-uniform — and LLM weight distributions never are."
 topics: [quantization, theory]
 tags: [lloyd-max, k-means, vector-quantization, bell-labs]
 theme: cream

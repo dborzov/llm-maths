@@ -1,6 +1,12 @@
 ---
-title: "What 1M Tokens Actually Costs"
-description: "A 'context window' is not a slot you pour text into. It is a quadratic compute bill and a linear memory bill, both of which the model pays before it produces a single word."
+title: "Context Window: the quadratic bill behind the marketing number"
+short_title: "Context Window"
+description: "A million-token context window is two bills paid before the model produces a word: a linear KV-cache memory bill and a quadratic attention compute bill."
+blurb:
+  - "Llama-3.1 70B: 320 KB of KV cache per token — 320 GB for a 1M-token prompt."
+  - "Attention FLOP count scales as O(n²), so doubling context quadruples compute."
+  - "February 2024: Google announces 1M tokens; engineers who read FlashAttention mutter into their coffee."
+  - "What is the gap between 'the model accepts these tokens' and 'the model can usefully attend across them'?"
 topics: [transformers, long-context, attention]
 tags: [kv-cache, attention, rope, flops, napkin-math]
 theme: teal

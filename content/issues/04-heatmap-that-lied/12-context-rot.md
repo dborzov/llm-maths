@@ -1,6 +1,12 @@
 ---
-title: "The Chroma Measurement"
-description: "July 14, 2025. A small RAG company called Chroma quietly publishes a 90-page report measuring 18 frontier models. The phrase 'context rot' enters the literature with a number attached, and the long-context conversation will never sound the same."
+title: "Context Rot: Chroma's 90-page report that named the disease"
+short_title: "Context Rot"
+description: "July 14, 2025: Chroma publishes a 90-page study of 18 frontier models at 8 context lengths, coins the term 'context rot,' and documents the universal non-linear degradation curve every model draws."
+blurb:
+  - "18 frontier models tested: GPT-4.1, Claude 4, Gemini 2.5, Qwen3, and 14 others."
+  - "Degradation is non-linear: slow decline to ~25% of the advertised window, steep drop at 50–75%."
+  - "Within two months, Anthropic's Opus 4.5 launch blog cites the Chroma report directly."
+  - "The phrase 'context rot' entered every long-context system card from late 2025 onward."
 topics: [evaluation, long-context, methodology]
 tags: [chroma, context-rot, nolima, absencebench, oolong, hong-2025]
 theme: teal

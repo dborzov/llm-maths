@@ -1,6 +1,12 @@
 ---
-title: "Compressed Sparse Attention (V4)"
-description: "DeepSeek V4's first attention mode. Compress every m=4 tokens into one entry, then run DSA's top-k selection over the compressed entries. The indexer queries share the same latent vector as the main queries. This is the chapter where we read Figure 3 of the V4 paper, line by line."
+title: "CSA: compress first, then select"
+short_title: "CSA"
+description: "Compressed Sparse Attention compresses every m=4 tokens into one entry before running the lightning indexer — so at 1M context, the indexer scores 250,000 compressed entries instead of 1,000,000 raw tokens."
+blurb:
+  - "DSA compressed nothing. CSA compresses first: 4× sequence reduction before the indexer even fires."
+  - "Each compressed entry covers 8 tokens (not 4) via a two-stream overlap: stream A covers the current block, stream B the preceding block."
+  - "Figure 3 of the V4 paper: token-level compressor → lightning indexer → top-k selector → shared key-value multi-query attention."
+  - "One latent vector serves both the indexer queries and the main attention queries — zero extra projection overhead."
 topics: [attention, sparse-attention, deepseek, csa, v4]
 tags: [csa, deepseek-v4, compressed-sparse-attention, lightning-indexer, token-compression, mqa]
 theme: cream

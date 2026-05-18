@@ -1,6 +1,12 @@
 ---
-title: "The Sum Is Not What You Think"
-description: "Floating-point summation is non-associative. The error grows with how many terms you add. James Wilkinson at NPL in 1960, William Kahan at Berkeley in 1965, and the compensated-summation algorithm that fixed it."
+title: "Kahan Summation: a 1965 fix inside your 2026 GPU"
+short_title: "Kahan Summation"
+description: "Floating-point addition is non-associative. The error grows with n. Wilkinson named it in 1960; Kahan fixed it in 1965. The same class of bug lived in vLLM's attention kernel."
+blurb:
+  - "(a + b) + c ≠ a + (b + c) in floating point. This is always true."
+  - "Sum n numbers naively: error grows as O(n·ε). At n = 128,000, that error swamps the result."
+  - "James Wilkinson at NPL named it in 1960. William Kahan fixed it in 1965."
+  - "The same class of bug sat in vLLM's FP8 attention kernel — waiting for context windows to grow long enough."
 topics: [numerical-analysis, primer]
 tags: [kahan-summation, wilkinson, ieee754, floating-point, compensation]
 theme: teal

@@ -1,6 +1,12 @@
 ---
-title: "The KV Cache"
-description: "`keys[li].append(k)`. The most important data structure in production LLM serving is one line of Python. We turn it inside out and see why paged attention, KV quantization, and continuous batching are all optimizations of this one append."
+title: "KV Cache: one append that changed LLM economics"
+short_title: "KV Cache"
+description: "The most important data structure in production LLM serving is `keys[li].append(k)` — two lines of Python that convert O(N²) recomputation into O(1) lookup."
+blurb:
+  - "July 2020: a Brooklyn developer noticed per-call latency scaled with prompt length, not output length. The server was recomputing every past key and value from scratch."
+  - "Shazeer's 2019 paper described the fix. Nobody outside research counted the FLOPs until the $0.02-per-1000-token pricing landed."
+  - "Past K and V vectors depend only on past inputs — they are fixed the moment a token is processed. No future token can change them."
+  - "Paged attention, KV quantization, continuous batching: which of these actually shrinks the cache, and which just moves it?"
 topics: [transformer, inference]
 tags: [microgpt, kv-cache, paged-attention]
 theme: cream

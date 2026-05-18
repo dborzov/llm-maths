@@ -1,6 +1,12 @@
 ---
-title: "The Halving"
-description: "Why FP8 KV-cache is irresistible — the linear ITL model, the bandwidth wall during decode, and the napkin math that says halving the cache should halve the slope."
+title: "HBM Bandwidth: why you'd halve the KV cache"
+short_title: "HBM Bandwidth"
+description: "The bandwidth wall during decode, the linear ITL model, and the napkin math that makes FP8 KV irresistible — before anyone checked whether it still worked."
+blurb:
+  - "H100 decode is bandwidth-bound: 3.35 TB/s is the constraint, not FLOPs."
+  - "The KV cache is the largest thing crossing that bus — every token, every step."
+  - "Halve the cache: halve the bandwidth pressure, halve the latency slope."
+  - "The math checked out. For three years, nobody checked whether the model stayed accurate."
 topics: [quantization, inference, kv-cache, performance]
 tags: [fp8, vllm, decode, itl, bandwidth, hopper]
 theme: teal

@@ -1,6 +1,12 @@
 ---
-title: "The Great Compression"
-description: "October 2022. OPT-175B weighs 350 gigabytes. Six months later, hobbyists run it on $1,500 consumer cards. What did we do to the numbers?"
+title: "The Great Compression: 350 GB to a hobbyist's GPU in six months"
+short_title: "The Great Compression"
+description: "OPT-175B weighed 350 GB and needed eight A100s; six months later a German grad student had it running on one consumer card."
+blurb:
+  - "May 2022: OPT-175B lands. 350 GB, 8× A100, $80,000 hardware — the joke was Meta open-sourced a model nobody could run."
+  - "December 2022: Tim Dettmers ships bitsandbytes. One flag, one GPU, same model."
+  - "By 2025, NVIDIA's flagship silicon trains in FP4 — a float with exactly 16 possible values. The loss curves barely flinch."
+  - "What changed? Not the model. The *numbers* it was stored in."
 topics: [quantization]
 tags: [opt-175b, dettmers, history]
 theme: cream

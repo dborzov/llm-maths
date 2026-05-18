@@ -1,6 +1,12 @@
 ---
-title: "Prefill vs Decode"
-description: "Two loops sitting around `gpt()`. The first is bandwidth-bound; the second is latency-bound. They are so different they get their own GPUs in modern serving clusters, and the entire vLLM/SGLang/TensorRT-LLM stack is a fight over this distinction."
+title: "Prefill vs Decode: two workloads, one GPU"
+short_title: "Prefill vs Decode"
+description: "Two for-loops around the same `gpt()` call with completely different semantics: prefill fills the cache and discards logits; decode uses the cache and keeps them."
+blurb:
+  - "Woosuk Kwon's A100 was doing 3–5% of its rated 312 TFLOPs. The GPU was not broken — it was doing two incompatible jobs."
+  - "Prefill: one massive matmul, GPU at 90% utilization. Decode: one thin matmul per layer, GPU mostly idle between calls."
+  - "Prefill is compute-bound; decode is memory-bandwidth-bound. The entire vLLM/SGLang/TensorRT-LLM stack is a fight over this distinction."
+  - "Modern serving clusters give prefill and decode their own separate GPUs. At what context length does this split pay off?"
 topics: [transformer, inference]
 tags: [microgpt, prefill, decode, serving]
 theme: teal

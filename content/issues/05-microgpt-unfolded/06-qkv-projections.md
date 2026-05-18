@@ -1,6 +1,12 @@
 ---
-title: "Q, K, V: The Three Projections"
-description: "Three linear maps applied to the same input vector. The model uses one copy of `x` to ask a question (`q`), another to advertise what it knows (`k`), and a third to carry the payload (`v`). The aha is that these are *learned* roles."
+title: "Q, K, V: three readings of the same vector"
+short_title: "Q, K, V"
+description: "Three linear projections of the same input: query asks what to find, key advertises what's here, value carries the payload — and all three roles are learned, not prescribed."
+blurb:
+  - "Bahdanau's 2014 attention bottleneck: one fixed-length vector can't remember 20+ words. His fix: let the decoder peek at every encoder state."
+  - "Three calls to `linear(x, ...)`, same `x` going into all three. This is not an accident — it is the whole point."
+  - "The library card-catalog metaphor: query is the question in your head, key is the title on the card, value is the book you fetch."
+  - "If Q, K, V all come from the same `x`, who decides which role each learns? The answer is in the weight matrices."
 topics: [transformer, attention]
 tags: [microgpt, attn_wq, attn_wk, attn_wv]
 theme: teal

@@ -1,6 +1,12 @@
 ---
-title: "The Full Anatomy of a Token"
-description: "The cold-open trace, re-annotated end to end: the same packet, the same H200 box, the same user — but every layer now named, every component explained, every latency budget itemized. Everything the issue introduced, assembled into one complete, labelled picture."
+title: "Full Anatomy: 6.1 seconds, every layer labelled"
+short_title: "Full Anatomy"
+description: "The cold-open trace walked through a second time — same packet, same H200 box, same 280 ms to first character — but now every layer is named, every chapter cashed in, and every latency budget itemized from TCP arrival to streamed token."
+blurb:
+  - "280 ms to first character; 6.1 s for a complete four-paragraph answer; 793 users sharing the same box the whole time."
+  - "The annotated timeline shows where each millisecond goes: tokenizer, scheduler, block manager, prefill kernel, decode loop, sampler, HTTP stream."
+  - "Every chapter from the issue appears as a labelled node in the final picture — the boss collects all seventeen debts."
+  - "The architecture that delivers this was non-existent five years ago; most of it didn't exist three years ago."
 topics: []
 tags: []
 theme: teal

@@ -1,6 +1,12 @@
 ---
-title: "Inside the Silicon"
-description: "A GPU is a throughput machine: 132 streaming multiprocessors, thousands of simultaneous threads, and a memory hierarchy that spans four orders of magnitude. Understanding the hardware is the foundation for every inference optimization that follows."
+title: "GPU Anatomy: why 270,000 threads beat 192"
+short_title: "GPU Anatomy"
+description: "The H200's 132 streaming multiprocessors run 270,336 threads simultaneously — a throughput machine built on the opposite bet from a CPU, and the reason every inference optimization in this issue looks the way it does."
+blurb:
+  - "From Jensen Huang's 1999 GeForce 256 (23M transistors) to the H200 (80B transistors, 989 TFLOP/s): not faster — structurally different."
+  - "A 96-core EPYC runs 192 smart, fast threads. The H200 runs 270,336 simple, simultaneous ones."
+  - "Each SM is a mini-processor with its own register file, shared memory, and warp scheduler — 132 of them in lockstep."
+  - "The whole memory hierarchy — registers to HBM — spans four orders of magnitude of bandwidth on one die."
 topics: []
 tags: []
 theme: teal

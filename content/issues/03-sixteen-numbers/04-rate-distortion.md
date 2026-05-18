@@ -1,6 +1,12 @@
 ---
-title: "The Rate-Distortion Bridge"
-description: "Shannon's lossy-compression frontier — the bend where you stop paying for bits and start paying for fidelity. The single curve that connects MP3, JPEG, and your LLM."
+title: "Rate-Distortion: the curve that unifies MP3, JPEG, and LLMs"
+short_title: "Rate-Distortion"
+description: "Shannon's lossy-compression theorem gives a hard floor on fidelity for any given bitrate — and every quantization method in this issue is trying to reach that floor."
+blurb:
+  - "For a Gaussian source, each additional bit cuts distortion by a factor of 4. That's the rate-distortion function in one equation."
+  - "LLM quantization is lossy compression: you are throwing information away deliberately. Shannon's theorem applies."
+  - "The rate-distortion curve is always convex and decreasing — no engineering trick can cross it, only approach it."
+  - "MP3, JPEG, and INT4 weight quantization all live on the same theoretical curve. The codec changes; the bound doesn't."
 topics: [quantization, information-theory]
 tags: [shannon, rate-distortion, entropy]
 theme: teal

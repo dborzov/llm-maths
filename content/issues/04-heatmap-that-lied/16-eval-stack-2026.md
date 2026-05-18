@@ -1,6 +1,12 @@
 ---
-title: "The 2026 Layered Stack"
-description: "Three years on from Greg Kamradt's heatmap, the frontier-lab playbook for measuring long-context capability is no longer one number. It is five layers, each measuring a different facet — and the right number to look at depends entirely on what you are trying to do with the model."
+title: "Eval Stack 2026: five layers, five orthogonal capabilities"
+short_title: "Eval Stack 2026"
+description: "Three years after NIAH, the frontier-lab long-context playbook is a five-layer stack — retrieval, multi-hop, aggregation, realistic, agentic — each measuring a capability the others cannot."
+blurb:
+  - "Layer 1 (Retrieval) to Layer 5 (Agentic): a model can be strong on any two and fail the rest."
+  - "Opus 4.6 scores 76% on Layer 1 (MRCR v2 1M) but 41% on Layer 2 (GraphWalks BFS-3 1M)."
+  - "Gemini 3 Pro Flash leads Opus 4.6 on Layers 1-3 but trails on Layer 5 (SWE-bench Verified)."
+  - "Mature labs report all five layers; a single headline number is no longer acceptable."
 topics: [evaluation, methodology, long-context]
 tags: [eval-stack-2026, mrcr-v2, graphwalks, oolong, longbench-v2, agentic, facts]
 theme: teal

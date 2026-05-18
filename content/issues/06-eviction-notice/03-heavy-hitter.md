@@ -1,6 +1,12 @@
 ---
-title: "The Heavy Hitter Oracle"
-description: "Mid-2023. Researchers at UT Austin plot attention heatmaps for LLMs and notice the same stark pattern: a tiny fraction of tokens absorbs almost all the attention mass. The H₂O paper names them 'heavy hitters' — and invents the first principled method to evict the rest."
+title: "H₂O: 20% of tokens absorb 80% of attention"
+short_title: "H₂O"
+description: "UT Austin's H₂O paper (NeurIPS 2023) measured that roughly 20% of tokens absorb 80% of softmax attention mass — and built the first principled eviction policy around that observation."
+blurb:
+  - "The heatmap finding: most query rows are nearly zero except for 3–4 spikes at the start, the end, and a handful of recurring positions."
+  - "The name: Heavy Hitter Oracle — borrowed from data-streaming theory, where a heavy hitter is any element appearing far more than its share."
+  - "H₂O's score for token i: the running sum of all attention weights ever placed on it across all queries."
+  - "What it couldn't do: work inside FlashAttention or during prefill — the two things production requires."
 topics: [kv-cache, attention, pruning]
 tags: [h2o, heavy-hitters, kv-pruning, zhang-2023, sparse-attention]
 theme: cream

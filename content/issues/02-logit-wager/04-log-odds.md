@@ -1,6 +1,12 @@
 ---
-title: "The Language of Risk"
-description: "Gamblers discovered log-odds centuries before statisticians did. When risk factors multiply, log-odds add — and that simple fact is why logistic regression dominates medical statistics."
+title: "Log-Odds: why gamblers got there before statisticians"
+short_title: "Log-Odds"
+description: "Gamblers priced bets in odds long before Berkson — because independent risk factors multiply in odds space, and multiplying is the same as adding after a log."
+blurb:
+  - "A horse with a 75% win chance has 3:1 odds. Gamblers multiply odds for joint events; they do not multiply probabilities."
+  - "Taking the log converts multiplication to addition: each independent risk factor contributes an additive term to the log-odds."
+  - "Smoking adds 1.1 to your log-odds of heart disease — equivalent to saying it multiplies your odds by e^1.1 ≈ 3."
+  - "This additive structure is why logistic regression coefficients are reported as odds ratios in every medical paper."
 topics: [probability, statistics]
 tags: [log-odds, odds-ratio, logit, risk-factors, logistic-regression]
 theme: teal

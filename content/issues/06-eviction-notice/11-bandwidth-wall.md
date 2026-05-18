@@ -1,6 +1,12 @@
 ---
-title: "The Bandwidth Wall"
-description: "Why GPU memory bandwidth — not compute — is the binding constraint during autoregressive decoding, and why this makes KV cache compression especially valuable."
+title: "Bandwidth Wall: why the H100 runs at 0.3% utilization"
+short_title: "Bandwidth Wall"
+description: "During autoregressive decode, an H100 GPU operates at roughly 0.3% of its 312 TFLOP/s rating — decode attention sits at ~1 FLOP/byte arithmetic intensity, 93× below the H100 ridge point where compute becomes the bottleneck."
+blurb:
+  - "H100 peak compute: 312 TFLOP/s. Measured FP utilization during text generation: ~0.3%."
+  - "The roofline ridge point for H100: 312 TFLOP/s ÷ 3.35 TB/s ≈ 93 FLOPs/byte."
+  - "Decode attention arithmetic intensity: ~1 FLOP/byte — 93× below the ridge. Catastrophically memory-bound."
+  - "If decode is memory-bound, halving the KV cache roughly halves the time per token — faster attention kernels don't help."
 topics: [gpu, memory, inference, bandwidth]
 tags: [hbm, roofline, bandwidth, decode, prefill, paged-attention]
 theme: cream

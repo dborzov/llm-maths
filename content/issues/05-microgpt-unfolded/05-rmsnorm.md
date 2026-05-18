@@ -1,6 +1,12 @@
 ---
-title: "RMSNorm, Not LayerNorm"
-description: "Why every modern LLM dropped LayerNorm in favor of a simpler cousin. The arithmetic difference is a single subtraction — but it costs a third of the normalization budget and nobody could tell the difference downstream."
+title: "RMSNorm: drop the mean, keep the scale"
+short_title: "RMSNorm"
+description: "RMSNorm drops LayerNorm's mean subtraction and bias, keeping only the root-mean-square rescale — the same accuracy at 7–64% lower cost."
+blurb:
+  - "LayerNorm: five passes over the vector (mean, center, variance, scale, bias). RMSNorm: one."
+  - "Zhang and Sennrich deleted what they couldn't justify. The benchmarks came back the same."
+  - "NeurIPS 2019 curiosity → T5 → Llama 1 (2023) → every frontier model by end of 2024."
+  - "In Llama 3 8B: 65 LayerNorm instances × 2 × 4096 ≈ 530K parameters spent on normalization bias alone — now gone."
 topics: [transformer, normalization]
 tags: [microgpt, rmsnorm, layernorm]
 theme: cream

@@ -1,6 +1,6 @@
 ---
-title: "The Geometry of Meaning"
-description: "How a Google researcher's 2013 insight turned words into arrows — and why the geometry of high-dimensional space turned out to be the perfect language for meaning."
+title: "Word Embeddings: the geometry that turned meaning into math"
+description: "How a Google researcher's 2013 insight turned words into arrows — and why high-dimensional geometry turned out to be the perfect language for meaning."
 issue: 1
 layout: issue-cover
 theme: cream

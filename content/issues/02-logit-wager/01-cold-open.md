@@ -1,6 +1,12 @@
 ---
-title: "The Dose That Kills Half"
-description: "It is the spring of 1934, and an entomologist in Connecticut has a problem that sounds almost comic: how do you fit a line through an S?"
+title: "Logistic Regression: born in a 1934 bug-killing experiment"
+short_title: "Logistic Regression"
+description: "Chester Bliss, 1934: six dose levels, 300 aphids, and a mortality curve no straight line can fit."
+blurb:
+  - "The LD50 — the dose that kills exactly 50% — is the problem. Bliss needs to read it off a curve, not a table."
+  - "A linear fit predicts negative deaths at low doses and over 100% mortality at high doses. It is obviously wrong."
+  - "The data isn't noisy — it's S-shaped. The shape is the signal, not the error."
+  - "Every neural network classifier on Earth inherits its output function from this 1934 insect experiment."
 topics: [probability, statistics]
 tags: [probit, ld50, dose-response, bliss]
 theme: cream

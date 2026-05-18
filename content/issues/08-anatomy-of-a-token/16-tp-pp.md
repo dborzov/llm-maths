@@ -1,6 +1,12 @@
 ---
-title: "Splitting the Model"
-description: "Tensor parallelism splits weight matrices column-by-column across GPUs, with one all-reduce per transformer block. Pipeline parallelism stacks layers across machines. Both fit large models into finite HBM — the trade-offs are latency (all-reduce cost) versus throughput (micro-batch fill)."
+title: "Model Parallelism: tensor splits and pipeline stages"
+short_title: "Model Parallelism"
+description: "Llama-3-70B in BF16 is 140 GB — more than an H100's 80 GB — so tensor parallelism splits each weight matrix column-by-column across GPUs with one all-reduce per block, while pipeline parallelism stacks layers, trading latency for throughput."
+blurb:
+  - "Megatron-LM (Shoeybi et al., 2019) invented tensor parallelism to fit an 8.3B model that wouldn't fit on a single 32 GB V100."
+  - "Column-parallel then row-parallel: two matmuls, one all-reduce per transformer block — minimum possible communication."
+  - "Tensor parallelism adds latency (all-reduce on every block); pipeline parallelism adds throughput (micro-batches fill the pipe)."
+  - "Production standard: TP within a node over NVLink, PP across nodes over Infiniband — matching topology to communication cost."
 topics: []
 tags: []
 theme: teal

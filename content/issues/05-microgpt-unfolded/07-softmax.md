@@ -1,6 +1,12 @@
 ---
-title: "Softmax, Numerically"
-description: "Why we subtract the max before exponentiating, what `flash-attention`'s online softmax is actually doing differently, and the one-line implementation that hides a decade of numerical analysis."
+title: "Softmax: subtract the max before you exponentiate"
+short_title: "Softmax"
+description: "The `max_val` subtraction in microGPT's four-line softmax is not cosmetic — omitting it has bricked production inference servers and blown up training runs."
+blurb:
+  - "R. Duncan Luce derived the same formula in 1959 from a behavioral choice axiom. Statistical mechanics had it as the Boltzmann distribution since the 1870s."
+  - "Two logits differing by 1 → probability ratio of e ≈ 2.72. Differing by 20 → ratio ≈ 5×10⁸. Big numbers eat small numbers."
+  - "Without the max subtraction, `math.exp(logit)` overflows to `inf` for logits above ~710. The division `inf/inf` returns NaN."
+  - "Flash-attention's online softmax updates the running max as new blocks arrive. What does that change about the output?"
 topics: [transformer, numerics]
 tags: [microgpt, softmax, numerical-stability]
 theme: cream

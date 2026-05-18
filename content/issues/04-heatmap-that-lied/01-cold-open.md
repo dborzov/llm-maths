@@ -1,6 +1,12 @@
 ---
-title: "The Heatmap That Lied"
-description: "November 2023. A solo developer cooks up a benchmark in an afternoon. Within months every AI lab is reporting his numbers. Within a year, every model scores 99% — and users feel like the test is gaslighting them."
+title: "Long-Context Benchmarks: the heatmap that broke in a year"
+short_title: "Long-Context Benchmarks"
+description: "November 21, 2023: Greg Kamradt posts a heatmap; within six weeks it is on every lab's product page; by March 2024 every frontier model scores 99% — and users still feel like something is wrong."
+blurb:
+  - "Total methodology: 88 model calls, a credit card, and a weekend script."
+  - "Anthropic, OpenAI, and Google all adopted a benchmark with zero peer review."
+  - "Users coined the phrase 'context rot' two years before a lab publicly acknowledged it."
+  - "How can every model score 99% on long context while developers still feel it broken?"
 topics: [evaluation, long-context]
 tags: [niah, kamradt, claude-2.1, anthropic, openai, history]
 theme: cream

@@ -1,6 +1,12 @@
 ---
-title: "The Pretext Trick"
-description: "2025. The KVzip paper (NVIDIA) asks a deceptively simple question: what if you measure which tokens matter by making the model repeat the document? The answer achieves 4× compression — and reveals why attention weight alone is the wrong metric."
+title: "KVzip: measuring importance by making the model copy"
+short_title: "KVzip"
+description: "NVIDIA's KVzip (2025) scores token importance by making the model repeat the document verbatim — tokens the model has to look up to reproduce receive high scores — achieving 4× compression with near-zero accuracy loss."
+blurb:
+  - "The pretext task: extend the prompt with 'Repeat the previous context exactly' and collect attention weights during that repetition."
+  - "Score formula: for each original token i, the max attention weight any repetition position j ever places on i."
+  - "4× compression on LongBench and passkey retrieval with accuracy losses that barely clear measurement noise."
+  - "The fatal flaw: scoring requires a second forward pass — 2× prefill overhead, unusable during decode."
 topics: [kv-cache, attention, pruning]
 tags: [kvzip, copy-paste, pretext-task, contribution-norm, devoto-2025, kv-pruning]
 theme: teal

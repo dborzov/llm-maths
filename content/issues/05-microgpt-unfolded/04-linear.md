@@ -1,6 +1,12 @@
 ---
-title: "Linear, in Pure Python"
-description: "The three-line `linear()` helper is the same operation every weight matrix in the model performs. Master this and `attn_wq`, `mlp_fc1`, and `lm_head` are all the same thing in different costumes."
+title: "Linear: the three-line function behind every weight"
+short_title: "Linear"
+description: "The three-line `linear()` helper is the single operation every weight matrix in microGPT performs — master it and `attn_wq`, `mlp_fc1`, and `lm_head` are all the same thing in different costumes."
+blurb:
+  - "Three lines. One loop. A dot product per row. That is 100% of the parameter budget, mechanically."
+  - "Cleve Moler wrote MATLAB in one Christmas break so students could type `A * B` instead of Fortran. The kernel he was hand-tuning was this."
+  - "On a GPU the same operation dispatches as a single cuBLAS call in nanoseconds. In microGPT it runs as a readable Python loop."
+  - "If `out_dim=64` and `in_dim=16`, `linear()` computes 64 dot products of length 16. How many multiplications is that?"
 topics: [transformer, linear-algebra]
 tags: [microgpt, linear, matmul]
 theme: teal

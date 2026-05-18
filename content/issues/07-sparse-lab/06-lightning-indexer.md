@@ -1,6 +1,12 @@
 ---
-title: "Lightning Strikes Twice"
-description: "September 29, 2025. V3.2-Exp ships with DeepSeek Sparse Attention. The 'lightning indexer' is a tiny bilinear scorer that ranks every past token in low-rank space, and a top-k selector that picks the survivors. The 50% API price cut happens at midnight Beijing time."
+title: "Lightning Indexer: 13 lines that halved the compute bill"
+short_title: "Lightning Indexer"
+description: "DSA's lightning indexer scores every past token cheaply in low-rank MLA-latent space, selects the top-2048, and runs full attention only over them — cutting attention compute at 128K context in half with no new cache storage."
+blurb:
+  - "The vLLM patch: 13 lines of PyTorch and a 200-line attention forward-pass modification. Already merged upstream before the model card was public."
+  - "Six years of efficient-transformer research had no cheap, already-cached key to score against. MLA's latent c_t provided exactly that."
+  - "DSA attends to 2,048 tokens out of 128,000. The scorer is the cheap part. The attention is the standard part."
+  - "50% API price cut at midnight Beijing time — not a promotional discount, but a compute bill that genuinely halved."
 topics: [attention, sparse-attention, deepseek, dsa]
 tags: [dsa, lightning-indexer, deepseek-v3.2-exp, top-k, mla, integration]
 theme: teal

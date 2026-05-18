@@ -1,6 +1,12 @@
 ---
-title: "Hardware Horizon"
-description: "When the silicon joins the conversation. FP8 on Hopper, MXFP4 on Blackwell, the OCP microscaling standard, and a five-event timeline of how we got here."
+title: "Hardware Horizon: FP8 on Hopper, MXFP4 on Blackwell"
+short_title: "Hardware Horizon"
+description: "Quantization stopped being a software workaround in 2023 when Hopper added native FP8 tensor cores; in 2025 Blackwell added MXFP4, making 4-bit a first-class hardware feature."
+blurb:
+  - "Hopper FP8 tensor cores run at 2× the rate of BF16 for the same chip area — effectively 4× throughput when memory is also halved."
+  - "MXFP4: 32 FP4 values share one FP8 E8M0 scale, baked into the storage layout. The tensor cores read the block scale alongside the data."
+  - "FP4's 16 representable values are useless alone; with a per-block scale they can be placed wherever the block's weights need them."
+  - "Blackwell MXFP4 is ~16× more efficient than BF16 at the same hardware budget. Frontier labs are training in it routinely."
 topics: [quantization, hardware]
 tags: [hopper, blackwell, fp8, mxfp4, nvidia, ocp]
 theme: teal

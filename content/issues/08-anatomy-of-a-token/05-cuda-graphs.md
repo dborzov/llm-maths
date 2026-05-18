@@ -1,6 +1,12 @@
 ---
-title: "Launches Aren't Free"
-description: "A decode-step forward pass launches hundreds of tiny CUDA kernels. The Python scheduling overhead can eat the entire latency budget before the GPU starts. CUDA graphs capture the launch sequence and replay it as a single GPU command, dropping CPU-side overhead from milliseconds to microseconds."
+title: "CUDA Graphs: from milliseconds to microseconds overhead"
+short_title: "CUDA Graphs"
+description: "A 32-layer Llama decode step launches ~400 CUDA kernels; at 7 µs Python overhead each, that is 2.8 ms of pure scheduling cost before the GPU multiplies a single number — CUDA graphs replay the whole sequence as one GPU command."
+blurb:
+  - "A $25,000 H100 running Llama-2-7B naively sits at 8% GPU utilization: 4.7 ms of kernel work buried in 60 ms of wall time."
+  - "Each kernel launch costs ~5–10 µs of CPU time; the GPU sees only the last 1–2 µs of that."
+  - "400 launches × 7 µs = 2.8 ms of overhead per token — often more than the actual compute."
+  - "CUDA graphs capture the launch graph once and replay it with O(1) driver overhead, cutting CPU-side cost to nearly zero."
 topics: []
 tags: []
 theme: cream

@@ -1,6 +1,12 @@
 ---
-title: "The Conveyor Belt"
-description: "Static batching wastes most of the GPU whenever sequences finish at different lengths — the GPU idles waiting for the longest sequence. Orca's iteration-level scheduling (OSDI 2022) fixed this: swap finished requests out and new ones in at every decode step, not at batch boundaries."
+title: "Continuous Batching: swap at every step, not every batch"
+short_title: "Continuous Batching"
+description: "Static batching makes a 12-token reply wait alongside a 480-token one until the longest finishes — 85% of GPU cycles go to padding; Orca's OSDI 2022 iteration-level scheduling fixes this by admitting new requests at every decode step."
+blurb:
+  - "A Seoul National University team in 2022 measured their OPT-13B serving at 15% useful tokens, 85% padding, by design."
+  - "The shortest request in a static batch idles for max_len − own_len steps, burning HBM bandwidth on zeros."
+  - "Orca's fix: treat each decode iteration as its own scheduling event — when a slot empties, fill it immediately."
+  - "Iteration-level scheduling is now the baseline of every production serving engine; it shipped in vLLM before PagedAttention did."
 topics: []
 tags: []
 theme: teal

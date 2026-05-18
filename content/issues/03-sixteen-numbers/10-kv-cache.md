@@ -1,6 +1,12 @@
 ---
-title: "KV Cache Tyranny"
-description: "Weights got small; KV cache became the new memory bill. Why K and V have different outlier structures, and why that asymmetry shapes how we quantize them."
+title: "KV Cache: the new memory bill after weights got small"
+short_title: "KV Cache"
+description: "Llama-2-70B quantized to 4-bit weighs 35 GB; at 32K context its KV cache weighs 80 GB — and K and V need different quantization axes."
+blurb:
+  - "Per-token KV cache footprint for Llama-2-70B: 2.5 MB. At 32K context that's 80 GB — bigger than the quantized weights."
+  - "KV cache grows linearly with context length. Quantized weights are fixed. The cache becomes the bottleneck."
+  - "K outliers are per-channel (same feature dimensions persist across tokens). V outliers are per-token (same token positions persist across heads)."
+  - "The asymmetry between K and V means symmetric weight-style methods fail: each tensor needs its own axis."
 topics: [quantization, attention]
 tags: [kv-cache, kivi, attention, long-context]
 theme: teal

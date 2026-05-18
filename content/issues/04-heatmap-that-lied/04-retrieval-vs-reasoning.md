@@ -1,6 +1,12 @@
 ---
-title: "Scan vs Think"
-description: "A transformer can find a sentence in 200,000 tokens with one forward pass. It cannot, in the same pass, follow a chain of reasoning that depends on five separately scattered facts. This is the gap the whole benchmark crisis is about."
+title: "Retrieval vs Reasoning: one pass can scan, not think"
+short_title: "Retrieval vs Reasoning"
+description: "A transformer finds any single fact in 200,000 tokens with one forward pass, but chained reasoning that depends on five separate facts requires depth that a single pass cannot provide."
+blurb:
+  - "Retrieval: a single softmax sweep across the KV cache, done in O(n) time."
+  - "Multi-hop reasoning: each hop depends on the previous hop's output — depth is mandatory."
+  - "The same codebase, the same model, but a 5-hop question takes an engineer thirty minutes not thirty seconds."
+  - "NIAH tests only retrieval — which is why 99% scores told developers nothing useful."
 topics: [transformers, attention, reasoning]
 tags: [retrieval, reasoning, multi-hop, attention-depth, chain-of-thought]
 theme: teal

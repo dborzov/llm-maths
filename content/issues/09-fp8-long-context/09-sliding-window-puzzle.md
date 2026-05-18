@@ -1,6 +1,12 @@
 ---
-title: "The Window That Wouldn't Save"
-description: "gpt-oss-20b had an FP8 break-even of 741,565 tokens — meaning the flag was, in practice, a no-op. The reason was sliding-window attention, and the fix was a per-layer skip flag for hybrid-attention models."
+title: "Sliding Window Attention: why FP8 broke even at 741K tokens"
+short_title: "Sliding Window Attention"
+description: "gpt-oss-20b's FP8 break-even was 741,565 tokens — the flag was a no-op. Sliding-window layers have bounded caches; the fix was a per-layer skip flag."
+blurb:
+  - "gpt-oss-20b: FP8 slope was 96% of BF16. The bandwidth saving was essentially zero."
+  - "Sliding-window layers have tiny, bounded caches — FP8 saves almost nothing on them."
+  - "In hybrid attention models, these layers dominate the count."
+  - "The fix: a per-layer skip flag drops the break-even from 741,565 tokens to 7,659."
 topics: [quantization, kv-cache, attention, hybrid-attention]
 tags: [fp8, sliding-window, gpt-oss-20b, gemma, layer-skip, hybrid-attention]
 theme: cream

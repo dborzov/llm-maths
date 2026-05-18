@@ -496,6 +496,19 @@ hr {
     font-weight: 500;
     color: var(--color-ink);
 }
+.article-blurb {
+    margin: 0;
+    padding-left: 1.2rem;
+    position: relative;
+    font-weight: 500;
+    color: var(--color-ink);
+    list-style: disc;
+}
+.article-blurb li {
+    margin: 0.35rem 0;
+}
+.article-blurb li:first-child { margin-top: 0; }
+.article-blurb li:last-child  { margin-bottom: 0; }
 .article-description-tag {
     display: inline-block;
     font-family: var(--font-body);
@@ -1975,6 +1988,20 @@ a.issue-cover-article-title:hover {
     line-height: 1.5;
     opacity: 0.75;
 }
+
+.issue-cover-article-blurb {
+    margin: 0.3rem 0 0;
+    padding-left: 1.1rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    opacity: 0.8;
+    list-style: disc;
+}
+.issue-cover-article-blurb li {
+    margin: 0.2rem 0;
+}
+.issue-cover-article-blurb li:first-child { margin-top: 0; }
+.issue-cover-article-blurb li:last-child  { margin-bottom: 0; }
 
 .issue-cover-article-meta {
     display: flex;

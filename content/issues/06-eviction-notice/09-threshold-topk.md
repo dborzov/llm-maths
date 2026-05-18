@@ -1,6 +1,12 @@
 ---
-title: "Threshold or Top-k"
-description: "Why a fixed budget is the wrong tool for adaptive compression — and what a log-space threshold actually controls."
+title: "Top-k vs Threshold: why fixed budgets fail on dense inputs"
+short_title: "Top-k vs Threshold"
+description: "Top-k pruning evicts exactly k tokens regardless of information density — disastrous on a 4096-token math proof where every step is referenced exactly once; threshold τ lets the compression ratio float with the input."
+blurb:
+  - "Top-k at 50%: fine for a repetitive legal boilerplate, catastrophic for a proof where every other step disappears."
+  - "KVzap sets τ in log-score space: evict token i if ŝ_i⁺ < τ. No budget. No normalization."
+  - "Same τ=−4 yields 74% compression on RULER (synthetic, repetitive) and 66% on LongBench (real-world, denser)."
+  - "Adaptive compression falls out of thresholding for free — the score distribution does the density estimation."
 topics: [kv-cache, pruning, compression]
 tags: [threshold, top-k, adaptive, kvzap, tau]
 theme: cream

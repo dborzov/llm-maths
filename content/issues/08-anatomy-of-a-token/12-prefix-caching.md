@@ -1,6 +1,12 @@
 ---
-title: "Reusing The Prologue"
-description: "Every conversation in a deployment starts with the same system prompt. Hashing prefix blocks and re-using their physical memory turns a full prefill into a cache hit — the single highest-leverage optimization in modern LLM serving, and an almost embarrassingly simple one in hindsight."
+title: "Prefix Caching: turn a 1,500-token prefill into a lookup"
+short_title: "Prefix Caching"
+description: "A 1,500-token system prompt repeated across every conversation means 97% of each prompt's prefill work is identical — hashing prefix blocks and reusing their physical KV memory collapses 1,550 tokens of compute down to 50, a 31× reduction in time-to-first-token."
+blurb:
+  - "In production chat workloads, 60–90% of all incoming prompt tokens are byte-identical to tokens prefilled in the last few minutes."
+  - "System prompts, few-shot examples, and tool schemas are 100% shared across users — recomputing them is pure waste."
+  - "Prefix caching works because KV vectors are deterministic: same tokens, same weights, same position embeddings — same result."
+  - "The page-table abstraction makes this free: a cache hit just increments a reference count and skips the forward pass."
 topics: []
 tags: []
 theme: teal

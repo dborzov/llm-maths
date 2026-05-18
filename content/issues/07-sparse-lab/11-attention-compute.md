@@ -1,6 +1,12 @@
 ---
-title: "The Compute Bill of Attention"
-description: "Primer. The exact FLOP counts for QK^T, the softmax, and attention·V — derived from the microGPT listing, then scaled to a 70B model at 128K context. Prefill vs decode regimes, arithmetic intensity, and why FlashAttention is a memory trick, not a compute trick."
+title: "Attention FLOPs: the exact bill, line by line"
+short_title: "Attention FLOPs"
+description: "The full FLOP count for attention is 4HLTD per layer in prefill — quadratic in T — and FlashAttention eliminates materialization of the score matrix but does not reduce the arithmetic."
+blurb:
+  - "QK^T alone costs 2HT²D FLOPs. Attention·V adds another 2HT²D. Total per layer: 4HT²D."
+  - "Prefill is O(T²); decode is O(T) per step. The same formula, different regime, two very different cost curves."
+  - "FlashAttention is a memory trick: it avoids storing the T×T score matrix. It does not skip computing any of its entries."
+  - "Softmax is O(HT²) scalar operations — 20–30× cheaper per op than a GEMM — and safely negligible in the FLOP budget."
 topics: [attention, flops, hardware, primer]
 tags: [attention-flops, prefill, decode, arithmetic-intensity, flash-attention]
 theme: teal

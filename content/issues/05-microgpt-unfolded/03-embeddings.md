@@ -1,6 +1,12 @@
 ---
-title: "Tokens & Positions"
-description: "Two lookup tables, added together. The `wte` table tells the model what token it saw; the `wpe` table tells it where. Why addition (and not concatenation) is the right move."
+title: "Embeddings: two lookup tables added together"
+short_title: "Embeddings"
+description: "Two lookup tables — `wte` for what token, `wpe` for what position — added elementwise into the first residual vector."
+blurb:
+  - "Mikolov's 1973 word2vec arithmetic: `king - man + woman ≈ queen`. Cited 50,000 times. Still the foundation of every LLM's first line."
+  - "The lookup is just array indexing — no matrix multiply. If `token_id` is 5, you get row 5."
+  - "The toy model: vocab_size=27, n_embd=16. The `wte` table is 27×16. That's 432 floats."
+  - "Why add the two embeddings instead of concatenating them? The answer is in the dimensions."
 topics: [transformer, embeddings]
 tags: [microgpt, wte, wpe, positional]
 theme: cream
