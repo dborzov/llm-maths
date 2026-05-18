@@ -1,6 +1,8 @@
-# LLM Maths Comics — Claude Code Instructions
+# Borzov's LLM Maths — Claude Code Instructions
 
-A static website: a serialized collection of long-form deep-learning mathematics articles structured as **comic-book issues**. Each issue groups multiple articles around a single theme and presents them via a **tech tree graph** as table of contents. Pop-art neubrutalist visual design. Hugo + custom theme + Python pre-build script.
+**Project name:** "LLM Maths" (short) / "Borzov's LLM Maths" (full). Do not use any other name variant ("Comics", "Almanac", "LLM Maths Comics", etc.).
+
+A static website: a serialized collection of long-form deep-learning mathematics articles structured as **issues** (like comic-book issues). Each issue groups multiple articles around a single theme and presents them via a **tech tree graph** as table of contents. Pop-art neubrutalist visual design. Hugo + custom theme + Python pre-build script.
 
 Live at: `https://borzov.ca/llm-maths/`
 

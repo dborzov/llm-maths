@@ -2,10 +2,6 @@
 # Canonical example: data/techtrees/issue03.toml.
 
 title  = "Tech tree — Anatomy of a Token"
-width  = 1700
-height = 1140
-node_w = 200
-node_h = 70
 
 # ---------------------------------------------------------------
 # Layout (top → bottom; arrows point UPWARD prerequisite → user):
@@ -29,8 +25,6 @@ node_h = 70
 id    = "full-anatomy"
 label = "The Full Anatomy\nof a Token"
 kind  = "boss"
-x     = 850
-y     = 80
 link  = "18-full-anatomy/"
 sub   = "ch.18"
 
@@ -42,8 +36,6 @@ sub   = "ch.18"
 id    = "disagg-pd"
 label = "Two Houses,\nDivided (P/D split)"
 kind  = "mainline"
-x     = 400
-y     = 220
 link  = "17-disagg-pd/"
 sub   = "ch.17"
 
@@ -51,8 +43,6 @@ sub   = "ch.17"
 id    = "speculative-decoding"
 label = "The Draft Trick\n(Speculative Decode)"
 kind  = "mainline"
-x     = 1300
-y     = 220
 link  = "15-speculative-decoding/"
 sub   = "ch.15"
 
@@ -64,8 +54,6 @@ sub   = "ch.15"
 id    = "scheduler"
 label = "The Token Budget\n(V1 Scheduler)"
 kind  = "mainline"
-x     = 850
-y     = 360
 link  = "14-scheduler/"
 sub   = "ch.14"
 
@@ -77,8 +65,6 @@ sub   = "ch.14"
 id    = "prefix-caching"
 label = "Reusing the\nPrologue"
 kind  = "mainline"
-x     = 550
-y     = 500
 link  = "12-prefix-caching/"
 sub   = "ch.12"
 
@@ -86,8 +72,6 @@ sub   = "ch.12"
 id    = "chunked-prefill"
 label = "Slicing the\nPrefill"
 kind  = "mainline"
-x     = 1150
-y     = 500
 link  = "13-chunked-prefill/"
 sub   = "ch.13"
 
@@ -99,8 +83,6 @@ sub   = "ch.13"
 id    = "paged-attention"
 label = "Borrowing\nfrom 1965"
 kind  = "mainline"
-x     = 700
-y     = 640
 link  = "10-paged-attention/"
 sub   = "ch.10"
 
@@ -108,8 +90,6 @@ sub   = "ch.10"
 id    = "block-manager"
 label = "The Block\nManager"
 kind  = "primer"
-x     = 1000
-y     = 640
 link  = "11-block-manager/"
 sub   = "ch.11"
 
@@ -117,8 +97,6 @@ sub   = "ch.11"
 id    = "tp-pp"
 label = "Splitting\nthe Model"
 kind  = "primer"
-x     = 1450
-y     = 640
 link  = "16-tp-pp/"
 sub   = "ch.16"
 
@@ -130,8 +108,6 @@ sub   = "ch.16"
 id    = "kv-fragmentation"
 label = "The KV Cache\nIs a Heap"
 kind  = "mainline"
-x     = 700
-y     = 780
 link  = "09-kv-fragmentation/"
 sub   = "ch.9"
 
@@ -139,8 +115,6 @@ sub   = "ch.9"
 id    = "continuous-batching"
 label = "The Conveyor\nBelt (Orca)"
 kind  = "mainline"
-x     = 1100
-y     = 780
 link  = "08-continuous-batching/"
 sub   = "ch.8"
 
@@ -152,8 +126,6 @@ sub   = "ch.8"
 id    = "prefill-vs-decode"
 label = "Two Phases,\nTwo Personalities"
 kind  = "mainline"
-x     = 900
-y     = 920
 link  = "07-prefill-vs-decode/"
 sub   = "ch.7"
 
@@ -165,8 +137,6 @@ sub   = "ch.7"
 id    = "flash-attention"
 label = "Attention\nin SRAM"
 kind  = "primer"
-x     = 250
-y     = 1060
 link  = "06-flash-attention/"
 sub   = "ch.6"
 
@@ -174,8 +144,6 @@ sub   = "ch.6"
 id    = "roofline"
 label = "The\nRoofline"
 kind  = "primer"
-x     = 550
-y     = 1060
 link  = "04-roofline/"
 sub   = "ch.4"
 
@@ -183,8 +151,6 @@ sub   = "ch.4"
 id    = "memory-hierarchy"
 label = "The Pyramid\nof Speed"
 kind  = "primer"
-x     = 850
-y     = 1060
 link  = "03-memory-hierarchy/"
 sub   = "ch.3"
 
@@ -192,8 +158,6 @@ sub   = "ch.3"
 id    = "cuda-graphs"
 label = "Launches\nAren't Free"
 kind  = "primer"
-x     = 1150
-y     = 1060
 link  = "05-cuda-graphs/"
 sub   = "ch.5"
 
@@ -201,8 +165,6 @@ sub   = "ch.5"
 id    = "gpu-anatomy"
 label = "Inside the\nSilicon"
 kind  = "primer"
-x     = 1450
-y     = 1060
 link  = "02-gpu-anatomy/"
 sub   = "ch.2"
 

@@ -2,13 +2,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} — {{ site.Title }}{{ end }}</title>
 <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+<link rel="canonical" href="{{ .Permalink }}">
+
+{{- /* Open Graph + Twitter Card — used by social share previews and link unfurlers. */}}
+{{- $ogTitle := cond .IsHome site.Title (printf "%s — %s" .Title site.Title) -}}
+{{- $ogDesc  := .Description | default site.Params.description -}}
+{{- $ogType  := cond .IsHome "website" "article" -}}
+{{- $ogImage := printf "%slogo-512.png" site.BaseURL -}}
+{{- with .Params.header -}}
+  {{- $ogImage = printf "%sheader-illustrations/%s" site.BaseURL . -}}
+{{- end -}}
+<meta property="og:type"        content="{{ $ogType }}">
+<meta property="og:site_name"   content="{{ site.Title }}">
+<meta property="og:title"       content="{{ $ogTitle }}">
+<meta property="og:description" content="{{ $ogDesc }}">
+<meta property="og:url"         content="{{ .Permalink }}">
+<meta property="og:image"       content="{{ $ogImage }}">
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="{{ $ogTitle }}">
+<meta name="twitter:description" content="{{ $ogDesc }}">
+<meta name="twitter:image"       content="{{ $ogImage }}">
 
 {{- $css := resources.Get "css/main.css" | minify | fingerprint -}}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}">
 
 {{ partial "theme-vars.html" . }}
 
-{{ if or .Params.math .IsHome }}
+{{ if .Params.math }}
   {{ partial "katex.html" . }}
 {{ end }}
 

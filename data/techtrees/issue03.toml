@@ -2,10 +2,6 @@
 # This file is the canonical example — copy its structure for new tech trees.
 
 title  = "Tech tree — Sixteen Numbers Walk Into A GPU"
-width  = 1500
-height = 920
-node_w = 200
-node_h = 70
 
 # ---------------------------------------------------------------
 # Row 1 (y=80)   — overall capstone (hardware horizon)
@@ -22,8 +18,6 @@ node_h = 70
 id    = "hardware"
 label = "Hardware\nHorizon"
 kind  = "boss"
-x     = 1100
-y     = 80
 link  = "12-hardware-horizon/"
 sub   = "ch.12"
 
@@ -33,8 +27,6 @@ sub   = "ch.12"
 id    = "method-family"
 label = "Weight Method\nFamily Tree"
 kind  = "boss"
-x     = 380
-y     = 210
 link  = "09-method-family-tree/"
 sub   = "ch.9"
 
@@ -42,8 +34,6 @@ sub   = "ch.9"
 id    = "kv-method-family"
 label = "KV Method\nFamily Tree"
 kind  = "boss"
-x     = 1100
-y     = 210
 link  = "15-kv-method-family/"
 sub   = "ch.15"
 
@@ -53,8 +43,6 @@ sub   = "ch.15"
 id    = "outliers"
 label = "The 1% That\nRuins Everything"
 kind  = "mainline"
-x     = 140
-y     = 380
 link  = "06-outliers/"
 sub   = "ch.6"
 
@@ -62,8 +50,6 @@ sub   = "ch.6"
 id    = "llm-int8"
 label = "Inside\nLLM.int8()"
 kind  = "mainline"
-x     = 360
-y     = 380
 link  = "06b-llm-int8-deep/"
 sub   = "ch.6b"
 
@@ -71,8 +57,6 @@ sub   = "ch.6b"
 id    = "brain-surgery"
 label = "Brain Surgery\nReturns"
 kind  = "mainline"
-x     = 600
-y     = 380
 link  = "08-brain-surgery/"
 sub   = "ch.8"
 
@@ -80,8 +64,6 @@ sub   = "ch.8"
 id    = "kv-distribution"
 label = "Inside K and V"
 kind  = "mainline"
-x     = 870
-y     = 380
 link  = "16-kv-distribution/"
 sub   = "ch.16"
 
@@ -89,8 +71,6 @@ sub   = "ch.16"
 id    = "kv-cache"
 label = "KV Cache\nTyranny"
 kind  = "mainline"
-x     = 1100
-y     = 380
 link  = "10-kv-cache/"
 sub   = "ch.10"
 
@@ -100,8 +80,6 @@ sub   = "ch.10"
 id    = "shape-weights"
 label = "Geometry\nof Weights"
 kind  = "primer"
-x     = 360
-y     = 540
 link  = "05-geometry-of-weights/"
 sub   = "ch.5"
 
@@ -109,8 +87,6 @@ sub   = "ch.5"
 id    = "rotations"
 label = "Rotations:\nThe Anti-Outlier"
 kind  = "primer"
-x     = 600
-y     = 540
 link  = "17-rotations/"
 sub   = "ch.17"
 
@@ -118,8 +94,6 @@ sub   = "ch.17"
 id    = "quantization-axes"
 label = "The Axis\nQuestion"
 kind  = "primer"
-x     = 870
-y     = 540
 link  = "18-quantization-axes/"
 sub   = "ch.18"
 
@@ -127,8 +101,6 @@ sub   = "ch.18"
 id    = "calibration"
 label = "Calibration\n& Blocks"
 kind  = "primer"
-x     = 1100
-y     = 540
 link  = "11-calibration-and-blocks/"
 sub   = "ch.11"
 
@@ -136,8 +108,6 @@ sub   = "ch.11"
 id    = "calibration-survey"
 label = "Calibration\nField Guide"
 kind  = "primer"
-x     = 1340
-y     = 540
 link  = "13-calibration-survey/"
 sub   = "ch.13"
 
@@ -147,8 +117,6 @@ sub   = "ch.13"
 id    = "numbers"
 label = "Numbers\nin Boxes"
 kind  = "primer"
-x     = 140
-y     = 700
 link  = "02-numbers-in-boxes/"
 sub   = "ch.2"
 
@@ -156,8 +124,6 @@ sub   = "ch.2"
 id    = "taylor-hess"
 label = "Taylor &\nHessians"
 kind  = "primer"
-x     = 360
-y     = 700
 link  = "07-taylor-and-hessians/"
 sub   = "ch.7"
 
@@ -165,8 +131,6 @@ sub   = "ch.7"
 id    = "lloyd-max"
 label = "The Lloyd-Max\nBargain"
 kind  = "primer"
-x     = 600
-y     = 700
 link  = "03-lloyd-max/"
 sub   = "ch.3"
 
@@ -174,8 +138,6 @@ sub   = "ch.3"
 id    = "rate-distortion"
 label = "Rate-Distortion\nBridge"
 kind  = "primer"
-x     = 870
-y     = 700
 link  = "04-rate-distortion/"
 sub   = "ch.4"
 
@@ -183,8 +145,6 @@ sub   = "ch.4"
 id    = "compression-roots"
 label = "Compression's\nFamily Tree"
 kind  = "primer"
-x     = 1100
-y     = 700
 link  = "14-compression-roots/"
 sub   = "ch.14"
 
@@ -194,8 +154,6 @@ sub   = "ch.14"
 id    = "absmax"
 label = "Absmax\nQuantization"
 kind  = "primer"
-x     = 140
-y     = 850
 link  = "02a-absmax/"
 sub   = "ch.2a"
 
@@ -203,8 +161,6 @@ sub   = "ch.2a"
 id    = "zero-point"
 label = "Zero-Point\nQuantization"
 kind  = "primer"
-x     = 360
-y     = 850
 link  = "02b-zero-point/"
 sub   = "ch.2b"
 

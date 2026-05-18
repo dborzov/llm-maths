@@ -2,10 +2,6 @@
 # Issue 09 — The Long-Context Lie (FP8 KV-Cache Quantization in vLLM)
 
 title  = "Tech tree — The Long-Context Lie"
-width  = 1500
-height = 920
-node_w = 200
-node_h = 70
 
 # ---------------------------------------------------------------
 # Row 1 (y=80)   — Boss capstone (state of FP8 KV)
@@ -21,8 +17,6 @@ node_h = 70
 id    = "state-of-fp8"
 label = "The State\nof FP8 KV"
 kind  = "boss"
-x     = 760
-y     = 80
 link  = "11-state-of-fp8/"
 sub   = "ch.11"
 
@@ -32,8 +26,6 @@ sub   = "ch.11"
 id    = "bandwidth-bargain"
 label = "The Halving:\nThe Bandwidth Bargain"
 kind  = "mainline"
-x     = 200
-y     = 230
 link  = "02-bandwidth-bargain/"
 sub   = "ch.2"
 
@@ -41,8 +33,6 @@ sub   = "ch.2"
 id    = "accumulator-lie"
 label = "The Accumulator\nLie"
 kind  = "mainline"
-x     = 540
-y     = 230
 link  = "05-accumulator-lie/"
 sub   = "ch.5"
 
@@ -50,8 +40,6 @@ sub   = "ch.5"
 id    = "two-level-fix"
 label = "Two Levels\nof Honesty"
 kind  = "mainline"
-x     = 880
-y     = 230
 link  = "06-two-level-fix/"
 sub   = "ch.6"
 
@@ -59,8 +47,6 @@ sub   = "ch.6"
 id    = "sliding-puzzle"
 label = "The Window That\nWouldn't Save"
 kind  = "mainline"
-x     = 1240
-y     = 230
 link  = "09-sliding-window-puzzle/"
 sub   = "ch.9"
 
@@ -70,8 +56,6 @@ sub   = "ch.9"
 id    = "tile-sizes"
 label = "Register Wars:\nTile Sizes"
 kind  = "primer"
-x     = 880
-y     = 400
 link  = "07-tile-sizes/"
 sub   = "ch.7"
 
@@ -79,8 +63,6 @@ sub   = "ch.7"
 id    = "calibrate"
 label = "Scale Equals\nOne"
 kind  = "primer"
-x     = 1240
-y     = 400
 link  = "10-calibrate/"
 sub   = "ch.10"
 
@@ -90,8 +72,6 @@ sub   = "ch.10"
 id    = "fp8-format"
 label = "E4M3 in\nThree Steps"
 kind  = "primer"
-x     = 200
-y     = 570
 link  = "03-what-is-fp8-here/"
 sub   = "ch.3"
 
@@ -99,8 +79,6 @@ sub   = "ch.3"
 id    = "summation"
 label = "The Sum Is Not\nWhat You Think"
 kind  = "primer"
-x     = 540
-y     = 570
 link  = "04-summation-history/"
 sub   = "ch.4"
 
@@ -108,8 +86,6 @@ sub   = "ch.4"
 id    = "itl-model"
 label = "Slope vs\nIntercept"
 kind  = "primer"
-x     = 1240
-y     = 570
 link  = "08-itl-slope-model/"
 sub   = "ch.8"
 
@@ -119,29 +95,21 @@ sub   = "ch.8"
 id    = "ext-fp8-hw"
 label = "FP8 Hardware\n& Number Formats\n(Issue 03)"
 kind  = "external"
-x     = 200
-y     = 730
 
 [[nodes]]
 id    = "ext-kv-family"
 label = "KV Method\nFamily Tree\n(Issue 03)"
 kind  = "external"
-x     = 540
-y     = 730
 
 [[nodes]]
 id    = "ext-flash"
 label = "FlashAttention\n(Issue 08)"
 kind  = "external"
-x     = 880
-y     = 730
 
 [[nodes]]
 id    = "ext-roofline"
 label = "Roofline &\nBandwidth Wall\n(Issues 06, 08)"
 kind  = "external"
-x     = 1240
-y     = 730
 
 # =========================================================================
 # Edges — arrows point UPWARD from prerequisite → dependent
