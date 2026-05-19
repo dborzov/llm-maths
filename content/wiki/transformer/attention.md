@@ -25,7 +25,7 @@ The core operation of the transformer. Within a single forward pass:
 
 **Attention variants:**
 - **GQA / MQA** — grouped-query / multi-query: multiple query heads share fewer K/V heads (`n_kv_head`, `group_size`). See [ch.18](/comicbook/05-microgpt/18-gqa/).
-- **MLA** — multi-head latent attention: low-rank KV via `kv_down`, latent `c`, `d_c`. See [ch.19](/comicbook/05-microgpt/19-mla/).
+- **MLA** — multi-head latent attention: low-rank KV via `kv_down`, latent `c`, `d_c`. See [ch.19](/comicbook/05-microgpt/19-mla/). For the low-rank-factorization lineage (SVD → LoRA → MLA), see [Issue 10](/comicbook/10-low-rank/).
 - **Sliding window** — per-layer attention window `W`. See [ch.20](/comicbook/05-microgpt/20-sliding-window/).
 - **DSA** — DeepSeek Sparse Attention (V3.2-Exp). Lightning indexer scores past tokens; top-$k$ go to full attention. See [Issue 7 ch.6](/comicbook/07-deepseek-attn/06-lightning-indexer/).
 - **CSA** — Compressed Sparse Attention (V4). Token-level compressor pools $m$ tokens into one entry, then DSA selects top-$k$ compressed entries. See [Issue 7 ch.7](/comicbook/07-deepseek-attn/07-csa/).
