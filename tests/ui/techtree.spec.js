@@ -73,3 +73,46 @@ test('the legend remains visible regardless of which pane is active', async ({ p
   await tree.locator('[data-techtree-view="list"]').click();
   await expect(tree.locator('.techtree-legend')).toBeVisible();
 });
+
+test('graph pane actually renders nodes (not just an empty SVG container)', async ({ page }) => {
+  // Regression: Hugo's html/template engine was JS-escaping the JSON
+  // inside <script type="application/json">, turning the data into a
+  // string literal so JSON.parse returned a string and data.nodes was
+  // undefined — the graph showed only the legend, no nodes.
+  await page.goto(COVER);
+  await page.waitForLoadState('networkidle');
+
+  const tree = page.locator('[data-techtree]').first();
+  await tree.locator('[data-techtree-view="graph"]').click();
+
+  const svg = tree.locator('.techtree-svg');
+  await expect(svg).toBeVisible();
+  await expect(tree.locator('.techtree-node')).not.toHaveCount(0);
+  await expect(tree.locator('.techtree-edges path')).not.toHaveCount(0);
+});
+
+test('cross-issue (external) nodes are tappable links in both views', async ({ page }) => {
+  // Regression: external nodes in issue06/issue07 had no `link` field
+  // so they rendered as inert chips and unlinked SVG groups. They
+  // should resolve to the article they reference, like any other node.
+  await page.goto('/issues/06-eviction-notice/');
+  await page.waitForLoadState('networkidle');
+
+  const tree = page.locator('[data-techtree]').first();
+
+  // List view: every external chip must be a real <a href>.
+  await tree.locator('[data-techtree-view="list"]').click();
+  const extChips = tree.locator('.techtree-list-item--external a.techtree-list-link');
+  const chipCount = await extChips.count();
+  expect(chipCount).toBeGreaterThan(0);
+  for (let i = 0; i < chipCount; i++) {
+    const href = await extChips.nth(i).getAttribute('href');
+    expect(href, `external chip #${i} should have href`).toBeTruthy();
+    expect(href).toMatch(/^\//);
+  }
+
+  // Graph view: every external SVG node must be wrapped in an <a>.
+  await tree.locator('[data-techtree-view="graph"]').click();
+  const extSvgLinks = tree.locator('.techtree-node--external a.techtree-node-link');
+  await expect(extSvgLinks).toHaveCount(chipCount);
+});

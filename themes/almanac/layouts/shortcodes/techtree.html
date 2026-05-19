@@ -89,9 +89,11 @@
   {{- with $tree.caption -}}<figcaption class="techtree-caption">{{ . | safeHTML }}</figcaption>{{- end -}}
 </figure>
 
-{{- /* JSON data consumed by techtree.js */ -}}
+{{- /* JSON data consumed by techtree.js. `safeJS` keeps Hugo's
+       html/template engine from re-escaping the JSON as a JS string
+       literal (which would double-encode it inside <script>). */ -}}
 <script type="application/json" id="techtree-data-{{ $name }}">
-{{- dict "title" ($tree.title | default "") "nodes" $tree.nodes "edges" ($tree.edges | default slice) | jsonify -}}
+{{- dict "title" ($tree.title | default "") "nodes" $tree.nodes "edges" ($tree.edges | default slice) | jsonify | safeJS -}}
 </script>
 
 {{- end -}}

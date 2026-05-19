@@ -95,16 +95,19 @@ sub   = "ch.8"
 id    = "ext-kv-mechanics"
 label = "KV Cache &\nK/V Internals\n(Issues 03, 05)"
 kind  = "external"
+link  = "/issues/05-microgpt-unfolded/13-kv-cache/"
 
 [[nodes]]
 id    = "ext-residual"
 label = "Residual Stream\n& GQA\n(Issue 05)"
 kind  = "external"
+link  = "/issues/05-microgpt-unfolded/10-residual-stream/"
 
 [[nodes]]
 id    = "ext-longctx-eval"
 label = "Long-Context\nEval (Issue 04)"
 kind  = "external"
+link  = "/issues/04-heatmap-that-lied/"
 
 # =========================================================================
 # Edges — arrows point UPWARD from prerequisite → dependent
