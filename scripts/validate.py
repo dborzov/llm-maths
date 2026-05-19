@@ -28,10 +28,17 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent.parent
+CONTENT_ROOT = REPO_ROOT / "content"
 CONTENT_ISSUES = REPO_ROOT / "content" / "comicbook"
 DATA_TECHTREES = REPO_ROOT / "data" / "techtrees"
 DATA_TIMELINES = REPO_ROOT / "data" / "timelines"
-STATIC_HEADER_IMGS = REPO_ROOT / "static" / "header-illustrations"
+STATIC_ROOT = REPO_ROOT / "static"
+STATIC_HEADER_IMGS = STATIC_ROOT / "header-illustrations"
+
+# The site's baseURL path prefix. Rooted image paths in markdown start with
+# this; we strip it before resolving against static/. Keep in sync with
+# `baseURL` in hugo.toml.
+BASE_URL_PREFIX = "/llm-maths/"
 
 REQUIRED_ARTICLE_FIELDS = {
     "title", "description", "topics", "tags", "theme",
@@ -378,6 +385,97 @@ def check_header_images(issues: list[IssueSection], report: Report) -> None:
                 )
 
 
+# `src="..."` attribute on a {{< figure ... >}} shortcode. The shortcode
+# call can span multiple lines, so we anchor on the opening token and
+# then grep for `src="..."` inside its argument block.
+FIGURE_SHORTCODE_RE = re.compile(
+    r"\{\{<\s*figure\b([^>]*?)>\}\}",
+    re.DOTALL,
+)
+# Markdown image syntax: ![alt](path "optional title")
+MARKDOWN_IMAGE_RE = re.compile(
+    r"!\[[^\]]*\]\(\s*([^)\s]+)(?:\s+\"[^\"]*\")?\s*\)"
+)
+# Raw <img src="..."> tags in markdown — used in some docs pages.
+HTML_IMG_RE = re.compile(r"<img\b[^>]*\bsrc=[\"']([^\"']+)[\"']", re.IGNORECASE)
+SRC_ATTR_RE = re.compile(r"\bsrc\s*=\s*[\"']([^\"']+)[\"']")
+IMAGE_EXTS = (".webp", ".png", ".jpg", ".jpeg", ".svg", ".gif", ".avif")
+
+
+def _resolve_image_to_static(src: str, md_path: Path) -> Path | None:
+    """Map an image URL/path written in markdown to a local file in static/.
+
+    Returns None if the reference points off-site (http/https) or isn't an
+    image we host. Otherwise returns a Path that should exist on disk.
+    """
+    if src.startswith(("http://", "https://", "data:", "mailto:", "#")):
+        return None
+    # Drop fragment / querystring just in case.
+    src = src.split("#", 1)[0].split("?", 1)[0]
+    if not src:
+        return None
+    if not src.lower().endswith(IMAGE_EXTS):
+        return None
+    if src.startswith(BASE_URL_PREFIX):
+        # `/llm-maths/figures/x.webp` → `static/figures/x.webp`
+        return STATIC_ROOT / src[len(BASE_URL_PREFIX):]
+    if src.startswith("/"):
+        # Treat any rooted path as relative to the static root — Hugo
+        # serves static/ at the site root.
+        return STATIC_ROOT / src.lstrip("/")
+    # Relative path. Hugo's `relURL` resolves against the site root, so
+    # `header-illustrations/foo.webp` → `static/header-illustrations/foo.webp`.
+    return STATIC_ROOT / src
+
+
+def check_image_links(report: Report) -> None:
+    """Every image reference inside content/ should point at a real file.
+
+    Scans for:
+      - `{{< figure src="..." >}}` shortcodes (the canonical caption-bearing
+        image component).
+      - Inline Markdown images `![alt](path)`.
+      - Raw `<img src="...">` tags.
+
+    Off-site URLs (http/https) and non-image src attributes are skipped.
+    Header images defined in front matter are already covered by
+    `check_header_images`.
+    """
+    for md_path in sorted(CONTENT_ROOT.rglob("*.md")):
+        text = md_path.read_text()
+        candidates: list[tuple[str, str]] = []  # (kind, src)
+
+        for fig_attrs in FIGURE_SHORTCODE_RE.findall(text):
+            m = SRC_ATTR_RE.search(fig_attrs)
+            if m:
+                candidates.append(("figure shortcode", m.group(1)))
+            else:
+                report.err(
+                    f"{rel(md_path)}: {{{{< figure >}}}} shortcode missing src attribute"
+                )
+
+        # Strip fenced code blocks before scanning for ![]() and <img> —
+        # documentation pages quote examples in code fences.
+        text_no_code = re.sub(r"```[\s\S]*?```", "", text)
+        # Also strip inline `code spans` to avoid matching ![](...) inside `…`.
+        text_no_code = re.sub(r"`[^`\n]*`", "", text_no_code)
+
+        for src in MARKDOWN_IMAGE_RE.findall(text_no_code):
+            candidates.append(("markdown image", src))
+        for src in HTML_IMG_RE.findall(text_no_code):
+            candidates.append(("<img> tag", src))
+
+        for kind, src in candidates:
+            resolved = _resolve_image_to_static(src, md_path)
+            if resolved is None:
+                continue
+            if not resolved.exists():
+                report.err(
+                    f"{rel(md_path)}: broken {kind} src={src!r} — "
+                    f"no file at {rel(resolved)}"
+                )
+
+
 def check_timeline_data(report: Report) -> None:
     """Verify timeline TOML files parse and never exceed 5 events."""
     if not DATA_TIMELINES.exists():
@@ -430,6 +528,7 @@ def main() -> int:
         check_cross_links(issue, report)
         check_pyplot_blocks(issue, report)
     check_header_images(issues, report)
+    check_image_links(report)
     check_timeline_data(report)
     check_wiki(report)
     return report.print_summary()
