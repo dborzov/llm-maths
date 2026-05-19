@@ -4,7 +4,7 @@ slug: "transformer-weights"
 description: "The named weight matrices in microGPT: embedding tables, Q/K/V/O projections, MLP matrices, and lm_head."
 category: "transformer"
 also_known_as: ["wte", "wpe", "attn_wq", "attn_wk", "attn_wv", "attn_wo", "mlp_fc1", "mlp_fc2", "lm_head", "state dict"]
-source_of_truth: "/issues/05-microgpt-unfolded/02-state-dict/"
+source_of_truth: "/comicbook/05-microgpt/02-state-dict/"
 source_of_truth_title: "ch.2 The State Dict (microGPT)"
 related: ["attention", "hyperparameters"]
 draft: false
@@ -21,4 +21,4 @@ The persistent parameters that survive between forward passes. All live in `stat
 | `mlp_fc1` / `mlp_fc2` | MLP "fatten" and "skinny" matrices |
 | `lm_head` | Vocab projection at the output — shape `n_embd × vocab_size` |
 
-Shape reference lives in [ch.1 — don't re-derive per article](/issues/05-microgpt-unfolded/01-cold-open/).
+Shape reference lives in [ch.1 — don't re-derive per article](/comicbook/05-microgpt/01-cold-open/).

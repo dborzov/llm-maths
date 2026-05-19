@@ -10,7 +10,7 @@
 const { test, expect } = require('@playwright/test');
 
 test('section numbers are injected into article headings', async ({ page }) => {
-  await page.goto('/issues/03-sixteen-numbers/03-lloyd-max/');
+  await page.goto('/comicbook/03-quantization/03-lloyd-max/');
   await page.waitForLoadState('networkidle');
 
   // First H2 (now wrapped in a <details><summary>) gets "1."
@@ -26,7 +26,7 @@ test('section numbers are injected into article headings', async ({ page }) => {
 });
 
 test('TOC links carry the same section number prefix', async ({ page }) => {
-  await page.goto('/issues/03-sixteen-numbers/03-lloyd-max/');
+  await page.goto('/comicbook/03-quantization/03-lloyd-max/');
   await page.waitForLoadState('networkidle');
 
   const firstTocLink = page.locator('.toc-body a').first();
@@ -34,7 +34,7 @@ test('TOC links carry the same section number prefix', async ({ page }) => {
 });
 
 test('shortcode-internal headings are NOT auto-numbered', async ({ page }) => {
-  await page.goto('/issues/03-sixteen-numbers/12-hardware-horizon/');
+  await page.goto('/comicbook/03-quantization/12-hardware-horizon/');
   await page.waitForLoadState('networkidle');
 
   // Timeline event titles are H3 inside .timeline — they must stay clean.
@@ -47,7 +47,7 @@ test('shortcode-internal headings are NOT auto-numbered', async ({ page }) => {
 });
 
 test('manually numbered headings ("### 1. Foo") are not double-numbered', async ({ page }) => {
-  await page.goto('/issues/03-sixteen-numbers/03-lloyd-max/');
+  await page.goto('/comicbook/03-quantization/03-lloyd-max/');
   await page.waitForLoadState('networkidle');
 
   // The article has "### 1. The Robot-Voice Limit (rate vs. fidelity)".

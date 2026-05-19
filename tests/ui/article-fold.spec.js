@@ -6,7 +6,7 @@
  */
 const { test, expect } = require('@playwright/test');
 
-const ARTICLE = '/issues/03-sixteen-numbers/03-lloyd-max/';
+const ARTICLE = '/comicbook/03-quantization/03-lloyd-max/';
 
 // fold.js gives every wrapped H2 an id; pyplot code blocks are also
 // <details> but without one. Filter on `[id]` to pick just our sections.

@@ -95,25 +95,25 @@ sub   = "ch.8"
 id    = "ext-fp8-hw"
 label = "FP8 Hardware\n& Number Formats\n(Issue #3)"
 kind  = "external"
-link  = "/issues/03-sixteen-numbers/02-numbers-in-boxes/"
+link  = "/comicbook/03-quantization/02-numbers-in-boxes/"
 
 [[nodes]]
 id    = "ext-kv-family"
 label = "KV Method\nFamily Tree\n(Issue #3)"
 kind  = "external"
-link  = "/issues/03-sixteen-numbers/15-kv-method-family/"
+link  = "/comicbook/03-quantization/15-kv-method-family/"
 
 [[nodes]]
 id    = "ext-flash"
 label = "FlashAttention\n(Issue #8)"
 kind  = "external"
-link  = "/issues/08-anatomy-of-a-token/06-flash-attention/"
+link  = "/comicbook/08-vLLM/06-flash-attention/"
 
 [[nodes]]
 id    = "ext-roofline"
 label = "Roofline &\nBandwidth Wall\n(Issues #6, #8)"
 kind  = "external"
-link  = "/issues/08-anatomy-of-a-token/04-roofline/"
+link  = "/comicbook/08-vLLM/04-roofline/"
 
 # =========================================================================
 # Edges — arrows point UPWARD from prerequisite → dependent

@@ -24,8 +24,39 @@
 {{- $pageBase := .Page.RelPermalink -}}
 {{- if .Page.IsPage -}}{{- $pageBase = .Page.Parent.RelPermalink -}}{{- end -}}
 
-{{- /* Sort nodes for the list view: preserve TOML order (no x/y to sort by). */ -}}
-{{- $listNodes := $tree.nodes -}}
+{{- /*
+  Pre-resolve every node's link the same way the list view does.
+  This ensures the graph view (which reads the JSON blob) gets fully-
+  qualified site-relative URLs even for absolute external links like
+  /comicbook/05-microgpt/… that need the /llm-maths base prefix added.
+*/ -}}
+{{- $resolvedNodes := slice -}}
+{{- range $tree.nodes -}}
+  {{- $link := .link | default "" -}}
+  {{- $resolved := . -}}
+  {{- if $link -}}
+    {{- if not (hasPrefix $link "/") -}}
+      {{- $link = printf "%s%s" $pageBase $link -}}
+    {{- else -}}
+      {{- $link = $link | relURL -}}
+    {{- end -}}
+    {{- $resolved = merge . (dict "link" $link) -}}
+  {{- end -}}
+  {{- $resolvedNodes = $resolvedNodes | append $resolved -}}
+{{- end -}}
+
+{{- /* List view: internal nodes sorted by article number, external nodes last. */ -}}
+{{- $internalNodes := slice -}}
+{{- $externalNodes := slice -}}
+{{- range $resolvedNodes -}}
+  {{- if eq .kind "external" -}}
+    {{- $externalNodes = $externalNodes | append . -}}
+  {{- else -}}
+    {{- $internalNodes = $internalNodes | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- $listNodes := sort $internalNodes "link" -}}
+{{- range $externalNodes -}}{{- $listNodes = $listNodes | append . -}}{{- end -}}
 
 <figure class="techtree" role="group" aria-label="Tech tree diagram"
         data-techtree
@@ -51,7 +82,7 @@
     <p class="techtree-hint" aria-hidden="true">↔ Scroll to pan · arrows point from prerequisite to reader</p>
   </div>
 
-  {{- /* List view — tap-friendly chips, one per node, in TOML order. */ -}}
+  {{- /* List view — tap-friendly chips sorted by article number, externals last. */ -}}
   <ol class="techtree-list" data-techtree-pane="list" hidden>
     {{- range $listNodes -}}
       {{- $node := . -}}
@@ -60,13 +91,7 @@
       {{- $label := replace $node.label "\n" " " -}}
       <li class="techtree-list-item techtree-list-item--{{ $kind }}">
         {{- if $hasLink -}}
-          {{- $linkURL := $node.link -}}
-          {{- if not (hasPrefix $linkURL "/") -}}
-            {{- $linkURL = printf "%s%s" $pageBase $node.link -}}
-          {{- else -}}
-            {{- $linkURL = $linkURL | relURL -}}
-          {{- end -}}
-          <a class="techtree-list-link" href="{{ $linkURL }}">
+          <a class="techtree-list-link" href="{{ $node.link }}">
         {{- else -}}
           <span class="techtree-list-link techtree-list-link--inert">
         {{- end -}}
@@ -93,7 +118,7 @@
        html/template engine from re-escaping the JSON as a JS string
        literal (which would double-encode it inside <script>). */ -}}
 <script type="application/json" id="techtree-data-{{ $name }}">
-{{- dict "title" ($tree.title | default "") "nodes" $tree.nodes "edges" ($tree.edges | default slice) | jsonify | safeJS -}}
+{{- dict "title" ($tree.title | default "") "nodes" $resolvedNodes "edges" ($tree.edges | default slice) | jsonify | safeJS -}}
 </script>
 
 {{- end -}}

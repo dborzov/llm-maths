@@ -6,7 +6,7 @@
 
 ## Why This Exists
 
-Issue 5 (`content/issues/05-microgpt-unfolded/`) introduces a 60-line plain-Python transformer — **microGPT** — that is the shared reference implementation for the entire project. Every transformer concept on this site is named after its variable in microGPT.
+Issue 5 (`content/comicbook/05-microgpt/`) introduces a 60-line plain-Python transformer — **microGPT** — that is the shared reference implementation for the entire project. Every transformer concept on this site is named after its variable in microGPT.
 
 The canonical names, aliases, and source-of-truth links now live in the **wiki**. Look them up there:
 
@@ -31,7 +31,7 @@ Relevant wiki pages: [`transformer-weights`](/wiki/transformer/transformer-weigh
 
 3. **Show the relevant microGPT slice** when discussing a specific line — copy-paste the 1–4 line excerpt verbatim, do not rewrite it.
 
-4. **For shape questions, defer to the canonical table** in [ch.1 Sixty Lines, One LLM](/issues/05-microgpt-unfolded/01-cold-open/#the-names-you-should-tattoo). Do not re-derive shapes per article.
+4. **For shape questions, defer to the canonical table** in [ch.1 Sixty Lines, One LLM](/comicbook/05-microgpt/01-cold-open/#the-names-you-should-tattoo). Do not re-derive shapes per article.
 
 ---
 

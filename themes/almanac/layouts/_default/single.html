@@ -22,7 +22,7 @@
   <article class="article-body">
     <header class="article-header">
       {{ $parent := .Parent }}
-      {{ $issuesRoot := site.GetPage "/issues" }}
+      {{ $issuesRoot := site.GetPage "/comicbook" }}
       {{ if and $parent $issuesRoot (ne $parent.RelPermalink $issuesRoot.RelPermalink) (ne $parent.Kind "home") }}
       <a href="{{ $parent.RelPermalink }}" class="article-breadcrumb">← {{ $parent.Title }}</a>
       {{ end }}

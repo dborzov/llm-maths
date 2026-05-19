@@ -6,9 +6,9 @@ A static website: a serialized collection of long-form deep-learning mathematics
 
 Live at: `https://borzov.ca/llm-maths/`
 
-**Canonical reference implementation:** `content/issues/03-sixteen-numbers/` — when in doubt, copy what issue 03 does.
+**Canonical reference implementation:** `content/comicbook/03-quantization/` — when in doubt, copy what issue 03 does.
 
-**Canonical LLM vocabulary:** `content/issues/05-microgpt-unfolded/` introduces **microGPT** — the shared reference implementation. Every transformer concept is named after its variable there. Canonical names and aliases live in the wiki (`content/wiki/transformer/`); look them up with `uv run scripts/wiki_index.py search <term>`. Writing rules are in [`docs/microgpt-contract.md`](docs/microgpt-contract.md).
+**Canonical LLM vocabulary:** `content/comicbook/05-microgpt/` introduces **microGPT** — the shared reference implementation. Every transformer concept is named after its variable there. Canonical names and aliases live in the wiki (`content/wiki/transformer/`); look them up with `uv run scripts/wiki_index.py search <term>`. Writing rules are in [`docs/microgpt-contract.md`](docs/microgpt-contract.md).
 
 **Wiki / glossary:** Recurring concepts have stub pages at `content/wiki/` — each stub holds the canonical slug, aliases, and a link to where the concept is defined. Use `{{< wiki "slug" >}}term{{< /wiki >}}` shortcode on first mention in any article. See [`docs/wiki.md`](docs/wiki.md).
 
@@ -100,7 +100,7 @@ The test infrastructure, file conventions, and worked examples live in
 
 ## When You Are Stuck
 
-- "What does a good article look like?" → read `content/issues/03-sixteen-numbers/06-outliers.md` (mainline) and `content/issues/03-sixteen-numbers/03-lloyd-max.md` (primer).
+- "What does a good article look like?" → read `content/comicbook/03-quantization/06-outliers.md` (mainline) and `content/comicbook/03-quantization/03-lloyd-max.md` (primer).
 - "Which component do I use here?" → [`docs/components/README.md`](docs/components/README.md). Then drill into the per-component file.
 - "What does a good tech tree look like?" → see `data/techtrees/issue03.toml`; schema in [`docs/techtrees-schema.md`](docs/techtrees-schema.md).
 - "What does a good timeline look like?" → see `data/timelines/quantization2019to2026.toml`; schema in [`docs/timelines-schema.md`](docs/timelines-schema.md).

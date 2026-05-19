@@ -4,7 +4,7 @@ slug: "hyperparameters"
 description: "The integer constants that define a model's architecture: n_layer, n_embd, n_head, block_size, head_dim, n_kv_head, group_size."
 category: "transformer"
 also_known_as: ["n_layer", "n_embd", "block_size", "n_head", "head_dim", "n_kv_head", "group_size", "d_model", "d_head", "context length", "number of layers", "embedding dimension"]
-source_of_truth: "/issues/05-microgpt-unfolded/02-state-dict/"
+source_of_truth: "/comicbook/05-microgpt/02-state-dict/"
 source_of_truth_title: "ch.2 The State Dict (microGPT)"
 related: ["transformer-weights", "attention", "kv-cache"]
 draft: false

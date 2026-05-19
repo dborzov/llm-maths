@@ -3,7 +3,7 @@ import re
 import sys
 from pathlib import Path
 
-BASE = Path("/attic/olde-llm-maths/content/issues/08-anatomy-of-a-token")
+BASE = Path("/attic/olde-llm-maths/content/comicbook/08-vLLM")
 
 # Descriptions derived from scaffold note content and titles
 DESCRIPTIONS = {

@@ -68,7 +68,7 @@ The graph shows in the **Graph tab** (default on tablet/desktop) or **List tab**
 
 Inside the shortcode, `link` values without a leading `/` are joined to the **issue cover's RelPermalink**:
 
-- `link = "06-outliers/"` from `issue03.toml` → `/llm-maths/issues/03-sixteen-numbers/06-outliers/`
+- `link = "06-outliers/"` from `issue03.toml` → `/llm-maths/comicbook/03-quantization/06-outliers/`
 - Works correctly whether called from the issue cover OR from inside an article (the shortcode walks `.Page.Parent` for articles).
 
 ## Validation

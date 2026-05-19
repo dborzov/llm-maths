@@ -10,7 +10,7 @@ also_known_as:
   - "IO-aware attention"
   - "fused attention kernel"
   - "tiled attention"
-source_of_truth: "/issues/07-sparse-lab/11-attention-compute/"
+source_of_truth: "/comicbook/07-deepseek-attn/11-attention-compute/"
 source_of_truth_title: "ch.11 The Compute Bill of Attention (Issue 07)"
 related:
   - "attention"
@@ -34,4 +34,4 @@ FlashAttention (Dao et al., 2022) reformulates the standard attention computatio
 - FlashAttention-2 (2023): improved parallelism over sequence length; 2× faster
 - FlashAttention-3 (2024): exploits Hopper (H100) async data movement and FP8 paths
 
-See [ch.11 — The Compute Bill of Attention](/issues/07-sparse-lab/11-attention-compute/) for the full arithmetic intensity analysis and where FlashAttention fits in the optimization landscape.
+See [ch.11 — The Compute Bill of Attention](/comicbook/07-deepseek-attn/11-attention-compute/) for the full arithmetic intensity analysis and where FlashAttention fits in the optimization landscape.

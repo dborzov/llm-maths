@@ -6,9 +6,9 @@ A static website: a serialized collection of long-form deep-learning mathematics
 
 Live at: `https://borzov.ca/llm-maths/`
 
-**Canonical reference**: `content/issues/03-sixteen-numbers/` is the reference implementation for the new issue format. When in doubt, copy what issue 03 does.
+**Canonical reference**: `content/comicbook/03-quantization/` is the reference implementation for the new issue format. When in doubt, copy what issue 03 does.
 
-**Canonical vocabulary for LLM architecture**: `content/issues/05-microgpt-unfolded/` introduces a single 60-line plain-Python transformer (microGPT) that this entire project uses as its shared reference implementation. Variable names from microGPT — `wte`, `wpe`, `attn_wq`, `attn_wk`, `attn_wv`, `attn_wo`, `mlp_fc1`, `mlp_fc2`, `lm_head`, `q`, `k`, `v`, `head_dim`, `n_layer`, `n_embd`, `block_size`, `n_head`, `keys[li]`, `values[li]`, `x_residual`, `attn_logits`, `attn_weights`, `head_out`, `x_attn`, the `prefill` and `decode` phases — are the **canonical names** every article in this project should use. See [the microGPT terminology contract](#the-microgpt-terminology-contract) below for the full enforcement rules.
+**Canonical vocabulary for LLM architecture**: `content/comicbook/05-microgpt/` introduces a single 60-line plain-Python transformer (microGPT) that this entire project uses as its shared reference implementation. Variable names from microGPT — `wte`, `wpe`, `attn_wq`, `attn_wk`, `attn_wv`, `attn_wo`, `mlp_fc1`, `mlp_fc2`, `lm_head`, `q`, `k`, `v`, `head_dim`, `n_layer`, `n_embd`, `block_size`, `n_head`, `keys[li]`, `values[li]`, `x_residual`, `attn_logits`, `attn_weights`, `head_out`, `x_attn`, the `prefill` and `decode` phases — are the **canonical names** every article in this project should use. See [the microGPT terminology contract](#the-microgpt-terminology-contract) below for the full enforcement rules.
 
 ## The Issue Format (READ THIS FIRST)
 
@@ -30,7 +30,7 @@ Given only a topic from the user, here is the **complete recipe**:
 ```bash
 # 1. Pick a playful title and a slug. Sketch the dependency DAG on paper.
 make new-issue NN=04 SLUG=attention-anatomy TITLE='Attention, Anatomized'
-# → creates content/issues/04-attention-anatomy/_index.md
+# → creates content/comicbook/04-attention-anatomy/_index.md
 # → creates data/techtrees/issue04.toml (stub with example nodes)
 
 # 2. Edit data/techtrees/issue04.toml — define the actual nodes and edges
@@ -70,7 +70,7 @@ This is the per-article checklist. If any item is missing, the article isn't don
 
 ## The microGPT Terminology Contract
 
-Issue 5 (`content/issues/05-microgpt-unfolded/`) introduces a 60-line plain-Python transformer that is the shared **reference implementation** for everything else in this project. Whenever a later article (in any issue) discusses transformer internals, it should refer to those internals using **microGPT's variable names and structure**, and link back to the issue 5 primer that explains the concept.
+Issue 5 (`content/comicbook/05-microgpt/`) introduces a 60-line plain-Python transformer that is the shared **reference implementation** for everything else in this project. Whenever a later article (in any issue) discusses transformer internals, it should refer to those internals using **microGPT's variable names and structure**, and link back to the issue 5 primer that explains the concept.
 
 This keeps the project coherent: a reader who has read issue 5 once can pick up *any* article in *any* later issue and know that `attn_wk` always means the same thing.
 
@@ -78,36 +78,36 @@ This keeps the project coherent: a reader who has read issue 5 once can pick up 
 
 | Symbol | What it is | Where in microGPT | Primer to link |
 |---|---|---|---|
-| `wte` | token embedding table | `state_dict['wte']` | [ch.3 Tokens & Positions](../05-microgpt-unfolded/03-embeddings/) |
-| `wpe` | positional embedding table | `state_dict['wpe']` | [ch.3 Tokens & Positions](../05-microgpt-unfolded/03-embeddings/) |
-| `attn_wq` / `attn_wk` / `attn_wv` | per-layer Q/K/V projections | `state_dict[f'layer{li}.attn_w?']` | [ch.6 Q, K, V](../05-microgpt-unfolded/06-qkv-projections/) |
-| `attn_wo` | attention output projection | `state_dict[f'layer{li}.attn_wo']` | [ch.9 Multi-Head Attention](../05-microgpt-unfolded/09-multi-head/) |
-| `mlp_fc1` / `mlp_fc2` | MLP fatten / skinny matrices | `state_dict[f'layer{li}.mlp_fc?']` | [ch.11 The MLP Block](../05-microgpt-unfolded/11-mlp-block/) |
-| `lm_head` | vocab projection | `state_dict['lm_head']` | [ch.15 LM Head & Sampling](../05-microgpt-unfolded/15-sampling/) |
-| `q`, `k`, `v` | current-token query/key/value | local in `gpt()` | [ch.6](../05-microgpt-unfolded/06-qkv-projections/) |
-| `q_h`, `k_h`, `v_h` | per-head slices | local in head loop | [ch.9](../05-microgpt-unfolded/09-multi-head/) |
-| `attn_logits` | raw `q · k / √d` scores | local | [ch.8 Scaled Dot-Product Attention](../05-microgpt-unfolded/08-attention/) |
-| `attn_weights` | softmaxed scores | local | [ch.8](../05-microgpt-unfolded/08-attention/) |
-| `head_out` | per-head output vector | local | [ch.8](../05-microgpt-unfolded/08-attention/) |
-| `x_attn` | concatenated head outputs | local | [ch.9](../05-microgpt-unfolded/09-multi-head/) |
-| `x_residual` | residual-stream copy held aside | local | [ch.10 The Residual Stream](../05-microgpt-unfolded/10-residual-stream/) |
-| `keys[li]`, `values[li]` | KV cache for layer `li` | function argument | [ch.13 The KV Cache](../05-microgpt-unfolded/13-kv-cache/) |
-| `n_layer`, `n_embd`, `block_size`, `n_head`, `head_dim` | model hyperparameters | `const.py` | [ch.2 The State Dict](../05-microgpt-unfolded/02-state-dict/) |
-| **prefill** / **decode** | the two inference phases | driver loop | [ch.14 Prefill vs Decode](../05-microgpt-unfolded/14-prefill-decode/) |
-| KV cache shape `(2, L, H, T, D)` | the 5D tensor view of the cache | implicit | [ch.17 The Three Axes](../05-microgpt-unfolded/17-kv-axes/) |
-| `n_kv_head`, `group_size` | GQA/MQA sharing factor | (extension) | [ch.18 Grouped-Query Attention](../05-microgpt-unfolded/18-gqa/) |
-| `kv_down`, `d_c`, latent `c` | MLA low-rank cache form | (extension) | [ch.19 Multi-head Latent Attention](../05-microgpt-unfolded/19-mla/) |
-| sliding window `W` | per-layer attention window | (extension) | [ch.20 Sliding-Window Attention](../05-microgpt-unfolded/20-sliding-window/) |
-| `state[li]` for SSM layers | fixed-size recurrent state replacing KV | (extension) | [ch.21 State-Space Hybrids](../05-microgpt-unfolded/21-ssm-hybrids/) |
+| `wte` | token embedding table | `state_dict['wte']` | [ch.3 Tokens & Positions](../05-microgpt/03-embeddings/) |
+| `wpe` | positional embedding table | `state_dict['wpe']` | [ch.3 Tokens & Positions](../05-microgpt/03-embeddings/) |
+| `attn_wq` / `attn_wk` / `attn_wv` | per-layer Q/K/V projections | `state_dict[f'layer{li}.attn_w?']` | [ch.6 Q, K, V](../05-microgpt/06-qkv-projections/) |
+| `attn_wo` | attention output projection | `state_dict[f'layer{li}.attn_wo']` | [ch.9 Multi-Head Attention](../05-microgpt/09-multi-head/) |
+| `mlp_fc1` / `mlp_fc2` | MLP fatten / skinny matrices | `state_dict[f'layer{li}.mlp_fc?']` | [ch.11 The MLP Block](../05-microgpt/11-mlp-block/) |
+| `lm_head` | vocab projection | `state_dict['lm_head']` | [ch.15 LM Head & Sampling](../05-microgpt/15-sampling/) |
+| `q`, `k`, `v` | current-token query/key/value | local in `gpt()` | [ch.6](../05-microgpt/06-qkv-projections/) |
+| `q_h`, `k_h`, `v_h` | per-head slices | local in head loop | [ch.9](../05-microgpt/09-multi-head/) |
+| `attn_logits` | raw `q · k / √d` scores | local | [ch.8 Scaled Dot-Product Attention](../05-microgpt/08-attention/) |
+| `attn_weights` | softmaxed scores | local | [ch.8](../05-microgpt/08-attention/) |
+| `head_out` | per-head output vector | local | [ch.8](../05-microgpt/08-attention/) |
+| `x_attn` | concatenated head outputs | local | [ch.9](../05-microgpt/09-multi-head/) |
+| `x_residual` | residual-stream copy held aside | local | [ch.10 The Residual Stream](../05-microgpt/10-residual-stream/) |
+| `keys[li]`, `values[li]` | KV cache for layer `li` | function argument | [ch.13 The KV Cache](../05-microgpt/13-kv-cache/) |
+| `n_layer`, `n_embd`, `block_size`, `n_head`, `head_dim` | model hyperparameters | `const.py` | [ch.2 The State Dict](../05-microgpt/02-state-dict/) |
+| **prefill** / **decode** | the two inference phases | driver loop | [ch.14 Prefill vs Decode](../05-microgpt/14-prefill-decode/) |
+| KV cache shape `(2, L, H, T, D)` | the 5D tensor view of the cache | implicit | [ch.17 The Three Axes](../05-microgpt/17-kv-axes/) |
+| `n_kv_head`, `group_size` | GQA/MQA sharing factor | (extension) | [ch.18 Grouped-Query Attention](../05-microgpt/18-gqa/) |
+| `kv_down`, `d_c`, latent `c` | MLA low-rank cache form | (extension) | [ch.19 Multi-head Latent Attention](../05-microgpt/19-mla/) |
+| sliding window `W` | per-layer attention window | (extension) | [ch.20 Sliding-Window Attention](../05-microgpt/20-sliding-window/) |
+| `state[li]` for SSM layers | fixed-size recurrent state replacing KV | (extension) | [ch.21 State-Space Hybrids](../05-microgpt/21-ssm-hybrids/) |
 
 ### What This Means In Practice
 
 When writing a *new* article that touches any of these concepts:
 
 1. **Use the microGPT name on first mention** rather than coining a synonym. Write "the `attn_wk` projection" rather than "the key matrix `W_K`" or "the key weights". If the source paper uses different notation, introduce both: *"the K projection (`attn_wk` in our reference listing)"*.
-2. **Link to the issue 5 primer** the first time a microGPT name appears in the article. Use a sibling-relative link like `[the `attn_wk` projection](../../05-microgpt-unfolded/06-qkv-projections/)` from another issue, or `../06-qkv-projections/` from within issue 5.
+2. **Link to the issue 5 primer** the first time a microGPT name appears in the article. Use a sibling-relative link like `[the `attn_wk` projection](../../05-microgpt/06-qkv-projections/)` from another issue, or `../06-qkv-projections/` from within issue 5.
 3. **Show the relevant slice of the listing** when the article is talking about one specific line. Copy-paste the 1–4 line excerpt from microGPT verbatim, do *not* rewrite it into a different style. Consistency is the entire value proposition.
-4. **For shape questions, defer to the table in [ch.1 Sixty Lines, One LLM](../05-microgpt-unfolded/01-cold-open/#the-names-you-should-tattoo)**. Don't re-derive `wte` is `vocab_size × n_embd` in every article — point at the canonical table.
+4. **For shape questions, defer to the table in [ch.1 Sixty Lines, One LLM](../05-microgpt/01-cold-open/#the-names-you-should-tattoo)**. Don't re-derive `wte` is `vocab_size × n_embd` in every article — point at the canonical table.
 
 ### Exception: When NOT To Use microGPT Terms
 
@@ -139,11 +139,11 @@ Heuristic: **mainline chapters advance the story. Primer chapters can be read in
 Each issue is a **Hugo section** — a directory containing an `_index.md` (the cover page) plus the article files.
 
 ```
-content/issues/
+content/comicbook/
   _index.md                         ← top-level issues list
   01_embeddings.md                  ← legacy single-article issue (leaf)
   02_logits.md                      ← legacy single-article issue (leaf)
-  03-sixteen-numbers/               ← new-format multi-article issue (section) — CANONICAL
+  03-quantization/               ← new-format multi-article issue (section) — CANONICAL
     _index.md                       ← cover page (tech tree TOC + intro text)
     01-cold-open.md                 ← mainline article
     02-numbers-in-boxes.md          ← primer article
@@ -241,7 +241,7 @@ The Goldmark `passthrough` extension (configured in `hugo.toml`) protects these 
 
 These are mistakes from prior sessions that took non-trivial time to debug. They're written down so they stay solved.
 
-1. **Shortcode `relURL` is rooted at the site, not the calling page.** If you write `{{ .link | relURL }}` in a shortcode, the link will resolve to `/llm-maths/06-foo/` rather than `/llm-maths/issues/03-NN/06-foo/`. **Fix**: capture `.Page.RelPermalink` (or `.Page.Parent.RelPermalink` if the calling page is an article) into a local variable *before* entering the range loop, and prepend it to relative links. See `techtree.html` and `timeline.html` for the pattern.
+1. **Shortcode `relURL` is rooted at the site, not the calling page.** If you write `{{ .link | relURL }}` in a shortcode, the link will resolve to `/llm-maths/06-foo/` rather than `/llm-maths/comicbook/03-NN/06-foo/`. **Fix**: capture `.Page.RelPermalink` (or `.Page.Parent.RelPermalink` if the calling page is an article) into a local variable *before* entering the range loop, and prepend it to relative links. See `techtree.html` and `timeline.html` for the pattern.
 
 2. **Inside Go template `range` blocks, `$` is the root context — NOT the parent iterator.** `$.x` will fail if `.` was rebound. **Fix**: capture the current item with `{{- $node := . -}}` immediately upon entering the range, then use `$node.x` instead.
 
@@ -251,12 +251,12 @@ These are mistakes from prior sessions that took non-trivial time to debug. They
 
 5. **Hugo template variable `:=` re-declaration in the same scope is an error.** If you copy a `{{ $x := ... }}` from one block to another in the same template, the second one fails. **Fix**: declare once at the top, reuse below.
 
-6. **Hugo `Parent.RelPermalink` for the top-level issues section is `/llm-maths/issues/`, NOT `/issues/`.** Comparing against literal `/issues/` will fail for the breadcrumb logic. **Fix**: compare against `(site.GetPage "/issues").RelPermalink` — Hugo will give you the correctly-prefixed path.
+6. **Hugo `Parent.RelPermalink` for the top-level issues section is `/llm-maths/comicbook/`, NOT `/comicbook/`.** Comparing against literal `/comicbook/` will fail for the breadcrumb logic. **Fix**: compare against `(site.GetPage "/issues").RelPermalink` — Hugo will give you the correctly-prefixed path.
 
 ## File Structure Reference
 
 ```
-content/issues/                   → ALL issues (mainline content)
+content/comicbook/                   → ALL issues (mainline content)
   _index.md                       → top-level issues list
   NN_legacy.md                    → legacy single-article issues
   NN-slug/                        → new-format multi-article issues
@@ -372,7 +372,7 @@ Never use bare `pip install`. Never use `apt` for Python packages.
 
 ## When You Are Stuck
 
-- "What does a good article look like?" → read `content/issues/03-sixteen-numbers/06-outliers.md` (mainline) and `content/issues/03-sixteen-numbers/03-lloyd-max.md` (primer).
+- "What does a good article look like?" → read `content/comicbook/03-quantization/06-outliers.md` (mainline) and `content/comicbook/03-quantization/03-lloyd-max.md` (primer).
 - "Which component do I use here?" → `docs/components/README.md`. Then drill into the per-component file.
 - "What does a good tech tree look like?" → see `data/techtrees/issue03.toml`; schema in `docs/techtrees-schema.md`.
 - "What does a good timeline look like?" → see `data/timelines/quantization2019to2026.toml`; schema in `docs/timelines-schema.md`.

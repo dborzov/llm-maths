@@ -11,7 +11,7 @@
  */
 const { test, expect } = require('@playwright/test');
 
-const ARTICLE = '/issues/03-sixteen-numbers/03-lloyd-max/';
+const ARTICLE = '/comicbook/03-quantization/03-lloyd-max/';
 
 test.describe('Article TOC', () => {
   test.beforeEach(async ({ page }) => {

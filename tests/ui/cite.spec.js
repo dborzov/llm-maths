@@ -7,7 +7,7 @@
 const { test, expect } = require('@playwright/test');
 
 test('cite shortcode renders as an external link with a kind badge', async ({ page }) => {
-  await page.goto('/issues/03-sixteen-numbers/03-lloyd-max/');
+  await page.goto('/comicbook/03-quantization/03-lloyd-max/');
   await page.waitForLoadState('networkidle');
   await page.evaluate(() => document.querySelectorAll('details').forEach(d => d.open = true));
 

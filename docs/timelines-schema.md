@@ -4,7 +4,7 @@ Data backing the `{{< timeline name="..." >}}` shortcode. The shortcode lives in
 
 ## Canonical Example
 
-See `quantization2019to2026.toml` — five turning points spanning 2018–2025, used in `content/issues/03-sixteen-numbers/12-hardware-horizon.md`.
+See `quantization2019to2026.toml` — five turning points spanning 2018–2025, used in `content/comicbook/03-quantization/12-hardware-horizon.md`.
 
 ## The Five-Event Rule (Hard Cap)
 

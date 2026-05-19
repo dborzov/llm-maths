@@ -14,13 +14,13 @@
         <h1 class="notfound-title">Page Not Found</h1>
         <p class="notfound-body">Whatever was here either moved, never existed, or got lost in a high-dimensional embedding space. Either way, it's gone.</p>
         <a href="{{ site.Home.RelPermalink }}" class="btn-primary">Back to home</a>
-        {{- with site.GetPage "/issues" }}
+        {{- with site.GetPage "/comicbook" }}
         <a href="{{ .RelPermalink }}" class="btn-secondary">Browse issues</a>
         {{- end }}
       </div>
 
       {{- /* Show the most recent issues as a navigation fallback */}}
-      {{- $issuesPage := site.GetPage "/issues" -}}
+      {{- $issuesPage := site.GetPage "/comicbook" -}}
       {{- if $issuesPage -}}
       {{- $issues := $issuesPage.Sections.ByParam "issue" -}}
       {{- if $issues -}}

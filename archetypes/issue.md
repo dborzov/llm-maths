@@ -11,7 +11,7 @@ date: {{ .Date }}
 
 ## The Mystery
 
-[Open with the framing question — the specific moment, the human stakes, what made the field move. See content/issues/03-sixteen-numbers/_index.md for the canonical example.]
+[Open with the framing question — the specific moment, the human stakes, what made the field move. See content/comicbook/03-quantization/_index.md for the canonical example.]
 
 ## How To Read This Issue
 

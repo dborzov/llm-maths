@@ -151,25 +151,25 @@ sub   = "ch.18"
 id    = "ext-mla-canon"
 label = "MLA (Issue 5\nch.19)"
 kind  = "external"
-link  = "/issues/05-microgpt-unfolded/19-mla/"
+link  = "/comicbook/05-microgpt/19-mla/"
 
 [[nodes]]
 id    = "ext-attention"
 label = "Multi-head Attention\n(Issue 5 ch.8–9)"
 kind  = "external"
-link  = "/issues/05-microgpt-unfolded/09-multi-head/"
+link  = "/comicbook/05-microgpt/09-multi-head/"
 
 [[nodes]]
 id    = "ext-kv-pruning"
 label = "KV Cache Pruning\n(Issue 6)"
 kind  = "external"
-link  = "/issues/06-eviction-notice/"
+link  = "/comicbook/06-kvcache-pruning/"
 
 [[nodes]]
 id    = "ext-mixed-precision"
 label = "FP4/FP8 formats\n(Issue 3)"
 kind  = "external"
-link  = "/issues/03-sixteen-numbers/02-numbers-in-boxes/"
+link  = "/comicbook/03-quantization/02-numbers-in-boxes/"
 
 # =========================================================================
 # Edges — arrows point UPWARD from prerequisite → dependent

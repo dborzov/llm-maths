@@ -9,11 +9,11 @@
 Each issue is a Hugo section — a directory containing an `_index.md` (the cover page) plus article files:
 
 ```
-content/issues/
+content/comicbook/
   _index.md                         ← top-level issues list
   01_embeddings.md                  ← legacy single-article issue (leaf)
   02_logits.md                      ← legacy single-article issue (leaf)
-  03-sixteen-numbers/               ← new-format multi-article issue — CANONICAL
+  03-quantization/               ← new-format multi-article issue — CANONICAL
     _index.md                       ← cover page (tech tree TOC + intro text)
     01-cold-open.md                 ← mainline article
     02-numbers-in-boxes.md          ← primer article
@@ -107,7 +107,7 @@ The Goldmark `passthrough` extension (configured in `hugo.toml`) protects these 
 ## Full File Structure Reference
 
 ```
-content/issues/                   → ALL issues (mainline content)
+content/comicbook/                   → ALL issues (mainline content)
   _index.md                       → top-level issues list
   NN_legacy.md                    → legacy single-article issues
   NN-slug/                        → new-format multi-article issues

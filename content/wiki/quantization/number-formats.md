@@ -4,7 +4,7 @@ slug: "number-formats"
 description: "Floating-point and integer number formats used in LLM training and inference: FP32, FP16, BF16, FP8, FP4, INT8, INT4, NF4."
 category: "quantization"
 also_known_as: ["FP32", "FP16", "BF16", "FP8", "FP8 E4M3", "FP8 E5M2", "FP4", "FP4 E2M1", "INT8", "INT4", "NF4", "IEEE 754", "bfloat16", "half precision", "float16", "float32", "normal float 4", "mixed precision"]
-source_of_truth: "/issues/03-sixteen-numbers/02-numbers-in-boxes/"
+source_of_truth: "/comicbook/03-quantization/02-numbers-in-boxes/"
 source_of_truth_title: "Numbers In Boxes (Issue 03)"
 related: ["transformer-weights"]
 draft: false
@@ -26,4 +26,4 @@ FP16 and BF16 are not smaller FP32 — they are different geometric objects.
 | NF4 | — | — | 4 | 16 values at normal-distribution quantiles (QLoRA) |
 
 INT4 and FP4 both have 16 levels; INT4 spaces them uniformly, FP4 logarithmically.
-Optimal level placement for a given data distribution → [The Lloyd-Max Bargain](/issues/03-sixteen-numbers/03-lloyd-max/).
+Optimal level placement for a given data distribution → [The Lloyd-Max Bargain](/comicbook/03-quantization/03-lloyd-max/).

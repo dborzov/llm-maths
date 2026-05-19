@@ -33,7 +33,7 @@ STYLE_PROMPT = (
 # Article-specific visual concepts (manual overrides for better creativity)
 VISUAL_CONCEPTS = {
     # Issue 02: Logit Wager
-    "02-logit-wager-cover": (
+    "02-logits-cover": (
         "High-stakes 1950s casino scene. A 'The Gambler' style character with slicked-back hair and a sharp tuxedo "
         "is coolly pushing a massive pile of glowing neon-blue chips into the center of a roulette table. "
         "The dealer is a calm, mysterious lady in a cocktail dress. Noir lighting, smoke in the air, Pulp Fiction vibe."
@@ -70,7 +70,7 @@ VISUAL_CONCEPTS = {
     ),
 
     # Issue 03: Sixteen Numbers
-    "03-sixteen-numbers-cover": (
+    "03-quantization-cover": (
         "A 'The Accountant' character in a sharp, thin-lapel suit and skinny tie (Pulp Fiction style) is opening "
         "a glowing briefcase on a table. Inside the briefcase are rows of perfectly uniform, glowing golden numbers. "
         "He's looking at them with meticulous, slightly menacing precision. Hard shadows, halftone dots."
@@ -167,7 +167,7 @@ VISUAL_CONCEPTS = {
     ),
 
     # Issue 04: The Heatmap That Lied
-    "04-heatmap-that-lied-cover": (
+    "04-long-context-bench-cover": (
         "The 'Boss' of the city. A powerful, older gangster-style character in a pinstripe suit sits at a massive "
         "mahogany desk in a high-rise office at night, overlooking a neon-drenched city. On his desk is a large, "
         "framed '99% PASS' heatmap with vibrant green and red cells. He is lighting a cigar, looking cynical and powerful."
@@ -259,7 +259,7 @@ VISUAL_CONCEPTS = {
     ),
 
     # Issue 05: MicroGPT Unfolded
-    "05-microgpt-unfolded-cover": (
+    "05-microgpt-cover": (
         "A cool, James Dean-style character in a leather jacket and white t-shirt leans against a massive, "
         "60-foot tall neon sign that glows with code snippets. He's holding a blueprint that shows a complex, "
         "beautiful machine labeled 'TRANSFORMER'. Sunset-noir LA vibe, GTA San Andreas loading screen style."
@@ -353,7 +353,7 @@ VISUAL_CONCEPTS = {
     ),
 
     # Issue 06: Eviction Notice
-    "06-eviction-notice-cover": (
+    "06-kvcache-pruning-cover": (
         "The Bouncer. A massive, tough-looking bouncer in a black suit stands at a velvet rope of an exclusive "
         "neon club called 'THE CACHE'. He is physically tossing out a group of 'Weak Token' characters into the street, "
         "while a 'Heavy Hitter' character in a flashy suit walks past him into the club. High-contrast noir."
@@ -407,7 +407,7 @@ VISUAL_CONCEPTS = {
     ),
 
     # Issue 07: The Sparse Lab
-    "07-sparse-lab-cover": (
+    "07-deepseek-attn-cover": (
         "A shadowy research laboratory at midnight in a high-rise building, venetian blinds casting noir stripes "
         "across the walls. A lone researcher in a sharp double-breasted suit pins the final piece of a massive "
         "attention-architecture diagram to a corkboard surrounded by rejected competitor papers stamped 'FAILED'. "
@@ -512,7 +512,7 @@ VISUAL_CONCEPTS = {
     ),
 
     # Issue 08: Anatomy of a Token
-    "08-anatomy-of-a-token-cover": (
+    "08-vLLM-cover": (
         "A glamorous 1950s anatomist in a lab coat over a pinstripe suit, standing over a dissection table "
         "lit by a single harsh spotlight. On the table: a single glowing token the size of a human, fully "
         "opened and labeled inside. She gestures with an elegant pointer, cool and clinical. Medical precision "

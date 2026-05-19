@@ -6,7 +6,7 @@
  */
 const { test, expect } = require('@playwright/test');
 
-const ARTICLE = '/issues/03-sixteen-numbers/12-hardware-horizon/';
+const ARTICLE = '/comicbook/03-quantization/12-hardware-horizon/';
 
 test('timeline renders 1–5 events in a grid rail', async ({ page }) => {
   await page.goto(ARTICLE);

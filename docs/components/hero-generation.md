@@ -31,14 +31,14 @@ The generation is handled by `scripts/generate_hero.py`. It uses the **Google Ge
 
 ### 2. Manual Overrides
 To ensure high creativity, the script uses a `VISUAL_CONCEPTS` dictionary. **Always add a concept here before generating.** 
-- Keys should be the article slug (e.g., `04-retrieval-vs-reasoning`) or the issue slug with `-cover` (e.g., `04-heatmap-that-lied-cover`).
+- Keys should be the article slug (e.g., `04-retrieval-vs-reasoning`) or the issue slug with `-cover` (e.g., `04-long-context-bench-cover`).
 - Values should be a descriptive, mood-focused scene.
 
 ### 3. Running the Generator
 Ensure your `GOOGLE_API_KEY` is set in your environment, then run:
 
 ```bash
-uv run scripts/generate_hero.py content/issues/NN-slug/article.md
+uv run scripts/generate_hero.py content/comicbook/NN-slug/article.md
 ```
 
 The script will:

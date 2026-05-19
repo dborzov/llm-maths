@@ -220,7 +220,7 @@ From the `styles/` app (React/Vite reference of the visual language):
 
 These are mistakes from prior sessions that took non-trivial time to debug.
 
-1. **Shortcode `relURL` is rooted at the site, not the calling page.** Writing `{{ .link | relURL }}` in a shortcode resolves to `/llm-maths/06-foo/` rather than `/llm-maths/issues/03-NN/06-foo/`. **Fix**: capture `.Page.RelPermalink` (or `.Page.Parent.RelPermalink` if the calling page is an article) into a local variable before entering the range loop, and prepend it to relative links. See `techtree.html` and `timeline.html` for the pattern.
+1. **Shortcode `relURL` is rooted at the site, not the calling page.** Writing `{{ .link | relURL }}` in a shortcode resolves to `/llm-maths/06-foo/` rather than `/llm-maths/comicbook/03-NN/06-foo/`. **Fix**: capture `.Page.RelPermalink` (or `.Page.Parent.RelPermalink` if the calling page is an article) into a local variable before entering the range loop, and prepend it to relative links. See `techtree.html` and `timeline.html` for the pattern.
 
 2. **Inside Go template `range` blocks, `$` is the root context — NOT the parent iterator.** `$.x` will fail if `.` was rebound. **Fix**: capture the current item with `{{- $node := . -}}` immediately upon entering the range, then use `$node.x`.
 
@@ -230,4 +230,4 @@ These are mistakes from prior sessions that took non-trivial time to debug.
 
 5. **Hugo template variable `:=` re-declaration in the same scope is an error.** If you copy a `{{ $x := ... }}` from one block to another in the same template, the second one fails. **Fix**: declare once at the top, reuse below.
 
-6. **Hugo `Parent.RelPermalink` for the top-level issues section is `/llm-maths/issues/`, NOT `/issues/`.** Comparing against the literal `/issues/` will fail. **Fix**: compare against `(site.GetPage "/issues").RelPermalink`.
+6. **Hugo `Parent.RelPermalink` for the top-level issues section is `/llm-maths/comicbook/`, NOT `/comicbook/`.** Comparing against the literal `/comicbook/` will fail. **Fix**: compare against `(site.GetPage "/issues").RelPermalink`.

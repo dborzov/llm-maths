@@ -12,13 +12,13 @@
       </div>
       <p class="hero-description">Long-form articles on the mathematics behind large language models. Each <em>issue</em> picks one topic — quantization, attention, inference — and works through it from first principles, with history, intuition, and working code. Side-project quality, freely available.</p>
       <div class="hero-actions">
-        {{- with site.GetPage "/issues" }}<a href="{{ .RelPermalink }}" class="btn-primary">Browse all issues</a>{{ end -}}
+        {{- with site.GetPage "/comicbook" }}<a href="{{ .RelPermalink }}" class="btn-primary">Browse all issues</a>{{ end -}}
         <a href="{{ site.Params.githubRepo }}" class="btn-secondary" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
     </div>
   </section>
 
-  {{- $issuesPage := site.GetPage "/issues" -}}
+  {{- $issuesPage := site.GetPage "/comicbook" -}}
   {{- if $issuesPage -}}
   {{- $issues := $issuesPage.Sections.ByParam "issue" -}}
   {{- $issueCount := len $issues -}}

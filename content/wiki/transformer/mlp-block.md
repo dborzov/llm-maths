@@ -15,7 +15,7 @@ also_known_as:
   - "feed-forward block"
   - "FC1"
   - "FC2"
-source_of_truth: "/issues/05-microgpt-unfolded/11-mlp-block/"
+source_of_truth: "/comicbook/05-microgpt/11-mlp-block/"
 source_of_truth_title: "ch.11 The MLP Block (microGPT)"
 related:
   - "transformer-weights"

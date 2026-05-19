@@ -14,7 +14,7 @@ also_known_as:
   - "GLU"
   - "Swish"
   - "post-activation distribution"
-source_of_truth: "/issues/05-microgpt-unfolded/12-activations/"
+source_of_truth: "/comicbook/05-microgpt/12-activations/"
 source_of_truth_title: "ch.12 Activation Functions (microGPT)"
 related:
   - "mlp-block"

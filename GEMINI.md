@@ -38,7 +38,7 @@ This project is a serialized collection of long-form deep-learning mathematics a
 ## Development Conventions
 
 ### 1. Canonical Terminology (The microGPT Contract)
-All articles must use the variable names and architectural structure of the **microGPT** reference implementation (`content/issues/05-microgpt-unfolded/`).
+All articles must use the variable names and architectural structure of the **microGPT** reference implementation (`content/comicbook/05-microgpt/`).
 - **Symbols:** `wte`, `wpe`, `attn_wq/k/v`, `attn_wo`, `mlp_fc1/2`, `lm_head`, `q`, `k`, `v`, `attn_logits`.
 - **Phases:** `prefill` and `decode`.
 - **Action:** On first mention of a canonical term, link to its corresponding primer in Issue 05.
@@ -67,7 +67,7 @@ All articles must use the variable names and architectural structure of the **mi
 - **Design System:** Reference available in `styles/` (run `npm run dev` there to view).
 
 ## Project Structure
-- `content/issues/`: The core articles and issue covers.
+- `content/comicbook/`: The core articles and issue covers.
 - `content/docs/components.md`: Human-facing showcase of every reusable component.
 - `data/techtrees/`: TOML definitions for the issue-level tech trees.
 - `data/timelines/`: TOML definitions for the timeline widgets.

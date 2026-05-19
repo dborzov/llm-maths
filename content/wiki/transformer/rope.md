@@ -11,7 +11,7 @@ also_known_as:
   - "position embedding"
   - "RoPE theta"
   - "rope_theta"
-source_of_truth: "/issues/04-heatmap-that-lied/02-context-window/"
+source_of_truth: "/comicbook/04-long-context-bench/02-context-window/"
 source_of_truth_title: "ch.2 What 1M Tokens Actually Costs (Issue 04)"
 related:
   - "attention"

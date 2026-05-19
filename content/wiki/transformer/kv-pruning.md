@@ -4,7 +4,7 @@ slug: "kv-pruning"
 description: "Methods that reduce KV cache memory by evicting low-importance token entries: H₂O, SnapKV, KVzip, KVzap, and the landscape of T-axis compression."
 category: "transformer"
 also_known_as: ["KV cache compression", "KV eviction", "token eviction", "T-axis compression", "H₂O", "KVzip", "KVzap", "heavy hitters", "SnapKV", "StreamingLLM", "attention sinks", "DuoAttention", "Expected Attention", "KVzip+", "KVzap-Linear", "KVzap-MLP", "compression ratio", "eviction policy", "sliding window", "threshold tau", "top-k eviction", "importance score", "surrogate model"]
-source_of_truth: "/issues/06-eviction-notice/06-kvzap/"
+source_of_truth: "/comicbook/06-kvcache-pruning/06-kvzap/"
 source_of_truth_title: "ch.6 KVzap: The Final Zap (Issue 06)"
 related: ["kv-cache", "attention", "residual-stream"]
 draft: false
@@ -23,4 +23,4 @@ KV cache pruning compresses the KV cache along the **T (sequence length) axis** 
 
 **The four production criteria** (from KVzap paper): fast & lightweight · phase-agnostic (prefill + decode) · optimization-friendly (FlashAttention/PagedAttention compatible) · faithful (minimal accuracy loss).
 
-Full timeline and analysis → [ch.10 — The KV Pruning Family Tree](/issues/06-eviction-notice/10-pruning-landscape/)
+Full timeline and analysis → [ch.10 — The KV Pruning Family Tree](/comicbook/06-kvcache-pruning/10-pruning-landscape/)

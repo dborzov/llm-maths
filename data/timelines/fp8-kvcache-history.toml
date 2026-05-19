@@ -10,7 +10,7 @@ title = "Hopper FP8 ships"
 who   = "NVIDIA H100"
 body  = "First mainstream silicon with native FP8 E4M3 + E5M2 tensor cores. Documented FP32 accumulation. Software has somewhere to land."
 kind  = "hardware"
-link  = "/issues/03-sixteen-numbers/12-hardware-horizon/"
+link  = "/comicbook/03-quantization/12-hardware-horizon/"
 
 [[events]]
 date  = "Jul 2024"

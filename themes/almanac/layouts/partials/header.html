@@ -7,7 +7,7 @@
       </a>
 
       <div class="nav-links">
-        {{- with site.GetPage "/issues" }}<a href="{{ .RelPermalink }}" class="nav-link">Comic Books</a>{{ end -}}
+        {{- with site.GetPage "/comicbook" }}<a href="{{ .RelPermalink }}" class="nav-link">Comic Books</a>{{ end -}}
         {{- with site.GetPage "/wiki" }}<a href="{{ .RelPermalink }}" class="nav-link">Wiki</a>{{ end -}}
         <a href="{{ site.Params.githubRepo }}" class="nav-link" target="_blank" rel="noopener">GitHub ↗</a>
       </div>

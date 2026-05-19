@@ -7,7 +7,7 @@
  */
 const { test, expect } = require('@playwright/test');
 
-const COVER = '/issues/03-sixteen-numbers/';
+const COVER = '/comicbook/03-quantization/';
 
 test('cover renders a numbered reading list', async ({ page }) => {
   await page.goto(COVER);

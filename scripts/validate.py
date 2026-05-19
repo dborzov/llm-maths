@@ -28,7 +28,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent.parent
-CONTENT_ISSUES = REPO_ROOT / "content" / "issues"
+CONTENT_ISSUES = REPO_ROOT / "content" / "comicbook"
 DATA_TECHTREES = REPO_ROOT / "data" / "techtrees"
 DATA_TIMELINES = REPO_ROOT / "data" / "timelines"
 

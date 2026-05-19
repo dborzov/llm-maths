@@ -6,7 +6,7 @@
  */
 const { test, expect } = require('@playwright/test');
 
-const COVER = '/issues/03-sixteen-numbers/';
+const COVER = '/comicbook/03-quantization/';
 
 test('techtree renders both panes; phone-narrow defaults to list, wider screens to graph', async ({ page }) => {
   await page.goto(COVER);
@@ -95,7 +95,7 @@ test('cross-issue (external) nodes are tappable links in both views', async ({ p
   // Regression: external nodes in issue06/issue07 had no `link` field
   // so they rendered as inert chips and unlinked SVG groups. They
   // should resolve to the article they reference, like any other node.
-  await page.goto('/issues/06-eviction-notice/');
+  await page.goto('/comicbook/06-kvcache-pruning/');
   await page.waitForLoadState('networkidle');
 
   const tree = page.locator('[data-techtree]').first();

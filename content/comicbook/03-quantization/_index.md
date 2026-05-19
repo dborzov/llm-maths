@@ -1,0 +1,51 @@
+---
+title: "LLM Quantization: how 4-bit weights still make smart models"
+description: "How LLM weights went from 32-bit floats to 4-bit integers, why FP4 has only 16 representable values, and why the models somehow stay smart anyway."
+issue: 3
+layout: issue-cover
+theme: cream
+math: false
+header: 03-quantization-cover.webp
+date: 2026-05-13T09:00:00-04:00
+---
+
+## The Mystery
+
+Autumn 2022. Meta releases **OPT-175B**: a model with 175 billion parameters. Stored in the standard 16-bit float format of the day, that's **350 gigabytes of weights**. To run inference at a reasonable speed you need 8 × A100 80GB GPUs, networked together. The hardware cost alone is north of $80,000. Most researchers can't touch it.
+
+Six months later, a hobbyist with a single $1,500 consumer GPU is generating text from it. Six months after *that*, people are running 70-billion-parameter models on **phones**. By 2025, NVIDIA's flagship silicon supports a number format called **{{< wiki "number-formats" >}}FP4{{< /wiki >}}** — a "floating point" number with exactly **2⁴ = 16** distinct possible values — and frontier labs are *training* in it. The loss curves barely flinch.
+
+What did we do to the numbers?
+
+The answer turns out to involve **a 1992 paper on brain surgery**, **a 1957 Bell Labs memo about analog telephones**, a quirk in the statistical distribution of weights that nobody predicted, and a quiet revolution in what we even *mean* by "a number". This issue walks the dependency tree of the mathematical ideas that made it possible.
+
+## How To Read This Issue
+
+Start with the [cold open](01-cold-open/) — it sets the stakes and introduces the cast. After that, the **tech tree** below is the table of contents. Each node is an article. Arrows show which articles build on which: if you follow them upward, you walk from the deepest mathematical foundations to the modern algorithms that exploit them.
+
+The tree has two storey-wide capstones below the hardware finale. On the left, the [**weight method family tree**](09-method-family-tree/) gathers GPTQ, AWQ, SmoothQuant, QLoRA/NF4, HQQ, LLM.int8 onto one shelf. On the right, the [**KV-cache method family tree**](15-kv-method-family/) does the same for the KV side: KIVI, KVQuant, GEAR, ATOM, QServe, KVTuner, TurboQuant. Three cross-cutting primers in the middle ([rotations](17-rotations/), [quantization axes](18-quantization-axes/), and the [calibration field guide](13-calibration-survey/)) feed both bosses — they are the concepts that show up in every method, on either side.
+
+If you already know IEEE 754 and rate-distortion theory, skip the primers and stay on the mainline (pink nodes). If you want the full James Burke treatment — connections between Bell Labs, your iPhone, 1990s pruning theory, and DeepSeek — read everything in numerical order.
+
+{{< techtree name="issue03" >}}
+
+## What You Will Walk Away With
+
+By the end of this issue you should be able to answer, with confidence and napkin math:
+
+- Why FP16 is *not* simply "half of FP32" but a fundamentally different number system.
+- The exact arithmetic of **absmax** quantization, **zero-point** quantization, and why each one is the default for different tensor shapes.
+- What the **Lloyd-Max** bargain is, and why nobody actually uses uniform quantization for anything that matters.
+- Why "just round the weights to 4 bits" *breaks* an LLM — and what the **1%** of activations doing the breaking actually looks like.
+- How [**LLM.int8()**](06b-llm-int8-deep/) routes outliers through a separate FP16 path, what each line of its three-step recipe does, and how to predict the speed cost on your hardware.
+- How a 1992 paper on **pruning neural networks** silently became the workhorse algorithm of LLM quantization in 2022.
+- Why **K** and **V** in your transformer's {{< wiki "kv-cache" >}}KV cache{{< /wiki >}} need *different* quantization schemes — and how the same root cause (massive activations in the {{< wiki "residual-stream" >}}residual stream{{< /wiki >}}) explains the K-channel outliers, the V-token outliers, *and* the BOS {{< wiki "attention" >}}attention{{< /wiki >}} sink.
+- The full menagerie of **KV-cache quantization methods** (KIVI, KVQuant, GEAR, ATOM, QServe, TurboQuant) and which one to reach for under what constraint.
+- The five-bucket taxonomy of **calibration**: data-free, statistics-only, second-order, gradient-based, full QAT — and why every single one has a 1970s–80s analogue in classical speech and image codec engineering.
+- The **rotation trick** (Hadamard transforms used by QuIP, QuaRot, SpinQuant, TurboQuant) — why orthogonal rotations spread outliers uniformly, and the algebraic identity that makes it free at inference time.
+- The **axis question** (per-tensor, per-row, per-channel, per-token, per-block) and the rule of thumb that decides which axis is right for which tensor.
+- What the **OCP microscaling** standard is, why **NVIDIA Blackwell** bet the farm on it, and what it means that "FP4" is now a number format your GPU has hardware support for.
+
+---
+
+*Each chapter is self-contained. Mainline chapters link liberally to the primer chapters they build on — and each primer links forward to the mainline chapter where it pays off.*
