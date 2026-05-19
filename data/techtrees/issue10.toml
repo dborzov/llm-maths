@@ -1,0 +1,177 @@
+# Schema and conventions: see docs/techtrees-schema.md.
+# Canonical example: data/techtrees/issue03.toml.
+
+title  = "Tech tree — Low-Rank Magic"
+
+# ---------------------------------------------------------------
+# Arrows point UPWARD from prerequisite to user.
+#
+# Bottom of the tree: SVD — the 1936 theorem.
+# Middle: the two empirical primers (low-rank hypothesis, intrinsic-dim).
+# Upper-middle: the two mainlines that exploit the trick (LoRA, MLA bridge).
+# Top: the boss capstone unifying them.
+# ---------------------------------------------------------------
+
+# ---------- Top row: boss capstone ----------
+
+[[nodes]]
+id    = "unified-thesis"
+label = "The Low-Rank\nThesis"
+kind  = "boss"
+link  = "08-unified-thesis/"
+sub   = "ch.8"
+
+# ---------- Mainline narrative chapters ----------
+
+[[nodes]]
+id    = "lora"
+label = "LoRA: the\nTraining Pivot"
+kind  = "mainline"
+link  = "05-lora/"
+sub   = "ch.5"
+
+[[nodes]]
+id    = "mla-bridge"
+label = "MLA, Re-Read\nas a LoRA"
+kind  = "mainline"
+link  = "07-mla-bridge/"
+sub   = "ch.7"
+
+# ---------- Primers — applied / empirical ----------
+
+[[nodes]]
+id    = "low-rank-hypothesis"
+label = "The Low-Rank\nHypothesis"
+kind  = "primer"
+link  = "03-low-rank-hypothesis/"
+sub   = "ch.3"
+
+[[nodes]]
+id    = "intrinsic-dimension"
+label = "Intrinsic\nDimension"
+kind  = "primer"
+link  = "04-intrinsic-dimension/"
+sub   = "ch.4"
+
+[[nodes]]
+id    = "lora-zoo"
+label = "LoRA Zoo:\nQLoRA, DoRA"
+kind  = "primer"
+link  = "06-lora-zoo/"
+sub   = "ch.6"
+
+# ---------- Primers — theory foundation ----------
+
+[[nodes]]
+id    = "svd"
+label = "SVD &\nEckart-Young"
+kind  = "primer"
+link  = "02-svd/"
+sub   = "ch.2"
+
+# ---------- External cross-issue references ----------
+
+[[nodes]]
+id    = "ext-mla"
+label = "MLA\n(microGPT)"
+kind  = "external"
+link  = "/comicbook/05-microgpt/19-mla/"
+sub   = "issue 5"
+
+[[nodes]]
+id    = "ext-sparse"
+label = "Sparse\nAttention"
+kind  = "external"
+link  = "/comicbook/07-deepseek-attn/"
+sub   = "issue 7"
+
+# =========================================================================
+# Edges — arrows point UPWARD from prerequisite to user
+# =========================================================================
+
+# SVD is the foundation of everything above
+[[edges]]
+from = "svd"
+to   = "low-rank-hypothesis"
+
+[[edges]]
+from = "svd"
+to   = "intrinsic-dimension"
+
+[[edges]]
+from = "svd"
+to   = "lora"
+
+[[edges]]
+from = "svd"
+to   = "mla-bridge"
+
+# Empirical primers feed the mainlines
+[[edges]]
+from = "low-rank-hypothesis"
+to   = "lora"
+
+[[edges]]
+from = "low-rank-hypothesis"
+to   = "mla-bridge"
+
+[[edges]]
+from = "intrinsic-dimension"
+to   = "lora"
+
+# LoRA enables the zoo and the bridge
+[[edges]]
+from = "lora"
+to   = "lora-zoo"
+
+[[edges]]
+from = "lora"
+to   = "mla-bridge"
+
+# External cross-references feed the bridge
+[[edges]]
+from = "ext-mla"
+to   = "mla-bridge"
+
+[[edges]]
+from = "ext-sparse"
+to   = "mla-bridge"
+
+# Everything converges to the boss
+[[edges]]
+from = "lora"
+to   = "unified-thesis"
+
+[[edges]]
+from = "lora-zoo"
+to   = "unified-thesis"
+
+[[edges]]
+from = "mla-bridge"
+to   = "unified-thesis"
+
+[[edges]]
+from = "low-rank-hypothesis"
+to   = "unified-thesis"
+
+# =========================================================================
+# Legend
+# =========================================================================
+
+[[legend]]
+kind  = "boss"
+label = "Boss capstone"
+
+[[legend]]
+kind  = "mainline"
+label = "Mainline narrative"
+
+[[legend]]
+kind  = "primer"
+label = "Tutorial primer"
+
+[[legend]]
+kind  = "external"
+label = "Cross-issue reference"
+
+caption = 'Arrows point <em>upward</em> from prerequisite to user. The <a href="01-cold-open/">cold-open</a> introduces the mystery. <b>SVD</b> is the 1936 floor everything stands on. <b>LoRA</b> and <b>MLA</b> are the two times the LLM field re-discovered the same theorem — once for training, once for inference. The two external nodes are the existing MLA chapters in <a href="/llm-maths/comicbook/05-microgpt/19-mla/">issue 5</a> and <a href="/llm-maths/comicbook/07-deepseek-attn/">issue 7</a>.'
