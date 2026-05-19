@@ -5,7 +5,7 @@ issue: 6
 layout: issue-cover
 theme: cream
 math: true
-header: 06-kvcache-pruning-cover.webp
+header: 06-eviction-notice-cover.webp
 date: 2026-05-14T23:01:06-04:00
 ---
 

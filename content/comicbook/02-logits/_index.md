@@ -5,7 +5,7 @@ issue: 2
 layout: issue-cover
 theme: cream
 math: false
-header: 02-logits-cover.webp
+header: 02-logit-wager-cover.webp
 date: 2026-05-14T09:00:00-04:00
 ---
 

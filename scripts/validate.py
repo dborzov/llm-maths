@@ -31,6 +31,7 @@ REPO_ROOT = Path(__file__).parent.parent
 CONTENT_ISSUES = REPO_ROOT / "content" / "comicbook"
 DATA_TECHTREES = REPO_ROOT / "data" / "techtrees"
 DATA_TIMELINES = REPO_ROOT / "data" / "timelines"
+STATIC_HEADER_IMGS = REPO_ROOT / "static" / "header-illustrations"
 
 REQUIRED_ARTICLE_FIELDS = {
     "title", "description", "topics", "tags", "theme",
@@ -357,6 +358,26 @@ def check_pyplot_blocks(issue: IssueSection, report: Report) -> None:
                     )
 
 
+def check_header_images(issues: list[IssueSection], report: Report) -> None:
+    """Every header: field in _index.md and article front matter must resolve to a real file."""
+    for issue in issues:
+        # Issue cover
+        img = issue.cover_fm.get("header")
+        if img and not (STATIC_HEADER_IMGS / img).exists():
+            report.err(
+                f"{rel(issue.cover)}: header={img!r} not found in "
+                f"static/header-illustrations/"
+            )
+        # Individual articles
+        for art in issue.articles:
+            img = art.fm.get("header")
+            if img and not (STATIC_HEADER_IMGS / img).exists():
+                report.err(
+                    f"{rel(art.path)}: header={img!r} not found in "
+                    f"static/header-illustrations/"
+                )
+
+
 def check_timeline_data(report: Report) -> None:
     """Verify timeline TOML files parse and never exceed 5 events."""
     if not DATA_TIMELINES.exists():
@@ -408,6 +429,7 @@ def main() -> int:
         check_techtree(issue, report)
         check_cross_links(issue, report)
         check_pyplot_blocks(issue, report)
+    check_header_images(issues, report)
     check_timeline_data(report)
     check_wiki(report)
     return report.print_summary()
