@@ -30,7 +30,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent.parent
 WIKI_CONTENT = REPO_ROOT / "content" / "wiki"
-CONTENT_ISSUES = REPO_ROOT / "content" / "issues"
+CONTENT_ISSUES = REPO_ROOT / "content" / "comicbook"
 DB_PATH = REPO_ROOT / "scripts" / "wiki.db"
 
 WIKI_USAGE_RE = re.compile(r'\{\{[<\s%]+wiki\s+"([^"]+)"')

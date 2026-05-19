@@ -6,56 +6,48 @@
       <div class="hero-eyebrow">Open Source · Deep Learning · From First Principles</div>
       <div class="hero-title-row">
         <div class="hero-decoration">
-          <img src="{{ "logo-512.png" | relURL }}" alt="LLM Maths Comics" class="hero-logo">
+          <img src="{{ "logo-512.png" | relURL }}" alt="LLM Maths" class="hero-logo">
         </div>
-        <h1 class="hero-title"><br>LLM Maths<br>Comics</h1>
+        <h1 class="hero-title"><br>LLM<br>Maths</h1>
       </div>
-      <p class="hero-description">{{ site.Params.description }}</p>
+      <p class="hero-description">Long-form articles on the mathematics behind large language models. Each <em>issue</em> picks one topic — quantization, attention, inference — and works through it from first principles, with history, intuition, and working code. Side-project quality, freely available.</p>
       <div class="hero-actions">
-        {{- with site.GetPage "/issues" }}<a href="{{ .RelPermalink }}" class="btn-primary">Browse Issues</a>{{ end -}}
-        <a href="{{ site.Params.githubRepo }}" class="btn-secondary" target="_blank" rel="noopener">Contribute ↗</a>
+        {{- with site.GetPage "/comicbook" }}<a href="{{ .RelPermalink }}" class="btn-primary">Browse all issues</a>{{ end -}}
+        <a href="{{ site.Params.githubRepo }}" class="btn-secondary" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
     </div>
   </section>
 
-  {{ with .Content }}
-  <section class="home-content">
-    {{ . }}
-  </section>
-  {{ end }}
-
-  {{ $articles := site.RegularPages }}
-  {{ if $articles }}
-  <section class="recent-articles">
+  {{- $issuesPage := site.GetPage "/comicbook" -}}
+  {{- if $issuesPage -}}
+  {{- $issues := $issuesPage.Sections.ByParam "issue" -}}
+  {{- $issueCount := len $issues -}}
+  {{- if gt $issueCount 0 -}}
+  <section class="home-issues">
     <div class="section-header">
-      <h2 class="section-title">Latest Dispatches</h2>
-      {{- with site.GetPage "/issues" }}<a href="{{ .RelPermalink }}" class="section-link">All issues →</a>{{ end -}}
+      <h2 class="section-title">Issues</h2>
+      <a href="{{ $issuesPage.RelPermalink }}" class="section-link">All {{ $issueCount }} issues →</a>
     </div>
-    <div class="article-grid">
-      {{ range first 6 ($articles.ByDate.Reverse) }}
-      <a href="{{ .RelPermalink }}" class="article-card">
+    <div class="home-issues-grid">
+      {{- range last 3 $issues -}}
+      <a href="{{ .RelPermalink }}" class="home-issue-card">
         {{ with .Params.header }}
-        <div class="card-illustration">
-          <img src="{{ printf "header-illustrations/%s" . | relURL }}" alt="{{ $.Title }}">
+        <div class="home-issue-card-img">
+          <img src="{{ printf "header-illustrations/%s" . | relURL }}" alt="{{ $.Title }}" loading="lazy">
         </div>
         {{ end }}
-        <div class="card-body">
-          <div class="card-topic">
-            {{ with .Params.issue }}<span class="card-issue">#{{ . }}</span>{{ end }}
-            {{ with .Params.topics }}{{ range . }}{{ . }} {{ end }}{{ end }}
-          </div>
-          <h3 class="card-title">{{ .Title }}</h3>
-          {{ with .Description }}<p class="card-desc">{{ . }}</p>{{ end }}
-          <div class="card-meta">
-            <span class="card-readtime">{{ .ReadingTime }} min</span>
-            {{ with .Date }}<span class="card-date">{{ .Format "Jan 2, 2006" }}</span>{{ end }}
-          </div>
+        <div class="home-issue-card-body">
+          {{ with .Params.issue }}<span class="home-issue-card-num">Issue #{{ . }}</span>{{ end }}
+          <h3 class="home-issue-card-title">{{ .Title }}</h3>
+          {{ with .Description }}<p class="home-issue-card-desc">{{ . }}</p>{{ end }}
+          <span class="home-issue-card-cta">Read issue →</span>
         </div>
       </a>
-      {{ end }}
+      {{- end -}}
     </div>
   </section>
-  {{ end }}
+  {{- end -}}
+  {{- end }}
 
 </div>
 {{ end }}

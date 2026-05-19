@@ -1,0 +1,348 @@
+# Schema, conventions, and the full field reference: see docs/techtrees-schema.md.
+# Issue 07 — The Sparse Lab (DeepSeek's attention arc: MLA → DSA → CSA/HCA → V4)
+
+title  = "Tech tree — The Sparse Lab"
+
+# ---------------------------------------------------------------
+# Row 1 (y=80)   — Boss capstone
+# Row 2 (y=240)  — Mainline narrative (8 chapters, cold-open lives in cover prose)
+# Row 3 (y=420)  — Applied primers (4 chapters)
+# Row 4 (y=600)  — Theory primers (3 chapters)
+# Row 5 (y=770)  — External cross-issue references
+# ---------------------------------------------------------------
+
+# ---------- Row 1: Boss ----------
+
+[[nodes]]
+id    = "decoupling"
+label = "Decoupling\nMemory From Time"
+kind  = "boss"
+link  = "10-decoupling/"
+sub   = "ch.10"
+
+# ---------- Row 2: Mainline narrative (left → right, chronological) ----------
+
+[[nodes]]
+id    = "mla-rewind"
+label = "MLA:\nThe First Cut"
+kind  = "mainline"
+link  = "02-mla-rewind/"
+sub   = "ch.2"
+
+[[nodes]]
+id    = "quadratic-wall"
+label = "The Other Wall"
+kind  = "mainline"
+link  = "03-quadratic-wall/"
+sub   = "ch.3"
+
+[[nodes]]
+id    = "sparse-detour"
+label = "Sparse Attention's\nLost Decade"
+kind  = "mainline"
+link  = "04-sparse-detour/"
+sub   = "ch.4"
+
+[[nodes]]
+id    = "nsa-paper"
+label = "The NSA Blueprint"
+kind  = "mainline"
+link  = "05-nsa-paper/"
+sub   = "ch.5"
+
+[[nodes]]
+id    = "lightning-indexer"
+label = "Lightning Strikes\nTwice (DSA)"
+kind  = "mainline"
+link  = "06-lightning-indexer/"
+sub   = "ch.6"
+
+[[nodes]]
+id    = "csa"
+label = "Compressed Sparse\nAttention (V4)"
+kind  = "mainline"
+link  = "07-csa/"
+sub   = "ch.7"
+
+[[nodes]]
+id    = "hca"
+label = "Heavily Compressed\nAttention (V4)"
+kind  = "mainline"
+link  = "08-hca/"
+sub   = "ch.8"
+
+[[nodes]]
+id    = "hybrid-pattern"
+label = "The Hybrid\nPattern (V4)"
+kind  = "mainline"
+link  = "09-hybrid-pattern/"
+sub   = "ch.9"
+
+# ---------- Row 3: Applied primers ----------
+
+[[nodes]]
+id    = "cache-engineering"
+label = "Engineering\nthe V4 Cache"
+kind  = "primer"
+link  = "19-cache-engineering/"
+sub   = "ch.19"
+
+[[nodes]]
+id    = "topk-routing"
+label = "Hard Top-k\nWithout Crying"
+kind  = "primer"
+link  = "13-topk-and-routing/"
+sub   = "ch.13"
+
+[[nodes]]
+id    = "indexer-pattern"
+label = "The Indexer\nPattern"
+kind  = "primer"
+link  = "14-indexer-pattern/"
+sub   = "ch.14"
+
+[[nodes]]
+id    = "token-compression"
+label = "Compressing m\nTokens Into One"
+kind  = "primer"
+link  = "12-token-compression/"
+sub   = "ch.12"
+
+[[nodes]]
+id    = "mixed-precision-kv"
+label = "Mixed-Precision\nKV Cache"
+kind  = "primer"
+link  = "15-mixed-precision-kv/"
+sub   = "ch.15"
+
+# ---------- Row 4: Theory primers ----------
+
+[[nodes]]
+id    = "attention-compute"
+label = "The Compute Bill\nof Attention"
+kind  = "primer"
+link  = "11-attention-compute/"
+sub   = "ch.11"
+
+[[nodes]]
+id    = "empirical-sparsity"
+label = "Where Attention\nIs Sparse"
+kind  = "primer"
+link  = "16-empirical-sparsity/"
+sub   = "ch.16"
+
+[[nodes]]
+id    = "attention-sink"
+label = "Attention Sinks\nRevisited"
+kind  = "primer"
+link  = "17-attention-sink/"
+sub   = "ch.17"
+
+[[nodes]]
+id    = "inverse-rope"
+label = "Inverse RoPE:\nShared K and V"
+kind  = "primer"
+link  = "18-inverse-rope/"
+sub   = "ch.18"
+
+# ---------- Row 5: External cross-issue references ----------
+
+[[nodes]]
+id    = "ext-mla-canon"
+label = "MLA (Issue 5\nch.19)"
+kind  = "external"
+link  = "/comicbook/05-microgpt/19-mla/"
+
+[[nodes]]
+id    = "ext-attention"
+label = "Multi-head Attention\n(Issue 5 ch.8–9)"
+kind  = "external"
+link  = "/comicbook/05-microgpt/09-multi-head/"
+
+[[nodes]]
+id    = "ext-kv-pruning"
+label = "KV Cache Pruning\n(Issue 6)"
+kind  = "external"
+link  = "/comicbook/06-kvcache-pruning/"
+
+[[nodes]]
+id    = "ext-mixed-precision"
+label = "FP4/FP8 formats\n(Issue 3)"
+kind  = "external"
+link  = "/comicbook/03-quantization/02-numbers-in-boxes/"
+
+# =========================================================================
+# Edges — arrows point UPWARD from prerequisite → dependent
+# =========================================================================
+
+# ---- Mainline chain ----
+
+[[edges]]
+from = "mla-rewind"
+to   = "quadratic-wall"
+
+[[edges]]
+from = "quadratic-wall"
+to   = "sparse-detour"
+
+[[edges]]
+from = "sparse-detour"
+to   = "nsa-paper"
+
+[[edges]]
+from = "nsa-paper"
+to   = "lightning-indexer"
+
+[[edges]]
+from = "lightning-indexer"
+to   = "csa"
+
+[[edges]]
+from = "csa"
+to   = "hca"
+
+[[edges]]
+from = "csa"
+to   = "hybrid-pattern"
+
+[[edges]]
+from = "hca"
+to   = "hybrid-pattern"
+
+# ---- Theory primers feed mainlines ----
+
+[[edges]]
+from = "attention-compute"
+to   = "quadratic-wall"
+
+[[edges]]
+from = "empirical-sparsity"
+to   = "sparse-detour"
+
+[[edges]]
+from = "empirical-sparsity"
+to   = "nsa-paper"
+
+[[edges]]
+from = "empirical-sparsity"
+to   = "lightning-indexer"
+
+[[edges]]
+from = "attention-sink"
+to   = "csa"
+
+[[edges]]
+from = "attention-sink"
+to   = "hca"
+
+# ---- Applied primers feed mainlines ----
+
+[[edges]]
+from = "topk-routing"
+to   = "nsa-paper"
+
+[[edges]]
+from = "topk-routing"
+to   = "lightning-indexer"
+
+[[edges]]
+from = "indexer-pattern"
+to   = "lightning-indexer"
+
+[[edges]]
+from = "indexer-pattern"
+to   = "csa"
+
+[[edges]]
+from = "token-compression"
+to   = "csa"
+
+[[edges]]
+from = "token-compression"
+to   = "hca"
+
+[[edges]]
+from = "mixed-precision-kv"
+to   = "csa"
+
+[[edges]]
+from = "mixed-precision-kv"
+to   = "hca"
+
+[[edges]]
+from = "cache-engineering"
+to   = "csa"
+
+[[edges]]
+from = "cache-engineering"
+to   = "hca"
+
+[[edges]]
+from = "inverse-rope"
+to   = "csa"
+
+[[edges]]
+from = "inverse-rope"
+to   = "hca"
+
+# ---- Mainlines + applied primers feed the boss ----
+
+[[edges]]
+from = "mla-rewind"
+to   = "decoupling"
+
+[[edges]]
+from = "lightning-indexer"
+to   = "decoupling"
+
+[[edges]]
+from = "hybrid-pattern"
+to   = "decoupling"
+
+[[edges]]
+from = "indexer-pattern"
+to   = "decoupling"
+
+# ---- Externals feed internals ----
+
+[[edges]]
+from = "ext-mla-canon"
+to   = "mla-rewind"
+
+[[edges]]
+from = "ext-attention"
+to   = "attention-compute"
+
+[[edges]]
+from = "ext-attention"
+to   = "empirical-sparsity"
+
+[[edges]]
+from = "ext-kv-pruning"
+to   = "empirical-sparsity"
+
+[[edges]]
+from = "ext-mixed-precision"
+to   = "mixed-precision-kv"
+
+# =========================================================================
+# Legend
+# =========================================================================
+
+[[legend]]
+kind  = "boss"
+label = "Boss capstone"
+
+[[legend]]
+kind  = "mainline"
+label = "Mainline narrative"
+
+[[legend]]
+kind  = "primer"
+label = "Tutorial primer"
+
+[[legend]]
+kind  = "external"
+label = "Cross-issue reference"
+
+caption = """Arrows point <em>upward</em> from prerequisite to dependent. Read the cold-open (<a href="01-cold-open/">ch.1</a>) first — it sets the mystery. The mainline tracks DeepSeek's attention timeline left-to-right: MLA (May 2024) → the quadratic compute wall MLA didn't solve → a decade of failed sparse-attention attempts → the NSA blueprint (Feb 2025) → the Lightning Indexer / DSA shipped in V3.2-Exp (Sept 2025) → CSA and HCA, the two attention modes V4 interleaves. Theory primers (bottom row) underwrite the mainline; applied primers (middle row) describe reusable techniques that recur across NSA, DSA, CSA, and HCA."""

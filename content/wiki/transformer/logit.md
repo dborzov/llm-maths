@@ -11,7 +11,7 @@ also_known_as:
   - "raw scores"
   - "sigmoid inverse"
   - "lm_head output"
-source_of_truth: "/issues/02-logit-wager/04-log-odds/"
+source_of_truth: "/comicbook/02-logits/04-log-odds/"
 source_of_truth_title: "ch.4 The Language of Risk (Issue 02)"
 related:
   - "softmax"

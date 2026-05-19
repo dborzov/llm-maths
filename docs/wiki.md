@@ -49,7 +49,7 @@ category: "transformer"      # matches the directory name
 also_known_as:               # all names, aliases, symbols for this concept
   - "alternate name"
   - "W_K"
-source_of_truth: "/issues/05-microgpt-unfolded/06-qkv-projections/"
+source_of_truth: "/comicbook/05-microgpt/06-qkv-projections/"
 source_of_truth_title: "ch.6 Q, K, V (microGPT)"
 related:
   - "attention"              # slugs of related wiki pages

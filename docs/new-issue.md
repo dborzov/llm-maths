@@ -9,7 +9,7 @@
 ```bash
 # 1. Pick a playful title and a slug. Sketch the dependency DAG on paper.
 make new-issue NN=04 SLUG=attention-anatomy TITLE='Attention, Anatomized'
-# → creates content/issues/04-attention-anatomy/_index.md
+# → creates content/comicbook/04-attention-anatomy/_index.md
 # → creates data/techtrees/issue04.toml (stub with example nodes)
 
 # 2. Edit data/techtrees/issue04.toml — define the actual nodes and edges.
@@ -78,4 +78,4 @@ For front matter schemas and file naming — see [`docs/issue-format.md`](issue-
 
 ## Canonical Reference
 
-Issue 03 (`content/issues/03-sixteen-numbers/`) is the reference implementation. When in doubt, copy what it does.
+Issue 03 (`content/comicbook/03-quantization/`) is the reference implementation. When in doubt, copy what it does.

@@ -1,10 +1,19 @@
 {{ if .TableOfContents }}
-<nav class="toc" aria-label="Table of contents">
-  <div class="toc-header">
-    <span class="toc-label">Contents</span>
-  </div>
-  <div class="toc-body">
-    {{ .TableOfContents }}
+<nav class="toc" aria-label="Table of contents" data-toc>
+  <button class="toc-toggle" type="button" aria-expanded="false" aria-controls="toc-panel-{{ .File.UniqueID }}">
+    <span class="toc-toggle-icon" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </span>
+    <span class="toc-toggle-text">
+      <span class="toc-toggle-label">Contents</span>
+      <span class="toc-toggle-current" data-toc-current></span>
+    </span>
+    <span class="toc-toggle-chev" aria-hidden="true">▾</span>
+  </button>
+  <div class="toc-panel" id="toc-panel-{{ .File.UniqueID }}">
+    <div class="toc-body">
+      {{ .TableOfContents }}
+    </div>
   </div>
 </nav>
 {{ end }}

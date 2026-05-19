@@ -1,4 +1,4 @@
-.PHONY: help preview build plots plots-force validate clean clean-all new-issue new-article
+.PHONY: help preview build plots plots-force validate clean clean-all new-issue new-article test-ui test-ui-debug test-ui-install
 
 help:
 	@echo "Common targets:"
@@ -9,6 +9,10 @@ help:
 	@echo "  make plots-force re-run all pyplot blocks regardless of cache"
 	@echo "  make clean       delete public/ + resources/"
 	@echo "  make clean-all   + delete plot cache and generated PNGs"
+	@echo ""
+	@echo "UI tests (Playwright — see tests/README.md):"
+	@echo "  make test-ui          run mobile/tablet/desktop test suite"
+	@echo "  make test-ui-install  install Playwright deps in tests/"
 	@echo ""
 	@echo "Scaffolding (see CLAUDE.md → 'Authoring A New Issue'):"
 	@echo "  make new-issue NN=NN SLUG=slug TITLE='Title'"
@@ -56,3 +60,16 @@ new-article:
 	@test -n "$(SLUG)"  || (echo 'usage: make new-article ISSUE=NN-slug SLUG=slug TITLE="Title" [KIND=primer|mainline|boss]'; exit 1)
 	@test -n "$(TITLE)" || (echo 'usage: make new-article ISSUE=NN-slug SLUG=slug TITLE="Title" [KIND=primer|mainline|boss]'; exit 1)
 	uv run scripts/new_issue.py article $(ISSUE) $(SLUG) $(TITLE) --kind $(KIND)
+
+# ---------------------------------------------------------------------------
+# Playwright UI tests — see tests/README.md
+# ---------------------------------------------------------------------------
+
+test-ui-install:
+	cd tests && npm install && npx playwright install chromium
+
+test-ui:
+	cd tests && npm test
+
+test-ui-debug:
+	cd tests && npm run test:debug

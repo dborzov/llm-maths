@@ -6,11 +6,11 @@
   </header>
 
   <div class="article-grid">
-    {{ range (.Pages.ByDate.Reverse) }}
+    {{ range (.Pages.ByParam "issue").Reverse }}
     <a href="{{ .RelPermalink }}" class="article-card">
       {{ with .Params.header }}
       <div class="card-illustration">
-        <img src="{{ printf "header-illustrations/%s" . | relURL }}" alt="{{ $.Title }}">
+        <img src="{{ printf "header-illustrations/%s" . | relURL }}" alt="{{ $.Title }}" loading="lazy">
       </div>
       {{ end }}
       <div class="card-body">

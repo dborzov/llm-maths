@@ -1,0 +1,110 @@
+# Schema, conventions, and the full field reference: see docs/techtrees-schema.md.
+
+title  = "Tech tree — The Geometry of Meaning"
+
+# ---------------------------------------------------------------
+# Row 1 (y=80)   — boss capstone
+# Row 2 (y=250)  — meaning-as-geometry mainline
+# Row 3 (y=420)  — one-hot-problem + word2vec mainlines
+# Row 4 (y=590)  — dot-product + high-dimensional primers
+# ---------------------------------------------------------------
+
+# ---------- Row 1: boss capstone ----------
+
+[[nodes]]
+id    = "inheritance"
+label = "The Living\nInheritance"
+kind  = "boss"
+link  = "07-inheritance/"
+sub   = "ch.7"
+
+# ---------- Row 2: mainline ----------
+
+[[nodes]]
+id    = "meaning-as-geometry"
+label = "Words That Know\nTheir Place"
+kind  = "mainline"
+link  = "06-meaning-as-geometry/"
+sub   = "ch.6"
+
+# ---------- Row 3: two mainline chapters ----------
+
+[[nodes]]
+id    = "one-hot-problem"
+label = "Why Every Word\nWas An Island"
+kind  = "mainline"
+link  = "02-one-hot-problem/"
+sub   = "ch.2"
+
+[[nodes]]
+id    = "word2vec"
+label = "Embarrassingly\nSimple"
+kind  = "mainline"
+link  = "04-word2vec/"
+sub   = "ch.4"
+
+# ---------- Row 4: primers ----------
+
+[[nodes]]
+id    = "dot-product"
+label = "The Geometry\nof Agreement"
+kind  = "primer"
+link  = "03-dot-product/"
+sub   = "ch.3"
+
+[[nodes]]
+id    = "high-dimensional"
+label = "The Stranger\nCountry"
+kind  = "primer"
+link  = "05-high-dimensional/"
+sub   = "ch.5"
+
+# =========================================================================
+# Edges — arrows point UPWARD from prerequisite to user
+# =========================================================================
+
+[[edges]]
+from = "dot-product"
+to   = "word2vec"
+
+[[edges]]
+from = "dot-product"
+to   = "meaning-as-geometry"
+
+[[edges]]
+from = "high-dimensional"
+to   = "meaning-as-geometry"
+
+[[edges]]
+from = "high-dimensional"
+to   = "inheritance"
+
+[[edges]]
+from = "one-hot-problem"
+to   = "word2vec"
+
+[[edges]]
+from = "word2vec"
+to   = "meaning-as-geometry"
+
+[[edges]]
+from = "meaning-as-geometry"
+to   = "inheritance"
+
+# =========================================================================
+# Legend
+# =========================================================================
+
+[[legend]]
+kind  = "boss"
+label = "Boss capstone"
+
+[[legend]]
+kind  = "mainline"
+label = "Mainline narrative"
+
+[[legend]]
+kind  = "primer"
+label = "Tutorial primer"
+
+caption = 'Arrows point <em>upward</em> from prerequisite to user. Start with the cold open (<a href="01-cold-open/">ch.1</a>) — it sets the scene. Primers (cream) can be read in any order; mainline chapters (pink) advance the story; the boss capstone (yellow) draws the inheritance line to modern LLMs.'

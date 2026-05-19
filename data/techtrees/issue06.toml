@@ -2,10 +2,6 @@
 # Issue 06 — The Eviction Notice (KV Cache Pruning / KVzap)
 
 title  = "Tech tree — The Eviction Notice"
-width  = 1480
-height = 900
-node_w = 200
-node_h = 70
 
 # ---------------------------------------------------------------
 # Row 1 (y=80)   — Boss capstone
@@ -21,8 +17,6 @@ node_h = 70
 id    = "kvzap"
 label = "KVzap:\nThe Final Zap"
 kind  = "boss"
-x     = 740
-y     = 80
 link  = "06-kvzap/"
 sub   = "ch.6"
 
@@ -32,8 +26,6 @@ sub   = "ch.6"
 id    = "kv-crisis"
 label = "The Cache That\nAte the Server"
 kind  = "mainline"
-x     = 200
-y     = 230
 link  = "02-kv-crisis/"
 sub   = "ch.2"
 
@@ -41,8 +33,6 @@ sub   = "ch.2"
 id    = "heavy-hitter"
 label = "The Heavy\nHitter Oracle"
 kind  = "mainline"
-x     = 510
-y     = 230
 link  = "03-heavy-hitter/"
 sub   = "ch.3"
 
@@ -50,8 +40,6 @@ sub   = "ch.3"
 id    = "copy-paste"
 label = "The Pretext\nTrick"
 kind  = "mainline"
-x     = 820
-y     = 230
 link  = "04-copy-paste/"
 sub   = "ch.4"
 
@@ -59,8 +47,6 @@ sub   = "ch.4"
 id    = "ghost-state"
 label = "Ghost in the\nHidden State"
 kind  = "mainline"
-x     = 1150
-y     = 230
 link  = "05-ghost-state/"
 sub   = "ch.5"
 
@@ -70,8 +56,6 @@ sub   = "ch.5"
 id    = "threshold-topk"
 label = "Threshold\nor Top-k?"
 kind  = "primer"
-x     = 510
-y     = 400
 link  = "09-threshold-topk/"
 sub   = "ch.9"
 
@@ -79,8 +63,6 @@ sub   = "ch.9"
 id    = "pruning-landscape"
 label = "The KV Pruning\nFamily Tree"
 kind  = "primer"
-x     = 820
-y     = 400
 link  = "10-pruning-landscape/"
 sub   = "ch.10"
 
@@ -88,8 +70,6 @@ sub   = "ch.10"
 id    = "bandwidth-wall"
 label = "The Bandwidth\nWall"
 kind  = "primer"
-x     = 1150
-y     = 400
 link  = "11-bandwidth-wall/"
 sub   = "ch.11"
 
@@ -99,8 +79,6 @@ sub   = "ch.11"
 id    = "attention-sparsity"
 label = "Softmax's\nLong Tail"
 kind  = "primer"
-x     = 200
-y     = 570
 link  = "07-attention-sparsity/"
 sub   = "ch.7"
 
@@ -108,8 +86,6 @@ sub   = "ch.7"
 id    = "contribution-norm"
 label = "Weight ≠\nContribution"
 kind  = "primer"
-x     = 570
-y     = 570
 link  = "08-contribution-norm/"
 sub   = "ch.8"
 
@@ -119,22 +95,19 @@ sub   = "ch.8"
 id    = "ext-kv-mechanics"
 label = "KV Cache &\nK/V Internals\n(Issues 03, 05)"
 kind  = "external"
-x     = 200
-y     = 730
+link  = "/comicbook/05-microgpt/13-kv-cache/"
 
 [[nodes]]
 id    = "ext-residual"
 label = "Residual Stream\n& GQA\n(Issue 05)"
 kind  = "external"
-x     = 600
-y     = 730
+link  = "/comicbook/05-microgpt/10-residual-stream/"
 
 [[nodes]]
 id    = "ext-longctx-eval"
 label = "Long-Context\nEval (Issue 04)"
 kind  = "external"
-x     = 1050
-y     = 730
+link  = "/comicbook/04-long-context-bench/"
 
 # =========================================================================
 # Edges — arrows point UPWARD from prerequisite → dependent

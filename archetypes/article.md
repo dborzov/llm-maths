@@ -16,7 +16,7 @@ header: default.webp
 
 ## [Open With A Human Moment]
 
-[A year, a person, a specific failed approach — never "in this article we will…". See content/issues/03-sixteen-numbers/01-cold-open.md for the canonical opening.]
+[A year, a person, a specific failed approach — never "in this article we will…". See content/comicbook/03-quantization/01-cold-open.md for the canonical opening.]
 
 ## [The Setup]
 

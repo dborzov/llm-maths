@@ -1,0 +1,43 @@
+# Schema, conventions, and the 5-event cap rule: see docs/timelines-schema.md.
+# Five turning points in the FP8 KV-cache story — from Hopper FP8 silicon to vLLM defaults.
+
+title   = "FP8 KV-Cache — 2023 to 2026 in five inflection points"
+caption = "Five inflection points. The full vLLM PR list, the FA3 commit history, the calibration tooling, the model zoo: all omitted."
+
+[[events]]
+date  = "Mar 2023"
+title = "Hopper FP8 ships"
+who   = "NVIDIA H100"
+body  = "First mainstream silicon with native FP8 E4M3 + E5M2 tensor cores. Documented FP32 accumulation. Software has somewhere to land."
+kind  = "hardware"
+link  = "/comicbook/03-quantization/12-hardware-horizon/"
+
+[[events]]
+date  = "Jul 2024"
+title = "FlashAttention-3"
+who   = "Shah, Bikshandi, Ye, Dao et al."
+body  = "First fused attention kernel with a native FP8 path. The vLLM fork ships it as the default attention backend on Hopper."
+kind  = "paper"
+
+[[events]]
+date  = "Dec 2024"
+title = "DeepSeek-V3 footnote"
+who   = "DeepSeek-AI"
+body  = "Their technical report's Figure 7(b) quietly documents the same FP32-accumulation precision loss in tensor cores during pretraining. Almost nobody outside the FA3 community reads it as a hardware bug."
+kind  = "paper"
+
+[[events]]
+date  = "Mar 2026"
+title = "The 13% needle drop"
+who   = "Kübler (AWS), Kurtić (Red Hat AI)"
+body  = "Routine vLLM stress-test catches FP8 KV-cache scoring 13% on a 128k needle-in-a-haystack task that BF16 scores 91%. The detective work begins."
+kind  = "release"
+link  = "01-cold-open/"
+
+[[events]]
+date  = "Apr 2026"
+title = "Two-level fix lands"
+who   = "vLLM team + flash-attention#104"
+body  = "Compensated accumulation (SageAttention2-style) wired through the FA3 FP8 path; needle accuracy back to 89%. Five months later, FP8 KV-cache is the recommended default."
+kind  = "release"
+link  = "11-state-of-fp8/"

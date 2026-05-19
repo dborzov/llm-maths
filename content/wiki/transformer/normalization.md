@@ -12,7 +12,7 @@ also_known_as:
   - "pre-norm"
   - "post-norm"
   - "root mean square normalization"
-source_of_truth: "/issues/05-microgpt-unfolded/05-rmsnorm/"
+source_of_truth: "/comicbook/05-microgpt/05-rmsnorm/"
 source_of_truth_title: "ch.5 RMSNorm (microGPT)"
 related:
   - "residual-stream"

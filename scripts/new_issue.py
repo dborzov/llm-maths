@@ -7,7 +7,7 @@ Usage:
     uv run scripts/new_issue.py article ISSUE_DIR slug "Title" [--kind primer|mainline|boss]
 
 The issue subcommand creates:
-    content/issues/NN-slug/_index.md            (cover stub with techtree shortcode)
+    content/comicbook/NN-slug/_index.md            (cover stub with techtree shortcode)
     data/techtrees/issueNN.toml                  (techtree stub with example node + legend)
 
 The article subcommand creates a single article file with the standard front matter,
@@ -24,7 +24,7 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent.parent
-CONTENT_ISSUES = REPO_ROOT / "content" / "issues"
+CONTENT_ISSUES = REPO_ROOT / "content" / "comicbook"
 DATA_TECHTREES = REPO_ROOT / "data" / "techtrees"
 
 VALID_KINDS = ("mainline", "primer", "boss", "external")
@@ -43,7 +43,7 @@ date: {date}
 
 ## The Mystery
 
-[Open with the framing question — the specific moment, the human stakes, what made the field move. See `content/issues/03-sixteen-numbers/_index.md` for the canonical example.]
+[Open with the framing question — the specific moment, the human stakes, what made the field move. See `content/comicbook/03-quantization/_index.md` for the canonical example.]
 
 ## How To Read This Issue
 
@@ -137,7 +137,7 @@ header: default.png
 
 ## [Open With A Human Moment]
 
-[A year, a person, a specific failed approach — never "in this article we will…". See `content/issues/03-sixteen-numbers/01-cold-open.md` for the canonical opening.]
+[A year, a person, a specific failed approach — never "in this article we will…". See `content/comicbook/03-quantization/01-cold-open.md` for the canonical opening.]
 
 ## [The Setup]
 
@@ -300,7 +300,7 @@ def main() -> int:
     p_issue.set_defaults(func=cmd_issue)
 
     p_article = sub.add_parser("article", help="scaffold a new article inside an existing issue")
-    p_article.add_argument("issue_dir", help="issue directory name, e.g. 03-sixteen-numbers")
+    p_article.add_argument("issue_dir", help="issue directory name, e.g. 03-quantization")
     p_article.add_argument("slug", help="article slug, e.g. cold-open")
     p_article.add_argument("title", help='display title, e.g. "The Cold Open"')
     p_article.add_argument("--kind", default="primer", choices=VALID_KINDS,

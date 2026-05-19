@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.LanguageCode }}" data-theme="cream">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  {{ partial "header.html" . }}
+
+  <main class="site-main">
+    <div class="notfound-container">
+
+      <div class="notfound-hero">
+        <div class="notfound-code">404</div>
+        <h1 class="notfound-title">Page Not Found</h1>
+        <p class="notfound-body">Whatever was here either moved, never existed, or got lost in a high-dimensional embedding space. Either way, it's gone.</p>
+        <a href="{{ site.Home.RelPermalink }}" class="btn-primary">Back to home</a>
+        {{- with site.GetPage "/comicbook" }}
+        <a href="{{ .RelPermalink }}" class="btn-secondary">Browse issues</a>
+        {{- end }}
+      </div>
+
+      {{- /* Show the most recent issues as a navigation fallback */}}
+      {{- $issuesPage := site.GetPage "/comicbook" -}}
+      {{- if $issuesPage -}}
+      {{- $issues := $issuesPage.Sections.ByParam "issue" -}}
+      {{- if $issues -}}
+      <section class="notfound-issues">
+        <h2 class="notfound-issues-title">While you're here — recent issues</h2>
+        <div class="home-issues-grid">
+          {{- range last 3 $issues -}}
+          <a href="{{ .RelPermalink }}" class="home-issue-card">
+            {{ with .Params.header }}
+            <div class="home-issue-card-img">
+              <img src="{{ printf "header-illustrations/%s" . | relURL }}" alt="{{ $.Title }}" loading="lazy">
+            </div>
+            {{ end }}
+            <div class="home-issue-card-body">
+              {{ with .Params.issue }}<span class="home-issue-card-num">Issue #{{ . }}</span>{{ end }}
+              <h3 class="home-issue-card-title">{{ .Title }}</h3>
+              {{ with .Description }}<p class="home-issue-card-desc">{{ . }}</p>{{ end }}
+              <span class="home-issue-card-cta">Read issue →</span>
+            </div>
+          </a>
+          {{- end -}}
+        </div>
+      </section>
+      {{- end -}}
+      {{- end }}
+
+    </div>
+  </main>
+
+  {{ partial "footer.html" . }}
+
+  {{- $fold    := resources.Get "js/fold.js"    | minify | fingerprint -}}
+  {{- $toc     := resources.Get "js/toc.js"     | minify | fingerprint -}}
+  {{- $widgets := resources.Get "js/widgets.js" | minify | fingerprint -}}
+  {{- $pyplot  := resources.Get "js/pyplot.js"  | minify | fingerprint -}}
+  <script src="{{ $fold.RelPermalink }}"    defer></script>
+  <script src="{{ $toc.RelPermalink }}"     defer></script>
+  <script src="{{ $widgets.RelPermalink }}" defer></script>
+  <script src="{{ $pyplot.RelPermalink }}"  defer></script>
+</body>
+</html>

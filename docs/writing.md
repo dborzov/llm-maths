@@ -161,5 +161,5 @@ Use these as tools to make the narrative better explained and more intuitive:
 
 ## Reference Examples
 
-- Good **mainline** article: `content/issues/03-sixteen-numbers/06-outliers.md`
-- Good **primer** article: `content/issues/03-sixteen-numbers/03-lloyd-max.md`
+- Good **mainline** article: `content/comicbook/03-quantization/06-outliers.md`
+- Good **primer** article: `content/comicbook/03-quantization/03-lloyd-max.md`

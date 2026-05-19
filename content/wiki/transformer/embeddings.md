@@ -13,8 +13,8 @@ also_known_as:
   - "dense vectors"
   - "embedding dimension"
   - "vocabulary embedding"
-source_of_truth: "/issues/01_embeddings/"
-source_of_truth_title: "Word2Vec and The Geometry of Meaning (Issue 01)"
+source_of_truth: "/comicbook/01-word2vec/"
+source_of_truth_title: "The Geometry of Meaning (Issue 01)"
 related:
   - "transformer-weights"
   - "hyperparameters"
@@ -30,6 +30,6 @@ The embedding layer maps a discrete token index to a dense vector in ℝⁿ. In 
 | `n_embd` | Embedding dimension (also called `d_model` in the literature) |
 | cosine similarity | The primary distance metric for comparing embedding vectors |
 
-**Why high-dimensional vectors?** Two random vectors in 300-dimensional space are nearly orthogonal — the space has room for every token to have its own direction. See [Issue 01](/issues/01_embeddings/) for the geometric argument.
+**Why high-dimensional vectors?** Two random vectors in 300-dimensional space are nearly orthogonal — the space has room for every token to have its own direction. See [The Stranger Country](/comicbook/01-word2vec/05-high-dimensional/) for the geometric argument.
 
 **In the transformer forward pass** the embedding lookup is the very first operation: `h = wte[token_ids] + wpe[positions]`. The resulting vector `h` enters the residual stream.

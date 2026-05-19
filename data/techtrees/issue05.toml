@@ -2,10 +2,6 @@
 # Canonical example: data/techtrees/issue03.toml.
 
 title  = "Tech tree — MicroGPT, Unfolded"
-width  = 1700
-height = 1180
-node_w = 200
-node_h = 70
 
 # ---------------------------------------------------------------
 # Layout (top → bottom; arrows point UPWARD prerequisite → user):
@@ -28,8 +24,6 @@ node_h = 70
 id    = "gqa"
 label = "Grouped-Query\nAttention (H-axis)"
 kind  = "mainline"
-x     = 280
-y     = 80
 link  = "18-gqa/"
 sub   = "ch.18"
 
@@ -37,8 +31,6 @@ sub   = "ch.18"
 id    = "mla"
 label = "Multi-head Latent\nAttention (D-axis)"
 kind  = "mainline"
-x     = 700
-y     = 80
 link  = "19-mla/"
 sub   = "ch.19"
 
@@ -46,8 +38,6 @@ sub   = "ch.19"
 id    = "sliding-window"
 label = "Sliding-Window\nAttention (L-axis)"
 kind  = "primer"
-x     = 1120
-y     = 80
 link  = "20-sliding-window/"
 sub   = "ch.20"
 
@@ -55,8 +45,6 @@ sub   = "ch.20"
 id    = "ssm-hybrids"
 label = "State-Space\nHybrids (L-axis)"
 kind  = "mainline"
-x     = 1480
-y     = 80
 link  = "21-ssm-hybrids/"
 sub   = "ch.21"
 
@@ -64,8 +52,6 @@ sub   = "ch.21"
 id    = "kv-axes"
 label = "The Three Axes\nof KV Compression"
 kind  = "mainline"
-x     = 880
-y     = 210
 link  = "17-kv-axes/"
 sub   = "ch.17"
 
@@ -77,8 +63,6 @@ sub   = "ch.17"
 id    = "full-forward"
 label = "The Full\nForward Pass"
 kind  = "boss"
-x     = 880
-y     = 360
 link  = "16-full-forward/"
 sub   = "ch.16"
 
@@ -90,8 +74,6 @@ sub   = "ch.16"
 id    = "prefill-decode"
 label = "Prefill vs\nDecode"
 kind  = "mainline"
-x     = 880
-y     = 500
 link  = "14-prefill-decode/"
 sub   = "ch.14"
 
@@ -103,8 +85,6 @@ sub   = "ch.14"
 id    = "multi-head"
 label = "Multi-Head\nAttention"
 kind  = "mainline"
-x     = 280
-y     = 650
 link  = "09-multi-head/"
 sub   = "ch.9"
 
@@ -112,8 +92,6 @@ sub   = "ch.9"
 id    = "mlp-block"
 label = "The MLP\nBlock"
 kind  = "primer"
-x     = 700
-y     = 650
 link  = "11-mlp-block/"
 sub   = "ch.11"
 
@@ -121,8 +99,6 @@ sub   = "ch.11"
 id    = "kv-cache"
 label = "The KV\nCache"
 kind  = "mainline"
-x     = 1120
-y     = 650
 link  = "13-kv-cache/"
 sub   = "ch.13"
 
@@ -130,8 +106,6 @@ sub   = "ch.13"
 id    = "sampling"
 label = "LM Head\n& Sampling"
 kind  = "primer"
-x     = 1480
-y     = 650
 link  = "15-sampling/"
 sub   = "ch.15"
 
@@ -143,8 +117,6 @@ sub   = "ch.15"
 id    = "attention"
 label = "Scaled Dot-\nProduct Attention"
 kind  = "mainline"
-x     = 280
-y     = 800
 link  = "08-attention/"
 sub   = "ch.8"
 
@@ -152,8 +124,6 @@ sub   = "ch.8"
 id    = "residual-stream"
 label = "The Residual\nStream"
 kind  = "primer"
-x     = 500
-y     = 800
 link  = "10-residual-stream/"
 sub   = "ch.10"
 
@@ -161,8 +131,6 @@ sub   = "ch.10"
 id    = "activations"
 label = "ReLU\n& Friends"
 kind  = "primer"
-x     = 900
-y     = 800
 link  = "12-activations/"
 sub   = "ch.12"
 
@@ -174,8 +142,6 @@ sub   = "ch.12"
 id    = "qkv-projections"
 label = "Q, K, V:\nThe Three Projections"
 kind  = "mainline"
-x     = 180
-y     = 950
 link  = "06-qkv-projections/"
 sub   = "ch.6"
 
@@ -183,8 +149,6 @@ sub   = "ch.6"
 id    = "softmax"
 label = "Softmax,\nNumerically"
 kind  = "primer"
-x     = 400
-y     = 950
 link  = "07-softmax/"
 sub   = "ch.7"
 
@@ -192,8 +156,6 @@ sub   = "ch.7"
 id    = "rmsnorm"
 label = "RMSNorm,\nNot LayerNorm"
 kind  = "primer"
-x     = 700
-y     = 950
 link  = "05-rmsnorm/"
 sub   = "ch.5"
 
@@ -201,8 +163,6 @@ sub   = "ch.5"
 id    = "embeddings"
 label = "Tokens\n& Positions"
 kind  = "primer"
-x     = 980
-y     = 950
 link  = "03-embeddings/"
 sub   = "ch.3"
 
@@ -214,8 +174,6 @@ sub   = "ch.3"
 id    = "linear"
 label = "Linear, in\nPure Python"
 kind  = "primer"
-x     = 480
-y     = 1100
 link  = "04-linear/"
 sub   = "ch.4"
 
@@ -223,8 +181,6 @@ sub   = "ch.4"
 id    = "state-dict"
 label = "The State\nDict"
 kind  = "primer"
-x     = 880
-y     = 1100
 link  = "02-state-dict/"
 sub   = "ch.2"
 

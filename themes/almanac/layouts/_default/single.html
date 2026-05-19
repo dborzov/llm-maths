@@ -13,7 +13,7 @@
       </div>
       {{ end }}
 
-      {{ with .Params.issue }}<p class="meta-issue">Issue #{{ . }}</p>{{ end }}
+      {{ with .Params.issue }}<p class="meta-issue">Comic Book #{{ . }}</p>{{ end }}
       {{ with .Date }}<p class="meta-updated">{{ .Format "Jan 2, 2006" }}</p>{{ end }}
       <p class="meta-readtime">{{ .ReadingTime }} min read</p>
     </div>
@@ -22,7 +22,7 @@
   <article class="article-body">
     <header class="article-header">
       {{ $parent := .Parent }}
-      {{ $issuesRoot := site.GetPage "/issues" }}
+      {{ $issuesRoot := site.GetPage "/comicbook" }}
       {{ if and $parent $issuesRoot (ne $parent.RelPermalink $issuesRoot.RelPermalink) (ne $parent.Kind "home") }}
       <a href="{{ $parent.RelPermalink }}" class="article-breadcrumb">← {{ $parent.Title }}</a>
       {{ end }}
@@ -38,12 +38,22 @@
       {{ $headerImg := "header-illustrations/default.webp" }}
       {{ with .Params.header }}{{ $headerImg = printf "header-illustrations/%s" . }}{{ end }}
       <div class="article-header-illustration">
-        <img src="{{ $headerImg | relURL }}" alt="{{ .Title }}">
+        <img src="{{ $headerImg | relURL }}" alt="{{ .Title }}" loading="lazy">
       </div>
 
-      {{ with .Description }}
-      <p class="article-description">{{ . }}</p>
-      {{ end }}
+      {{ if .Params.blurb }}
+      <aside class="article-description" role="note" aria-label="Article description">
+        <span class="article-description-tag">In this article</span>
+        <ul class="article-blurb">
+          {{ range .Params.blurb }}<li>{{ . }}</li>{{ end }}
+        </ul>
+      </aside>
+      {{ else }}{{ with .Description }}
+      <aside class="article-description" role="note" aria-label="Article description">
+        <span class="article-description-tag">In this article</span>
+        <p>{{ . }}</p>
+      </aside>
+      {{ end }}{{ end }}
     </header>
 
     <div class="article-content{{ if .Params.unfolded }} unfolded{{ end }}">
@@ -67,7 +77,7 @@
     </nav>
 
     <div class="article-issue-return">
-      <a href="{{ $parent.RelPermalink }}" class="btn-secondary">↑ Back to Issue Cover</a>
+      <a href="{{ $parent.RelPermalink }}" class="btn-secondary">↑ Back to Comic Book</a>
     </div>
     {{ end }}
   </article>
