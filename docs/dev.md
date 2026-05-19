@@ -55,6 +55,7 @@ have. See the "Testing" section below for the loop.
 2. **Tech tree consistency**: every issue's `{{< techtree >}}` shortcode references a real data file; every article's `techNode` matches a node id; every tree-node `link` resolves to an actual article file.
 3. **Cross-link integrity**: every `[text](../slug/)` link inside an article resolves to a real sibling article in the same issue.
 4. **Pyplot rules**: unique ids, no forbidden imports (scipy/torch/etc.), no `plt.show`/`plt.savefig`.
+5. **Image references**: every `{{< figure src="..." >}}` shortcode, inline `![](...)` markdown image, and `<img src="...">` tag in `content/` resolves to a real file under `static/` (rooted `/llm-maths/...` URLs are stripped against the baseURL prefix). Off-site `http(s)://` URLs are skipped. Header images in front matter are covered by a separate check.
 
 `make build` and `make preview` both run validate first. A failed validate fails the build.
 
