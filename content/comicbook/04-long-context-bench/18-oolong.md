@@ -17,7 +17,7 @@ issue: 4
 weight: 125
 techKind: primer
 techNode: oolong
-header: 18-oolong.webp
+header: default.webp
 ---
 
 ## Carnegie Mellon, November 2025

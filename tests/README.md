@@ -45,6 +45,10 @@ loop — when to run, when to add, what to do when it fails — is in
   row that tracks scroll; wider screens hide the dots.
 - `cite.spec.js` — `{{< cite >}}` renders as an external link with
   `target="_blank" rel="noopener external"` and a kind badge.
+- `figure.spec.js` — `{{< figure >}}` image actually loads (no 404 src);
+  caption text gets enough horizontal room on every viewport; on phones
+  the `figure-credit` wraps onto its own row instead of squeezing the
+  caption into a one-word column.
 
 ---
 

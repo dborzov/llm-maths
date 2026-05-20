@@ -5,7 +5,7 @@ issue: 3
 layout: issue-cover
 theme: cream
 math: false
-header: 03-quantization-cover.webp
+header: 03-sixteen-numbers-cover.webp
 date: 2026-05-13T09:00:00-04:00
 ---
 

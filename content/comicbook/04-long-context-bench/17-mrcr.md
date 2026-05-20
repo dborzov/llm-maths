@@ -17,7 +17,7 @@ issue: 4
 weight: 95
 techKind: primer
 techNode: mrcr
-header: 17-mrcr.webp
+header: default.webp
 ---
 
 ## Autumn 2024, Mountain View

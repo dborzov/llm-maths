@@ -5,7 +5,7 @@ issue: 4
 layout: issue-cover
 theme: cream
 math: false
-header: 04-long-context-bench-cover.webp
+header: 04-heatmap-that-lied-cover.webp
 date: 2026-05-14T09:00:00-04:00
 ---
 

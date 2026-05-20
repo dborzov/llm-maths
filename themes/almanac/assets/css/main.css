@@ -2695,8 +2695,9 @@ a.issue-cover-article-title:hover {
     .figure-image-hint { opacity: 0.85; }
 }
 .figure-caption {
-    display: flex;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
     gap: 0.55rem;
     padding: 0.7rem 1rem;
     border-top: var(--border);
@@ -2708,23 +2709,39 @@ a.issue-cover-article-title:hover {
     font-style: italic;
 }
 .figure-caption-mark {
-    flex-shrink: 0;
     margin-top: 0.4rem;
     width: 12px;
     height: 12px;
     background: var(--accent-1);
     border: 2px solid var(--color-ink);
 }
-.figure-caption-text { flex: 1; }
+.figure-caption-text { min-width: 0; }
 .figure-caption-text p { margin: 0; max-width: none; }
 .figure-credit {
-    flex-shrink: 0;
     font-size: 0.7rem;
     font-style: normal;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     opacity: 0.6;
     align-self: center;
+}
+/* Phone: the credit can be 30+ chars of uppercase text and refuses to
+   shrink, which on a 360px-wide screen squeezes the caption into a
+   column one word wide. Drop the third grid column on narrow screens
+   so the credit wraps onto its own row below the caption text. */
+@media (max-width: 600px) {
+    .figure-caption {
+        grid-template-columns: auto 1fr;
+        gap: 0.45rem 0.55rem;
+        padding: 0.65rem 0.8rem;
+    }
+    .figure-credit {
+        grid-column: 1 / -1;
+        align-self: start;
+        margin-top: 0.15rem;
+        padding-top: 0.5rem;
+        border-top: 1px dashed color-mix(in srgb, var(--color-ink) 25%, transparent);
+    }
 }
 
 /* ---- HERO IMAGE alias ---------------------------------------
