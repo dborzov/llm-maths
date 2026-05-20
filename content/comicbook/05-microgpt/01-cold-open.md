@@ -36,9 +36,7 @@ This is the engineer's listing.
 
 ```python
 def gpt(token_id, pos_id, keys, values):
-    tok_emb = state_dict['wte'][token_id]
-    pos_emb = state_dict['wpe'][pos_id]
-    x = [t + p for t, p in zip(tok_emb, pos_emb)]
+    x = state_dict['wte'][token_id]
     x = rmsnorm(x)
     for li in range(n_layer):
         # Multi-head Attention
@@ -47,13 +45,19 @@ def gpt(token_id, pos_id, keys, values):
         q = linear(x, state_dict[f'layer{li}.attn_wq'])
         k = linear(x, state_dict[f'layer{li}.attn_wk'])
         v = linear(x, state_dict[f'layer{li}.attn_wv'])
-        keys[li].append(k)
+
+        q_rot, k_rot = [], []
+        for h in range(n_head):
+            hs = h * head_dim
+            q_rot.extend(rope(q[hs:hs+head_dim], pos_id))
+            k_rot.extend(rope(k[hs:hs+head_dim], pos_id))
+        keys[li].append(k_rot)
         values[li].append(v)
 
         x_attn = []
         for h in range(n_head):
             hs = h * head_dim
-            q_h = q[hs:hs+head_dim]
+            q_h = q_rot[hs:hs+head_dim]
             k_h = [ki[hs:hs+head_dim] for ki in keys[li]]
             v_h = [vi[hs:hs+head_dim] for vi in values[li]]
 
@@ -80,7 +84,7 @@ def gpt(token_id, pos_id, keys, values):
 
 That is it. That is one decoder pass of a generative pre-trained transformer. **One token in, one logit vector out.** Everything you have ever heard about LLMs — context windows, attention heads, KV cache, residual stream, MLP blocks, embedding tables — is in there, in exactly one place each, with names short enough to fit on the page.
 
-The two helpers that the listing leans on are even smaller:
+The helpers the listing leans on are even smaller:
 
 ```python
 def linear(x, w):
@@ -99,6 +103,17 @@ def softmax(logits):
 
 def relu(x_val):
     return max(0.0, x_val)
+
+def rope(x, pos):
+    d = len(x)
+    out = list(x)
+    for i in range(d // 2):
+        theta = 10000.0 ** (-2 * i / d)
+        c, s = math.cos(pos * theta), math.sin(pos * theta)
+        x0, x1 = x[2*i], x[2*i + 1]
+        out[2*i]     = x0 * c - x1 * s
+        out[2*i + 1] = x0 * s + x1 * c
+    return out
 ```
 
 The hyperparameters of the toy model — the ones you would normally see as 32, 4096, 8192, 32 in a frontier model — are scaled down so each tensor is a list you could write out by hand:
@@ -117,21 +132,19 @@ That is the entire model. Two layers, sixteen-dimensional embeddings, four heads
 
 Read the listing once more, but this time skim it like prose. There are exactly seven movements.
 
-> **1. Look up the token.** Every input is a single integer `token_id`. We pull the row at that index from a table `wte` (the **w**ord-**t**oken **e**mbedding) and get back a vector of `n_embd` floats. This is the first time the model "knows" what character it just saw.
+> **1. Look up the token.** Every input is a single integer `token_id`. We pull the row at that index from a table `wte` (the **w**ord-**t**oken **e**mbedding) and get back a vector of `n_embd` floats. This is the first time the model "knows" what character it just saw. Note: unlike GPT-2, **there is no second lookup for position**. Position is injected later, inside attention, by RoPE.
 
-> **2. Look up the position.** Same trick, different table. `wpe` (**w**ord-**p**osition **e**mbedding) is indexed by *where* in the sequence we are, not *what* we are. We add the two vectors element-wise. The model now knows what *and* where.
+> **2. Normalize.** We rescale the vector to unit-ish magnitude using `rmsnorm`. This is glue. It keeps the magnitudes from exploding as we cascade through layers. We will do it before every sub-block from here on.
 
-> **3. Normalize.** We rescale the vector to unit-ish magnitude using `rmsnorm`. This is glue. It keeps the magnitudes from exploding as we cascade through layers. We will do it before every sub-block from here on.
+> **3. Run `n_layer` transformer blocks.** Each block has two halves: an attention half and an MLP half. Both halves share the same shape: *normalize → do something → add the result back to the input*. The "do something" is what makes the layer interesting.
 
-> **4. Run `n_layer` transformer blocks.** Each block has two halves: an attention half and an MLP half. Both halves share the same shape: *normalize → do something → add the result back to the input*. The "do something" is what makes the layer interesting.
+> **4. In the attention half:** Project `x` three different ways into a query `q`, a key `k`, and a value `v`. Per head, **apply RoPE** — rotate the `head_dim`-sized chunk of `q` and `k` by an angle proportional to `pos_id` — so the dot product `q·k` automatically depends only on the relative offset between query and key. Stash the rotated `k` and the unrotated `v` into the KV cache for this layer. For each of the `n_head` heads, compute a similarity score between this token's query and every previous token's (already rotated) key; turn the scores into a probability distribution with `softmax`; use those probabilities to weight-average the values. Concatenate all the heads back into one vector. Multiply by an output projection `attn_wo`. Add to the residual.
 
-> **5. In the attention half:** Project `x` three different ways into a query `q`, a key `k`, and a value `v`. Stash `k` and `v` into the KV cache for this layer. Then, for each of the `n_head` heads, slice `q`, `k`, and `v` into shorter chunks; compute a similarity score between this token's query and every previous token's key; turn the scores into a probability distribution with `softmax`; use those probabilities to weight-average the values. Concatenate all the heads back into one vector. Multiply by an output projection `attn_wo`. Add to the residual.
+> **5. In the MLP half:** Normalize again. Multiply by a "fattening" matrix `mlp_fc1` to expand to a wider hidden dimension. Apply a nonlinearity (`relu`). Multiply by a "skinnying" matrix `mlp_fc2` to come back to width `n_embd`. Add to the residual.
 
-> **6. In the MLP half:** Normalize again. Multiply by a "fattening" matrix `mlp_fc1` to expand to a wider hidden dimension. Apply a nonlinearity (`relu`). Multiply by a "skinnying" matrix `mlp_fc2` to come back to width `n_embd`. Add to the residual.
+> **6. Project to vocabulary.** After all the blocks, one final linear `lm_head` takes the residual vector and returns one logit per vocabulary token. The caller turns logits into probabilities, samples one, and feeds that integer back into `gpt()` next round.
 
-> **7. Project to vocabulary.** After all the blocks, one final linear `lm_head` takes the residual vector and returns one logit per vocabulary token. The caller turns logits into probabilities, samples one, and feeds that integer back into `gpt()` next round.
-
-There is no extra cleverness. Every "trick" of modern LLM inference — paged {{< wiki "kv-cache" >}}KV cache{{< /wiki >}}, continuous batching, speculative decoding, RoPE, GQA — is **a localized optimization of one specific line above**. By the end of this issue, you will be able to point at the line each of those tricks is replacing.
+There is no extra cleverness. Every "trick" of modern LLM inference — paged {{< wiki "kv-cache" >}}KV cache{{< /wiki >}}, continuous batching, speculative decoding, GQA, sliding-window attention — is **a localized optimization of one specific line above**. {{< wiki "rope" >}}RoPE{{< /wiki >}} itself, the per-head rotation that replaces GPT-2's `wpe` table, is a localized replacement of one such line — see [chapter on RoPE](../09b-rope/). By the end of this issue, you will be able to point at the line each of those tricks is replacing.
 
 ## Where The Cache Goes
 
@@ -178,7 +191,6 @@ Before we start unpacking, lock the **vocabulary**. These names are going to sho
 | Name in microGPT | What it is | Shape (for the toy model) |
 |---|---|---|
 | `wte` | token embedding table | `vocab_size × 16` |
-| `wpe` | positional embedding table | `block_size × 16` = `16 × 16` |
 | `attn_wq` | per-layer query projection | `16 × 16` |
 | `attn_wk` | per-layer key projection | `16 × 16` |
 | `attn_wv` | per-layer value projection | `16 × 16` |
@@ -187,6 +199,7 @@ Before we start unpacking, lock the **vocabulary**. These names are going to sho
 | `mlp_fc2` | MLP "skinnying" projection | `16 × 64` |
 | `lm_head` | vocab projection | `vocab_size × 16` |
 | `q`, `k`, `v` | query/key/value for the current token | length 16 each |
+| `q_rot`, `k_rot` | RoPE-rotated query and key (per-head application) | length 16 each |
 | `q_h`, `k_h`, `v_h` | per-head slice | length 4 each |
 | `attn_logits` | raw similarity scores before softmax | length = #tokens seen so far |
 | `attn_weights` | softmaxed scores | length = #tokens seen so far |
@@ -205,21 +218,21 @@ $$
 \text{params per layer} = 4 \cdot (16 \cdot 16) + 2 \cdot (16 \cdot 64) = 1024 + 2048 = 3072
 $$
 
-Add the embeddings and head — assume `vocab_size = 27` for a model trained on lowercase letters plus BOS:
+Add the embeddings and head — assume `vocab_size = 27` for a model trained on lowercase letters plus BOS. Note that there is no `wpe` table to count: position is handled by the parameter-free `rope()` helper.
 
 $$
-\text{embeddings + head} = 27 \cdot 16 + 16 \cdot 16 + 27 \cdot 16 = 432 + 256 + 432 = 1120
+\text{embeddings + head} = 27 \cdot 16 + 27 \cdot 16 = 432 + 432 = 864
 $$
 
 $$
-\text{total} \approx 2 \cdot 3072 + 1120 = \mathbf{7264 \text{ parameters}}
+\text{total} \approx 2 \cdot 3072 + 864 = \mathbf{7008 \text{ parameters}}
 $$
 
 Seven thousand floats. A frontier model is fifty *billion* to one *trillion* — the same structure, repeated wider and deeper. The fact that the per-line code does not change as you scale is the entire reason this listing is useful as a study aid.
 
-```pyplot {id="param-share" caption="Where the 7,264 parameters live in microGPT. Attention dominates per-layer, MLP dominates totally."}
+```pyplot {id="param-share" caption="Where the 7,008 parameters live in microGPT. Attention dominates per-layer, MLP dominates totally. No `wpe` — position is parameter-free via RoPE."}
 labels = ['attn_wq', 'attn_wk', 'attn_wv', 'attn_wo', 'mlp_fc1', 'mlp_fc2', 'embeddings\n+ lm_head']
-sizes  = [2*16*16,   2*16*16,   2*16*16,   2*16*16,   2*16*64,   2*64*16,   27*16+16*16+27*16]
+sizes  = [2*16*16,   2*16*16,   2*16*16,   2*16*16,   2*16*64,   2*64*16,   27*16+27*16]
 colors = ['#FF007F', '#FF007F', '#FF007F', '#FF007F', '#00A8A8', '#00A8A8', '#FFD700']
 
 fig, ax = plt.subplots(figsize=(8, 4))
@@ -231,12 +244,12 @@ ax.invert_yaxis()
 for i, s in enumerate(sizes):
     ax.text(s + 30, i, f'{s}', va='center', fontsize=10)
 ax.set_xlabel('parameter count')
-ax.set_title('microGPT parameter budget (toy: n_layer=2, n_embd=16)')
+ax.set_title('microGPT parameter budget (toy: n_layer=2, n_embd=16, RoPE)')
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 ```
 
-The two MLP matrices, between them, hold **56%** of the model's parameters. The four attention matrices together hold **35%**. The embedding/head triple is the remaining 9%. This is, to a first approximation, true at every scale: in a 70B-parameter model, the MLPs are still the majority of the weights, the attention projections are the second largest chunk, and the input/output tables are a rounding error.
+The two MLP matrices, between them, hold roughly **58%** of the model's parameters. The four attention matrices together hold **37%**. The embedding/head pair is the remaining 12%. This is, to a first approximation, true at every scale: in a 70B-parameter model, the MLPs are still the majority of the weights, the attention projections are the second largest chunk, and the input/output tables are a rounding error.
 
 ## What This Issue Will Do
 

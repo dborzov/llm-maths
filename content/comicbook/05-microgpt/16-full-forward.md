@@ -33,12 +33,12 @@ The hyperparameters of the toy model. Real models scale these into the thousands
 ```python
 n_layer    = 2     # see ch.16 (this page) — depth of the network
 n_embd     = 16    # see ch.2  — width of the residual stream
-block_size = 16    # see ch.3  — max number of positions in wpe
+block_size = 16    # nominal training context; RoPE makes this a soft wall
 n_head     = 4     # see ch.9  — number of attention heads
 head_dim   = 4     # = n_embd / n_head
 ```
 
-The four helper functions referenced by the forward pass:
+The helper functions referenced by the forward pass:
 
 ```python
 def linear(x, w):                                          # → ch.4
@@ -57,6 +57,17 @@ def softmax(logits):                                       # → ch.7
 
 def relu(x_val):                                           # → ch.12
     return max(0.0, x_val)
+
+def rope(x, pos):                                          # → ch.9b (RoPE)
+    d = len(x)
+    out = list(x)
+    for i in range(d // 2):
+        theta = 10000.0 ** (-2 * i / d)
+        c, s = math.cos(pos * theta), math.sin(pos * theta)
+        x0, x1 = x[2*i], x[2*i + 1]
+        out[2*i]     = x0 * c - x1 * s
+        out[2*i + 1] = x0 * s + x1 * c
+    return out
 ```
 
 ## The Forward Pass, Annotated
@@ -66,9 +77,7 @@ Each comment points at the chapter that introduced the concept. If you can read 
 ```python
 def gpt(token_id, pos_id, keys, values):
     # ─── input embedding ────────────────────────────────────────────
-    tok_emb = state_dict['wte'][token_id]                  # → ch.3
-    pos_emb = state_dict['wpe'][pos_id]                    # → ch.3
-    x = [t + p for t, p in zip(tok_emb, pos_emb)]          # → ch.10 (residual init)
+    x = state_dict['wte'][token_id]                        # → ch.3 (no wpe — RoPE replaces it)
     x = rmsnorm(x)                                         # → ch.5
 
     for li in range(n_layer):
@@ -80,13 +89,19 @@ def gpt(token_id, pos_id, keys, values):
         k = linear(x, state_dict[f'layer{li}.attn_wk'])    # → ch.6
         v = linear(x, state_dict[f'layer{li}.attn_wv'])    # → ch.6
 
-        keys[li].append(k)                                 # → ch.13 (KV cache)
-        values[li].append(v)                               # → ch.13 (KV cache)
+        q_rot, k_rot = [], []                              # → ch.9b (RoPE)
+        for h in range(n_head):
+            hs = h * head_dim
+            q_rot.extend(rope(q[hs:hs+head_dim], pos_id))  # rotate q per head
+            k_rot.extend(rope(k[hs:hs+head_dim], pos_id))  # rotate k per head
+
+        keys[li].append(k_rot)                             # → ch.13 (KV cache; rotated key)
+        values[li].append(v)                               # → ch.13 (KV cache; v not rotated)
 
         x_attn = []
         for h in range(n_head):                            # → ch.9
             hs = h * head_dim
-            q_h = q[hs:hs+head_dim]                        # → ch.9
+            q_h = q_rot[hs:hs+head_dim]                    # → ch.9 (rotated query)
             k_h = [ki[hs:hs+head_dim] for ki in keys[li]]  # → ch.9
             v_h = [vi[hs:hs+head_dim] for vi in values[li]]
 
@@ -155,8 +170,8 @@ Some lines look unremarkable in microGPT but bloom into entire research subfield
 
 | Line in microGPT | What it becomes in the real world |
 |---|---|
-| `tok_emb = state_dict['wte'][token_id]` | Tied vs. untied embeddings; vocab size 32K → 256K trade-offs |
-| `pos_emb = state_dict['wpe'][pos_id]` | Sinusoidal → learned → RoPE → ALiBi → YaRN; long-context extension |
+| `x = state_dict['wte'][token_id]` | Tied vs. untied embeddings; vocab size 32K → 256K trade-offs |
+| `rope(q, pos_id)`, `rope(k, pos_id)` | Sinusoidal → learned `wpe` → RoPE → ALiBi → YaRN; long-context extension |
 | `rmsnorm(x)` | RMSNorm vs LayerNorm; pre-norm vs post-norm; QK-norm |
 | `linear(x, state_dict[f'layer{li}.attn_wq'])` | Quantized linears (issue 03); LoRA adapters; tensor parallelism shards |
 | `attn_logits / head_dim**0.5` | Flash-attention; sliding-window attention; sparse attention masks |
@@ -176,7 +191,7 @@ Each row of that table is, somewhere in this project or the projects to come, an
 1. **The forward pass is six things in a loop.** Embed → norm → attention → MLP → ... → project to vocab. The "loop" runs `n_layer` times. Everything else is detail.
 2. **The KV cache is `list.append`.** Mechanically. Everything sophisticated about KV cache management is an optimization of where those lists live in memory and how they get reused.
 3. **Two phases of inference.** Prefill walks the prompt forward to fill the cache; decode generates one token per call. Most serving optimizations target one or the other.
-4. **Every modern trick is a line replacement.** RoPE replaces the `wpe` lookup. Flash-attention replaces the `attn_logits` + `softmax` + `head_out` block. SwiGLU replaces `relu(...)`. MoE replaces `mlp_fc2`. Find the line first; *then* read the paper.
+4. **Every modern trick is a line replacement.** RoPE replaced the `wpe` lookup (baseline microGPT already does this; see [ch.9b](../09b-rope/)). Flash-attention replaces the `attn_logits` + `softmax` + `head_out` block. SwiGLU replaces `relu(...)`. MoE replaces `mlp_fc2`. Find the line first; *then* read the paper.
 5. **Read this listing before reading any other paper about LLM internals.** The half-second of "wait, where in the forward pass is this?" is what separates skimming from understanding.
 
 ---

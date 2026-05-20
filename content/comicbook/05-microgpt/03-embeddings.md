@@ -1,12 +1,12 @@
 ---
-title: "Embeddings: two lookup tables added together"
+title: "Embeddings: the one lookup that opens every forward pass"
 short_title: "Embeddings"
-description: "Two lookup tables — `wte` for what token, `wpe` for what position — added elementwise into the first residual vector."
+description: "One lookup table — `wte` — turns the input token id into the first residual vector. The position vector that used to be added on top is now produced by RoPE inside attention."
 blurb:
-  - "Mikolov's 1973 word2vec arithmetic: `king - man + woman ≈ queen`. Cited 50,000 times. Still the foundation of every LLM's first line."
+  - "Mikolov's 2013 word2vec arithmetic: `king - man + woman ≈ queen`. Cited 50,000 times. Still the foundation of every LLM's first line."
   - "The lookup is just array indexing — no matrix multiply. If `token_id` is 5, you get row 5."
   - "The toy model: vocab_size=27, n_embd=16. The `wte` table is 27×16. That's 432 floats."
-  - "Why add the two embeddings instead of concatenating them? The answer is in the dimensions."
+  - "GPT-2 added a `wpe[pos_id]` vector on top. Modern microGPT does not — RoPE replaces it. Why is addition the wrong tool here?"
 topics: [transformer, embeddings]
 tags: [microgpt, wte, wpe, positional]
 theme: cream
@@ -37,13 +37,13 @@ Mikolov's lab notebook entry for that day is one line. *"The arithmetic works."*
 
 The paper he writes about it — *"Linguistic Regularities in Continuous Space Word Representations"* — will be cited fifty thousand times. But the bigger consequence is invisible in 2013: every transformer language model built in the next decade and a half will begin its forward pass with a **lookup into a table of vectors just like Mikolov's**. The cold-open chapter [showed you the line](../01-cold-open/); this primer is about what that line means.
 
+In modern microGPT, the opening of the forward pass is now just one line:
+
 ```python
-tok_emb = state_dict['wte'][token_id]
-pos_emb = state_dict['wpe'][pos_id]
-x = [t + p for t, p in zip(tok_emb, pos_emb)]
+x = state_dict['wte'][token_id]
 ```
 
-Three lines. Two lookups. One addition. There is more going on here than there appears.
+A single lookup. Earlier transformers (GPT-2, GPT-3, BERT, and an older version of microGPT) had a second lookup on top of this — a `wpe[pos_id]` vector that was added elementwise to `x`. That extra line has been retired: position information enters the model later, inside attention, via {{< wiki "rope" >}}RoPE{{< /wiki >}}. We will spend most of this article on `wte`, and the second half of it explaining why the position addition has moved.
 
 ## The Big Lookup Table
 
@@ -71,27 +71,21 @@ In `wte`, every row was learned. During training, the gradient that wanted token
 
 That's the entire purpose of this table. **`wte` is the model's dictionary of what tokens mean.** Every other operation in the forward pass massages those meanings.
 
-## The Other Lookup Table
+## The Other Lookup Table — Historical
 
-The next line of microGPT does the same trick with a different table.
-
-```python
-pos_emb = state_dict['wpe'][pos_id]
-```
-
-`wpe` — the **w**ord-**p**osition **e**mbedding — has shape
+Older transformers performed a second lookup right after `wte`, into a parallel table called `wpe` — the **w**ord-**p**osition **e**mbedding — of shape
 
 $$
 \texttt{wpe} \in \mathbb{R}^{\,\texttt{block\_size} \,\times\, \texttt{n\_embd}}.
 $$
 
-`block_size` rows, `n_embd` columns. In the toy model, `block_size = 16`, so `wpe` is 16×16. A square of 256 floats. Where `wte` is indexed by *what* token you saw, `wpe` is indexed by *where* in the sequence it sits. Position 0 gets row 0. Position 7 gets row 7. The first token of every sequence gets the same row of `wpe`; the second token of every sequence gets the same *different* row; and so on.
+`block_size` rows, `n_embd` columns. In the toy model, `block_size = 16`, so `wpe` would have been 16×16: a square of 256 floats. Where `wte` is indexed by *what* token you saw, `wpe` was indexed by *where* in the sequence it sat. Position 0 gets row 0. Position 7 gets row 7. The first token of every sequence gets the same row of `wpe`; the second token of every sequence gets the same *different* row; and so on.
 
-This split — separating *what* from *where* — is the entire reason transformers need positional embeddings at all. Attention, the operation we'll meet in [chapters 6 through 9](../06-qkv-projections/), is fundamentally a **set** operation: scramble the order of the input tokens and the output is scrambled identically. Without a position signal, "the dog bit the man" and "the man bit the dog" look like the same multiset to the attention layer. `wpe` is the patch on that hole.
+This split — separating *what* from *where* — is the entire reason transformers need positional information at all. {{< wiki "attention" >}}Attention{{< /wiki >}}, the operation we'll meet in [chapters 6 through 9](../06-qkv-projections/), is fundamentally a **set** operation: scramble the order of the input tokens and the output is scrambled identically. Without a position signal, "the dog bit the man" and "the man bit the dog" look like the same multiset to the attention layer. `wpe` was one early patch on that hole — but a leaky one. We will see why in a moment, and the cleaner fix in [chapter on RoPE](../09b-rope/).
 
 ## The Puzzle Of The Plus Sign
 
-Now look at the third line, the one that *combines* the two lookups:
+Suppose, for the next two sections, that we have done both lookups and want to combine them, as GPT-2 did:
 
 ```python
 x = [t + p for t, p in zip(tok_emb, pos_emb)]
@@ -167,7 +161,7 @@ plt.colorbar(im, ax=ax, label='value')
 
 The eye-grabbing pattern in the first few columns is the model's *position channel*: a smooth gradient that means "I am near the start" at the top and "I am near the end" at the bottom. The remaining columns are noise — capacity the model has reserved but not yet committed to any particular use of position. In a well-trained `wpe`, more of the columns end up doing useful work, but the *low-frequency* structure in the first few dimensions is universal.
 
-## Napkin Math: How Big Are These Tables?
+## Napkin Math: How Big Is This Table?
 
 In the toy:
 
@@ -175,13 +169,7 @@ $$
 |\texttt{wte}| = 27 \times 16 = 432 \text{ floats}
 $$
 
-$$
-|\texttt{wpe}| = 16 \times 16 = 256 \text{ floats}
-$$
-
-Both tables fit in a screenshot. Cute.
-
-For Llama 3 8B, the story is very different. Llama 3 uses a **128,000-token** BPE vocabulary, an embedding dimension of **4,096**, and a (RoPE-extended) context window we can pretend is **8,192** for accounting purposes. So:
+For Llama 3 8B, the story is very different. Llama 3 uses a **128,000-token** BPE vocabulary and an embedding dimension of **4,096**:
 
 $$
 |\texttt{wte}| = 128{,}000 \times 4{,}096 = 524{,}288{,}000 \text{ floats} \approx \mathbf{1.0 \text{ GB at fp16}}
@@ -189,17 +177,11 @@ $$
 
 A full *gigabyte* of weights, just for the token-lookup table, just to know what each token "means" before the model does anything else. That's about **6.5%** of Llama 3 8B's 16 GB fp16 footprint — sunk into a table that performs a single integer index. (Many production models *tie* `wte` to the final `lm_head` to halve this cost; we look at that trick in [chapter 15](../15-sampling/).)
 
-For `wpe`, well — Llama 3 doesn't have a learned `wpe`. We'll get to why in a second. But if it *did*, with `block_size = 8192`:
-
-$$
-|\texttt{wpe}| = 8{,}192 \times 4{,}096 = 33{,}554{,}432 \text{ floats} \approx \mathbf{64 \text{ MB at fp16}}
-$$
-
-Small compared to `wte`, but big enough that you would want a good reason to keep it around.
+There used to be a second table to budget here. GPT-3 175B, with `block_size = 2048` and `n_embd = 12288`, spent a full **100 MB** of weights on `wpe`. At Llama-3-style context lengths ($T = 8192$), the table would have been **264 MB** on its own. Modern models do not pay this — RoPE collapses the table to a parameter-free helper. The "position embedding" budget for a 2026 frontier model is *zero*.
 
 ## The Positional-Embedding Zoo
 
-Llama 3 doesn't carry a `wpe` table because the field, since 2017, has held a slow-motion bake-off between four families of how to encode *where*. Each one swaps out the single microGPT line `pos_emb = state_dict['wpe'][pos_id]` for a different mechanism.
+Modern models don't carry a `wpe` table because the field, since 2017, has held a slow-motion bake-off between four families of how to encode *where*. Each one swaps out the single GPT-2 line `pos_emb = state_dict['wpe'][pos_id]` for a different mechanism.
 
 | Year | Name | What it does | Used by |
 |---|---|---|---|
@@ -210,17 +192,19 @@ Llama 3 doesn't carry a `wpe` table because the field, since 2017, has held a sl
 
 The progression is, in spirit, a steady move *away* from learned position tables. Sinusoidal said "don't bother learning, the right answer is hand-derivable." Learned absolute said "no, the model can do better than your hand-derivation." RoPE said "the right place to inject position is into the dot-product mechanism that *uses* it, not into the input embedding." ALiBi said "you don't even need a vector — just bias the attention logits."
 
-The technical reasons each newer scheme beats the older one are subtle and mostly about **length generalization**: how well does the model do when, at inference time, you give it a sequence *longer* than anything it saw in training? Learned absolute `wpe` falls off a cliff at `pos_id = block_size + 1` — there *is* no row to look up. Sinusoidal and RoPE extrapolate gracefully because their position signal is generated, not stored. We will mostly skirt this story in this issue, because the microGPT listing uses learned `wpe` and we are honor-bound to explain that one first. But every time you read about a "long-context model" — 128k context, a million tokens, whatever — you are reading about a small variation on this table.
+The technical reasons each newer scheme beats the older one are subtle and mostly about **length generalization**: how well does the model do when, at inference time, you give it a sequence *longer* than anything it saw in training? Learned absolute `wpe` falls off a cliff at `pos_id = block_size + 1` — there *is* no row to look up. Sinusoidal and RoPE extrapolate gracefully because their position signal is generated, not stored.
+
+microGPT's modern listing follows the field: **no `wpe` table, position injected by RoPE inside attention**. The full derivation — why addition fails, why rotation succeeds, how the eleven-line `rope()` helper plugs in — is the subject of [chapter on RoPE](../09b-rope/). Every time you read about a "long-context model" — 128k context, a million tokens, whatever — you are reading about a small variation on the same rotation trick.
 
 ## What To Remember
 
 1. **`wte` is a `vocab_size × n_embd` lookup table.** One row per vocabulary token. `state_dict['wte'][token_id]` is *literally* an array index. The complexity of an LLM does not live here.
-2. **`wpe` is a `block_size × n_embd` lookup table.** One row per position in the context window. Indexed by `pos_id`, not by anything to do with content.
-3. **Addition, not concatenation.** The model can recover any decomposition of `what` and `where` it likes, at zero extra parameter cost, because addition leaves the residual stream's width alone. Concatenation would double every downstream weight matrix.
+2. **There is no `wpe` table any more.** Older transformers added a learned position vector here; modern microGPT (and every frontier autoregressive decoder since Llama) defers position injection to attention, where {{< wiki "rope" >}}RoPE{{< /wiki >}} rotates `q` and `k` instead — see [chapter on RoPE](../09b-rope/).
+3. **Had we kept `wpe`, addition would still be the right combining operator.** Concatenation would double every downstream weight matrix; addition lets the model recover any decomposition of "what" and "where" it likes, at zero extra parameter cost.
 4. **`wte` in Llama 3 is ~1 GB.** A nontrivial fraction of model weight even at frontier scale. Tied embeddings (`lm_head = wte^T`) cut this in half.
-5. **Learned `wpe` is the historical default; modern frontier models don't use it.** RoPE has effectively won the positional-embedding bake-off for autoregressive decoders. The microGPT line `pos_emb = state_dict['wpe'][pos_id]` is the **clearest** way to teach the concept — but in production, it has been replaced by an in-attention rotation.
+5. **Learned `wpe` was the GPT-2/3/BERT default; modern frontier models don't use it.** RoPE has effectively won the positional-embedding bake-off for autoregressive decoders, and the microGPT listing in this issue reflects that.
 
-The two lookups give us a single `n_embd`-dim vector `x` representing "token *t* at position *p*". From here on, every transformer block in the model will take that vector, transform it, and put a transformed version back. The first thing that happens to it — in microGPT, in GPT-2, in Llama 3 — is a linear projection. So that's where we go next.
+The one lookup gives us a single `n_embd`-dim vector `x` representing "token *t*". From here on, every transformer block in the model will take that vector, transform it, and put a transformed version back. The first thing that happens to it — in microGPT, in GPT-2, in Llama 3 — is a linear projection. So that's where we go next.
 
 ---
 

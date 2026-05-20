@@ -212,15 +212,41 @@ $$q_t = c^Q_t \cdot W^{UQ}, \quad q_t \in \mathbb{R}^{n_h \times c}$$
 
 The main attention is **Multi-Query Attention** (Shazeer 2019): one key vector and one value vector per compressed entry, shared across all $n_h$ query heads. This is what "Shared Key-Value" means in Figure 3.
 
-$$o_{t,i} = \text{CoreAttn}(\text{query}=q_{t,i},\; \text{key}=\mathcal{C}^{\text{SprsComp}}_t,\; \text{value}=\mathcal{C}^{\text{SprsComp}}_t)$$
+$$o_{t,h} = \text{CoreAttn}(\text{query}=q_{t,h},\; \text{key}=\mathcal{C}^{\text{SprsComp}}_t,\; \text{value}=\mathcal{C}^{\text{SprsComp}}_t)$$
 
-The compressed entries serve as *both* keys and values — the same vector. This is a stronger form of MQA than usual: not just shared KV across heads, but also shared K and V with each other.
+The compressed entries serve as *both* keys and values — the same vector. This is a stronger form of MQA than usual: not just shared KV across heads, but K and V shared with each other. That sharing creates a {{< wiki "rope" >}}RoPE{{< /wiki >}} complication that required an explicit fix.
 
-The **[inverse RoPE](../18-inverse-rope/)** trick, introduced in V4 and explained in the vLLM engineering blog, is relevant here. Because K and V are shared (the same compressed vector serves both roles), the attention output carries absolute position information through the rotation matrices. V4 applies an inverse RoPE $R(-i)$ to the output to restore translation invariance:
+{{< crosshead >}}The RoPE Problem: When a Key Doubles as a Value{{< /crosshead >}}
 
-$$R(-i) \cdot a_i = \sum_p \frac{\exp(q_i^\top R(j_p - i) k_{j_p})}{\sum_r \exp(q_i^\top R(j_r - i) k_{j_r})} R(j_p - i) k_{j_p}$$
+In standard {{< wiki "attention" >}}attention{{< /wiki >}} with RoPE, values are never rotated. After computing attention weights $\alpha_p$, the output for a query token at position $t$ is:
 
-The output now depends only on *relative* position $(j_p - i)$, not absolute position $j_p$. This is the same translation invariance property that standard attention has — inverse RoPE restores it when K and V are shared.
+$$a_t = \sum_p \alpha_p \cdot v_{j_p}$$
+
+where $\alpha_p = \operatorname{softmax}\!\left(q_t^\top R(j_p - t)\, k_{j_p}\right)$. The weights encode relative position through $R(j_p - t)$; the values $v_{j_p}$ are position-neutral. The output depends only on relative offsets $(j_p - t)$ — **translation invariant**.
+
+In CSA the {{< wiki "kv-cache" >}}KV cache{{< /wiki >}} stores *rotated* keys — this is the "pay rotation once at write time" optimization from [ch.9b](/llm-maths/comicbook/05-microgpt/09b-rope/) and [ch.13](/llm-maths/comicbook/05-microgpt/13-kv-cache/). So each cached entry is $R(j_p)\,C^{\text{Comp}}_{j_p}$: the compressed vector already rotated by its absolute anchor position $j_p$. When the **same** cached entry serves as the value:
+
+$$a_t = \sum_p \alpha_p \cdot R(j_p)\, C^{\text{Comp}}_{j_p}$$
+
+Absolute position $j_p$ is now baked into every term of the value sum. Slide the same passage to a later position in the document — replace every $j_p \to j_p + c$ — and the output changes even though the content and its relative arrangement are identical. **Translation invariance is broken.** The attention output encodes *where in the document* a block appears, not just *what it says relative to the query*.
+
+{{< crosshead >}}The Fix: Apply $R(-t)$ to the Output{{< /crosshead >}}
+
+V4's solution is one line of linear algebra. Apply $R(-t)$ — the inverse rotation for the query token's own absolute position — to the attention output:
+
+$$R(-t) \cdot a_t \;=\; R(-t) \cdot \sum_p \alpha_p \cdot R(j_p)\, C^{\text{Comp}}_{j_p}$$
+
+Rotation is a linear operation, so it distributes through the weighted sum. Rotation matrices compose by adding angles: $R(-t)\,R(j_p) = R(j_p - t)$. Therefore:
+
+$$R(-t) \cdot a_t \;=\; \sum_p \alpha_p \cdot R(j_p - t)\, C^{\text{Comp}}_{j_p}$$
+
+Absolute positions $j_p$ and $t$ are both gone. Only the relative offset $(j_p - t)$ survives — which is exactly what standard attention with separate unrotated values would have produced. Translation invariance is restored.
+
+{{% callout type="definition" %}}
+**The move in one sentence.** Caching rotated keys baked $R(j_p)$ into each value term. Applying $R(-t)$ at the output folds the query's own absolute rotation into the value factor, converting every $R(j_p)$ into $R(j_p - t)$. Absolute position vanishes; relative position survives. This is the **[inverse RoPE](../18-inverse-rope/)** trick.
+{{% /callout %}}
+
+The technique generalizes to any architecture where the KV cache stores rotated keys and those same vectors also serve as values — including HCA ([ch.8](../08-hca/)) and any future K=V sharing scheme. Once you see the algebra, the fix is obvious. The hard part is noticing the contamination in the first place.
 
 {{< crosshead >}}Grouped Output Projection{{< /crosshead >}}
 
@@ -341,7 +367,7 @@ It turns out that on roughly half the transformer layers, this is exactly what y
 1. **CSA = compress-then-DSA.** Compress $m=4$ tokens per entry (two overlapping streams of 4), then lightning-index over the $T/m$ compressed entries, keep top $k=512$.
 2. **Each compressed entry covers 8 raw tokens**, not 4 — because the two-stream overlap covers $[4j-4, 4j+3]$.
 3. **The query latent is shared.** $c^Q_t$ produces both indexer queries and main queries. One vector, two read-heads.
-4. **Shared key-value MQA.** One K, one V per compressed entry; inverse RoPE applied to the output to restore translation invariance.
+4. **Shared K=V breaks RoPE translation invariance.** The KV cache stores rotated keys $R(j_p)\,C^{\text{Comp}}_{j_p}$; using them as values bakes absolute position into the output. Fix: apply $R(-t)$ to the attention output, which converts $R(j_p) \to R(j_p - t)$ and restores the relative-only dependence — the **inverse RoPE** trick.
 5. **At 1M context, V4 uses 9.62 GiB** total KV cache (vs 83.9 GiB for V3.2) — an 8.7× reduction, and 2× more with FP4/FP8 quantization.
 6. **Sliding window (128 tokens) is architecturally necessary.** Causality prevents very recent tokens from appearing in compressed entries; the raw window provides access to them.
 

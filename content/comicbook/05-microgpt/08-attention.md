@@ -120,7 +120,7 @@ plt.tight_layout()
 
 Three plots, three lines of code. The bottom panel is the actionable output: a probability distribution over the past, peaked exactly where we built the query to look. The `head_out` produced by line three of the microGPT block is then a $0.4 v_4 + 0.3 v_{11} + \text{(small contributions from everyone else)}$ kind of vector.
 
-Notice what the model has *not* done: it never compared `q_h` to itself in a special way, never used position information, never asked "what comes after token 4?" — none of that. The only operation is **dot product, scale, softmax, weighted sum**. Position information has to be smuggled in somewhere else (RoPE in modern models, `wpe` in microGPT — see [embeddings](../03-embeddings/)). Causality is handled by *what's even in the cache to begin with* (more on that below). Attention itself is a beautifully memoryless soft lookup.
+Notice what the model has *not* done: it never compared `q_h` to itself in a special way, never used position information, never asked "what comes after token 4?" — none of that. The only operation is **dot product, scale, softmax, weighted sum**. Position information has to be smuggled in somewhere else — modern microGPT (and every modern open-weights LLM) rotates `q_h` and the cached `k_h[t]` via {{< wiki "rope" >}}RoPE{{< /wiki >}} before this dot product fires; see [chapter on RoPE](../09b-rope/). Causality is handled by *what's even in the cache to begin with* (more on that below). Attention itself is a beautifully memoryless soft lookup.
 
 ## Why Divide By $\sqrt{d_k}$?
 

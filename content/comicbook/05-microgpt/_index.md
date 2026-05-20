@@ -37,8 +37,8 @@ Above the capstone, a second wing — the **architecture variants** chapters ([c
 
 By the end of this issue you should be able to point at any line of microGPT and answer, with confidence and a sketch on a napkin:
 
-- What the **state dict** actually contains and how each tensor is shaped. `wte`, `wpe`, `attn_wq`, `attn_wk`, `attn_wv`, `attn_wo`, `mlp_fc1`, `mlp_fc2`, `lm_head` — every key, its dimensions, and the operation that consumes it.
-- Why the **token embedding** (`wte`) is just a lookup table, why the **positional embedding** (`wpe`) is added rather than concatenated, and what happens if you swap learned positions for sinusoidal or rotary.
+- What the **state dict** actually contains and how each tensor is shaped. `wte`, `attn_wq`, `attn_wk`, `attn_wv`, `attn_wo`, `mlp_fc1`, `mlp_fc2`, `lm_head` — every key, its dimensions, and the operation that consumes it.
+- Why the **token embedding** (`wte`) is just a lookup table, why GPT-2's `wpe` table has been retired, and how **RoPE** injects position by rotating `q` and `k` per head — derived from one trig identity at a time.
 - How the **`linear()` helper** — three lines of Python — generalizes to every weight matrix in the model.
 - Why modern LLMs use **RMSNorm** instead of LayerNorm, and the single arithmetic difference between them.
 - What the **three projections `Q`, `K`, `V`** geometrically *are*, and why splitting one tensor `x` into three lets attention be both a database lookup and a differentiable operation.

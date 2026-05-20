@@ -11,8 +11,8 @@ also_known_as:
   - "position embedding"
   - "RoPE theta"
   - "rope_theta"
-source_of_truth: "/comicbook/04-long-context-bench/02-context-window/"
-source_of_truth_title: "ch.2 What 1M Tokens Actually Costs (Issue 04)"
+source_of_truth: "/comicbook/05-microgpt/09b-rope/"
+source_of_truth_title: "ch.9b Position by Rotation (microGPT, Issue 05)"
 related:
   - "attention"
   - "kv-cache"

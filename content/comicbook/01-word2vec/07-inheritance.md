@@ -283,7 +283,7 @@ The words know their place. They have since 2013.
 - [The Stranger Country](../05-high-dimensional/) — why 300 dimensions is the right geometry
 - [Words That Know Their Place](../06-meaning-as-geometry/) — what the trained space contains
 - [Issue 2: The Logit Wager](../../02-logits/) — what the transformer does *after* the embedding lookup
-- [Issue 5: microGPT Unfolded](../../05-microgpt/) — the full transformer forward pass, with `wte` and `wpe` named and traced
+- [Issue 5: microGPT Unfolded](../../05-microgpt/) — the full transformer forward pass, with `wte` named and traced and RoPE derived from scratch
 
 </details>
 

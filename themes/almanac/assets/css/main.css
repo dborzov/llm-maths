@@ -2434,6 +2434,9 @@ a.issue-cover-article-title:hover {
 }
 .pullquote-body p { margin: 0; max-width: none; }
 .pullquote-body::after { display: none; }
+.pullquote-body ul, .pullquote-body ol { margin: 0.5em 0 0; padding-left: 1.2em; }
+.pullquote-body li { margin: 0.25em 0; }
+.pullquote-body li::marker { font-style: normal; }
 /* Override the general .article-content blockquote rules that have higher specificity */
 .article-content .pullquote-body {
     border-left: none;

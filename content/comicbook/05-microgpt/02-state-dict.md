@@ -1,10 +1,10 @@
 ---
 title: "State Dict: nine names, one Python dict"
 short_title: "State Dict"
-description: "The trained model is a Python dictionary of tensors — exactly nine distinct key patterns, two top-level and seven repeated per layer."
+description: "The trained model is a Python dictionary of tensors — exactly eight distinct key patterns, one top-level pair and seven repeated per layer."
 blurb:
   - "The entire 13 GB Llama 1 7B download is `collections.OrderedDict` — a friend's giddy 2023 discovery."
-  - "Nine key patterns. Two top-level (`wte`, `wpe`). Seven per-layer. For a 2-layer toy, the full key set has length 16."
+  - "Eight key patterns. One top-level (`wte`). Seven per-layer. For a 2-layer toy, the full key set has length 15."
   - "Every key has a shape, a byte cost, and a single role. What role does `lm_head` share with `wte`?"
   - "The cleverness lives in the code that reads the dict — the dict itself is, in one engineer's words, 'the world's most expensive lookup table.'"
 topics: [transformer]
@@ -47,13 +47,12 @@ It is. That is the entire trick. A "trained LLM" is not a program, not a virtual
 
 This is chapter two of an issue spent unpacking [microGPT, the 60-line transformer from chapter one](../01-cold-open/). Before we run a single token through that listing, we need to know exactly what is in the `state_dict` it keeps fishing tensors out of. By the end of this article you will be able to recite the keys in your sleep and tell me, for any one of them, the shape, the bytes, and the role.
 
-## The Nine Names
+## The Eight Names
 
-Open microGPT and grep for `state_dict`. You will find exactly **nine distinct key patterns**:
+Open microGPT and grep for `state_dict`. You will find exactly **eight distinct key patterns**:
 
 ```python
 state_dict['wte']                       # token embedding
-state_dict['wpe']                       # position embedding
 state_dict[f'layer{li}.attn_wq']        # query projection
 state_dict[f'layer{li}.attn_wk']        # key projection
 state_dict[f'layer{li}.attn_wv']        # value projection
@@ -63,9 +62,11 @@ state_dict[f'layer{li}.mlp_fc2']        # MLP skinnying
 state_dict['lm_head']                   # vocabulary projection
 ```
 
-That is it. Two top-level keys, seven per-layer keys repeated `n_layer` times. For our toy model with `n_layer = 2`, the full key set has length $2 + 7 \cdot 2 = 16$.
+That is it. One top-level key (the token table) and seven per-layer keys repeated `n_layer` times. For our toy model with `n_layer = 2`, the full key set has length $1 + 7 \cdot 2 = 15$.
 
-A Llama 3 8B `consolidated.00.pth` has more keys than that — closer to 290 — because real transformers also store **RMSNorm gain vectors** (one or two per layer) and split the MLP into three projections instead of two (the `SwiGLU` trick that we'll meet in [chapter 12](../12-activations/)). But every one of those extra keys is a refinement of, or addition to, the nine names above. The skeleton is identical.
+There is, conspicuously, **no `wpe`**. Older transformers (GPT-2, GPT-3, BERT) stored position information in a `block_size × n_embd` learned table at this top level. Modern frontier models — Llama, Mistral, Qwen, DeepSeek, microGPT — replace that table with the parameter-free {{< wiki "rope" >}}RoPE{{< /wiki >}} rotation applied inside attention. The "position embedding" key vanishes from the dictionary entirely. See [chapter on RoPE](../09b-rope/) for the derivation.
+
+A Llama 3 8B `consolidated.00.pth` has more keys than that — closer to 290 — because real transformers also store **RMSNorm gain vectors** (one or two per layer) and split the MLP into three projections instead of two (the `SwiGLU` trick that we'll meet in [chapter 12](../12-activations/)). But every one of those extra keys is a refinement of, or addition to, the eight names above. The skeleton is identical.
 
 > The state dict is a **flat namespace**. There is no hierarchy on disk, no nesting, no schema. It is `{str: ndarray}`, full stop. The string keys *imply* a structure ("this one belongs to layer 7's attention block") but the file format does not enforce one. The implication only becomes truth when the inference code agrees to read those keys in a particular order.
 
@@ -96,7 +97,6 @@ Here are the nine shapes, side by side, for our toy and for a real frontier mode
 | Key | Role | microGPT shape | Llama 3 8B shape |
 |---|---|---|---|
 | `wte` | token → embedding lookup | `vocab × n_embd` = `27 × 16` | `128000 × 4096` |
-| `wpe` | position → embedding lookup | `block_size × n_embd` = `16 × 16` | *(absent — uses RoPE)* |
 | `layer{li}.attn_wq` | query projection | `n_embd × n_embd` = `16 × 16` | `4096 × 4096` |
 | `layer{li}.attn_wk` | key projection | `n_embd × n_embd` = `16 × 16` | `1024 × 4096` (GQA: 8 KV heads) |
 | `layer{li}.attn_wv` | value projection | `n_embd × n_embd` = `16 × 16` | `1024 × 4096` (GQA: 8 KV heads) |
@@ -105,9 +105,7 @@ Here are the nine shapes, side by side, for our toy and for a real frontier mode
 | `layer{li}.mlp_fc2` | MLP skinnying | `n_embd × 4·n_embd` = `16 × 64` | `4096 × 14336` |
 | `lm_head` | residual → vocab logits | `vocab × n_embd` = `27 × 16` | `128000 × 4096` |
 
-Two columns of dictionary entries. Same nine names. **The only thing that changed between a toy you can write on a napkin and one of the most expensive trained artifacts in the world is the integers in the shapes.**
-
-> *Caveat for the pedant in row 2:* Llama 3 has no `wpe` because position information enters via **Rotary Position Embeddings** (RoPE) applied to `q` and `k` at attention time, rather than via a lookup table added to the embedding. That swap is one of the "localized line replacements" we promised in the cold open — RoPE replaces the `wpe` line. We unpack it in [chapter 3](../03-embeddings/).
+Two columns of dictionary entries. Same eight names. **The only thing that changed between a toy you can write on a napkin and one of the most expensive trained artifacts in the world is the integers in the shapes.**
 
 ## Napkin Math: Bytes Per Bucket
 
@@ -241,7 +239,7 @@ Every "innovation" in the modern LLM stack lives somewhere in the diff between t
 
 ## What To Remember
 
-1. **A trained LLM is a `dict[str, Tensor]`.** Nine key patterns in microGPT. A few more in real models. That's the whole artifact on disk.
+1. **A trained LLM is a `dict[str, Tensor]`.** Eight key patterns in microGPT (no `wpe` — RoPE has replaced it). A few more in real models. That's the whole artifact on disk.
 2. **Hyperparameters live outside the dict.** `n_layer`, `n_embd`, `n_head`, `block_size` are in a separate metadata blob and *implied* by the tensor shapes.
 3. **Shapes are the contract.** Given the nine shapes and the integers, the forward pass is fully determined. Different inference engines reading the same dict produce bit-identical logits.
 4. **MLP is the elephant.** $\sim 60$% of bytes in modern frontier models live in `mlp_fc1` and `mlp_fc2`. Attention is second, embeddings are third.
@@ -249,5 +247,5 @@ Every "innovation" in the modern LLM stack lives somewhere in the diff between t
 
 ---
 
-**Continue to** → [The Embedding Tables](../03-embeddings/) — now that you know `wte` and `wpe` are dictionary entries shaped `vocab × n_embd` and `block_size × n_embd`, the next question is what the *rows* of those tables actually mean, and why two tables get added together at the top of every forward pass.
+**Continue to** → [The Embedding Tables](../03-embeddings/) — now that you know `wte` is a dictionary entry shaped `vocab × n_embd`, the next question is what the *rows* of that table actually mean, and why the position vector that used to be added on top of it is gone.
 

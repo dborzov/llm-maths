@@ -15,7 +15,7 @@ The persistent parameters that survive between forward passes. All live in `stat
 | Symbol | What it is |
 |---|---|
 | `wte` | Token embedding table — shape `vocab_size × n_embd` |
-| `wpe` | Positional embedding table — shape `block_size × n_embd` |
+| `wpe` | Positional embedding table — shape `block_size × n_embd` (GPT-2/3 style; not in microGPT, which uses RoPE) |
 | `attn_wq` / `attn_wk` / `attn_wv` | Per-layer Q/K/V projection matrices |
 | `attn_wo` | Attention output projection |
 | `mlp_fc1` / `mlp_fc2` | MLP "fatten" and "skinny" matrices |

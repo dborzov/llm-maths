@@ -59,13 +59,22 @@ Look at the attention sub-block of microGPT. Stripped to essentials:
 q = linear(x, state_dict[f'layer{li}.attn_wq'])
 k = linear(x, state_dict[f'layer{li}.attn_wk'])
 v = linear(x, state_dict[f'layer{li}.attn_wv'])
-keys[li].append(k)
-values[li].append(v)
+
+q_rot, k_rot = [], []
+for h in range(n_head):
+    hs = h * head_dim
+    q_rot.extend(rope(q[hs:hs+head_dim], pos_id))
+    k_rot.extend(rope(k[hs:hs+head_dim], pos_id))
+
+keys[li].append(k_rot)       # already rotated by RoPE at write time
+values[li].append(v)         # values are NOT rotated
 
 # ... attention over keys[li] and values[li] follows ...
 ```
 
-Three projections produce $q$, $k$, $v$ for the **current** token only. The `append` lines stuff $k$ and $v$ into a layer-local growing list. The subsequent inner loop — see [ch.9 multi-head](../09-multi-head/) — slices across `keys[li]` and `values[li]` for the dot-product-and-softmax.
+Three projections produce $q$, $k$, $v$ for the **current** token. {{< wiki "rope" >}}RoPE{{< /wiki >}} then rotates each per-head slice of `q` and `k` by an angle proportional to `pos_id` — see [chapter on RoPE](../09b-rope/) for the derivation. The `append` lines stuff the *rotated* key and the *unrotated* value into a layer-local growing list. The subsequent inner loop — see [ch.9 multi-head](../09-multi-head/) — slices across `keys[li]` and `values[li]` for the dot-product-and-softmax.
+
+The detail to flag: **the KV cache stores already-rotated keys.** Each `k_rot` was rotated by *its own* position when it was computed, and never needs to be touched again. A new query at position $m$ is rotated by $R(m)$; the cached key at position $n$ was rotated by $R(n)$ when written; their dot product algebraically collapses to $q^\top R(n - m) k$. This is critical at long-context scale — you do not want to revisit a million cached vectors to multiply them by anything. RoPE is paid once, at append time, then forgotten.
 
 The driver makes the lifecycle explicit:
 

@@ -27,7 +27,12 @@ Then DeepSeek shipped four attention variants in twenty-three months, each one s
 What did this lab figure out that ten years of efficient-transformer research did not?
 
 {{% pullquote type="counter-intuitive" %}}
-The answer is not in any single mechanism. The answer is in the *stack* — MLA shrinks the cache, DSA's lightning indexer shrinks the score matrix, CSA compresses the sequence before scoring it, HCA throws away even the sparsity bookkeeping, and the four moves compose multiplicatively.
+The DeepSeek V4 attention stack:
+
+- **MLA** — shrinks the KV cache
+- **DSA** — lightning indexer shrinks the score matrix
+- **CSA** — compresses the sequence before scoring
+- **HCA** — throws away even the sparsity bookkeeping
 {{% /pullquote %}}
 
 ## The Lab Behind The Lab

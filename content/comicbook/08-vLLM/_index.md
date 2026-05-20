@@ -15,10 +15,12 @@ date: 2026-05-16T09:00:00-04:00
 
 Run the napkin math. A 600B model in FP8 is 600 GB. An H200 has 141 GB of HBM. The model has been sliced eight ways. The {{< wiki "kv-cache" >}}KV cache{{< /wiki >}} for eight hundred concurrent users at an average of 4,000 tokens of context is **another 250 GB of working memory**, allocated and freed at every step. At decode time, every one of those eight GPUs is fetching tens of gigabytes per second across an HBM bus, with a peak bandwidth of 4.8 TB/s. The model weights stream through SRAM. The {{< wiki "attention" >}}attention{{< /wiki >}} kernel is reading scattered keys and values from a paged address space. Tokens are being scheduled across users at every iteration, sharing a finite token budget. Somewhere a draft model is speculating four tokens ahead and the target model is verifying its guesses in a single forward pass. Two physical machines are passing KV cache to each other over RDMA.
 
-None of this existed five years ago. Most of it didn't exist three years ago.
+None of this existed five years ago. Most of it didn't exist three years ago. And almost none of it is machine learning — it is virtual memory management, scheduling theory, and queueing math, all engineered around one stubborn physical constraint.
 
 {{% pullquote type="counter-intuitive" %}}
-The hardest problems in modern LLM inference are not about machine learning. They are about virtual memory, scheduling, queueing theory, and the fact that loading a byte from HBM is roughly two thousand times slower than multiplying two numbers in a register.
+Efficient LLM inference isn't an ML problem. It's grappling with one physical fact:
+
+**A GPU core takes ~2,000× longer to load two numbers from HBM than to multiply them in a register.**
 {{% /pullquote %}}
 
 This issue takes apart a single inference request and walks the reader through every layer the token passes through on its way out of the box. The starting point is bare silicon: streaming multiprocessors, the memory hierarchy, the arithmetic intensity that determines whether a kernel is doing real work or sitting on the HBM bus. Then we build upward: the attention kernel, the {{< wiki "kv-cache" >}}KV cache{{< /wiki >}} and why its allocation pattern is a hell of fragmentation, the operating-system trick from 1965 that fixed it, the scheduler that decides who gets cycles, and the modern serving topologies (continuous batching, chunked prefill, prefix caching, disaggregated prefill/decode, speculative decoding) that turn a four-GPU machine into something that can credibly handle a thousand concurrent users.

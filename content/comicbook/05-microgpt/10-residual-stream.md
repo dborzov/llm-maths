@@ -71,10 +71,12 @@ The variable name `x_residual` is **reused twice** inside one layer, and that is
 Here is the metaphor that, once you have it, makes a lot of modern interpretability research click. Imagine the per-token vector `x` not as "the activation at layer $\ell$" but as a **lane on a highway** that runs the full depth of the network, from the embedding lookup to the `lm_head`:
 
 ```
-   [ wte + wpe ]  ─► rmsnorm ─►  +══►  +══►  +══►  +══► ... ─► lm_head
-                                 ▲     ▲     ▲     ▲
-                                 │     │     │     │
-                             attn_0  mlp_0  attn_1  mlp_1
+   [ wte[token_id] ]  ─► rmsnorm ─►  +══►  +══►  +══►  +══► ... ─► lm_head
+                                     ▲     ▲     ▲     ▲
+                                     │     │     │     │
+                                  attn_0  mlp_0  attn_1  mlp_1
+                                  (RoPE on q,k
+                                   inside attn)
 ```
 
 The double-line is `x`, the residual stream. The single lines coming in from below are the **contributions** each sub-block writes. Nothing in the architecture forces any sub-block to write a big contribution — it can write nearly zero and the highway carries the previous value through almost untouched. Equivalently, nothing forces a sub-block to write a *small* contribution — it can completely overwhelm the previous value if it wants to. The model learns, during training, how loudly each sub-block should speak.
@@ -200,16 +202,14 @@ This is *why* you can stack 96 transformer layers in GPT-3 and still have it tra
 Reread the top of microGPT's forward pass:
 
 ```python
-tok_emb = state_dict['wte'][token_id]
-pos_emb = state_dict['wpe'][pos_id]
-x = [t + p for t, p in zip(tok_emb, pos_emb)]
+x = state_dict['wte'][token_id]
 x = rmsnorm(x)
 for li in range(n_layer):
     x_residual = x
     ...
 ```
 
-Notice anything? **There is no `x_residual = ...` before the very first `rmsnorm(x)`.** That normalization happens *to* the embedding sum, not as part of a save-normalize-compute-add-back cycle. It is preparation: it gives the highway a sensible starting magnitude before the first sub-block reads from it. The per-layer pattern only kicks in once we enter the `for li in range(n_layer)` loop.
+Notice anything? **There is no `x_residual = ...` before the very first `rmsnorm(x)`.** That normalization happens *to* the token embedding, not as part of a save-normalize-compute-add-back cycle. It is preparation: it gives the highway a sensible starting magnitude before the first sub-block reads from it. The per-layer pattern only kicks in once we enter the `for li in range(n_layer)` loop. (Note also that position is no longer added here — it enters inside attention via [RoPE](../09b-rope/).)
 
 This is a stylistic choice — some transformers omit that pre-loop `rmsnorm` and instead put the first `rmsnorm` inside the first attention sub-block, where it then *also* sees the residual. Either works. microGPT picked the version that reads more cleanly: **embed, prep, then loop**.
 

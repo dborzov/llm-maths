@@ -114,6 +114,13 @@ sub   = "ch.15"
 # =========================================================================
 
 [[nodes]]
+id    = "rope"
+label = "Position\nby Rotation (RoPE)"
+kind  = "mainline"
+link  = "09b-rope/"
+sub   = "ch.9b"
+
+[[nodes]]
 id    = "attention"
 label = "Scaled Dot-\nProduct Attention"
 kind  = "mainline"
@@ -233,6 +240,24 @@ to   = "attention"
 [[edges]]
 from = "embeddings"
 to   = "residual-stream"
+
+# ---- RoPE feeds from qkv and embeddings, consumed by multi-head and kv-cache ----
+
+[[edges]]
+from = "qkv-projections"
+to   = "rope"
+
+[[edges]]
+from = "embeddings"
+to   = "rope"
+
+[[edges]]
+from = "rope"
+to   = "multi-head"
+
+[[edges]]
+from = "rope"
+to   = "kv-cache"
 
 # ---- Attention assembles into multi-head ----
 
