@@ -37,9 +37,12 @@ test.describe('Article TOC', () => {
     await toggle.tap();
     await expect(toc).toHaveClass(/toc-open/);
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
-    // Panel becomes scrollable (max-height > 0) when open.
-    const openHeight = await panel.evaluate(el => parseFloat(getComputedStyle(el).maxHeight));
-    expect(openHeight).toBeGreaterThan(100);
+    // Panel becomes scrollable when open — poll until the 0.18s max-height
+    // transition has settled rather than reading mid-animation.
+    await expect(async () => {
+      const openHeight = await panel.evaluate(el => parseFloat(getComputedStyle(el).maxHeight));
+      expect(openHeight).toBeGreaterThan(100);
+    }).toPass({ timeout: 1000 });
 
     await toggle.tap();
     await expect(toc).not.toHaveClass(/toc-open/);

@@ -15,8 +15,14 @@ date: 2026-05-14T23:01:06-04:00
 
 The KV cache problem has been a known crisis since 2023. The math is unforgiving: cache size scales as $(2,\, L,\, H,\, T,\, D)$ — two tensors, $L$ layers, $H$ heads, $T$ token positions, $D$ head dimension. Every dimension except $T$ is baked in at training time. But $T$ — the sequence length — grows without bound as users push context windows from 4K to 32K to 128K to one million tokens. One axis, unbounded.
 
+Some KV cache approaches did make it — **GQA** and **MQA** cut heads, **MLA** compressed the cache axis, **FlashAttention** tamed the compute. But those attack the constant factors, not the T-axis. Token eviction — deciding which past tokens to drop entirely — remained unsolved.
+
 {{% pullquote type="counter-intuitive" %}}
-By late 2025, the community had catalogued over twenty KV pruning methods. Zero were integrated in vLLM, SGLang, or TensorRT-LLM — the three inference engines that run production traffic.
+Since 2023, KV cache optimizations that conquered production: **GQA**, **MQA**, **MLA**, **FlashAttention**.
+
+As of 2026: [96 papers on KV cache pruning](https://github.com/October2001/Awesome-KV-Cache-Compression).
+
+Saw production use: **0**.
 {{% /pullquote %}}
 
 {{% callout type="theorem" title="The Four Production Requirements" %}}

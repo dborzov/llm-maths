@@ -18,7 +18,9 @@ The benchmark they pick is a **needle-in-a-haystack** task at 128,000 tokens of 
 A seventy-eight-point regression. From a feature that was supposed to be free.
 
 {{% pullquote type="counter-intuitive" %}}
-Three years of "just enable the flag" advice in vLLM tutorials, and at long context, on the most popular open-weight model on the planet, the flag was silently destroying long-document recall.
+In vLLM, switching the KV cache from **BF16 to FP8** drops accuracy from **91% to 13%** at 128K context.
+
+This story is about why.
 {{% /pullquote %}}
 
 What follows is the detective story of how the team traced the catastrophe to a hardware spec sheet that wasn't lying so much as carefully not telling the full truth, found the same bug independently documented in a DeepSeek-V3 training report from five months earlier, fixed it with a numerical-analysis idea **William Kahan** published in 1965 for very different reasons, and then re-fixed it three more times because the first fix triggered a register-spill cascade in the kernel, the second fix didn't help sliding-window models, and the third fix exposed a per-tensor scale issue that some attention backends really, really did not like.
