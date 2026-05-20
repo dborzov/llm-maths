@@ -24,7 +24,7 @@ header: 07-csa.webp
 
 This chapter is built around one diagram — Figure 3 of the V4 technical report. Look at it once, then we will spend the rest of the chapter taking it apart.
 
-{{< figure src="/llm-maths/figures/07-deepseek-attn/v4-paper/deepseek-v4-figure3-csa.webp"
+{{< figure src="/figures/07-deepseek-attn/v4-paper/deepseek-v4-figure3-csa.webp"
            alt="DeepSeek V4 paper Figure 3: Core architecture of Compressed Sparse Attention. Hidden states of KV tokens enter at the bottom, go through Token-Level Compressors into Compressed KV Entries. A Lightning Indexer (dashed box, right side) produces Index Scores from compressed indexer keys and indexer queries. A Top-k Selector picks Selected Compressed KV Entries. Sliding Window KV Entries enter from the left. All three feed into a Concatenation and then Shared Key-Value Multi-Query Attention."
            caption="**Figure 3 of the DeepSeek-V4 paper.** Core architecture of CSA. The KV cache of every $m=4$ tokens is compressed into one entry (the **Token-Level Compressor**, blue triangle, bottom). The query token's hidden state is projected to indexer queries (the **Lightning Indexer**, dashed box on the right) which score every compressed KV entry. A **Top-k Selector** picks the highest-scoring $k$ compressed entries. A small **Sliding Window** branch (left) supplies recent uncompressed entries for local detail. Everything feeds a **Shared Key-Value Multi-Query Attention** at the top — meaning one key/value vector is shared across all $n_h$ query heads."
            credit="Reproduced from DeepSeek-AI, DeepSeek-V4 Technical Report (2026), Fig. 3." >}}

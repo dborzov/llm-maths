@@ -37,7 +37,7 @@
 {{- end -}}
 
 {{- $resolved := $src -}}
-{{- if not (or (hasPrefix $src "http") (hasPrefix $src "/")) -}}
+{{- if not (hasPrefix $src "http") -}}
   {{- $resolved = $src | relURL -}}
 {{- end -}}
 

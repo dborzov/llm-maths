@@ -26,7 +26,7 @@ The previous chapter, [Compressed Sparse Attention](../07-csa/), gives you Figur
 
 Figure 4 is the antidote.
 
-{{< figure src="/llm-maths/figures/07-deepseek-attn/v4-paper/deepseek-v4-figure4-hca.webp"
+{{< figure src="/figures/07-deepseek-attn/v4-paper/deepseek-v4-figure4-hca.webp"
            alt="DeepSeek V4 paper Figure 4: Core architecture of Heavily Compressed Attention. Hidden states of KV tokens go through a single Token-Level Compressor with rate m', producing Heavily Compressed KV Entries. These feed directly into Shared Key-Value Multi-Query Attention along with the query and a Sliding Window branch. No indexer. No top-k selector."
            caption="**Figure 4 of the DeepSeek-V4 paper.** Core architecture of HCA. Compared to CSA (previous chapter), HCA has *no lightning indexer*, *no top-k selector*, *one compressor stream* (instead of two), and a much heavier compression rate $m' = 128$ (vs. $m=4$ in CSA). What remains: token-level compressor → dense attention over compressed entries → sliding window for local detail. Half the diagram of CSA. The sequence length collapses to $T/128$ before attention even runs."
            credit="Reproduced from DeepSeek-AI, DeepSeek-V4 Technical Report (2026), Fig. 4." >}}

@@ -15,7 +15,7 @@ date: 2026-05-16T09:00:00-04:00
 
 Six months later, **DeepSeek-V4** drops. The model card opens with a number nobody has put in print before: **one million tokens of context, supported natively, at 27% of V3.2's per-token FLOPs and 10% of V3.2's KV cache**. Two attention modes — Compressed Sparse Attention (CSA) and Heavily Compressed Attention (HCA) — interleave across the 61 transformer blocks. The headline plot is the one below: KV cache size vs. context length, with three curves and the V3.2 baseline crushed underneath the V4-Flash line at 1M tokens.
 
-{{< figure src="/llm-maths/figures/07-deepseek-attn/v4-paper/deepseek-v4-figure1-bench-and-efficiency.webp"
+{{< figure src="/figures/07-deepseek-attn/v4-paper/deepseek-v4-figure1-bench-and-efficiency.webp"
            alt="DeepSeek V4 paper Figure 1: benchmark performance bars on the left, single-token FLOPs and accumulated KV cache size vs. token position on the right, comparing V3.2 against V4-Pro and V4-Flash."
            caption="**Figure 1 of the DeepSeek-V4 paper.** *Left:* benchmark performance of V4-Pro-Max vs frontier models on SimpleQA, HLE, Apex, Codeforces, SWE-Verified, Terminal-Bench 2.0, and Toolathlon. *Right:* single-token inference FLOPs and accumulated KV cache size as context grows from 0 to 1M tokens. At 1M context, V4-Pro uses **3.7×** fewer FLOPs and **9.5×** less KV cache than V3.2; V4-Flash uses **9.8×** fewer FLOPs and **13.7×** less KV cache. This is the picture the rest of the issue explains."
            credit="Reproduced from DeepSeek-AI, DeepSeek-V4 Technical Report (2026), Fig. 1." >}}
