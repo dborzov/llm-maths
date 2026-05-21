@@ -41,7 +41,7 @@ sub   = "ch.15"
 
 [[nodes]]
 id    = "outliers"
-label = "The 1% That\nRuins Everything"
+label = "Outliers"
 kind  = "mainline"
 link  = "06-outliers/"
 sub   = "ch.6"
@@ -55,14 +55,14 @@ sub   = "ch.6b"
 
 [[nodes]]
 id    = "brain-surgery"
-label = "Brain Surgery\nReturns"
+label = "GPTQ"
 kind  = "mainline"
 link  = "08-brain-surgery/"
 sub   = "ch.8"
 
 [[nodes]]
 id    = "kv-distribution"
-label = "Inside K and V"
+label = "KV\nDistributions"
 kind  = "mainline"
 link  = "16-kv-distribution/"
 sub   = "ch.16"
@@ -78,7 +78,7 @@ sub   = "ch.10"
 
 [[nodes]]
 id    = "shape-weights"
-label = "Geometry\nof Weights"
+label = "Weight\nDistributions"
 kind  = "primer"
 link  = "05-geometry-of-weights/"
 sub   = "ch.5"
@@ -92,14 +92,14 @@ sub   = "ch.17"
 
 [[nodes]]
 id    = "quantization-axes"
-label = "The Axis\nQuestion"
+label = "Quantization\nAxes"
 kind  = "primer"
 link  = "18-quantization-axes/"
 sub   = "ch.18"
 
 [[nodes]]
 id    = "calibration"
-label = "Calibration\n& Blocks"
+label = "Block\nQuantization"
 kind  = "primer"
 link  = "11-calibration-and-blocks/"
 sub   = "ch.11"
@@ -115,7 +115,7 @@ sub   = "ch.13"
 
 [[nodes]]
 id    = "numbers"
-label = "Numbers\nin Boxes"
+label = "Float\nFormats"
 kind  = "primer"
 link  = "02-numbers-in-boxes/"
 sub   = "ch.2"

@@ -24,28 +24,28 @@ sub   = "ch.6"
 
 [[nodes]]
 id    = "kv-crisis"
-label = "The Cache That\nAte the Server"
+label = "KV Cache\nAnatomy"
 kind  = "mainline"
 link  = "02-kv-crisis/"
 sub   = "ch.2"
 
 [[nodes]]
 id    = "heavy-hitter"
-label = "The Heavy\nHitter Oracle"
+label = "H₂O:\nHeavy Hitter"
 kind  = "mainline"
 link  = "03-heavy-hitter/"
 sub   = "ch.3"
 
 [[nodes]]
 id    = "copy-paste"
-label = "The Pretext\nTrick"
+label = "KVzip"
 kind  = "mainline"
 link  = "04-copy-paste/"
 sub   = "ch.4"
 
 [[nodes]]
 id    = "ghost-state"
-label = "Ghost in the\nHidden State"
+label = "Residual\nStream"
 kind  = "mainline"
 link  = "05-ghost-state/"
 sub   = "ch.5"
@@ -77,14 +77,14 @@ sub   = "ch.11"
 
 [[nodes]]
 id    = "attention-sparsity"
-label = "Softmax's\nLong Tail"
+label = "Attention\nSparsity"
 kind  = "primer"
 link  = "07-attention-sparsity/"
 sub   = "ch.7"
 
 [[nodes]]
 id    = "contribution-norm"
-label = "Weight ≠\nContribution"
+label = "Contribution\nNorm"
 kind  = "primer"
 link  = "08-contribution-norm/"
 sub   = "ch.8"

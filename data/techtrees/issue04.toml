@@ -17,7 +17,7 @@ title  = "Tech tree — The Heatmap That Lied"
 
 [[nodes]]
 id    = "eval-stack-2026"
-label = "The 2026\nLayered Stack"
+label = "Eval Stack\n2026"
 kind  = "boss"
 link  = "16-eval-stack-2026/"
 sub   = "ch.16"
@@ -26,35 +26,35 @@ sub   = "ch.16"
 
 [[nodes]]
 id    = "cold-open"
-label = "The Heatmap\nThat Lied"
+label = "Long-Context\nBenchmarks"
 kind  = "mainline"
 link  = "01-cold-open/"
 sub   = "ch.1"
 
 [[nodes]]
 id    = "saturation"
-label = "When Everyone\nScored 99"
+label = "Saturation"
 kind  = "mainline"
 link  = "05-saturation/"
 sub   = "ch.5"
 
 [[nodes]]
 id    = "needle-to-graph"
-label = "One Pass\nIsn't Enough"
+label = "GraphWalks"
 kind  = "mainline"
 link  = "08-needle-to-graph/"
 sub   = "ch.8"
 
 [[nodes]]
 id    = "context-rot-fix"
-label = "The 4× Jump"
+label = "Context\nRot Fix"
 kind  = "mainline"
 link  = "11-context-rot-fix/"
 sub   = "ch.11"
 
 [[nodes]]
 id    = "agentic-turn"
-label = "A Day's Worth\nof Work"
+label = "Agentic\nTurn"
 kind  = "mainline"
 link  = "14-agentic-turn/"
 sub   = "ch.14"
@@ -63,7 +63,7 @@ sub   = "ch.14"
 
 [[nodes]]
 id    = "latent-structure"
-label = "Vodrahalli's\nChisel"
+label = "Latent\nStructure"
 kind  = "primer"
 link  = "09-latent-structure/"
 sub   = "ch.9"
@@ -77,14 +77,14 @@ sub   = "ch.10"
 
 [[nodes]]
 id    = "contamination-drift"
-label = "Leakage &\nDrift"
+label = "Contamination\n& Drift"
 kind  = "primer"
 link  = "15-contamination-drift/"
 sub   = "ch.15"
 
 [[nodes]]
 id    = "synth-vs-real"
-label = "Synthetic vs\nRealistic"
+label = "Synth vs\nReal"
 kind  = "primer"
 link  = "13-synth-vs-real/"
 sub   = "ch.13"
@@ -93,35 +93,35 @@ sub   = "ch.13"
 
 [[nodes]]
 id    = "retrieval-vs-reasoning"
-label = "Scan vs\nThink"
+label = "Retrieval vs\nReasoning"
 kind  = "primer"
 link  = "04-retrieval-vs-reasoning/"
 sub   = "ch.4"
 
 [[nodes]]
 id    = "measurement-saturation"
-label = "Goodhart's\nCeiling"
+label = "Goodhart's\nLaw"
 kind  = "primer"
 link  = "06-measurement-saturation/"
 sub   = "ch.6"
 
 [[nodes]]
 id    = "mrcr"
-label = "The Fourth\nPoem"
+label = "MRCR"
 kind  = "primer"
 link  = "17-mrcr/"
 sub   = "ch.17"
 
 [[nodes]]
 id    = "context-rot"
-label = "The Chroma\nMeasurement"
+label = "Context\nRot"
 kind  = "primer"
 link  = "12-context-rot/"
 sub   = "ch.12"
 
 [[nodes]]
 id    = "oolong"
-label = "The Tallying\nProblem"
+label = "OOLONG"
 kind  = "primer"
 link  = "18-oolong/"
 sub   = "ch.18"
@@ -130,14 +130,14 @@ sub   = "ch.18"
 
 [[nodes]]
 id    = "niah-mechanics"
-label = "Needle in a\nHaystack"
+label = "NIAH"
 kind  = "primer"
 link  = "03-niah-mechanics/"
 sub   = "ch.3"
 
 [[nodes]]
 id    = "lost-in-the-middle"
-label = "The U-Curve"
+label = "Lost in\nthe Middle"
 kind  = "primer"
 link  = "07-lost-in-the-middle/"
 sub   = "ch.7"
@@ -146,7 +146,7 @@ sub   = "ch.7"
 
 [[nodes]]
 id    = "context-window"
-label = "What 1M Tokens\nActually Costs"
+label = "Context\nWindow"
 kind  = "primer"
 link  = "02-context-window/"
 sub   = "ch.2"

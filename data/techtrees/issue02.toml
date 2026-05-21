@@ -23,14 +23,14 @@ sub   = "ch.6"
 
 [[nodes]]
 id    = "logistic-regression"
-label = "From Insects\nto ImageNet"
+label = "Sigmoid\nGradient"
 kind  = "mainline"
 link  = "05-logistic-regression/"
 sub   = "ch.5"
 
 [[nodes]]
 id    = "berksons-gamble"
-label = "The Simpler\nS-Curve"
+label = "Logit:\n1944 Wager"
 kind  = "mainline"
 link  = "03-berksons-gamble/"
 sub   = "ch.3"
@@ -39,14 +39,14 @@ sub   = "ch.3"
 
 [[nodes]]
 id    = "probit-transform"
-label = "Cramming the Bell\nCurve Into a Line"
+label = "Probit:\nthe S-Curve"
 kind  = "primer"
 link  = "02-probit-transform/"
 sub   = "ch.2"
 
 [[nodes]]
 id    = "log-odds"
-label = "The Language\nof Risk"
+label = "Log-Odds"
 kind  = "primer"
 link  = "04-log-odds/"
 sub   = "ch.4"
