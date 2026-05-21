@@ -34,7 +34,7 @@ sub   = "ch.18"
 
 [[nodes]]
 id    = "disagg-pd"
-label = "Two Houses,\nDivided (P/D split)"
+label = "Disaggregated\nPD"
 kind  = "mainline"
 link  = "17-disagg-pd/"
 sub   = "ch.17"
@@ -52,7 +52,7 @@ sub   = "ch.15"
 
 [[nodes]]
 id    = "scheduler"
-label = "The Token Budget\n(V1 Scheduler)"
+label = "vLLM\nScheduler"
 kind  = "mainline"
 link  = "14-scheduler/"
 sub   = "ch.14"
@@ -63,14 +63,14 @@ sub   = "ch.14"
 
 [[nodes]]
 id    = "prefix-caching"
-label = "Reusing the\nPrologue"
+label = "Prefix\nCaching"
 kind  = "mainline"
 link  = "12-prefix-caching/"
 sub   = "ch.12"
 
 [[nodes]]
 id    = "chunked-prefill"
-label = "Slicing the\nPrefill"
+label = "Chunked\nPrefill"
 kind  = "mainline"
 link  = "13-chunked-prefill/"
 sub   = "ch.13"
@@ -81,7 +81,7 @@ sub   = "ch.13"
 
 [[nodes]]
 id    = "paged-attention"
-label = "Borrowing\nfrom 1965"
+label = "PagedAttention"
 kind  = "mainline"
 link  = "10-paged-attention/"
 sub   = "ch.10"
@@ -95,7 +95,7 @@ sub   = "ch.11"
 
 [[nodes]]
 id    = "tp-pp"
-label = "Splitting\nthe Model"
+label = "Model\nParallelism"
 kind  = "primer"
 link  = "16-tp-pp/"
 sub   = "ch.16"
@@ -106,14 +106,14 @@ sub   = "ch.16"
 
 [[nodes]]
 id    = "kv-fragmentation"
-label = "The KV Cache\nIs a Heap"
+label = "KV\nFragmentation"
 kind  = "mainline"
 link  = "09-kv-fragmentation/"
 sub   = "ch.9"
 
 [[nodes]]
 id    = "continuous-batching"
-label = "The Conveyor\nBelt (Orca)"
+label = "Continuous\nBatching"
 kind  = "mainline"
 link  = "08-continuous-batching/"
 sub   = "ch.8"
@@ -124,7 +124,7 @@ sub   = "ch.8"
 
 [[nodes]]
 id    = "prefill-vs-decode"
-label = "Two Phases,\nTwo Personalities"
+label = "Prefill vs\nDecode"
 kind  = "mainline"
 link  = "07-prefill-vs-decode/"
 sub   = "ch.7"
@@ -135,7 +135,7 @@ sub   = "ch.7"
 
 [[nodes]]
 id    = "flash-attention"
-label = "Attention\nin SRAM"
+label = "FlashAttention"
 kind  = "primer"
 link  = "06-flash-attention/"
 sub   = "ch.6"
@@ -149,21 +149,21 @@ sub   = "ch.4"
 
 [[nodes]]
 id    = "memory-hierarchy"
-label = "The Pyramid\nof Speed"
+label = "Memory\nHierarchy"
 kind  = "primer"
 link  = "03-memory-hierarchy/"
 sub   = "ch.3"
 
 [[nodes]]
 id    = "cuda-graphs"
-label = "Launches\nAren't Free"
+label = "CUDA\nGraphs"
 kind  = "primer"
 link  = "05-cuda-graphs/"
 sub   = "ch.5"
 
 [[nodes]]
 id    = "gpu-anatomy"
-label = "Inside the\nSilicon"
+label = "GPU\nAnatomy"
 kind  = "primer"
 link  = "02-gpu-anatomy/"
 sub   = "ch.2"

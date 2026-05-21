@@ -13,7 +13,7 @@ title  = "Tech tree — The Geometry of Meaning"
 
 [[nodes]]
 id    = "inheritance"
-label = "The Living\nInheritance"
+label = "Contextual\nEmbeddings"
 kind  = "boss"
 link  = "07-inheritance/"
 sub   = "ch.7"
@@ -22,7 +22,7 @@ sub   = "ch.7"
 
 [[nodes]]
 id    = "meaning-as-geometry"
-label = "Words That Know\nTheir Place"
+label = "Analogy\nArithmetic"
 kind  = "mainline"
 link  = "06-meaning-as-geometry/"
 sub   = "ch.6"
@@ -31,14 +31,14 @@ sub   = "ch.6"
 
 [[nodes]]
 id    = "one-hot-problem"
-label = "Why Every Word\nWas An Island"
+label = "One-Hot\nEncoding"
 kind  = "mainline"
 link  = "02-one-hot-problem/"
 sub   = "ch.2"
 
 [[nodes]]
 id    = "word2vec"
-label = "Embarrassingly\nSimple"
+label = "Word2Vec"
 kind  = "mainline"
 link  = "04-word2vec/"
 sub   = "ch.4"
@@ -47,14 +47,14 @@ sub   = "ch.4"
 
 [[nodes]]
 id    = "dot-product"
-label = "The Geometry\nof Agreement"
+label = "Dot\nProduct"
 kind  = "primer"
 link  = "03-dot-product/"
 sub   = "ch.3"
 
 [[nodes]]
 id    = "high-dimensional"
-label = "The Stranger\nCountry"
+label = "High-Dimensional\nGeometry"
 kind  = "primer"
 link  = "05-high-dimensional/"
 sub   = "ch.5"

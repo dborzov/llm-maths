@@ -50,7 +50,7 @@ sub   = "ch.21"
 
 [[nodes]]
 id    = "kv-axes"
-label = "The Three Axes\nof KV Compression"
+label = "KV Axes:\nThree Dimensions"
 kind  = "mainline"
 link  = "17-kv-axes/"
 sub   = "ch.17"
@@ -136,7 +136,7 @@ sub   = "ch.10"
 
 [[nodes]]
 id    = "activations"
-label = "ReLU\n& Friends"
+label = "Activations:\nReLU & Friends"
 kind  = "primer"
 link  = "12-activations/"
 sub   = "ch.12"
@@ -168,7 +168,7 @@ sub   = "ch.5"
 
 [[nodes]]
 id    = "embeddings"
-label = "Tokens\n& Positions"
+label = "Embeddings:\nTokens & Positions"
 kind  = "primer"
 link  = "03-embeddings/"
 sub   = "ch.3"

@@ -31,7 +31,7 @@ sub   = "ch.2"
 
 [[nodes]]
 id    = "quadratic-wall"
-label = "The Other Wall"
+label = "Quadratic\nWall"
 kind  = "mainline"
 link  = "03-quadratic-wall/"
 sub   = "ch.3"
@@ -119,14 +119,14 @@ sub   = "ch.15"
 
 [[nodes]]
 id    = "attention-compute"
-label = "The Compute Bill\nof Attention"
+label = "Attention\nFLOPs"
 kind  = "primer"
 link  = "11-attention-compute/"
 sub   = "ch.11"
 
 [[nodes]]
 id    = "empirical-sparsity"
-label = "Where Attention\nIs Sparse"
+label = "Empirical\nSparsity"
 kind  = "primer"
 link  = "16-empirical-sparsity/"
 sub   = "ch.16"
