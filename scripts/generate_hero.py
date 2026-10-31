@@ -68,6 +68,12 @@ VISUAL_CONCEPTS = {
         "stand before her, all adjusting their heights to ensure they sum to exactly one. "
         "Striking composition, high contrast."
     ),
+    "07-cross-entropy": (
+        "A sharp-suited 1950s bookkeeper in a smoky noir office slams an itemized bill onto a desk under a "
+        "green banker's lamp. The bill has three big columns of stamps: a modest fair-price stamp, a fat red "
+        "overcharge stamp, and a golden discount coupon clipped to the corner. A cool lady in a trench coat "
+        "reads a detective paperback, unimpressed. Hard shadows, halftone dots, Pulp Fiction vibe."
+    ),
 
     # Issue 03: Sixteen Numbers
     "03-quantization-cover": (

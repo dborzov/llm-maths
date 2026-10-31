@@ -1,0 +1,37 @@
+title   = "One Logarithm, Four Readings — 1941 to 2022"
+caption = "Two codebreaking agencies, one phone company, one AI lab. <em>The same log in every row.</em>"
+
+[[events]]
+date  = "1941"
+title = "Weight of Evidence"
+who   = "Alan Turing & I. J. Good, Bletchley Park"
+body  = "Enigma clues are scored by adding log-likelihood ratios in bans and decibans. Evidence becomes something you can sum."
+kind  = "paper"
+
+[[events]]
+date  = "1948"
+title = "Entropy"
+who   = "Claude Shannon, Bell Labs"
+body  = "A Mathematical Theory of Communication: the average surprise of a source is the fewest bits per symbol any code can achieve."
+kind  = "paper"
+
+[[events]]
+date  = "1951"
+title = "The Guessing Game"
+who   = "Claude & Betty Shannon"
+body  = "A human predicts printed English letter by letter. Shannon bounds its entropy at 0.6–1.3 bits per letter: the first next-token benchmark."
+kind  = "paper"
+
+[[events]]
+date  = "1951"
+title = "Information for Discrimination"
+who   = "Solomon Kullback & Richard Leibler"
+body  = "Two government codebreakers define the expected evidence per observation for one hypothesis over another. We now call it KL divergence."
+kind  = "paper"
+
+[[events]]
+date  = "2022"
+title = "The Irreducible Loss"
+who   = "Hoffmann et al. (Chinchilla)"
+body  = "A scaling-law fit splits LLM loss into a floor E = 1.69 nats that no model can beat, plus a gap that shrinks with parameters and data."
+kind  = "paper"

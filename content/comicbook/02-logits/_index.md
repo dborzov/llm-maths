@@ -31,6 +31,7 @@ By the end of this issue you should be able to:
 - **Explain Berkson's wager** — what the logistic approximation trades away for its computational convenience, and why the trade almost never matters in practice.
 - **Derive the logistic regression gradient** from first principles and see why it is the same computation as backpropagation through a sigmoid output neuron.
 - **Understand why PyTorch wants raw logits** rather than probabilities, and trace the 90-year chain from Connecticut insects to `torch.nn.CrossEntropyLoss`.
+- **Read the loss itself** — cross-entropy as the bill a model pays, entropy as the fair price nobody can beat, KL divergence as the overcharge, and mutual information as the discount the context buys — and see why all four are one logarithm averaged different ways.
 
 ---
 
