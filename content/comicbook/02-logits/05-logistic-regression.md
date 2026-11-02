@@ -56,7 +56,7 @@ $$
 \ell(\beta) = \sum_{i=1}^n \left[ y_i \log \sigma(z_i) + (1 - y_i) \log(1 - \sigma(z_i)) \right], \quad z_i = \beta^\top x_i
 $$
 
-This is the **negative binary cross-entropy loss** — or equivalently, the log-likelihood under the logistic model. Maximizing $\ell(\beta)$ is the same as minimizing the cross-entropy.
+This is the **negative binary cross-entropy loss** — or equivalently, the log-likelihood under the logistic model. Maximizing $\ell(\beta)$ is the same as minimizing the cross-entropy. (What that loss is actually *counting* — bits of surprise, split into a fair price the data imposes and an overcharge that is the model's fault — is the subject of the epilogue, [Cross-Entropy](../07-cross-entropy/).)
 
 ## The Gradient: Surprisingly Clean
 

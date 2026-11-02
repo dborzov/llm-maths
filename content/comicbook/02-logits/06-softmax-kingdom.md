@@ -124,7 +124,7 @@ for col, zs in enumerate(logit_sets):
 
 PyTorch's `CrossEntropyLoss` takes **logits**, not probabilities. This is not an API quirk — it is a numerical stability decision.
 
-The cross-entropy loss for class $y$ is:
+The {{< wiki "information-measures" >}}cross-entropy loss{{< /wiki >}} for class $y$ is:
 
 $$
 \mathcal{L} = -\log P(y) = -\log \text{softmax}(z)_y = -z_y + \log \sum_j e^{z_j}
@@ -238,3 +238,7 @@ The entire probability chain that modern deep learning rests on — from binary 
 3. **Generalize to $K$ classes with softmax and minimize cross-entropy.** (Clear by the 1960s; standard in deep learning by the 1980s)
 
 From Bliss's dead aphids to a 70B-parameter LLM's prediction of the next word: in the end, one elegant mathematical idea — model the log-odds as a linear function of your inputs — runs inside every classifier that has ever been trained.
+
+---
+
+**Continue to** → [Cross-Entropy: the bill, the overcharge, and the discount](../07-cross-entropy/) — every chapter of this issue ended with *minimize cross-entropy*. The epilogue asks what that number is actually counting, why it can never reach zero, and how much of it is the model's fault.
